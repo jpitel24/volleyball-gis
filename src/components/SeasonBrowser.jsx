@@ -2,7 +2,15 @@ import { useState, useMemo } from 'react';
 import { useData } from '../lib/DataContext.jsx';
 import { POS_COLORS_SB } from '../lib/gis.js';
 
-const POSITIONS = ['ALL', 'OH', 'MB', 'OPP', 'S', 'L', 'DS'];
+const POSITIONS = ['ALL', 'OH', 'MB', 'S', 'L'];
+
+// OPP is grouped under OH; DS is grouped under L
+const POS_FILTER = {
+  OH: r => r.pos === 'OH' || r.pos === 'OPP',
+  MB: r => r.pos === 'MB',
+  S:  r => r.pos === 'S',
+  L:  r => r.pos === 'L'  || r.pos === 'DS',
+};
 
 const COLS_SEASON = [
   { key: '#',              label: '#',       nosort: true, fmt: (r,i) => <td key="#" className="sb-rank">{i+1}</td> },
@@ -33,6 +41,7 @@ export default function SeasonBrowser() {
   const [search, setSearch] = useState('');
   const [sortKey, setSortKey]     = useState('avg_pgis');
   const [sortDir, setSortDir]     = useState('desc');
+  const [minGames, setMinGames]   = useState(10);
 
   const seasons = useMemo(() => {
     if (!playerArchive) return ['2025'];
@@ -54,7 +63,8 @@ export default function SeasonBrowser() {
 
   const filtered = useMemo(() => {
     let out = rows;
-    if (pos !== 'ALL') out = out.filter(r => r.pos === pos);
+    if (pos !== 'ALL') out = out.filter(POS_FILTER[pos] || (r => r.pos === pos));
+    if (minGames > 0)  out = out.filter(r => (r.qual_games ?? 0) >= minGames);
     if (search.trim()) {
       const q = search.toLowerCase();
       out = out.filter(r => r.player.toLowerCase().includes(q) || r.team.toLowerCase().includes(q));
@@ -64,7 +74,7 @@ export default function SeasonBrowser() {
       const bv = b[sortKey] ?? -Infinity;
       return sortDir === 'desc' ? bv - av : av - bv;
     });
-  }, [rows, pos, search, sortKey, sortDir]);
+  }, [rows, pos, minGames, search, sortKey, sortDir]);
 
   function handleSort(key) {
     if (key === '#' || key === 'player' || key === 'team') return;
@@ -103,6 +113,16 @@ export default function SeasonBrowser() {
             </button>
           ))}
         </div>
+        <label className="sb-mingames">
+          Min Qg
+          <input
+            type="number"
+            className="sb-mingames-input"
+            min={0}
+            value={minGames}
+            onChange={e => setMinGames(Math.max(0, parseInt(e.target.value) || 0))}
+          />
+        </label>
         <input
           className="sb-search"
           placeholder="Search player or team…"

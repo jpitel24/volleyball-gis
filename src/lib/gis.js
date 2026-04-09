@@ -262,16 +262,38 @@ export function normalisePlayer(p) {
 
 export function normaliseBoxscore(raw) {
   if (!raw) return null;
-  const teams = (raw.teamBoxscore || raw.teams || []).map(tb => {
-    const teamInfo = tb.team || tb;
-    const players  = (tb.players || tb.playerBoxscore || []).map(normalisePlayer);
+
+  // raw.teams has isHome + name info; raw.teamBoxscore has playerStats
+  const teamInfoMap = {};
+  for (const t of (raw.teams || [])) {
+    teamInfoMap[String(t.teamId)] = t;
+  }
+
+  const teams = (raw.teamBoxscore || []).map(tb => {
+    const tId      = String(tb.teamId || '');
+    const teamInfo = teamInfoMap[tId] || tb.team || tb;
+    const isHome   = teamInfo.isHome ?? (tb.homeAway === 'home' || tb.home_away === 'home');
+    const players  = (tb.playerStats || tb.players || tb.playerBoxscore || []).map(normalisePlayer);
     return {
-      teamName: teamInfo.teamName || teamInfo.name || tb.teamName || 'Unknown',
-      teamId:   teamInfo.teamId   || tb.teamId || '',
-      homeAway: (tb.homeAway || tb.home_away || 'home').toLowerCase(),
+      teamName: teamInfo.nameShort || teamInfo.nameFull || teamInfo.teamName || teamInfo.name || tb.teamName || 'Unknown',
+      teamId:   tId,
+      homeAway: isHome ? 'home' : 'away',
       players,
     };
   });
+
+  // Fallback: if no teamBoxscore, build shell entries from raw.teams
+  if (!teams.length) {
+    return {
+      teams: (raw.teams || []).map(t => ({
+        teamName: t.nameShort || t.nameFull || t.teamName || 'Unknown',
+        teamId:   String(t.teamId || ''),
+        homeAway: t.isHome ? 'home' : 'away',
+        players:  [],
+      })),
+    };
+  }
+
   return { teams };
 }
 

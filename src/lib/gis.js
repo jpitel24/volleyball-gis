@@ -90,20 +90,32 @@ export function findRPIValue(teamName, gameId, RPI_BY_YEAR) {
   const norm   = normaliseTeamName(teamName);
   if (!norm) return null;
   const season = seasonFromGameId(gameId);
-  const table  = RPI_BY_YEAR[season] || RPI_BY_YEAR['2025'] || {};
+  const raw    = RPI_BY_YEAR[season] || RPI_BY_YEAR['2025'] || {};
 
-  if (table[norm] !== undefined) return table[norm];
+  // Pass 1: slug match — strip only punctuation/spaces, NOT words like "state".
+  // "Texas A&M" → "texasam" matches stored "texas a m" → "texasam" without
+  // colliding with "Texas State" → "texasstate" or "Texas" → "texas".
+  const slug = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const inputSlug = slug(teamName);
+  for (const [k, v] of Object.entries(raw)) {
+    if (slug(k) === inputSlug) return v;
+  }
 
+  // Pass 2: exact match on word-stripped norm (handles "University of Kentucky" → "kentucky")
+  if (raw[norm] !== undefined) return raw[norm];
+
+  // Pass 3: longest substring match on word-stripped norms
   let best = null, bestLen = 0;
-  for (const [stored, val] of Object.entries(table)) {
+  for (const [stored, val] of Object.entries(raw)) {
     if (stored.includes(norm) || norm.includes(stored)) {
       if (stored.length > bestLen) { best = val; bestLen = stored.length; }
     }
   }
   if (best !== null) return best;
 
+  // Pass 4: 5-char prefix fallback
   if (norm.length >= 5) {
-    for (const [stored, val] of Object.entries(table)) {
+    for (const [stored, val] of Object.entries(raw)) {
       if (stored.length >= 5 && stored.slice(0,5) === norm.slice(0,5)) return val;
     }
   }

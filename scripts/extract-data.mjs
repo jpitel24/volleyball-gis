@@ -42,8 +42,17 @@ function extractVar(src, varName) {
 
   let i          = match.index + match[0].length;
   const opener   = src[i];
-  const closer   = opener === '{' ? '}' : opener === '[' ? ']' : null;
-  if (!closer)   throw new Error(`${varName}: unexpected opener '${opener}'`);
+
+  // Handle primitive literals: null, true, false, numbers
+  if (opener !== '{' && opener !== '[') {
+    const rest  = src.slice(i);
+    const prim  = rest.match(/^(null|true|false|-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)/);
+    if (!prim)  throw new Error(`${varName}: unexpected opener '${opener}'`);
+    // eslint-disable-next-line no-new-func
+    return new Function(`"use strict"; return ${prim[1]};`)();
+  }
+
+  const closer   = opener === '{' ? '}' : ']';
 
   let depth = 0, inStr = false, strChar = '', escape = false;
   let start = i;

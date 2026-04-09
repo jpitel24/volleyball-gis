@@ -84,6 +84,7 @@ export function rpiToModifier(rpiValue) {
 }
 
 export function findRPIValue(teamName, gameId, RPI_BY_YEAR) {
+  if (!RPI_BY_YEAR) return null;
   const norm   = normaliseTeamName(teamName);
   if (!norm) return null;
   const season = seasonFromGameId(gameId);
@@ -108,7 +109,7 @@ export function findRPIValue(teamName, gameId, RPI_BY_YEAR) {
 }
 
 export function rpiToRank(rpiVal, season, RPI_BY_YEAR) {
-  if (!rpiVal) return null;
+  if (!rpiVal || !RPI_BY_YEAR) return null;
   const table  = RPI_BY_YEAR[season] || RPI_BY_YEAR['2025'] || {};
   const sorted = Object.values(table).sort((a, b) => b - a);
   const idx    = sorted.findIndex(v => v <= rpiVal);

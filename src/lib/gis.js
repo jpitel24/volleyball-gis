@@ -74,13 +74,15 @@ export function seasonFromGameId(gameId) {
 }
 
 // ─── RPI modifier ─────────────────────────────────────────────────────────────
-export function rpiToModifier(rpiValue) {
-  if (!rpiValue) return 1.0;
-  const neutral = 0.500;
-  const diff    = rpiValue - neutral;
-  const raw     = 1.0 + diff * 0.63;
-  if (diff > 0) return Math.min(1.20, raw);
-  return Math.max(0.60, raw);
+// Rank 1 → +5% (1.05), rank 50 → +0% (1.00), last place → -50% (0.50).
+// Two linear segments meeting at rank 50.
+export function rankToModifier(rank, totalTeams) {
+  if (!rank || !totalTeams) return 1.0;
+  if (rank <= 50) {
+    return 1.05 - (rank - 1) * (0.05 / 49);
+  }
+  if (totalTeams <= 50) return 1.0;
+  return Math.max(0.50, 1.00 - (rank - 50) * (0.50 / (totalTeams - 50)));
 }
 
 export function findRPIValue(teamName, gameId, RPI_BY_YEAR) {
@@ -182,10 +184,16 @@ export function computeGIS(bs, ss, pbp, gameId, RPI_BY_YEAR, PGIS_TABLES) {
   const homeTeam = (bs.teams || []).find(t => t.homeAway === 'home') || {};
   const awayTeam = (bs.teams || []).find(t => t.homeAway === 'away') || {};
 
-  const homeOppRank = findRPIValue(awayTeam.teamName, gameId, RPI_BY_YEAR);
-  const awayOppRank = findRPIValue(homeTeam.teamName, gameId, RPI_BY_YEAR);
-  const homeOppMod  = rpiToModifier(homeOppRank);
-  const awayOppMod  = rpiToModifier(awayOppRank);
+  const season       = seasonFromGameId(gameId);
+  const rpiTable     = RPI_BY_YEAR?.[season] || RPI_BY_YEAR?.['2025'] || {};
+  const totalTeams   = Object.keys(rpiTable).length;
+
+  const homeOppRpiVal = findRPIValue(awayTeam.teamName, gameId, RPI_BY_YEAR);
+  const awayOppRpiVal = findRPIValue(homeTeam.teamName, gameId, RPI_BY_YEAR);
+  const homeOppRank   = rpiToRank(homeOppRpiVal, season, RPI_BY_YEAR);
+  const awayOppRank   = rpiToRank(awayOppRpiVal, season, RPI_BY_YEAR);
+  const homeOppMod    = rankToModifier(homeOppRank, totalTeams);
+  const awayOppMod    = rankToModifier(awayOppRank, totalTeams);
 
   const players = [];
   for (const team of (bs.teams || [])) {

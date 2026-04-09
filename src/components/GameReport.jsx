@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import PlayerCard from './PlayerCard.jsx';
-import { findRPIValue, rpiToRank, rpiToModifier, seasonFromGameId } from '../lib/gis.js';
+import { findRPIValue, rpiToRank, seasonFromGameId } from '../lib/gis.js';
 
 const WEIGHTS = [
   ['Kill','1.00','#38bdf8'],

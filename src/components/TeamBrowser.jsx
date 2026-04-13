@@ -8,7 +8,13 @@ import {
 } from '../lib/gis.js';
 
 // Fake game IDs that map to the right season via seasonFromGameId
-const SEASON_FAKE_ID = { '2025': '6500001', '2024': '6200001', '2023': '6000001' };
+const SEASON_FAKE_ID = {
+  '2025': '6479200',
+  '2024': '6326200',
+  '2023': '6173900',
+  '2022': '6026000',
+  '2021': '5874000',
+};
 
 function RosterTable({ players, gameLogs, season }) {
   return (

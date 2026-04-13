@@ -23,7 +23,7 @@ function Pills({ p }) {
   );
 }
 
-export default function PlayerCard({ p, rank, animDelay }) {
+export default function PlayerCard({ p, rank, animDelay, onSelect }) {
   const [, tc]         = gisTier(p.gis);
   const pc             = posColor(p.position);
   const errT           = (p.errors||0)+(p.service_errors||0)+(p.reception_errors||0)+(p.ball_handling_errors||0)+(p.blocking_errors||0);
@@ -40,7 +40,9 @@ export default function PlayerCard({ p, rank, animDelay }) {
         '--pos-color': pc,
         '--tier-color': tc,
         animationDelay: `${animDelay}ms`,
+        cursor: onSelect ? 'pointer' : 'default',
       }}
+      onClick={onSelect ? () => onSelect(p) : undefined}
     >
       <div className="pcard-top">
         <span className="pos-badge" style={{ background: `${pc}20`, color: pc, borderColor: `${pc}40` }}>

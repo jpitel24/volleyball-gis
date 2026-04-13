@@ -12,6 +12,25 @@ export const ERR_W = {
 export const ERR_FLOOR = 0.55;
 export const ERR_DAMP  = 1.20;
 export const GIS_SCALE = 1.25;
+
+export const CATEGORIES = [
+  { key: 'attack',   label: 'Attack',   pos: { kills: 1.00 },                            err: { errors: 0.55 } },
+  { key: 'blocking', label: 'Blocking', pos: { block_solos: 1.10, block_assists: 0.50 }, err: { blocking_errors: 0.30 } },
+  { key: 'defense',  label: 'Defense',  pos: { digs: 0.35 },                             err: { reception_errors: 0.30 } },
+  { key: 'serving',  label: 'Serving',  pos: { service_aces: 1.20 },                     err: { service_errors: 0.35 } },
+  { key: 'setting',  label: 'Setting',  pos: { assists: 0.28 },                          err: { ball_handling_errors: 0.45 } },
+];
+
+export function computeCategoryGIS(p, ns, avgLev, oppMod) {
+  return CATEGORIES.map(({ key, label, pos, err }) => {
+    const raw    = Object.entries(pos).reduce((s, [k, w]) => s + (p[k] || 0) * w, 0);
+    const errSum = Object.entries(err).reduce((s, [k, w]) => s + (p[k] || 0) * w, 0);
+    const errPen = Math.max(ERR_FLOOR, Math.min(1.0, 1.0 - (errSum / (raw + 1)) * ERR_DAMP));
+    const vol    = raw / ns;
+    const gis    = vol * avgLev * errPen * GIS_SCALE;
+    return { key, label, gis, gisPlus: gis * oppMod };
+  });
+}
 export const PGIS_K    = 2.0;
 
 export const POS_GROUP_MAP = {

@@ -320,3 +320,67 @@ body {
   color: var(--muted); padding: 3rem 0; text-align: center;
   display: flex; align-items: center; justify-content: center; gap: 0.6rem;
 }
+
+/* ── Player detail modal ─────────────────────────────────────────── */
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(8,12,20,0.82); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+}
+.modal-panel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; width: 100%; max-width: 480px;
+  max-height: 90vh; overflow-y: auto;
+  padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;
+  animation: cardIn 0.22s ease both;
+}
+.modal-hdr {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-left: 0.75rem; gap: 0.6rem;
+}
+.modal-hdr-left { display: flex; align-items: center; gap: 0.5rem; flex: 1; min-width: 0; flex-wrap: wrap; }
+.modal-name {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+  font-size: 1.3rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.modal-team { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--muted); white-space: nowrap; }
+.modal-close {
+  background: transparent; border: 1px solid var(--border); border-radius: 4px;
+  color: var(--muted); cursor: pointer; font-size: 0.75rem; padding: 0.2rem 0.5rem;
+  flex-shrink: 0; transition: color 0.15s, border-color 0.15s;
+}
+.modal-close:hover { color: var(--text); border-color: var(--text); }
+.modal-scores {
+  display: flex; align-items: flex-end; gap: 0;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 7px; padding: 0.85rem 1rem;
+}
+.modal-score-block { display: flex; flex-direction: column; flex: 1; align-items: center; }
+.modal-score-num { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 2.1rem; line-height: 1; }
+.modal-section-lbl {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.58rem;
+  letter-spacing: 0.14em; color: var(--muted);
+}
+.modal-cats { display: flex; flex-direction: column; gap: 0.55rem; }
+.modal-cat-row {
+  display: grid;
+  grid-template-columns: 68px 1fr 50px 50px 56px;
+  align-items: center; gap: 0.5rem;
+}
+.modal-cat-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.85rem; }
+.modal-cat-bar-track { height: 4px; background: var(--bg); border-radius: 2px; overflow: hidden; }
+.modal-cat-bar-fill { height: 100%; background: linear-gradient(90deg, #38bdf8, #fb923c); border-radius: 2px; transition: width 0.4s ease; }
+.modal-cat-gis { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700; text-align: right; }
+.modal-cat-gisplus { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--gisplus); text-align: right; }
+.modal-cat-hdrs { font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; color: var(--muted); white-space: nowrap; }
+.modal-raw-stats {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+  gap: 0.4rem; background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 7px; padding: 0.75rem;
+}
+.modal-lev-note {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--muted);
+  border-top: 1px solid var(--border); padding-top: 0.6rem; line-height: 1.55;
+}
+.modal-lev-note strong { color: var(--text); }

@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PlayerCard from './PlayerCard.jsx';
+import PlayerModal from './PlayerModal.jsx';
 import { findRPIValue, rpiToRank, seasonFromGameId } from '../lib/gis.js';
 
 const WEIGHTS = [
@@ -11,7 +12,7 @@ const WEIGHTS = [
   ['Dig','0.35','#facc15'],
 ];
 
-function TeamSection({ mg, teamName, side, matchRanks, gameId, rpiByYear }) {
+function TeamSection({ mg, teamName, side, matchRanks, gameId, rpiByYear, onSelect }) {
   const players = mg.players
     .filter(p => p.team === teamName && p.gis > 0)
     .sort((a, b) => (b.pGIS ?? b.gisPlus) - (a.pGIS ?? a.gisPlus));
@@ -62,6 +63,7 @@ function TeamSection({ mg, teamName, side, matchRanks, gameId, rpiByYear }) {
             p={p}
             rank={matchRanks.get(p)}
             animDelay={matchRanks.get(p) * 35}
+            onSelect={onSelect}
           />
         ))}
       </div>
@@ -71,6 +73,7 @@ function TeamSection({ mg, teamName, side, matchRanks, gameId, rpiByYear }) {
 
 export default function GameReport({ gameId, mg, isMock, rpiByYear }) {
   const ref = useRef(null);
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
 
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -153,8 +156,12 @@ export default function GameReport({ gameId, mg, isMock, rpiByYear }) {
         </div>
       </div>
 
-      <TeamSection mg={mg} teamName={mg.homeTeam} side="home" matchRanks={matchRanks} gameId={gameId} rpiByYear={rpiByYear} />
-      <TeamSection mg={mg} teamName={mg.awayTeam} side="away" matchRanks={matchRanks} gameId={gameId} rpiByYear={rpiByYear} />
+      <TeamSection mg={mg} teamName={mg.homeTeam} side="home" matchRanks={matchRanks} gameId={gameId} rpiByYear={rpiByYear} onSelect={setSelectedPlayer} />
+      <TeamSection mg={mg} teamName={mg.awayTeam} side="away" matchRanks={matchRanks} gameId={gameId} rpiByYear={rpiByYear} onSelect={setSelectedPlayer} />
+
+      {selectedPlayer && (
+        <PlayerModal p={selectedPlayer} onClose={() => setSelectedPlayer(null)} />
+      )}
 
       <div className="rpt-footer">
         Game {gameId} · GIS tiers: ELITE ≥10 · IMPACT ≥7 · SOLID ≥4.5 · PRESENT ≥2.5 · LIMITED &lt;2.5<br />

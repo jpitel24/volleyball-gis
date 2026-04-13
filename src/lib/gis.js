@@ -234,7 +234,10 @@ export function computeGIS(bs, ss, pbp, gameId, RPI_BY_YEAR, PGIS_TABLES) {
     const oppRank = isHome ? homeOppRank : awayOppRank;
 
     for (const p of (team.players || [])) {
-      const ns = p.sets || 0;
+      // Use match-level nSets as the authoritative denominator.
+      // The NCAA API's per-player gamesPlayed field returns sets needed to win
+      // the match (e.g. 3 in a 5-set game) rather than total sets played.
+      const ns = nSets || p.sets || 0;
       if (ns === 0) continue;
 
       const raw     = Object.entries(POS_W).reduce((s, [k, w]) => s + (p[k] || 0) * w, 0);

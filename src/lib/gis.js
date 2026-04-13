@@ -241,8 +241,10 @@ export function computeGIS(bs, ss, pbp, gameId, RPI_BY_YEAR, PGIS_TABLES) {
   const rpiTable     = RPI_BY_YEAR?.[season] || RPI_BY_YEAR?.['2025'] || {};
   const totalTeams   = Object.keys(rpiTable).length;
 
-  const homeOppRpiVal = findRPIValue(awayTeam.teamName, gameId, RPI_BY_YEAR);
-  const awayOppRpiVal = findRPIValue(homeTeam.teamName, gameId, RPI_BY_YEAR);
+  // Use teamNameFull (e.g. "Colorado State University") for RPI lookup so that
+  // abbreviated nameShort values like "Colorado St." don't cause mis-matching.
+  const homeOppRpiVal = findRPIValue(awayTeam.teamNameFull || awayTeam.teamName, gameId, RPI_BY_YEAR);
+  const awayOppRpiVal = findRPIValue(homeTeam.teamNameFull || homeTeam.teamName, gameId, RPI_BY_YEAR);
   const homeOppRank   = rpiToRank(homeOppRpiVal, season, RPI_BY_YEAR);
   const awayOppRank   = rpiToRank(awayOppRpiVal, season, RPI_BY_YEAR);
   const homeOppMod    = rankToModifier(homeOppRank, totalTeams);
@@ -342,7 +344,8 @@ export function normaliseBoxscore(raw) {
     const isHome   = teamInfo.isHome ?? (tb.homeAway === 'home' || tb.home_away === 'home');
     const players  = (tb.playerStats || tb.players || tb.playerBoxscore || []).map(normalisePlayer);
     return {
-      teamName: teamInfo.nameShort || teamInfo.nameFull || teamInfo.teamName || teamInfo.name || tb.teamName || 'Unknown',
+      teamName:     teamInfo.nameShort || teamInfo.nameFull || teamInfo.teamName || teamInfo.name || tb.teamName || 'Unknown',
+      teamNameFull: teamInfo.nameFull  || teamInfo.nameShort || teamInfo.teamName || teamInfo.name || tb.teamName || 'Unknown',
       teamId:   tId,
       homeAway: isHome ? 'home' : 'away',
       players,
@@ -353,7 +356,8 @@ export function normaliseBoxscore(raw) {
   if (!teams.length) {
     return {
       teams: (raw.teams || []).map(t => ({
-        teamName: t.nameShort || t.nameFull || t.teamName || 'Unknown',
+        teamName:     t.nameShort || t.nameFull || t.teamName || 'Unknown',
+        teamNameFull: t.nameFull  || t.nameShort || t.teamName || 'Unknown',
         teamId:   String(t.teamId || ''),
         homeAway: t.isHome ? 'home' : 'away',
         players:  [],

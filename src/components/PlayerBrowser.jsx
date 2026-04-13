@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useData } from '../lib/DataContext.jsx';
-import { POS_COLORS_SB } from '../lib/gis.js';
+import { POS_COLORS_SB, computeArchivePGIS } from '../lib/gis.js';
 
 function GameLogRow({ g }) {
   const [gid, opp, ms, gp, pgis, qual, k, e, ta, a, d, sa] = g;
@@ -27,14 +27,15 @@ function GameLogRow({ g }) {
   );
 }
 
-function SeasonRow({ record, cardId, gameLogs }) {
+function SeasonRow({ record, cardId, gameLogs, pgisTables }) {
   const [open, setOpen] = useState(false);
   const key = `${record.player.toLowerCase()}||${record.team.toLowerCase()}||${record.season}`;
   const games = gameLogs?.[key] || [];
   const rHit = record.total_attacks > 0
     ? ((record.kills - record.errors) / record.total_attacks).toFixed(3)
     : '—';
-  const qPgis = record.avg_pgis ? record.avg_pgis.toFixed(2) : '—';
+  const computedPGIS = computeArchivePGIS(record, pgisTables);
+  const qPgis = computedPGIS != null ? computedPGIS.toFixed(2) : '—';
 
   return (
     <>
@@ -48,10 +49,10 @@ function SeasonRow({ record, cardId, gameLogs }) {
         <td className="pb-team">{record.team}</td>
         <td>{record.games}</td>
         <td>{record.qual_games || 0}</td>
-        <td className="sb-pgis-val" title="pGIS across all full-match games">
-          {record.avg_pgis_all?.toFixed(2) ?? '—'}
+        <td className="sb-pgis-val" title="pGIS (neutral efficiency percentile vs D1 peers)">
+          {computedPGIS?.toFixed(2) ?? '—'}
         </td>
-        <td className="sb-pgis-val" title="pGIS vs top-100 opponents only (≥8 games)">
+        <td className="sb-pgis-val" title="pGIS (neutral efficiency percentile vs D1 peers)">
           {qPgis}
         </td>
         <td className="sb-gisplus-val">{record.gis_plus_per_set?.toFixed(3) ?? '—'}</td>
@@ -93,7 +94,7 @@ function SeasonRow({ record, cardId, gameLogs }) {
   );
 }
 
-function PlayerCard({ norm, records, gameLogs }) {
+function PlayerCard({ norm, records, gameLogs, pgisTables }) {
   const canon = records[0].player;
   const pos   = records[0].pos;
   const pc    = POS_COLORS_SB[pos] || '#94a3b8';
@@ -108,7 +109,8 @@ function PlayerCard({ norm, records, gameLogs }) {
     totalK  += r.kills||0; totalE  += r.errors||0;  totalTA += r.total_attacks||0;
     totalA  += r.assists||0; totalD += r.digs||0;
     totalSA += r.service_aces||0; totalRE += r.reception_errors||0;
-    if (r.avg_pgis) allPgis.push(r.avg_pgis);
+    const pg = computeArchivePGIS(r, pgisTables);
+    if (pg != null) allPgis.push(pg);
   }
   const careerHit = totalTA > 0 ? ((totalK-totalE)/totalTA).toFixed(3) : '—';
   const careerGPS = totalSets > 0 ? (totalGisPlus/totalSets).toFixed(3) : '—';
@@ -149,6 +151,7 @@ function PlayerCard({ norm, records, gameLogs }) {
                 record={r}
                 cardId={norm.replace(/[^a-z0-9]/g,'_')}
                 gameLogs={gameLogs}
+                pgisTables={pgisTables}
               />
             ))}
           </tbody>
@@ -159,7 +162,7 @@ function PlayerCard({ norm, records, gameLogs }) {
 }
 
 export default function PlayerBrowser() {
-  const { playerArchive, gameLogs, loading, error } = useData();
+  const { playerArchive, gameLogs, pgisTables, loading, error } = useData();
   const [query, setQuery] = useState('');
 
   const results = useMemo(() => {
@@ -178,11 +181,11 @@ export default function PlayerBrowser() {
     return [...matched.entries()]
       .map(([norm, records]) => ({ norm, records: records.sort((a,b) => b.season - a.season) }))
       .sort((a, b) => {
-        const aB = Math.max(...a.records.map(r => r.avg_pgis || 0));
-        const bB = Math.max(...b.records.map(r => r.avg_pgis || 0));
+        const aB = Math.max(...a.records.map(r => computeArchivePGIS(r, pgisTables) ?? 0));
+        const bB = Math.max(...b.records.map(r => computeArchivePGIS(r, pgisTables) ?? 0));
         return bB - aB;
       });
-  }, [playerArchive, query]);
+  }, [playerArchive, pgisTables, query]);
 
   if (loading) return <div className="data-loading"><div className="spinner" /> Loading player data…</div>;
   if (error)   return <div className="data-loading" style={{color:'var(--red)'}}>Failed to load data: {error}</div>;
@@ -209,7 +212,7 @@ export default function PlayerBrowser() {
         <div className="pb-hint">No players found</div>
       )}
       {results !== null && results.map(p => (
-        <PlayerCard key={p.norm} norm={p.norm} records={p.records} gameLogs={gameLogs} />
+        <PlayerCard key={p.norm} norm={p.norm} records={p.records} gameLogs={gameLogs} pgisTables={pgisTables} />
       ))}
     </div>
   );

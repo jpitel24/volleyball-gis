@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useData } from '../lib/DataContext.jsx';
-import { POS_COLORS_SB } from '../lib/gis.js';
+import { POS_COLORS_SB, computeArchivePGIS } from '../lib/gis.js';
 
 const POSITIONS = ['ALL', 'OH', 'MB', 'S', 'L'];
 
@@ -20,7 +20,7 @@ const COLS_SEASON = [
   { key: 'pos',            label: 'Pos',                   fmt: r => <td key="pos" style={{color:'var(--accent)'}}>{r.pos}</td>, hideIfPos: true },
   { key: 'games',          label: 'G',                     fmt: r => <td key="games">{r.games}</td> },
   { key: 'qual_games',     label: 'Qg',                    fmt: r => <td key="qg" style={{color:'var(--muted)'}}>{r.qual_games}</td> },
-  { key: 'avg_pgis',       label: 'pGIS',                  fmt: r => <td key="pgis" className="sb-pgis-val">{r.avg_pgis?.toFixed(2)??'—'}</td> },
+  { key: '_pGIS',          label: 'pGIS',                  fmt: r => <td key="pgis" className="sb-pgis-val">{r._pGIS?.toFixed(2)??'—'}</td> },
   { key: 'gis_plus_per_set', label: 'GIS+/S',              fmt: r => <td key="gps" className="sb-gisplus-val">{r.gis_plus_per_set?.toFixed(3)??'—'}</td> },
   { key: 'gis_per_set',    label: 'GIS/S',                 fmt: r => <td key="gis">{r.gis_per_set?.toFixed(3)??'—'}</td> },
   { key: 'gis_plus_total', label: 'GIS+',                  fmt: r => <td key="gpt" className="sb-gisplus-val">{r.gis_plus_total?.toFixed(1)??'—'}</td> },
@@ -34,12 +34,12 @@ const COLS_SEASON = [
 ];
 
 export default function SeasonBrowser() {
-  const { playerArchive, loading, error } = useData();
+  const { playerArchive, pgisTables, loading, error } = useData();
   const [tab, setTab]       = useState('season'); // 'season' | 'all'
   const [season, setSeason] = useState('2025');
   const [pos, setPos]       = useState('ALL');
   const [search, setSearch] = useState('');
-  const [sortKey, setSortKey]     = useState('avg_pgis');
+  const [sortKey, setSortKey]     = useState('_pGIS');
   const [sortDir, setSortDir]     = useState('desc');
   const [minGames, setMinGames]   = useState(10);
 
@@ -58,8 +58,9 @@ export default function SeasonBrowser() {
         for (const r of records) all.push({ ...r, season: parseInt(s) });
       }
     }
-    return all;
-  }, [playerArchive, tab, season]);
+    // Augment each record with live-computed pGIS using current formula + tables
+    return all.map(r => ({ ...r, _pGIS: computeArchivePGIS(r, pgisTables) }));
+  }, [playerArchive, tab, season, pgisTables]);
 
   const filtered = useMemo(() => {
     let out = rows;

@@ -169,6 +169,18 @@ export function computePGIS(gisRaw, position, nSets, PGIS_TABLES) {
   return Math.min(10.0, 10 * Math.pow(pct, PGIS_K));
 }
 
+// Compute pGIS from a raw archive record (seasonal stat totals).
+// Uses the same neutral GIS formula as the live computeGIS path.
+export function computeArchivePGIS(rec, PGIS_TABLES) {
+  if (!rec?.sets || rec.sets <= 0) return null;
+  const raw    = Object.entries(POS_W).reduce((s, [k, w]) => s + (rec[k] || 0) * w, 0);
+  const errSum = Object.entries(ERR_W).reduce((s, [k, w]) => s + (rec[k] || 0) * w, 0);
+  const errPen = Math.max(ERR_FLOOR, Math.min(1.0, 1.0 - (errSum / (raw + 1)) * ERR_DAMP));
+  const gisNeutral = (raw / rec.sets) * errPen * GIS_SCALE;
+  const sc = Math.min(5, Math.max(3, Math.round(rec.sets / (rec.games || 1))));
+  return computePGIS(gisNeutral, rec.pos, sc, PGIS_TABLES);
+}
+
 // ─── Leverage ─────────────────────────────────────────────────────────────────
 export function matchLev(nSets, setScores) {
   if (nSets === 5) return 1.40;

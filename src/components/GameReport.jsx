@@ -22,8 +22,8 @@ function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpi
   const isWinner     = (side === 'home' && mg.hW > mg.aW) || (side === 'away' && mg.aW > mg.hW);
   const totalGIS     = players.reduce((s, p) => s + p.gis, 0);
   const totalGISPlus = players.reduce((s, p) => s + p.gisPlus, 0);
-  const validPGIS    = players.filter(p => p.pGIS !== null);
-  const avgPGIS      = validPGIS.length ? validPGIS.reduce((s, p) => s + p.pGIS, 0) / validPGIS.length : null;
+  const validPGIS    = players.filter(p => p.pGIS !== null).sort((a, b) => b.pGIS - a.pGIS);
+  const rotationPGIS = validPGIS.length ? validPGIS.slice(0, 7).reduce((s, p) => s + p.pGIS, 0) / Math.min(validPGIS.length, 7) : null;
   const oppMod       = side === 'home' ? mg.homeOppMod : mg.awayOppMod;
   const oppRank      = side === 'home' ? mg.homeOppRank : mg.awayOppRank;
 
@@ -48,8 +48,8 @@ function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpi
         <div className="team-totals">
           <span>GIS: <strong>{totalGIS.toFixed(2)}</strong></span>
           <span>GIS+: <strong className="t-gp">{totalGISPlus.toFixed(2)}</strong></span>
-          {avgPGIS !== null && (
-            <span>Avg pGIS: <strong className="t-pg">{avgPGIS.toFixed(2)}</strong></span>
+          {rotationPGIS !== null && (
+            <span>Rotation pGIS: <strong className="t-pg">{rotationPGIS.toFixed(2)}</strong></span>
           )}
           <span className="opp-ctx" style={{ color: oppRank ? 'inherit' : 'var(--muted)' }}>
             {oppStr}

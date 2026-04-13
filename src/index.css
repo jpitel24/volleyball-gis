@@ -218,6 +218,16 @@ body {
 .pb-qual-dot-off { font-size: 0.6rem; color: var(--muted); }
 .text-left { text-align: left !important; }
 
+/* ── Team Browser ────────────────────────────────────────────────── */
+.tb-team-row td { padding: 0.42rem 0.65rem; }
+.tb-team-row:hover td { background: var(--surface-hover, rgba(255,255,255,0.03)); }
+.tb-roster-wrap { padding: 0.6rem 1rem 0.9rem 2.5rem; background: var(--bg); }
+.tb-section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+  text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted);
+  margin-bottom: 0.35rem; margin-top: 0.1rem; }
+.tb-placeholder { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+  color: var(--muted); font-style: italic; padding: 0.4rem 0 0.2rem; }
+
 /* ── Season browser ─────────────────────────────────────────────── */
 .season-panel { padding: 0 1.5rem 3rem; max-width: 1400px; margin: 0 auto; }
 .sb-view-tabs { display: flex; gap: 0.3rem; }

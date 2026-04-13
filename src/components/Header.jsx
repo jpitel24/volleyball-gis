@@ -24,6 +24,12 @@ export default function Header({ activeTab, setActiveTab }) {
         >
           PLAYER BROWSER
         </button>
+        <button
+          className={`nav-pill ${activeTab === 'team' ? 'active' : ''}`}
+          onClick={() => setActiveTab('team')}
+        >
+          TEAM BROWSER
+        </button>
       </nav>
     </header>
   );

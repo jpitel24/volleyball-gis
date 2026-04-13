@@ -288,8 +288,10 @@ export function computeGIS(bs, ss, pbp, gameId, RPI_BY_YEAR, PGIS_TABLES) {
   const scoresUnknown = !!(ss?.scoresUnknown);
   return {
     players, ml, nSets, setScores, periods,
-    homeTeam: homeTeam.teamName || 'Home',
-    awayTeam: awayTeam.teamName || 'Away',
+    homeTeam:     homeTeam.teamName     || 'Home',
+    awayTeam:     awayTeam.teamName     || 'Away',
+    homeTeamFull: homeTeam.teamNameFull || homeTeam.teamName || 'Home',
+    awayTeamFull: awayTeam.teamNameFull || awayTeam.teamName || 'Away',
     result: scoresUnknown
       ? `${homeTeam.teamName || 'Home'} vs ${awayTeam.teamName || 'Away'}`
       : `${homeTeam.teamName || 'Home'} ${hW} – ${aW} ${awayTeam.teamName || 'Away'}`,

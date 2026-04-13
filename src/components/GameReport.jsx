@@ -12,7 +12,7 @@ const WEIGHTS = [
   ['Dig','0.35','#facc15'],
 ];
 
-function TeamSection({ mg, teamName, side, matchRanks, gameId, rpiByYear, onSelect }) {
+function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpiByYear, onSelect }) {
   const players = mg.players
     .filter(p => p.team === teamName && p.gis > 0)
     .sort((a, b) => (b.pGIS ?? b.gisPlus) - (a.pGIS ?? a.gisPlus));
@@ -28,7 +28,7 @@ function TeamSection({ mg, teamName, side, matchRanks, gameId, rpiByYear, onSele
   const oppRank      = side === 'home' ? mg.homeOppRank : mg.awayOppRank;
 
   const gameSeason = seasonFromGameId(gameId || 0);
-  const ownRpiVal  = findRPIValue(teamName, gameId, rpiByYear);
+  const ownRpiVal  = findRPIValue(teamNameFull || teamName, gameId, rpiByYear);
   const ownRank    = rpiToRank(ownRpiVal, gameSeason, rpiByYear);
 
   const oppStr = oppRank
@@ -156,8 +156,8 @@ export default function GameReport({ gameId, mg, isMock, rpiByYear, categoryPgis
         </div>
       </div>
 
-      <TeamSection mg={mg} teamName={mg.homeTeam} side="home" matchRanks={matchRanks} gameId={gameId} rpiByYear={rpiByYear} onSelect={setSelectedPlayer} />
-      <TeamSection mg={mg} teamName={mg.awayTeam} side="away" matchRanks={matchRanks} gameId={gameId} rpiByYear={rpiByYear} onSelect={setSelectedPlayer} />
+      <TeamSection mg={mg} teamName={mg.homeTeam} teamNameFull={mg.homeTeamFull} side="home" matchRanks={matchRanks} gameId={gameId} rpiByYear={rpiByYear} onSelect={setSelectedPlayer} />
+      <TeamSection mg={mg} teamName={mg.awayTeam} teamNameFull={mg.awayTeamFull} side="away" matchRanks={matchRanks} gameId={gameId} rpiByYear={rpiByYear} onSelect={setSelectedPlayer} />
 
       {selectedPlayer && (
         <PlayerModal

@@ -146,13 +146,13 @@ export default function GameReport({ gameId, mg, isMock, rpiByYear, categoryPgis
             &nbsp;·&nbsp; modifier = 1 + (rpi_value − 0.500) × 0.63 &nbsp;·&nbsp; neutral at RPI 0.500
           </div>
           <div className="formula-eq">
-            pGIS = <em className="pg">power curve percentile of neutral per-set efficiency vs D1 peers at same position · leverage &amp; opponent context captured in GIS+</em>
+            pGIS = <em className="pg">power curve percentile of opponent-adjusted per-set efficiency vs D1 peers at same position · leverage captured in GIS+ only</em>
           </div>
         </div>
         <div className="formula-note">
-          <span>pGIS</span> = percentile rank of neutral GIS/set vs D1 2023–2025 (≥50% sets played, same position).
+          <span>pGIS</span> = percentile rank of opponent-adjusted GIS/set vs D1 2023–2025 (≥50% sets played, same position).
           Hard scale 0–10 · 10.0 = best ever recorded · 9.80 = top 1% · 8.10 = top 10% · 5 = positional median.
-          Leverage &amp; opponent quality reflected in GIS+, not pGIS.
+          Opponent quality baked into pGIS · leverage reflected in GIS+ only.
         </div>
       </div>
 
@@ -170,7 +170,7 @@ export default function GameReport({ gameId, mg, isMock, rpiByYear, categoryPgis
 
       <div className="rpt-footer">
         Game {gameId} · GIS tiers: ELITE ≥10 · IMPACT ≥7 · SOLID ≥4.5 · PRESENT ≥2.5 · LIMITED &lt;2.5<br />
-        pGIS tiers: ELITE ≥9.5 · IMPACT ≥8.5 · SOLID ≥7.5 · GOOD ≥6.0 · AVG ≥4.0 · BELOW ≥2.0 · LTD &lt;2 &nbsp;·&nbsp; 10.0 = best ever · hard ceiling · raw GIS percentile<br />
+        pGIS tiers: ELITE ≥9.5 · IMPACT ≥8.5 · SOLID ≥7.5 · GOOD ≥6.0 · AVG ≥4.0 · BELOW ≥2.0 · LTD &lt;2 &nbsp;·&nbsp; 10.0 = best ever · hard ceiling · opp-adjusted GIS percentile<br />
         PBP ✓ = point-level win-probability leverage applied · OPP MOD = GIS+ opponent RPI modifier
       </div>
     </div>

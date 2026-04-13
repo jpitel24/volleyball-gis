@@ -62,7 +62,10 @@ for (const cat of CATEGORIES) {
       const sorted = raw.sort((a, b) => a - b);
       const len = sorted.length;
       if (!len) { tables[cat.key][grp][sc] = { p: [] }; continue; }
-      const p = Array.from({ length: N }, (_, i) => sorted[Math.floor((i / N) * len)]);
+      // Last slot is absolute max + 1 so no real value can reach pGIS 10.0 in the season browser.
+      const p = Array.from({ length: N }, (_, i) =>
+        i === N - 1 ? sorted[len - 1] + 1 : sorted[Math.floor((i / N) * len)]
+      );
       tables[cat.key][grp][sc] = { p };
       console.log(`  ${cat.key}/${grp}/${sc}: ${len} records`);
     }

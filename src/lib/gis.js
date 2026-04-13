@@ -106,37 +106,42 @@ export function rankToModifier(rank, totalTeams) {
 }
 
 export function findRPIValue(teamName, gameId, RPI_BY_YEAR) {
-  if (!RPI_BY_YEAR) return null;
-  const norm   = normaliseTeamName(teamName);
-  if (!norm) return null;
+  if (!RPI_BY_YEAR || !teamName) return null;
   const season = seasonFromGameId(gameId);
   const raw    = RPI_BY_YEAR[season] || RPI_BY_YEAR['2025'] || {};
 
-  // Pass 1: slug match — strip only punctuation/spaces, NOT words like "state".
-  // "Texas A&M" → "texasam" matches stored "texas a m" → "texasam" without
-  // colliding with "Texas State" → "texasstate" or "Texas" → "texas".
+  // Pass 1: exact slug match — strips only punctuation/spaces, not words.
+  // Handles "Colorado State" → "coloradostate" matching stored "colorado state".
   const slug = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
   const inputSlug = slug(teamName);
   for (const [k, v] of Object.entries(raw)) {
     if (slug(k) === inputSlug) return v;
   }
 
-  // Pass 2: exact match on word-stripped norm (handles "University of Kentucky" → "kentucky")
-  if (raw[norm] !== undefined) return raw[norm];
-
-  // Pass 3: longest substring match on word-stripped norms
+  // Pass 2: every word in a stored RPI key must appear as a whole word in the input;
+  // longest matching stored key wins.
+  // "Colorado State University" → stored "colorado state" (needs colorado+state, both present)
+  // beats stored "colorado" (needs only colorado) → correct disambiguation.
+  // "University of Colorado Boulder" → stored "colorado state" needs "state" (absent) → no match;
+  // stored "colorado" matches → correct.
+  const inputWords = new Set(
+    teamName.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean)
+  );
   let best = null, bestLen = 0;
-  for (const [stored, val] of Object.entries(raw)) {
-    if (stored.includes(norm) || norm.includes(stored)) {
-      if (stored.length > bestLen) { best = val; bestLen = stored.length; }
+  for (const [k, v] of Object.entries(raw)) {
+    const kWords = k.toLowerCase().split(/\s+/).filter(Boolean);
+    if (kWords.length > 0 && kWords.every(w => inputWords.has(w))) {
+      if (k.length > bestLen) { best = v; bestLen = k.length; }
     }
   }
   if (best !== null) return best;
 
-  // Pass 4: 5-char prefix fallback
+  // Pass 3: 5-char prefix fallback (last resort for unusual abbreviations)
+  const norm = normaliseTeamName(teamName);
   if (norm.length >= 5) {
     for (const [stored, val] of Object.entries(raw)) {
-      if (stored.length >= 5 && stored.slice(0,5) === norm.slice(0,5)) return val;
+      const sn = normaliseTeamName(stored);
+      if (sn.length >= 5 && sn.slice(0, 5) === norm.slice(0, 5)) return val;
     }
   }
   return null;
@@ -170,15 +175,19 @@ export function computePGIS(gisRaw, position, nSets, PGIS_TABLES) {
 }
 
 // Compute pGIS from a raw archive record (seasonal stat totals).
-// Uses the same neutral GIS formula as the live computeGIS path.
+// Uses neutral GIS × historical opponent-modifier ratio to match the pgis_tables baseline.
 export function computeArchivePGIS(rec, PGIS_TABLES) {
   if (!rec?.sets || rec.sets <= 0) return null;
   const raw    = Object.entries(POS_W).reduce((s, [k, w]) => s + (rec[k] || 0) * w, 0);
   const errSum = Object.entries(ERR_W).reduce((s, [k, w]) => s + (rec[k] || 0) * w, 0);
   const errPen = Math.max(ERR_FLOOR, Math.min(1.0, 1.0 - (errSum / (raw + 1)) * ERR_DAMP));
-  const gisNeutral = (raw / rec.sets) * errPen * GIS_SCALE;
+  const gisNeutral    = (raw / rec.sets) * errPen * GIS_SCALE;
+  const oppModRatio   = (rec.gis_per_set > 0 && rec.gis_plus_per_set != null)
+    ? Math.max(0.5, Math.min(1.5, rec.gis_plus_per_set / rec.gis_per_set))
+    : 1.0;
+  const gisNeutralPlus = gisNeutral * oppModRatio;
   const sc = Math.min(5, Math.max(3, Math.round(rec.sets / (rec.games || 1))));
-  return computePGIS(gisNeutral, rec.pos, sc, PGIS_TABLES);
+  return computePGIS(gisNeutralPlus, rec.pos, sc, PGIS_TABLES);
 }
 
 // ─── Leverage ─────────────────────────────────────────────────────────────────
@@ -258,15 +267,16 @@ export function computeGIS(bs, ss, pbp, gameId, RPI_BY_YEAR, PGIS_TABLES) {
       const vol        = raw / ns;
       const plays      = levMap[p.name] || [];
       const avgLev     = plays.length ? plays.reduce((a, b) => a + b, 0) / plays.length : ml;
-      const gisNeutral = vol * errPen * GIS_SCALE;
-      const gis        = vol * avgLev * errPen * GIS_SCALE;
-      const gisPlus    = gis * oppMod;
-      const pGIS       = computePGIS(gisNeutral, p.position, nSets, PGIS_TABLES);
+      const gisNeutral     = vol * errPen * GIS_SCALE;
+      const gisNeutralPlus = gisNeutral * oppMod;   // opponent-adjusted, no leverage — for pGIS
+      const gis            = vol * avgLev * errPen * GIS_SCALE;
+      const gisPlus        = gis * oppMod;
+      const pGIS           = computePGIS(gisNeutralPlus, p.position, nSets, PGIS_TABLES);
 
       players.push({
         ...p, team: team.teamName, side: team.homeAway,
         ns, vol, errPen, avgLev, levPlays: plays.length, hasPbp: !!pbp,
-        gisNeutral, gis, gisPlus, oppMod, oppRank, pGIS,
+        gisNeutral, gisNeutralPlus, gis, gisPlus, oppMod, oppRank, pGIS,
       });
     }
   }

@@ -23,11 +23,17 @@ for (const rec of allRecords) {
   const grp = POS_GROUP_MAP[(rec.pos || '').toUpperCase()];
   if (!grp) continue;
   const sc = Math.min(5, Math.max(3, Math.round(rec.sets / (rec.games || 1))));
-  const raw    = Object.entries(POS_W).reduce((s, [k, w]) => s + (rec[k] || 0) * w, 0);
-  const errSum = Object.entries(ERR_W).reduce((s, [k, w]) => s + (rec[k] || 0) * w, 0);
-  const errPen = Math.max(ERR_FLOOR, Math.min(1.0, 1.0 - (errSum / (raw + 1)) * ERR_DAMP));
-  const gis    = (raw / rec.sets) * errPen * GIS_SCALE;
-  if (gis > 0) buckets[grp][sc].push(Math.round(gis * 100));
+  const raw        = Object.entries(POS_W).reduce((s, [k, w]) => s + (rec[k] || 0) * w, 0);
+  const errSum     = Object.entries(ERR_W).reduce((s, [k, w]) => s + (rec[k] || 0) * w, 0);
+  const errPen     = Math.max(ERR_FLOOR, Math.min(1.0, 1.0 - (errSum / (raw + 1)) * ERR_DAMP));
+  const gisNeutral = (raw / rec.sets) * errPen * GIS_SCALE;
+  // Apply the historical opponent modifier from the archive (ratio of GIS+ to neutral GIS).
+  // Both fields were computed by the same old formula, so their ratio is a valid opp-quality proxy.
+  const oppModRatio = (rec.gis_per_set > 0 && rec.gis_plus_per_set != null)
+    ? Math.max(0.5, Math.min(1.5, rec.gis_plus_per_set / rec.gis_per_set))
+    : 1.0;
+  const gisPlus = gisNeutral * oppModRatio;
+  if (gisPlus > 0) buckets[grp][sc].push(Math.round(gisPlus * 100));
 }
 
 const N = 1000, MIN_RECORDS = 30;
@@ -40,7 +46,11 @@ for (const grp of ['S', 'OH', 'MB', 'L']) {
     const sorted = [...raw].sort((a, b) => a - b);
     const len = sorted.length;
     if (!len) { tables[grp][sc] = { p: [] }; continue; }
-    const p = Array.from({ length: N }, (_, i) => sorted[Math.floor((i / N) * len)]);
+    // Last slot is absolute max + 1 so no real value can reach pGIS 10.0 in the season browser.
+    // Only a live game strictly above the all-time GIS+ high will hit 10.0.
+    const p = Array.from({ length: N }, (_, i) =>
+      i === N - 1 ? sorted[len - 1] + 1 : sorted[Math.floor((i / N) * len)]
+    );
     tables[grp][sc] = { p };
     console.log(`  ${grp}/${sc}: ${len} records, max=${(sorted[len-1]/100).toFixed(3)}`);
   }

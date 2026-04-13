@@ -105,43 +105,82 @@ export function rankToModifier(rank, totalTeams) {
   return Math.max(0.50, 1.00 - (rank - 50) * (0.50 / (totalTeams - 50)));
 }
 
-export function findRPIValue(teamName, gameId, RPI_BY_YEAR) {
-  if (!RPI_BY_YEAR || !teamName) return null;
+// Schools whose RPI key is a nickname/abbreviation not derivable from either official name.
+// Key: lowercase full name with "university"/"college"/"the" stripped.
+// Value: the stored RPI key.
+const TEAM_RPI_ALIASES = {
+  'pennsylvania state':  'penn state',   // "Penn St." / "Pennsylvania State University"
+  'north carolina state':'nc state',     // "NC State" / "North Carolina State University"
+  'appalachian state':   'app state',    // "App State" / "Appalachian State University"
+};
+
+// findRPIValue accepts both the full official name (nameFull) and the short display name
+// (nameShort / teamName) so it can try both when matching against stored RPI keys.
+// Alias map catches schools whose RPI key is a nickname before any pass that could
+// accidentally match a wrong key (e.g. "North Carolina State Univ." → "north carolina").
+export function findRPIValue(teamNameFull, teamNameShort, gameId, RPI_BY_YEAR) {
+  if (!RPI_BY_YEAR) return null;
   const season = seasonFromGameId(gameId);
   const raw    = RPI_BY_YEAR[season] || RPI_BY_YEAR['2025'] || {};
 
-  // Pass 1: exact slug match — strips only punctuation/spaces, not words.
-  // Handles "Colorado State" → "coloradostate" matching stored "colorado state".
+  // Deduplicate — caller may pass the same string for both if only one is available.
+  const names = [...new Set([teamNameFull, teamNameShort].filter(Boolean))];
+  if (!names.length) return null;
+
+  // Pre-pass: alias check — strips institutional suffixes but NOT "state", then looks up
+  // in the alias map.  Catches Penn State, NC State, App State before any pass that would
+  // accidentally match the wrong key (e.g. "North Carolina State Univ." → "north carolina").
+  for (const n of names) {
+    const stripped = n.toLowerCase()
+      .replace(/\b(university|college|the)\b/g, '')
+      .replace(/[^a-z\s]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    const aliasKey = TEAM_RPI_ALIASES[stripped];
+    if (aliasKey && raw[aliasKey] !== undefined) return raw[aliasKey];
+  }
+
+  // Pass 1: exact slug match (strips only punctuation/spaces, not words).
+  // Handles abbreviated nameShort like "NC State" → slug "ncstate" = slug of stored "nc state",
+  // and standard names like "Colorado State University" → slug matches stored key.
+  // Tries all candidate names — catches abbreviation schools (LSU, UCF, SMU, etc.) whose
+  // nameShort IS the stored key.
   const slug = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
-  const inputSlug = slug(teamName);
-  for (const [k, v] of Object.entries(raw)) {
-    if (slug(k) === inputSlug) return v;
+  for (const n of names) {
+    const inputSlug = slug(n);
+    for (const [k, v] of Object.entries(raw)) {
+      if (slug(k) === inputSlug) return v;
+    }
   }
 
   // Pass 2: every word in a stored RPI key must appear as a whole word in the input;
-  // longest matching stored key wins.
-  // "Colorado State University" → stored "colorado state" (needs colorado+state, both present)
-  // beats stored "colorado" (needs only colorado) → correct disambiguation.
-  // "University of Colorado Boulder" → stored "colorado state" needs "state" (absent) → no match;
-  // stored "colorado" matches → correct.
-  const inputWords = new Set(
-    teamName.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean)
-  );
+  // longest matching stored key wins across all candidate names.
+  // "Colorado State University" → "colorado state" (15) beats "colorado" (8) → correct.
+  // "University of Colorado Boulder" → "colorado state" needs "state" (absent) → only
+  //   "colorado" matches → correct.
+  // "The Ohio State University" → "ohio state" (10) beats "ohio" (4) if both present → correct.
   let best = null, bestLen = 0;
-  for (const [k, v] of Object.entries(raw)) {
-    const kWords = k.toLowerCase().split(/\s+/).filter(Boolean);
-    if (kWords.length > 0 && kWords.every(w => inputWords.has(w))) {
-      if (k.length > bestLen) { best = v; bestLen = k.length; }
+  for (const n of names) {
+    const inputWords = new Set(
+      n.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean)
+    );
+    for (const [k, v] of Object.entries(raw)) {
+      const kWords = k.toLowerCase().split(/\s+/).filter(Boolean);
+      if (kWords.length > 0 && kWords.every(w => inputWords.has(w))) {
+        if (k.length > bestLen) { best = v; bestLen = k.length; }
+      }
     }
   }
   if (best !== null) return best;
 
-  // Pass 3: 5-char prefix fallback (last resort for unusual abbreviations)
-  const norm = normaliseTeamName(teamName);
-  if (norm.length >= 5) {
-    for (const [stored, val] of Object.entries(raw)) {
-      const sn = normaliseTeamName(stored);
-      if (sn.length >= 5 && sn.slice(0, 5) === norm.slice(0, 5)) return val;
+  // Pass 3: 5-char prefix fallback (last resort)
+  for (const n of names) {
+    const norm = normaliseTeamName(n);
+    if (norm.length >= 5) {
+      for (const [stored, val] of Object.entries(raw)) {
+        const sn = normaliseTeamName(stored);
+        if (sn.length >= 5 && sn.slice(0, 5) === norm.slice(0, 5)) return val;
+      }
     }
   }
   return null;
@@ -241,10 +280,8 @@ export function computeGIS(bs, ss, pbp, gameId, RPI_BY_YEAR, PGIS_TABLES) {
   const rpiTable     = RPI_BY_YEAR?.[season] || RPI_BY_YEAR?.['2025'] || {};
   const totalTeams   = Object.keys(rpiTable).length;
 
-  // Use teamNameFull (e.g. "Colorado State University") for RPI lookup so that
-  // abbreviated nameShort values like "Colorado St." don't cause mis-matching.
-  const homeOppRpiVal = findRPIValue(awayTeam.teamNameFull || awayTeam.teamName, gameId, RPI_BY_YEAR);
-  const awayOppRpiVal = findRPIValue(homeTeam.teamNameFull || homeTeam.teamName, gameId, RPI_BY_YEAR);
+  const homeOppRpiVal = findRPIValue(awayTeam.teamNameFull, awayTeam.teamName, gameId, RPI_BY_YEAR);
+  const awayOppRpiVal = findRPIValue(homeTeam.teamNameFull, homeTeam.teamName, gameId, RPI_BY_YEAR);
   const homeOppRank   = rpiToRank(homeOppRpiVal, season, RPI_BY_YEAR);
   const awayOppRank   = rpiToRank(awayOppRpiVal, season, RPI_BY_YEAR);
   const homeOppMod    = rankToModifier(homeOppRank, totalTeams);

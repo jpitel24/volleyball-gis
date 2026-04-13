@@ -28,7 +28,7 @@ function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpi
   const oppRank      = side === 'home' ? mg.homeOppRank : mg.awayOppRank;
 
   const gameSeason = seasonFromGameId(gameId || 0);
-  const ownRpiVal  = findRPIValue(teamNameFull || teamName, gameId, rpiByYear);
+  const ownRpiVal  = findRPIValue(teamNameFull, teamName, gameId, rpiByYear);
   const ownRank    = rpiToRank(ownRpiVal, gameSeason, rpiByYear);
 
   const oppStr = oppRank

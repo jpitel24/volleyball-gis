@@ -45,7 +45,7 @@ function getMockData() {
 }
 
 export default function GameLookup() {
-  const { rpiByYear, pgisTables, loading: dataLoading } = useData();
+  const { rpiByYear, pgisTables, categoryPgisTables, loading: dataLoading } = useData();
   const [input, setInput]   = useState('');
   const [status, setStatus] = useState(null); // null | {type, msg}
   const [report, setReport] = useState(null); // null | {gameId, mg, isMock}
@@ -172,6 +172,7 @@ export default function GameLookup() {
           mg={report.mg}
           isMock={report.isMock}
           rpiByYear={rpiByYear}
+          categoryPgisTables={categoryPgisTables}
         />
       )}
     </>

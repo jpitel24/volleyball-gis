@@ -1,8 +1,14 @@
 import { createPortal } from 'react-dom';
-import { gisTier, pgisLabel, posColor, computeCategoryGIS } from '../lib/gis.js';
+import { gisTier, pgisLabel, posColor, computeCategoryGIS, computePGIS } from '../lib/gis.js';
 
-export default function PlayerModal({ p, onClose }) {
-  const cats   = computeCategoryGIS(p, p.ns, p.avgLev, p.oppMod).filter(c => c.gis > 0);
+export default function PlayerModal({ p, onClose, nSets, categoryPgisTables }) {
+  const rawCats = computeCategoryGIS(p, p.ns, p.avgLev, p.oppMod).filter(c => c.gis > 0);
+  const cats = rawCats.map(c => ({
+    ...c,
+    pGIS: categoryPgisTables
+      ? computePGIS(c.gisNeutral, p.position, nSets, categoryPgisTables[c.key])
+      : null,
+  }));
   const maxGis = Math.max(...cats.map(c => c.gis), 0.01);
 
   const [, tc]         = gisTier(p.gis);
@@ -60,7 +66,8 @@ export default function PlayerModal({ p, onClose }) {
               </div>
               <span className="modal-cat-gis" style={{ color: tc }}>{c.gis.toFixed(2)}</span>
               <span className="modal-cat-gisplus">{c.gisPlus.toFixed(2)}</span>
-              <span className="modal-cat-hdrs">GIS / GIS+</span>
+              <span className="modal-cat-pgis">{c.pGIS !== null ? c.pGIS.toFixed(1) : '—'}</span>
+              <span className="modal-cat-hdrs">GIS / GIS+ / pGIS</span>
             </div>
           ))}
           {cats.length === 0 && (

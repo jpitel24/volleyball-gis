@@ -27,8 +27,9 @@ export function computeCategoryGIS(p, ns, avgLev, oppMod) {
     const errSum = Object.entries(err).reduce((s, [k, w]) => s + (p[k] || 0) * w, 0);
     const errPen = Math.max(ERR_FLOOR, Math.min(1.0, 1.0 - (errSum / (raw + 1)) * ERR_DAMP));
     const vol    = raw / ns;
-    const gis    = vol * avgLev * errPen * GIS_SCALE;
-    return { key, label, gis, gisPlus: gis * oppMod };
+    const gis        = vol * avgLev * errPen * GIS_SCALE;
+    const gisNeutral = vol * errPen * GIS_SCALE;
+    return { key, label, gis, gisPlus: gis * oppMod, gisNeutral };
   });
 }
 export const PGIS_K    = 2.0;

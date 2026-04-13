@@ -365,7 +365,7 @@ body {
 .modal-cats { display: flex; flex-direction: column; gap: 0.55rem; }
 .modal-cat-row {
   display: grid;
-  grid-template-columns: 68px 1fr 50px 50px 56px;
+  grid-template-columns: 68px 1fr 50px 50px 44px 72px;
   align-items: center; gap: 0.5rem;
 }
 .modal-cat-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.85rem; }
@@ -373,6 +373,7 @@ body {
 .modal-cat-bar-fill { height: 100%; background: linear-gradient(90deg, #38bdf8, #fb923c); border-radius: 2px; transition: width 0.4s ease; }
 .modal-cat-gis { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700; text-align: right; }
 .modal-cat-gisplus { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--gisplus); text-align: right; }
+.modal-cat-pgis { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--pgis); text-align: right; font-weight: 700; }
 .modal-cat-hdrs { font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; color: var(--muted); white-space: nowrap; }
 .modal-raw-stats {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));

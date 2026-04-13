@@ -71,7 +71,7 @@ function TeamSection({ mg, teamName, side, matchRanks, gameId, rpiByYear, onSele
   );
 }
 
-export default function GameReport({ gameId, mg, isMock, rpiByYear }) {
+export default function GameReport({ gameId, mg, isMock, rpiByYear, categoryPgisTables }) {
   const ref = useRef(null);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
 
@@ -160,7 +160,12 @@ export default function GameReport({ gameId, mg, isMock, rpiByYear }) {
       <TeamSection mg={mg} teamName={mg.awayTeam} side="away" matchRanks={matchRanks} gameId={gameId} rpiByYear={rpiByYear} onSelect={setSelectedPlayer} />
 
       {selectedPlayer && (
-        <PlayerModal p={selectedPlayer} onClose={() => setSelectedPlayer(null)} />
+        <PlayerModal
+          p={selectedPlayer}
+          onClose={() => setSelectedPlayer(null)}
+          nSets={mg.nSets}
+          categoryPgisTables={categoryPgisTables}
+        />
       )}
 
       <div className="rpt-footer">

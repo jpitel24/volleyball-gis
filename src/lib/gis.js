@@ -240,20 +240,21 @@ export function computeGIS(bs, ss, pbp, gameId, RPI_BY_YEAR, PGIS_TABLES) {
       const ns = nSets || p.sets || 0;
       if (ns === 0) continue;
 
-      const raw     = Object.entries(POS_W).reduce((s, [k, w]) => s + (p[k] || 0) * w, 0);
-      const err     = Object.entries(ERR_W).reduce((s, [k, w]) => s + (p[k] || 0) * w, 0);
-      const errPen  = Math.max(ERR_FLOOR, Math.min(1.0, 1.0 - (err / (raw + 1)) * ERR_DAMP));
-      const vol     = raw / ns;
-      const plays   = levMap[p.name] || [];
-      const avgLev  = plays.length ? plays.reduce((a, b) => a + b, 0) / plays.length : ml;
-      const gis     = vol * avgLev * errPen * GIS_SCALE;
-      const gisPlus = gis * oppMod;
-      const pGIS    = computePGIS(gisPlus, p.position, nSets, PGIS_TABLES);
+      const raw        = Object.entries(POS_W).reduce((s, [k, w]) => s + (p[k] || 0) * w, 0);
+      const err        = Object.entries(ERR_W).reduce((s, [k, w]) => s + (p[k] || 0) * w, 0);
+      const errPen     = Math.max(ERR_FLOOR, Math.min(1.0, 1.0 - (err / (raw + 1)) * ERR_DAMP));
+      const vol        = raw / ns;
+      const plays      = levMap[p.name] || [];
+      const avgLev     = plays.length ? plays.reduce((a, b) => a + b, 0) / plays.length : ml;
+      const gisNeutral = vol * errPen * GIS_SCALE;
+      const gis        = vol * avgLev * errPen * GIS_SCALE;
+      const gisPlus    = gis * oppMod;
+      const pGIS       = computePGIS(gisNeutral, p.position, nSets, PGIS_TABLES);
 
       players.push({
         ...p, team: team.teamName, side: team.homeAway,
         ns, vol, errPen, avgLev, levPlays: plays.length, hasPbp: !!pbp,
-        gis, gisPlus, oppMod, oppRank, pGIS,
+        gisNeutral, gis, gisPlus, oppMod, oppRank, pGIS,
       });
     }
   }

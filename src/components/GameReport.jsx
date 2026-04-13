@@ -146,13 +146,13 @@ export default function GameReport({ gameId, mg, isMock, rpiByYear, categoryPgis
             &nbsp;·&nbsp; modifier = 1 + (rpi_value − 0.500) × 0.63 &nbsp;·&nbsp; neutral at RPI 0.500
           </div>
           <div className="formula-eq">
-            pGIS = <em className="pg">power curve percentile of GIS+ vs D1 peers at same position · opponent context baked in via GIS+ distribution</em>
+            pGIS = <em className="pg">power curve percentile of neutral per-set efficiency vs D1 peers at same position · leverage &amp; opponent context captured in GIS+</em>
           </div>
         </div>
         <div className="formula-note">
-          <span>pGIS</span> = percentile rank of GIS+ vs D1 2023–2025 (≥50% sets played, same position).
+          <span>pGIS</span> = percentile rank of neutral GIS/set vs D1 2023–2025 (≥50% sets played, same position).
           Hard scale 0–10 · 10.0 = best ever recorded · 9.80 = top 1% · 8.10 = top 10% · 5 = positional median.
-          Opponent context baked into GIS+ distribution.
+          Leverage &amp; opponent quality reflected in GIS+, not pGIS.
         </div>
       </div>
 

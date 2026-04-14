@@ -57,6 +57,26 @@ export function posGroup(position) {
   return POS_GROUP_MAP[position?.toUpperCase()?.split('/')[0]?.trim()] || null;
 }
 
+/**
+ * Infer a player's position from their per-game stat rates.
+ * Pass either single-game raw stats OR season totals divided by games played.
+ * Returns 'S' | 'OH' | 'MB' | 'L' | null
+ */
+export function inferPosition({ kills=0, assists=0, digs=0, block_solos=0, block_assists=0 }) {
+  const total = kills + assists + digs + block_solos + block_assists;
+  if (total === 0) return null;
+  const bTotal = block_solos + block_assists;
+  // Setter: assists dominate kills by a wide margin
+  if (assists > 8 && assists > kills * 3) return 'S';
+  // Libero/DS: digs dominate, minimal kills/blocks
+  if (digs > 4 && kills < 3 && bTotal < 1) return 'L';
+  // Middle: blocks are a significant fraction of attack contribution
+  if (bTotal >= 2 && kills >= 2 && bTotal / (kills + bTotal) >= 0.30) return 'MB';
+  // Default: outside/right-side hitter
+  if (kills > 0 || digs > 0 || assists > 0) return 'OH';
+  return null;
+}
+
 export function posColor(p) { return POS_COLORS[p] || '#94a3b8'; }
 
 export function gisTier(g) {
@@ -348,22 +368,30 @@ export function normalisePlayer(p) {
   const name = (p.firstName && p.lastName)
     ? `${p.firstName} ${p.lastName}`
     : (p.name || p.playerName || p.fullName || 'Unknown');
-  const rawPos = (p.position || p.pos || '?').toUpperCase().trim();
-  const position = rawPos.includes('/') ? rawPos.split('/')[0] : rawPos;
+  const rawPos = (p.position || p.pos || '').toUpperCase().trim();
+  const apiPos = rawPos.includes('/') ? rawPos.split('/')[0] : rawPos;
+
+  const kills                = n(p.kills || p.k);
+  const assists              = n(p.assists || p.a);
+  const digs                 = n(p.digs || p.d);
+  const block_solos          = n(p.blockSolos || p.block_solos || p.bs);
+  const block_assists        = n(p.blockAssists || p.block_assists || p.ba);
+
+  // If the API gave no recognised position, infer it from the stats
+  const position = posGroup(apiPos)
+    ? apiPos
+    : (inferPosition({ kills, assists, digs, block_solos, block_assists }) ?? '?');
+
   return {
     name, number: p.number || p.jersey || '', position,
     sets:                 n(p.gamesPlayed || p.sets || p.s || p.gp),
-    kills:                n(p.kills || p.k),
+    kills, assists, digs, block_solos, block_assists,
     errors:               n(p.attackErrors || p.errors || p.e),
     total_attacks:        n(p.attackAttempts || p.total_attacks || p.ta),
     hit_pct:              f(p.hittingPercentage || p.hit_pct || p.pct),
-    assists:              n(p.assists || p.a),
     service_aces:         n(p.serviceAces || p.service_aces || p.sa),
     service_errors:       n(p.serviceErrors || p.service_errors || p.se),
     reception_errors:     n(p.receptionErrors || p.reception_errors || p.re),
-    digs:                 n(p.digs || p.d),
-    block_solos:          n(p.blockSolos || p.block_solos || p.bs),
-    block_assists:        n(p.blockAssists || p.block_assists || p.ba),
     ball_handling_errors: n(p.ballHandlingErrors || p.ball_handling_errors || p.bhe),
     blocking_errors:      n(p.blockingErrors || p.blocking_errors || p.be),
     points:               f(p.points || p.pts),

@@ -94,6 +94,17 @@ function posGroup(pos) {
   return POS_GROUP_MAP[(pos || '').toUpperCase().split('/')[0].trim()] || null;
 }
 
+function inferPosition({ kills=0, assists=0, digs=0, block_solos=0, block_assists=0 }) {
+  const total = kills + assists + digs + block_solos + block_assists;
+  if (total === 0) return null;
+  const bTotal = block_solos + block_assists;
+  if (assists > 8 && assists > kills * 3) return 'S';
+  if (digs > 4 && kills < 3 && bTotal < 1) return 'L';
+  if (bTotal >= 2 && kills >= 2 && bTotal / (kills + bTotal) >= 0.30) return 'MB';
+  if (kills > 0 || digs > 0 || assists > 0) return 'OH';
+  return null;
+}
+
 function computePGIS(gisRaw, position, nSets, PGIS_TABLES) {
   if (!gisRaw || gisRaw <= 0) return null;
   const grp = posGroup(position);
@@ -192,21 +203,28 @@ function rankToModifier(rank, totalTeams) {
 
 // ── Normalise player stats from API field names to internal names ─────────────
 function normalisePlayerStats(p) {
+  const kills          = parseInt(p.kills)             || 0;
+  const assists        = parseInt(p.assists)            || 0;
+  const digs           = parseInt(p.digs)               || 0;
+  const block_solos    = parseInt(p.blockSolos)         || 0;
+  const block_assists  = parseInt(p.blockAssists)       || 0;
+
+  const apiPos = (p.position || '').split('/')[0].trim();
+  // Fall back to stat-based inference when API omits position
+  const position = posGroup(apiPos)
+    ? apiPos
+    : (inferPosition({ kills, assists, digs, block_solos, block_assists }) ?? '');
+
   return {
-    kills:               parseInt(p.kills)             || 0,
-    errors:              parseInt(p.attackErrors)       || 0,
-    total_attacks:       parseInt(p.attackAttempts)     || 0,
-    assists:             parseInt(p.assists)            || 0,
-    digs:                parseInt(p.digs)              || 0,
-    service_aces:        parseInt(p.serviceAces)        || 0,
-    service_errors:      parseInt(p.serviceErrors)      || 0,
-    reception_errors:    parseInt(p.receptionErrors)    || 0,
-    block_solos:         parseInt(p.blockSolos)         || 0,
-    block_assists:       parseInt(p.blockAssists)       || 0,
-    blocking_errors:     parseInt(p.blockingErrors)     || 0,
-    ball_handling_errors:parseInt(p.ballHandlingErrors) || 0,
-    position:            (p.position || '').split('/')[0].trim(),
-    name:               `${(p.firstName||'').trim()} ${(p.lastName||'').trim()}`.trim().toLowerCase(),
+    kills, assists, digs, block_solos, block_assists, position,
+    errors:               parseInt(p.attackErrors)       || 0,
+    total_attacks:        parseInt(p.attackAttempts)     || 0,
+    service_aces:         parseInt(p.serviceAces)        || 0,
+    service_errors:       parseInt(p.serviceErrors)      || 0,
+    reception_errors:     parseInt(p.receptionErrors)    || 0,
+    blocking_errors:      parseInt(p.blockingErrors)     || 0,
+    ball_handling_errors: parseInt(p.ballHandlingErrors) || 0,
+    name: `${(p.firstName||'').trim()} ${(p.lastName||'').trim()}`.trim().toLowerCase(),
   };
 }
 

@@ -57,6 +57,18 @@ function posGroup(pos) {
   return POS_GROUP_MAP[(pos || '').toUpperCase().split('/')[0].trim()] || null;
 }
 
+// Infer position from per-game stat rates (mirrors gis.js inferPosition)
+function inferPosition({ kills=0, assists=0, digs=0, block_solos=0, block_assists=0 }) {
+  const total = kills + assists + digs + block_solos + block_assists;
+  if (total === 0) return null;
+  const bTotal = block_solos + block_assists;
+  if (assists > 8 && assists > kills * 3) return 'S';
+  if (digs > 4 && kills < 3 && bTotal < 1) return 'L';
+  if (bTotal >= 2 && kills >= 2 && bTotal / (kills + bTotal) >= 0.30) return 'MB';
+  if (kills > 0 || digs > 0 || assists > 0) return 'OH';
+  return null;
+}
+
 function computePGIS(gisRaw, position, nSets, PGIS_TABLES) {
   if (!gisRaw || gisRaw <= 0) return null;
   const grp  = posGroup(position);
@@ -143,8 +155,17 @@ for (const [key, entries] of Object.entries(gameLogs)) {
 
   if (games === 0 || sets === 0) continue;
 
-  // Determine canonical pos and conf
-  const pos  = mostFrequent(positions);
+  // Determine canonical pos — if none from API, infer from per-game stat rates
+  let pos = mostFrequent(positions);
+  if (!pos || !posGroup(pos)) {
+    pos = inferPosition({
+      kills:         kills        / games,
+      assists:       assists      / games,
+      digs:          digs         / games,
+      block_solos:   block_solos  / games,
+      block_assists: block_assists / games,
+    }) ?? '';
+  }
   const conf = mostFrequent(confs);
 
   // Recompute neutral GIS from aggregated stats (same formula as computeArchivePGIS)

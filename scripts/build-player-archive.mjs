@@ -93,10 +93,54 @@ function mostFrequent(arr) {
   return best || '';
 }
 
+// ── Display name helpers ──────────────────────────────────────────────────────
+/**
+ * Build a map from lowercase team key → properly-cased display name by reading
+ * opponent name strings from game_logs entries. Opponent names carry original
+ * API casing (e.g. "LSU", "NC State", "UC Davis"), so this recovers proper
+ * capitalisation without any hardcoded lookup table.
+ */
+function buildTeamDisplayMap(gameLogs) {
+  const map = new Map();
+  for (const entries of Object.values(gameLogs)) {
+    for (const e of entries) {
+      const opp = e[1];
+      if (opp && typeof opp === 'string' && !map.has(opp.toLowerCase())) {
+        map.set(opp.toLowerCase(), opp);
+      }
+    }
+  }
+  return map;
+}
+
+/**
+ * Title-case a player name, handling common edge cases:
+ *  - Hyphenated names:  "mary-kate" → "Mary-Kate"
+ *  - Apostrophe names:  "o'brien"   → "O'Brien"
+ *  - Mac/Mc prefixes:   "mcdonald"  → "McDonald"  (best-effort)
+ */
+function titleCaseName(name) {
+  return name
+    .split(/(\s+|-|')/)
+    .map((part, i, parts) => {
+      // Keep the delimiter tokens (spaces, hyphens, apostrophes) unchanged
+      if (part === ' ' || part === '-' || part === "'") return part;
+      // Don't capitalise the empty strings that split() can produce
+      if (!part) return part;
+      // After an apostrophe (index > 0 and previous token was "'"), capitalise
+      return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
+    })
+    .join('');
+}
+
 // ── Load data ─────────────────────────────────────────────────────────────────
 console.log('Loading game_logs.json…');
 const gameLogs  = JSON.parse(readFileSync(GL_PATH, 'utf8'));
 const PGIS_TABLES = JSON.parse(readFileSync(path.join(DATA_DIR, 'pgis_tables.json'), 'utf8'));
+
+// Build display maps once before aggregation
+console.log('Building display name maps…');
+const teamDisplayMap = buildTeamDisplayMap(gameLogs);
 
 // ── Aggregate ─────────────────────────────────────────────────────────────────
 console.log('Aggregating player-season records…');
@@ -105,9 +149,13 @@ console.log('Aggregating player-season records…');
 const seasonData = {};
 
 for (const [key, entries] of Object.entries(gameLogs)) {
-  const [player, team, season] = key.split('||');
-  if (!player || !team || !season) continue;
+  const [playerKey, teamKey, season] = key.split('||');
+  if (!playerKey || !teamKey || !season) continue;
   if (TARGET_YEARS && !TARGET_YEARS.has(season)) continue;
+
+  // Resolve display names from keys (keys are lowercase for matching)
+  const player = titleCaseName(playerKey);
+  const team   = teamDisplayMap.get(teamKey) ?? titleCaseName(teamKey);
 
   // Aggregate counting stats
   let games = 0, sets = 0, qual_games = 0;

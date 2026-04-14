@@ -13,16 +13,20 @@
  *   --delay 120             Ms between batch dispatches (default: 120)
  *   --phase1-only           Only collect game IDs from scoreboard, skip boxscores
  *   --phase2-only           Only process boxscores (requires existing checkpoint)
+ *   --update-conf           Phase 1: re-scan scoreboard to backfill missing conf for existing games
  *   --resume                Skip already-processed game IDs (default: true)
- *   --no-resume             Re-process all games
+ *   --no-resume             Re-process targeted years from scratch (preserves other years in output)
  *
  * Progress checkpoint: scripts/.game-logs-progress/
- *   games.json     — all discovered game IDs + metadata
+ *   games.json     — all discovered game IDs + metadata (includes homeConf/awayConf)
  *   done.json      — set of processed game IDs
  *   logs.json      — accumulated output so far
  *
  * Output: public/data/game_logs.json
- * Format: { "player||team||season": [[gameId, opp, nSets, gisPlus, pGIS, qual, K, E, TA, A, D, SA], ...] }
+ * Format: { "player||team||season": [[gameId, opp, nSets, gisPlus, pGIS, qual, K, E, TA, A, D, SA,
+ *            BS, BA, SE, RE, BHE, BE, pos, conf], ...] }
+ * Indices: 0=gameId 1=opp 2=nSets 3=gisNeutralPlus 4=pGIS 5=qual
+ *          6=K 7=E 8=TA 9=A 10=D 11=SA 12=BS 13=BA 14=SE 15=RE 16=BHE 17=BE 18=pos 19=conf
  *
  * Notes:
  * - Phase 1 hits the NCAA scoreboard API directly (no proxy, CORS not an issue in Node).
@@ -47,9 +51,10 @@ const hasFlag     = flag => args.includes(flag);
 const YEARS       = getArg('--years', '2021,2022,2023,2024,2025').split(',').map(Number);
 const CONCURRENCY = parseInt(getArg('--concurrency', '8'));
 const DELAY_MS    = parseInt(getArg('--delay', '120'));
-const PHASE1_ONLY = hasFlag('--phase1-only');
-const PHASE2_ONLY = hasFlag('--phase2-only');
-const RESUME      = !hasFlag('--no-resume');
+const PHASE1_ONLY   = hasFlag('--phase1-only');
+const PHASE2_ONLY   = hasFlag('--phase2-only');
+const UPDATE_CONF   = hasFlag('--update-conf');
+const RESUME        = !hasFlag('--no-resume');
 
 // ── Constants (mirrors src/lib/gis.js) ───────────────────────────────────────
 const PROXY_BASE = 'https://volleyball-gis-proxy.gordonno24.workers.dev';
@@ -262,11 +267,22 @@ function* seasonDates(year) {
   }
 }
 
+// ── Extract conference name from a team node ──────────────────────────────────
+function extractConf(teamNode) {
+  if (!teamNode) return '';
+  // Try various API shapes
+  return teamNode.conf?.conferenceName
+    || teamNode.conferences?.[0]?.conferenceName
+    || teamNode.conferences?.[0]?.name
+    || teamNode.conferenceName
+    || '';
+}
+
 // ── Phase 1: collect all game IDs from scoreboard ────────────────────────────
 async function phase1(years) {
   console.log('\n── Phase 1: collecting game IDs from scoreboard ──');
   const existing = loadCP('games.json', {});
-  let added = 0;
+  let added = 0, updated = 0;
 
   for (const year of years) {
     let yearCount = 0;
@@ -281,7 +297,6 @@ async function phase1(years) {
         const urlMatch = (game.url || '').match(/\/game\/(\d+)/);
         if (!urlMatch) continue;
         const gameId   = urlMatch[1];
-        if (existing[gameId]) continue;
 
         const hScore = parseInt(game.home?.score ?? game.homeScore ?? 0);
         const aScore = parseInt(game.away?.score ?? game.awayScore ?? 0);
@@ -289,25 +304,41 @@ async function phase1(years) {
         if (nSets < 3 || nSets > 5) continue;  // skip non-final or invalid
         if (game.gameState !== 'final') continue;
 
+        const homeConf = extractConf(game.home);
+        const awayConf = extractConf(game.away);
+
+        if (existing[gameId]) {
+          // Backfill conf if missing (for --update-conf re-runs)
+          if (UPDATE_CONF && (!existing[gameId].homeConf || !existing[gameId].awayConf)) {
+            existing[gameId].homeConf = homeConf || existing[gameId].homeConf || '';
+            existing[gameId].awayConf = awayConf || existing[gameId].awayConf || '';
+            updated++;
+          }
+          continue;
+        }
+
         existing[gameId] = {
           gameId,
-          season:       String(year),
+          season:        String(year),
           nSets,
           homeNameShort: game.home?.names?.short  || game.home?.nameShort || '',
           homeNameFull:  game.home?.names?.full   || game.home?.nameFull  || '',
           awayNameShort: game.away?.names?.short  || game.away?.nameShort || '',
           awayNameFull:  game.away?.names?.full   || game.away?.nameFull  || '',
+          homeConf,
+          awayConf,
         };
         added++; yearCount++;
       }
       await sleep(50); // gentle on the scoreboard API
     }
-    console.log(`${yearCount} games`);
+    console.log(`${yearCount} new games`);
     saveCP('games.json', existing);
   }
 
   saveCP('games.json', existing);
-  console.log(`Phase 1 complete. Total games: ${Object.keys(existing).length} (+${added} new)`);
+  const extra = UPDATE_CONF ? `  conf updated: ${updated}` : '';
+  console.log(`Phase 1 complete. Total games: ${Object.keys(existing).length} (+${added} new)${extra}`);
   return existing;
 }
 
@@ -315,8 +346,27 @@ async function phase1(years) {
 async function phase2(games, PGIS_TABLES, RPI_BY_YEAR) {
   console.log('\n── Phase 2: fetching boxscores and computing GIS ──');
 
-  const done = RESUME ? loadCP('done.json', {}) : {};
-  const logs = RESUME ? loadCP('logs.json', {}) : {};
+  let done, logs;
+  if (RESUME) {
+    done = loadCP('done.json', {});
+    logs = loadCP('logs.json', {});
+  } else {
+    // No-resume: start fresh for targeted years, preserve other years from existing output
+    done = {};
+    logs = {};
+    try {
+      const existing = JSON.parse(readFileSync(OUT_PATH, 'utf8'));
+      let kept = 0;
+      for (const [key, entries] of Object.entries(existing)) {
+        const season = key.split('||')[2];
+        if (!YEARS.includes(parseInt(season))) {
+          logs[key] = entries;  // preserve years not being reprocessed
+          kept++;
+        }
+      }
+      if (kept > 0) console.log(`  Preserved ${kept} player-season keys for other years.`);
+    } catch { /* fresh start — no existing output */ }
+  }
 
   const gameList = Object.values(games).filter(g => {
     if (!YEARS.includes(parseInt(g.season))) return false;
@@ -372,6 +422,9 @@ async function phase2(games, PGIS_TABLES, RPI_BY_YEAR) {
         const oppShort  = isHome
           ? (meta.awayNameShort || away.nameShort || 'Unknown')
           : (meta.homeNameShort || home.nameShort || 'Unknown');
+        const teamConf  = isHome
+          ? (meta.homeConf || '')
+          : (meta.awayConf || '');
 
         const oppMod  = isHome ? homeOppMod  : awayOppMod;
         const qual    = isHome ? homeQual    : awayQual;
@@ -388,18 +441,26 @@ async function phase2(games, PGIS_TABLES, RPI_BY_YEAR) {
           const logKey = `${p.name}||${nameShort.toLowerCase()}||${season}`;
 
           const entry = [
-            meta.gameId,                           // gameId
-            oppShort,                              // opponent display name
-            nSets,                                 // match sets
-            parseFloat(gisNeutralPlus.toFixed(3)), // GIS+ (opponent-adjusted, no leverage)
-            pGIS !== null ? parseFloat(pGIS.toFixed(2)) : null, // pGIS
-            qual,                                  // qualifying game (opp ≤ top-100)
-            p.kills,
-            p.errors,
-            p.total_attacks,
-            p.assists,
-            p.digs,
-            p.service_aces,
+            meta.gameId,                           // [0]  gameId
+            oppShort,                              // [1]  opponent display name
+            nSets,                                 // [2]  match sets
+            parseFloat(gisNeutralPlus.toFixed(3)), // [3]  GIS+ (opponent-adjusted, no leverage) per set
+            pGIS !== null ? parseFloat(pGIS.toFixed(2)) : null, // [4] pGIS
+            qual,                                  // [5]  qualifying game (opp ≤ top-100)
+            p.kills,                               // [6]
+            p.errors,                              // [7]
+            p.total_attacks,                       // [8]
+            p.assists,                             // [9]
+            p.digs,                                // [10]
+            p.service_aces,                        // [11]
+            p.block_solos,                         // [12]
+            p.block_assists,                       // [13]
+            p.service_errors,                      // [14]
+            p.reception_errors,                    // [15]
+            p.ball_handling_errors,                // [16]
+            p.blocking_errors,                     // [17]
+            p.position,                            // [18] pos
+            teamConf,                              // [19] conference
           ];
 
           if (!logs[logKey]) logs[logKey] = [];

@@ -365,9 +365,14 @@ export function computeGIS(bs, ss, pbp, gameId, RPI_BY_YEAR, PGIS_TABLES) {
 export function normalisePlayer(p) {
   const n = s => parseInt(s || 0) || 0;
   const f = s => parseFloat(s || 0) || 0;
-  const name = (p.firstName && p.lastName)
+  const rawName = (p.firstName && p.lastName)
     ? `${p.firstName} ${p.lastName}`
     : (p.name || p.playerName || p.fullName || 'Unknown');
+  // Normalise casing — the 2022 API returns all-lowercase first/last names
+  const name = rawName.split(/(\s+|-|')/).map(part => {
+    if (!part || part === ' ' || part === '-' || part === "'") return part;
+    return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
+  }).join('');
   const rawPos = (p.position || p.pos || '').toUpperCase().trim();
   const apiPos = rawPos.includes('/') ? rawPos.split('/')[0] : rawPos;
 

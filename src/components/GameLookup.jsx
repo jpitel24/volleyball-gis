@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import GameReport from './GameReport.jsx';
 import { useData } from '../lib/DataContext.jsx';
 import {
@@ -6,6 +6,21 @@ import {
   normaliseBoxscore, normalisePbp, scoringSumFromPbp, scoringSumFromBoxscore,
   computeGIS,
 } from '../lib/gis.js';
+
+// ── Display name helper ───────────────────────────────────────────────────────
+// Build lowercase-team-key → display-name map by reading opponent names
+// from game_logs entries (opponent names carry original API casing, e.g. "LSU", "NC State")
+function buildDisplayMap(gameLogs) {
+  const map = new Map();
+  if (!gameLogs) return map;
+  for (const entries of Object.values(gameLogs)) {
+    for (const e of entries) {
+      const opp = e[1];
+      if (opp && !map.has(opp.toLowerCase())) map.set(opp.toLowerCase(), opp);
+    }
+  }
+  return map;
+}
 
 function getMockData() {
   return {
@@ -45,32 +60,108 @@ function getMockData() {
 }
 
 export default function GameLookup() {
-  const { rpiByYear, pgisTables, categoryPgisTables, loading: dataLoading } = useData();
+  const { rpiByYear, pgisTables, categoryPgisTables, gameLogs, loading: dataLoading } = useData();
   const [input, setInput]   = useState('');
-  const [status, setStatus] = useState(null); // null | {type, msg}
-  const [report, setReport] = useState(null); // null | {gameId, mg, isMock}
+  const [status, setStatus] = useState(null);
+  const [report, setReport] = useState(null);
   const [busy, setBusy]     = useState(false);
 
-  async function runGIS() {
-    const gameId = extractId(input);
-    if (!gameId) {
-      setStatus({ type: 'error', msg: 'Please enter a valid game ID (e.g. <code>6481347</code>) or paste an ncaa.com game URL.' });
-      return;
-    }
+  // Browse mode state
+  const [mode, setMode]               = useState('id');   // 'id' | 'browse'
+  const [browseYear, setBrowseYear]   = useState('2025');
+  const [teamSearch, setTeamSearch]   = useState('');
+  const [selectedTeam, setSelectedTeam] = useState(null); // { key, display }
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const teamInputRef = useRef(null);
+  const suggestionsRef = useRef(null);
 
+  // Resolve available years from gameLogs
+  const availableYears = useMemo(() => {
+    if (!gameLogs) return ['2025', '2024', '2023', '2022'];
+    const years = new Set();
+    for (const key of Object.keys(gameLogs)) years.add(key.split('||')[2]);
+    return [...years].sort((a, b) => b - a);
+  }, [gameLogs]);
+
+  // Build display name map once from opponent references
+  const displayMap = useMemo(() => buildDisplayMap(gameLogs), [gameLogs]);
+
+  function displayName(teamKey) {
+    return displayMap.get(teamKey) || teamKey.replace(/\b\w/g, c => c.toUpperCase());
+  }
+
+  // All teams for the selected browse year, sorted alphabetically by display name
+  const teamsForYear = useMemo(() => {
+    if (!gameLogs) return [];
+    const keys = new Set();
+    for (const key of Object.keys(gameLogs)) {
+      const parts = key.split('||');
+      if (parts[2] === browseYear) keys.add(parts[1]);
+    }
+    return [...keys].sort((a, b) => displayName(a).localeCompare(displayName(b)));
+  }, [gameLogs, browseYear, displayMap]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Filtered suggestions while typing
+  const suggestions = useMemo(() => {
+    if (!teamSearch.trim()) return teamsForYear.slice(0, 8);
+    const q = teamSearch.toLowerCase();
+    return teamsForYear.filter(t => t.includes(q) || displayName(t).toLowerCase().includes(q)).slice(0, 12);
+  }, [teamsForYear, teamSearch]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Games for the selected team in the selected year, deduplicated and sorted by gameId
+  const gamesForTeam = useMemo(() => {
+    if (!gameLogs || !selectedTeam) return [];
+    const gameMap = new Map();
+    for (const [key, entries] of Object.entries(gameLogs)) {
+      const parts = key.split('||');
+      if (parts[2] !== browseYear || parts[1] !== selectedTeam.key) continue;
+      for (const e of entries) {
+        if (!gameMap.has(e[0])) gameMap.set(e[0], { gameId: e[0], opp: e[1], nSets: e[2] });
+      }
+    }
+    return [...gameMap.values()].sort((a, b) => String(a.gameId).localeCompare(String(b.gameId)));
+  }, [gameLogs, browseYear, selectedTeam]);
+
+  // Close suggestions on outside click
+  useEffect(() => {
+    function onDown(e) {
+      if (
+        teamInputRef.current && !teamInputRef.current.contains(e.target) &&
+        suggestionsRef.current && !suggestionsRef.current.contains(e.target)
+      ) setShowSuggestions(false);
+    }
+    document.addEventListener('mousedown', onDown);
+    return () => document.removeEventListener('mousedown', onDown);
+  }, []);
+
+  // Reset browse state when switching years
+  function switchYear(y) {
+    setBrowseYear(y);
+    setSelectedTeam(null);
+    setTeamSearch('');
+  }
+
+  function pickTeam(key) {
+    setSelectedTeam({ key, display: displayName(key) });
+    setTeamSearch('');
+    setShowSuggestions(false);
+  }
+
+  // ── Core game fetch ───────────────────────────────────────────────────────
+  async function loadGame(gameId) {
+    if (!gameId) return;
     setBusy(true);
     setReport(null);
     setStatus({ type: 'loading', msg: `Fetching game ${gameId} from NCAA…` });
 
-    let rawData, isMock = false;
+    let rawData;
     try {
-      const [boxscore, pbp, ss, summary] = await Promise.all([
-        fetch(`${PROXY_BASE}/game/${gameId}/boxscore`, { signal: AbortSignal.timeout(10000) }).then(r => r.ok ? r.json() : null),
-        fetch(`${PROXY_BASE}/game/${gameId}/play-by-play`, { signal: AbortSignal.timeout(10000) }).then(r => r.ok ? r.json() : null),
+      const [boxscore, pbp, ss] = await Promise.all([
+        fetch(`${PROXY_BASE}/game/${gameId}/boxscore`,        { signal: AbortSignal.timeout(10000) }).then(r => r.ok ? r.json() : null),
+        fetch(`${PROXY_BASE}/game/${gameId}/play-by-play`,    { signal: AbortSignal.timeout(10000) }).then(r => r.ok ? r.json() : null),
         fetch(`${PROXY_BASE}/game/${gameId}/scoring-summary`, { signal: AbortSignal.timeout(10000) }).then(r => r.ok ? r.json() : null),
-        fetch(`${PROXY_BASE}/game/${gameId}/`, { signal: AbortSignal.timeout(10000) }).then(r => r.ok ? r.json() : null),
       ]);
-      rawData = { boxscore, play_by_play: pbp, scoring_summary: ss, summary };
+      rawData = { boxscore, play_by_play: pbp, scoring_summary: ss };
       if (!rawData.boxscore) throw new Error('No boxscore returned');
     } catch (e) {
       setStatus({ type: 'error', msg: `Could not fetch game ${gameId}. Check the ID and try again.<br/><small>${e.message}</small>` });
@@ -81,13 +172,13 @@ export default function GameLookup() {
     setStatus({ type: 'loading', msg: 'Computing GIS scores…' });
 
     try {
-      const bs     = normaliseBoxscore(rawData.boxscore);
+      const bs  = normaliseBoxscore(rawData.boxscore);
       const pbpRaw = rawData.play_by_play || null;
 
-      let ss = null;
-      if (rawData.scoring_summary?.periods?.length > 0) ss = rawData.scoring_summary;
-      if (!ss && pbpRaw) ss = scoringSumFromPbp(pbpRaw);
-      if (!ss && rawData.boxscore) ss = scoringSumFromBoxscore(rawData.boxscore);
+      let scoringSummary = null;
+      if (rawData.scoring_summary?.periods?.length > 0) scoringSummary = rawData.scoring_summary;
+      if (!scoringSummary && pbpRaw) scoringSummary = scoringSumFromPbp(pbpRaw);
+      if (!scoringSummary && rawData.boxscore) scoringSummary = scoringSumFromBoxscore(rawData.boxscore);
 
       const pbp = normalisePbp(pbpRaw);
 
@@ -97,20 +188,28 @@ export default function GameLookup() {
         return;
       }
 
-      const mg = computeGIS(bs, ss, pbp, gameId, rpiByYear, pgisTables);
+      const mg = computeGIS(bs, scoringSummary, pbp, gameId, rpiByYear, pgisTables);
       const { gameDate, gameLocation } = extractGameMeta(rawData);
       mg.gameDate     = gameDate;
       mg.gameLocation = gameLocation;
 
       setStatus(null);
-      setReport({ gameId, mg, isMock });
+      setReport({ gameId, mg });
     } catch (e) {
       setStatus({ type: 'error', msg: `GIS error: ${e.message}` });
     }
     setBusy(false);
   }
 
-  // Load demo on mount if no proxy (shouldn't happen, but keep parity)
+  async function runGIS() {
+    const gameId = extractId(input);
+    if (!gameId) {
+      setStatus({ type: 'error', msg: 'Please enter a valid game ID (e.g. <code>6481347</code>) or paste an ncaa.com game URL.' });
+      return;
+    }
+    await loadGame(gameId);
+  }
+
   const showHero = !report;
 
   return (
@@ -122,22 +221,117 @@ export default function GameLookup() {
           <div className="hero-sub">
             Enter a game ID or paste an ncaa.com game URL to compute GIS, GIS+, and pGIS for every player.
           </div>
-          <div className="search-wrap">
-            <input
-              className="search-input"
-              placeholder="Game ID or ncaa.com/game/… URL"
-              value={input}
-              onChange={e => setInput(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && !busy && runGIS()}
-              autoFocus
-            />
-            <button className="search-btn" disabled={busy || dataLoading} onClick={runGIS}>
-              {busy ? 'LOADING…' : 'COMPUTE'}
-            </button>
+
+          {/* Mode toggle */}
+          <div className="gl-mode-toggle">
+            <button
+              className={`gl-mode-btn ${mode === 'id' ? 'active' : ''}`}
+              onClick={() => setMode('id')}
+            >Search by ID</button>
+            <button
+              className={`gl-mode-btn ${mode === 'browse' ? 'active' : ''}`}
+              onClick={() => setMode('browse')}
+              disabled={dataLoading || !gameLogs}
+            >Browse by Team</button>
           </div>
-          <div className="search-hint">
-            e.g. <code>6481347</code> or <code>ncaa.com/game/6481347/…</code>
-          </div>
+
+          {mode === 'id' && (
+            <>
+              <div className="search-wrap">
+                <input
+                  className="search-input"
+                  placeholder="Game ID or ncaa.com/game/… URL"
+                  value={input}
+                  onChange={e => setInput(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && !busy && runGIS()}
+                  autoFocus
+                />
+                <button className="search-btn" disabled={busy || dataLoading} onClick={runGIS}>
+                  {busy ? 'LOADING…' : 'COMPUTE'}
+                </button>
+              </div>
+              <div className="search-hint">
+                e.g. <code>6481347</code> or <code>ncaa.com/game/6481347/…</code>
+              </div>
+            </>
+          )}
+
+          {mode === 'browse' && (
+            <div className="gl-browse">
+              {/* Year tabs */}
+              <div className="gl-browse-years">
+                {availableYears.map(y => (
+                  <button
+                    key={y}
+                    className={`sb-view-btn ${browseYear === y ? 'active' : ''}`}
+                    onClick={() => switchYear(y)}
+                  >{y}</button>
+                ))}
+              </div>
+
+              {/* Team search */}
+              <div className="gl-team-search-wrap" style={{ position: 'relative' }}>
+                <input
+                  ref={teamInputRef}
+                  className="gl-team-input"
+                  placeholder={`Search ${browseYear} teams…`}
+                  value={selectedTeam && !showSuggestions ? selectedTeam.display : teamSearch}
+                  onChange={e => {
+                    setTeamSearch(e.target.value);
+                    setSelectedTeam(null);
+                    setShowSuggestions(true);
+                  }}
+                  onFocus={() => setShowSuggestions(true)}
+                />
+                {selectedTeam && (
+                  <button
+                    className="gl-team-clear"
+                    onClick={() => { setSelectedTeam(null); setTeamSearch(''); teamInputRef.current?.focus(); }}
+                    title="Clear selection"
+                  >✕</button>
+                )}
+
+                {showSuggestions && suggestions.length > 0 && !selectedTeam && (
+                  <ul ref={suggestionsRef} className="gl-suggestions">
+                    {suggestions.map(key => (
+                      <li
+                        key={key}
+                        className="gl-suggestion-item"
+                        onMouseDown={e => { e.preventDefault(); pickTeam(key); }}
+                      >{displayName(key)}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              {/* Game list */}
+              {selectedTeam && (
+                <div className="gl-game-list">
+                  {gamesForTeam.length === 0 ? (
+                    <div className="gl-no-games">No games found for {selectedTeam.display} in {browseYear}.</div>
+                  ) : (
+                    <>
+                      <div className="gl-game-list-header">
+                        {selectedTeam.display} · {browseYear} · {gamesForTeam.length} games
+                      </div>
+                      {gamesForTeam.map(g => (
+                        <button
+                          key={g.gameId}
+                          className="gl-game-item"
+                          onClick={() => loadGame(g.gameId)}
+                          disabled={busy}
+                        >
+                          <span className="gl-game-opp">vs {g.opp}</span>
+                          <span className="gl-game-sets">{g.nSets} sets</span>
+                          <span className="gl-game-arrow">→</span>
+                        </button>
+                      ))}
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
 
@@ -154,6 +348,11 @@ export default function GameLookup() {
           <button className="search-btn" disabled={busy || dataLoading} onClick={runGIS}>
             {busy ? 'LOADING…' : 'COMPUTE'}
           </button>
+          <button
+            className="gl-mode-btn"
+            style={{ whiteSpace: 'nowrap' }}
+            onClick={() => { setReport(null); setMode('browse'); }}
+          >← Browse</button>
         </div>
       )}
 

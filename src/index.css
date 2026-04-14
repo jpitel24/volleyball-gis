@@ -228,6 +228,79 @@ body {
 .tb-placeholder { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
   color: var(--muted); font-style: italic; padding: 0.4rem 0 0.2rem; }
 
+/* ── Game Lookup — browse mode ───────────────────────────────────── */
+.gl-mode-toggle {
+  display: flex; gap: 0.4rem; justify-content: center; margin-bottom: 1.4rem;
+}
+.gl-mode-btn {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.06em;
+  padding: 0.28rem 0.75rem; border-radius: 4px;
+  border: 1px solid var(--border); color: var(--muted);
+  background: transparent; cursor: pointer; transition: all 0.15s;
+}
+.gl-mode-btn:hover:not(:disabled) { color: var(--text); border-color: #38bdf840; }
+.gl-mode-btn.active { color: var(--accent); border-color: #38bdf840; background: #38bdf80d; }
+.gl-mode-btn:disabled { opacity: 0.4; cursor: default; }
+
+.gl-browse {
+  text-align: left;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 1rem 1.1rem 0.6rem;
+}
+.gl-browse-years { display: flex; gap: 0.35rem; margin-bottom: 0.85rem; }
+
+.gl-team-search-wrap { position: relative; margin-bottom: 0.6rem; }
+.gl-team-input {
+  width: 100%;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+  padding: 0.42rem 2rem 0.42rem 0.75rem;
+  font-family: 'Barlow', sans-serif; font-size: 0.88rem; color: var(--text);
+  outline: none; transition: border-color 0.15s;
+}
+.gl-team-input:focus { border-color: #38bdf855; }
+.gl-team-input::placeholder { color: var(--muted); }
+.gl-team-clear {
+  position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%);
+  background: none; border: none; color: var(--muted); cursor: pointer;
+  font-size: 0.75rem; padding: 0.15rem 0.2rem; line-height: 1;
+}
+.gl-team-clear:hover { color: var(--text); }
+
+.gl-suggestions {
+  position: absolute; top: calc(100% + 2px); left: 0; right: 0; z-index: 50;
+  background: var(--surface2); border: 1px solid var(--border); border-radius: 6px;
+  list-style: none; max-height: 220px; overflow-y: auto;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+.gl-suggestion-item {
+  padding: 0.45rem 0.75rem; cursor: pointer; font-size: 0.86rem;
+  transition: background 0.1s;
+}
+.gl-suggestion-item:hover { background: var(--border); color: var(--accent); }
+
+.gl-game-list { margin-top: 0.2rem; }
+.gl-game-list-header {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+  text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted);
+  margin-bottom: 0.4rem; padding: 0.2rem 0;
+}
+.gl-game-item {
+  display: flex; align-items: center; gap: 0.5rem; width: 100%;
+  background: none; border: none; border-bottom: 1px solid var(--border);
+  padding: 0.5rem 0.25rem; cursor: pointer; text-align: left;
+  color: var(--text); transition: background 0.1s; border-radius: 0;
+}
+.gl-game-item:first-of-type { border-top: 1px solid var(--border); }
+.gl-game-item:hover:not(:disabled) { background: var(--surface2); }
+.gl-game-item:disabled { opacity: 0.5; cursor: wait; }
+.gl-game-opp { flex: 1; font-size: 0.88rem; font-weight: 600; }
+.gl-game-sets {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+  color: var(--muted); white-space: nowrap;
+}
+.gl-game-arrow { color: var(--accent); font-size: 0.8rem; }
+.gl-no-games { font-size: 0.82rem; color: var(--muted); padding: 0.5rem 0; }
+
 /* ── Season browser ─────────────────────────────────────────────── */
 .season-panel { padding: 0 1.5rem 3rem; max-width: 1400px; margin: 0 auto; }
 .sb-view-tabs { display: flex; gap: 0.3rem; }

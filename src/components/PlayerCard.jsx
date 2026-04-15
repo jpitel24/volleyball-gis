@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import { gisTier, pgisLabel, posColor } from '../lib/gis.js';
+import { getSchoolColors } from '../data/schoolColors.js';
+import ExportCardModal from './ExportCardModal.jsx';
 
 const OPP_POSITIONS = ['RS','OPP','OP','O','OPPOSITE','OPPO','OUTSIDE','OS'];
 
@@ -23,15 +26,25 @@ function Pills({ p }) {
   );
 }
 
-export default function PlayerCard({ p, rank, animDelay, onSelect }) {
+export default function PlayerCard({ p, rank, animDelay, onSelect, gameData }) {
+  const [exportOpen, setExportOpen] = useState(false);
+
   const [, tc]         = gisTier(p.gis);
   const pc             = posColor(p.position);
   const errT           = (p.errors||0)+(p.service_errors||0)+(p.reception_errors||0)+(p.ball_handling_errors||0)+(p.blocking_errors||0);
   const ec             = errT >= 8 ? '#f43f5e' : errT >= 5 ? '#fb923c' : '#94a3b8';
-  const barPct         = p.pGIS !== null ? Math.min((p.pGIS / 12) * 100, 100).toFixed(1) : '0';
+
+  // Bar capped at 10.0
+  const barPct         = p.pGIS !== null ? Math.min((p.pGIS / 10) * 100, 100).toFixed(1) : '0';
   const [pLabel, pCls] = pgisLabel(p.pGIS);
   const pGISVal        = p.pGIS !== null ? p.pGIS.toFixed(2) : '—';
   const displayPos     = OPP_POSITIONS.includes(p.position?.toUpperCase()) ? 'OPP' : (p.position || '?');
+
+  // School color for bar fill (falls back to CSS gradient when not in table)
+  const schoolColors   = getSchoolColors(p.team);
+  const barFillStyle   = schoolColors.primary !== '#1a1a2e'
+    ? { background: schoolColors.primary }
+    : {};
 
   return (
     <div
@@ -49,10 +62,15 @@ export default function PlayerCard({ p, rank, animDelay, onSelect }) {
           {displayPos}
         </span>
         <span className="pcard-name">{p.name}</span>
-        <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.54rem', color: 'var(--muted)', whiteSpace: 'nowrap' }}>
-          {p.ns}S
-        </span>
+        {/* Set count removed per Change 6 */}
         <span className="match-rank">#{rank}</span>
+        <button
+          className="pcard-export-btn"
+          title="Export game card"
+          onClick={e => { e.stopPropagation(); setExportOpen(true); }}
+        >
+          ↓
+        </button>
       </div>
 
       <div className="scores-row">
@@ -66,19 +84,23 @@ export default function PlayerCard({ p, rank, animDelay, onSelect }) {
           <span className="score-lbl">GIS+</span>
         </div>
         <div className="score-divider" />
+        {/* pGIS block — tier label above number to prevent overlap */}
         <div className="score-block pgis-block">
-          <span className={`pgis-ctx ${pCls}`}>{pLabel}</span>
+          <div className="pgis-label-row">
+            <span className={`pgis-ctx ${pCls}`}>{pLabel}</span>
+          </div>
           <span className="score-num">{pGISVal}</span>
           <span className="score-lbl">pGIS</span>
         </div>
       </div>
 
+      {/* Bar capped at 10, school color fill */}
       <div className="pgis-bar-wrap">
         <div className="pgis-bar-track">
-          <div className="pgis-bar-fill" style={{ width: `${barPct}%` }} />
+          <div className="pgis-bar-fill" style={{ width: `${barPct}%`, ...barFillStyle }} />
         </div>
         <div className="pgis-bar-ticks">
-          {['0','2','4','6','8','10','12+'].map(t => <span key={t}>{t}</span>)}
+          {['0','2','4','6','8','10'].map(t => <span key={t}>{t}</span>)}
         </div>
       </div>
 
@@ -93,6 +115,16 @@ export default function PlayerCard({ p, rank, animDelay, onSelect }) {
         <div className="stat-cell"><div className="stat-num">{p.service_errors||0}</div><div className="stat-lbl">SE</div></div>
         <div className="stat-cell"><div className="stat-num" style={{ color: ec }}>{errT}</div><div className="stat-lbl">TE</div></div>
       </div>
+
+      {exportOpen && (
+        <ExportCardModal
+          mode="game"
+          player={{ name: p.name, pos: displayPos, position: p.position, team: p.team }}
+          gameStats={p}
+          gameData={gameData}
+          onClose={() => setExportOpen(false)}
+        />
+      )}
     </div>
   );
 }

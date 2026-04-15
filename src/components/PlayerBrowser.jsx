@@ -1,15 +1,21 @@
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useData } from '../lib/DataContext.jsx';
 import { POS_COLORS_SB, computeArchivePGIS } from '../lib/gis.js';
+import ExportCardModal from './ExportCardModal.jsx';
 
-function GameLogRow({ g }) {
+// ── Game log row — clickable to navigate to Game Lookup ───────────────────────
+function GameLogRow({ g, navigate }) {
   const [gid, opp, ms, gp, pgis, qual, k, e, ta, a, d, sa] = g;
   const hit = ta > 0 ? ((k-e)/ta).toFixed(3) : '—';
   return (
-    <tr>
+    <tr
+      className="pb-log-row-clickable"
+      onClick={() => navigate('/games', { state: { gameId: String(gid) } })}
+      title={`Open game ${gid} in Game Lookup`}
+    >
       <td className="pb-log-gid">
-        <a href={`https://www.ncaa.com/game/${gid}`} target="_blank" rel="noreferrer"
-           style={{color:'var(--muted)',fontSize:'0.6rem'}}>{gid}</a>
+        <span style={{ color: 'var(--muted)', fontSize: '0.6rem' }}>{gid}</span>
       </td>
       <td className="pb-log-opp">
         {qual
@@ -27,7 +33,7 @@ function GameLogRow({ g }) {
   );
 }
 
-function SeasonRow({ record, cardId, gameLogs, pgisTables }) {
+function SeasonRow({ record, gameLogs, pgisTables, navigate }) {
   const [open, setOpen] = useState(false);
   const key = `${record.player.toLowerCase()}||${record.team.toLowerCase()}||${record.season}`;
   const games = gameLogs?.[key] || [];
@@ -81,7 +87,9 @@ function SeasonRow({ record, cardId, gameLogs, pgisTables }) {
                       </tr>
                     </thead>
                     <tbody>
-                      {games.map((g, i) => <GameLogRow key={i} g={g} />)}
+                      {games.map((g, i) => (
+                        <GameLogRow key={i} g={g} navigate={navigate} />
+                      ))}
                     </tbody>
                   </table>
                 )
@@ -94,7 +102,9 @@ function SeasonRow({ record, cardId, gameLogs, pgisTables }) {
   );
 }
 
-function PlayerCard({ norm, records, gameLogs, pgisTables }) {
+function PlayerCard({ norm, records, gameLogs, pgisTables, navigate }) {
+  const [exportOpen, setExportOpen] = useState(false);
+
   const canon = records[0].player;
   const pos   = records[0].pos;
   const pc    = POS_COLORS_SB[pos] || '#94a3b8';
@@ -127,6 +137,13 @@ function PlayerCard({ norm, records, gameLogs, pgisTables }) {
           <span className="pb-chip">Career HIT% <strong>{careerHit}</strong></span>
           <span className="pb-chip">{totalGames}G / {totalSets}S</span>
         </div>
+        <button
+          className="pb-export-btn"
+          title="Export player card"
+          onClick={() => setExportOpen(true)}
+        >
+          ↓ Card
+        </button>
       </div>
       <div className="pb-table-wrap">
         <table className="sb-table pb-season-table">
@@ -149,14 +166,25 @@ function PlayerCard({ norm, records, gameLogs, pgisTables }) {
               <SeasonRow
                 key={`${r.player}-${r.team}-${r.season}`}
                 record={r}
-                cardId={norm.replace(/[^a-z0-9]/g,'_')}
                 gameLogs={gameLogs}
                 pgisTables={pgisTables}
+                navigate={navigate}
               />
             ))}
           </tbody>
         </table>
       </div>
+
+      {exportOpen && (
+        <ExportCardModal
+          mode="career"
+          player={{ name: canon, pos, team: records[0].team }}
+          allRecords={records}
+          gameLogs={gameLogs}
+          pgisTables={pgisTables}
+          onClose={() => setExportOpen(false)}
+        />
+      )}
     </div>
   );
 }
@@ -164,12 +192,13 @@ function PlayerCard({ norm, records, gameLogs, pgisTables }) {
 export default function PlayerBrowser() {
   const { playerArchive, gameLogs, pgisTables, loading, error } = useData();
   const [query, setQuery] = useState('');
+  const navigate = useNavigate();
 
   const results = useMemo(() => {
     if (!playerArchive || query.length < 2) return null;
     const q = query.toLowerCase();
     const matched = new Map();
-    for (const [season, records] of Object.entries(playerArchive.seasons || {})) {
+    for (const [, records] of Object.entries(playerArchive.seasons || {})) {
       for (const r of records) {
         if (r.player.toLowerCase().includes(q)) {
           const norm = r.player.toLowerCase();
@@ -212,7 +241,14 @@ export default function PlayerBrowser() {
         <div className="pb-hint">No players found</div>
       )}
       {results !== null && results.map(p => (
-        <PlayerCard key={p.norm} norm={p.norm} records={p.records} gameLogs={gameLogs} pgisTables={pgisTables} />
+        <PlayerCard
+          key={p.norm}
+          norm={p.norm}
+          records={p.records}
+          gameLogs={gameLogs}
+          pgisTables={pgisTables}
+          navigate={navigate}
+        />
       ))}
     </div>
   );

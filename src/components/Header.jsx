@@ -1,4 +1,14 @@
-export default function Header({ activeTab, setActiveTab }) {
+import { NavLink } from 'react-router-dom';
+
+const NAV_ITEMS = [
+  { to: '/games',   label: 'GAME LOOKUP' },
+  { to: '/season',  label: 'SEASON BROWSER' },
+  { to: '/players', label: 'PLAYER BROWSER' },
+  { to: '/teams',   label: 'TEAM BROWSER' },
+  { to: '/about',   label: 'METHODOLOGY' },
+];
+
+export default function Header() {
   return (
     <header className="app-header">
       <div className="logo">
@@ -6,30 +16,15 @@ export default function Header({ activeTab, setActiveTab }) {
         Volleyball GIS
       </div>
       <nav className="nav-pills">
-        <button
-          className={`nav-pill ${activeTab === 'game' ? 'active' : ''}`}
-          onClick={() => setActiveTab('game')}
-        >
-          GAME LOOKUP
-        </button>
-        <button
-          className={`nav-pill ${activeTab === 'season' ? 'active' : ''}`}
-          onClick={() => setActiveTab('season')}
-        >
-          SEASON BROWSER
-        </button>
-        <button
-          className={`nav-pill ${activeTab === 'player' ? 'active' : ''}`}
-          onClick={() => setActiveTab('player')}
-        >
-          PLAYER BROWSER
-        </button>
-        <button
-          className={`nav-pill ${activeTab === 'team' ? 'active' : ''}`}
-          onClick={() => setActiveTab('team')}
-        >
-          TEAM BROWSER
-        </button>
+        {NAV_ITEMS.map(({ to, label }) => (
+          <NavLink
+            key={to}
+            to={to}
+            className={({ isActive }) => `nav-pill${isActive ? ' active' : ''}`}
+          >
+            {label}
+          </NavLink>
+        ))}
       </nav>
     </header>
   );

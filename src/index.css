@@ -153,6 +153,9 @@ body {
   margin-top: 0.4rem; padding-top: 0.4rem; border-top: 1px solid var(--border);
 }
 .formula-note span { color: var(--pgis); }
+.formula-note-primary { color: var(--text); font-size: 0.65rem; margin-bottom: 0.2rem; }
+.formula-note-primary span { color: var(--pgis); }
+.formula-note-benchmarks { color: var(--muted); font-size: 0.58rem; }
 
 /* ── Team section ────────────────────────────────────────────────── */
 .team-section { margin-bottom: 2.75rem; }
@@ -369,8 +372,9 @@ body {
 .score-num { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.85rem; line-height: 1; }
 .score-lbl { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; color: var(--muted); letter-spacing: 0.1em; margin-top: 0.18rem; }
 .score-divider { width: 1px; background: var(--border); align-self: stretch; margin: 0 0.6rem 0.3rem; }
-.pgis-block { position: relative; }
-.pgis-ctx { font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; letter-spacing: 0.08em; padding: 0.06rem 0.28rem; border-radius: 3px; border: 1px solid; position: absolute; top: -0.1rem; right: 0; }
+.pgis-block { }
+.pgis-label-row { min-height: 1.2rem; display: flex; align-items: center; margin-bottom: 0.1rem; }
+.pgis-ctx { font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; letter-spacing: 0.08em; padding: 0.06rem 0.28rem; border-radius: 3px; border: 1px solid; display: inline-block; }
 .pgis-ctx.elite  { color: #f43f5e; border-color: #f43f5e40; background: #f43f5e0d; }
 .pgis-ctx.strong { color: var(--orange); border-color: #fb923c40; background: #fb923c0d; }
 .pgis-ctx.avg    { color: var(--accent); border-color: #38bdf840; background: #38bdf80d; }
@@ -468,3 +472,174 @@ body {
   border-top: 1px solid var(--border); padding-top: 0.6rem; line-height: 1.55;
 }
 .modal-lev-note strong { color: var(--text); }
+
+/* ── Player card export button ───────────────────────────────────── */
+.pcard-export-btn {
+  background: transparent; border: none; color: var(--muted);
+  cursor: pointer; font-size: 0.62rem; padding: 0.08rem 0.22rem;
+  border-radius: 3px; transition: color 0.15s; flex-shrink: 0;
+}
+.pcard-export-btn:hover { color: var(--accent); background: #38bdf80d; }
+
+/* ── Player Browser export button ────────────────────────────────── */
+.pb-export-btn {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+  padding: 0.18rem 0.5rem; border-radius: 4px; border: 1px solid var(--border);
+  background: transparent; color: var(--muted); cursor: pointer; transition: all 0.15s;
+  margin-left: auto; flex-shrink: 0;
+}
+.pb-export-btn:hover { color: var(--accent); border-color: #38bdf840; background: #38bdf80d; }
+
+/* ── Player Browser clickable game log rows ──────────────────────── */
+.pb-log-row-clickable { cursor: pointer; }
+.pb-log-row-clickable:hover td { background: #1e2d4580; }
+
+/* ── Export card modal ───────────────────────────────────────────── */
+.export-modal-wrap {
+  position: fixed; inset: 0; z-index: 600;
+  background: rgba(8,12,20,0.88); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+}
+.export-modal-panel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; width: 100%; max-width: 580px; max-height: 90vh;
+  overflow-y: auto; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;
+  animation: cardIn 0.22s ease both;
+}
+.export-modal-hdr {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.export-modal-title {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+  font-size: 1.1rem; letter-spacing: 0.02em;
+}
+.export-modal-tabs { display: flex; gap: 0.35rem; }
+.export-modal-tab {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+  padding: 0.22rem 0.65rem; border-radius: 4px; border: 1px solid var(--border);
+  background: transparent; color: var(--muted); cursor: pointer; transition: all 0.15s;
+}
+.export-modal-tab.active { color: var(--accent); border-color: #38bdf840; background: #38bdf80d; }
+.export-modal-ratios { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+.export-modal-ratio {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+  padding: 0.22rem 0.55rem; border-radius: 4px; border: 1px solid var(--border);
+  background: transparent; color: var(--muted); cursor: pointer; transition: all 0.15s;
+}
+.export-modal-ratio.active { color: var(--pgis); border-color: #fb923c40; background: #fb923c0d; }
+.export-preview-wrap {
+  display: flex; justify-content: center; align-items: center;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+  padding: 1rem; min-height: 200px; overflow: hidden;
+}
+.export-preview-inner { transform-origin: top left; }
+.export-modal-actions { display: flex; align-items: center; gap: 0.6rem; }
+.export-export-btn {
+  background: var(--accent); color: #080c14; border: none;
+  border-radius: 5px; padding: 0.52rem 1.4rem;
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+  font-size: 0.9rem; letter-spacing: 0.06em; cursor: pointer; transition: opacity 0.15s;
+}
+.export-export-btn:hover { opacity: 0.85; }
+.export-export-btn:disabled { opacity: 0.35; cursor: default; }
+.export-close-btn {
+  background: transparent; border: 1px solid var(--border); border-radius: 4px;
+  color: var(--muted); cursor: pointer; font-size: 0.75rem; padding: 0.2rem 0.5rem;
+  transition: color 0.15s, border-color 0.15s; flex-shrink: 0;
+}
+.export-close-btn:hover { color: var(--text); border-color: var(--text); }
+.export-season-select {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+  background: var(--surface2); border: 1px solid var(--border); border-radius: 4px;
+  color: var(--text); padding: 0.2rem 0.4rem; cursor: pointer;
+}
+.export-option-row { display: flex; align-items: center; gap: 0.6rem; }
+.export-option-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: var(--muted); }
+
+/* ── About / Methodology page ────────────────────────────────────── */
+.about-wrap { max-width: 720px; margin: 0 auto; padding: 0 1.5rem 5rem; }
+.about-hero { text-align: center; padding: 4rem 0 3rem; }
+.hero-eyebrow {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.63rem;
+  letter-spacing: 0.22em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.7rem;
+}
+.about-title {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 900;
+  font-size: clamp(2rem, 5vw, 3rem); text-transform: uppercase;
+  letter-spacing: -0.01em; margin-bottom: 0.6rem;
+}
+.about-sub { color: var(--muted); font-size: 0.9rem; line-height: 1.7; max-width: 500px; margin: 0 auto; }
+.about-section {
+  border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem;
+  background: var(--surface); margin-bottom: 1.5rem;
+}
+.about-metric-badge {
+  display: inline-block; font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem; letter-spacing: 0.1em; font-weight: 700;
+  padding: 0.18rem 0.55rem; border-radius: 4px; border: 1px solid; margin-bottom: 0.7rem;
+}
+.about-section-title {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+  font-size: 1.5rem; margin-bottom: 0.9rem;
+}
+.about-body { font-size: 0.9rem; color: var(--muted); line-height: 1.75; margin-bottom: 0.75rem; }
+.about-body em { font-style: italic; color: var(--text); }
+.about-body strong { color: var(--text); }
+.about-formula {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+  background: var(--surface2); border: 1px solid var(--border); border-radius: 6px;
+  padding: 0.65rem 1rem; color: var(--accent); margin-bottom: 0.75rem;
+}
+.about-code {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+  background: var(--surface2); border: 1px solid var(--border); border-radius: 4px;
+  padding: 0.1rem 0.4rem; color: var(--accent);
+}
+.about-weights { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.about-wchip {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+  background: var(--surface2); border: 1px solid var(--border); border-radius: 3px;
+  padding: 0.18rem 0.5rem; display: flex; gap: 0.4rem;
+}
+.about-wchip strong { color: var(--accent); }
+.about-modifier-scale { display: flex; flex-direction: column; gap: 0.55rem; margin-top: 0.75rem; }
+.about-mod-row { display: flex; align-items: center; gap: 0.75rem; }
+.about-mod-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+  color: var(--muted); width: 100px; flex-shrink: 0;
+}
+.about-mod-track { flex: 1; height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+.about-mod-bar { height: 4px; border-radius: 2px; flex-shrink: 0; }
+.about-mod-val {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+  font-weight: 700; white-space: nowrap; color: var(--muted);
+}
+.about-pgis-scale { margin-top: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.about-pgis-row { display: flex; align-items: center; gap: 0.75rem; }
+.about-pgis-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+  color: var(--muted); width: 60px; flex-shrink: 0;
+}
+.about-pgis-track { flex: 1; height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+.about-pgis-bar { height: 100%; background: var(--pgis); border-radius: 2px; }
+.about-pgis-val {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+  color: var(--pgis); font-weight: 700; width: 36px; text-align: right;
+}
+.about-pgis-note {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.58rem;
+  color: var(--muted); margin-top: 0.3rem;
+}
+.about-tier-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem; }
+.about-tier-col { display: flex; flex-direction: column; gap: 0.4rem; }
+.about-tier-header {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+  letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.3rem;
+}
+.about-tier-row { display: flex; align-items: center; gap: 0.6rem; }
+.about-tier-badge {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+  letter-spacing: 0.08em; padding: 0.1rem 0.4rem; border-radius: 3px; border: 1px solid;
+  flex-shrink: 0; width: 58px; text-align: center;
+}
+.about-tier-range { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--muted); }

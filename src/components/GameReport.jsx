@@ -23,17 +23,31 @@ function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpi
   const totalGIS     = players.reduce((s, p) => s + p.gis, 0);
   const totalGISPlus = players.reduce((s, p) => s + p.gisPlus, 0);
   const validPGIS    = players.filter(p => p.pGIS !== null).sort((a, b) => b.pGIS - a.pGIS);
-  const rotationPGIS = validPGIS.length ? validPGIS.slice(0, 7).reduce((s, p) => s + p.pGIS, 0) / Math.min(validPGIS.length, 7) : null;
-  const oppMod       = side === 'home' ? mg.homeOppMod : mg.awayOppMod;
-  const oppRank      = side === 'home' ? mg.homeOppRank : mg.awayOppRank;
+  const rotationPGIS = validPGIS.length
+    ? validPGIS.slice(0, 7).reduce((s, p) => s + p.pGIS, 0) / Math.min(validPGIS.length, 7)
+    : null;
+  const oppMod  = side === 'home' ? mg.homeOppMod : mg.awayOppMod;
+  const oppRank = side === 'home' ? mg.homeOppRank : mg.awayOppRank;
 
   const gameSeason = seasonFromGameId(gameId || 0);
   const ownRpiVal  = findRPIValue(teamNameFull, teamName, gameId, rpiByYear);
   const ownRank    = rpiToRank(ownRpiVal, gameSeason, rpiByYear);
-
-  const oppStr = oppRank
+  const oppStr     = oppRank
     ? `${oppMod >= 1 ? '+' : ''}${((oppMod-1)*100).toFixed(1)}% opp mod`
     : 'RPI unavailable';
+
+  // Build gameData object to pass down to each PlayerCard for export
+  const gameData = {
+    opp:       side === 'home' ? mg.awayTeam : mg.homeTeam,
+    homeTeam:  mg.homeTeam,
+    awayTeam:  mg.awayTeam,
+    homeScore: mg.hW,
+    awayScore: mg.aW,
+    date:      mg.gameDate,
+    location:  mg.gameLocation,
+    nSets:     mg.nSets,
+    playerTeam: teamName,
+  };
 
   return (
     <section className="team-section">
@@ -64,6 +78,7 @@ function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpi
             rank={matchRanks.get(p)}
             animDelay={matchRanks.get(p) * 35}
             onSelect={onSelect}
+            gameData={gameData}
           />
         ))}
       </div>
@@ -103,6 +118,8 @@ export default function GameReport({ gameId, mg, isMock, rpiByYear, categoryPgis
           <span className="meta-chip">Match lev <strong>{mg.ml.toFixed(2)}×</strong></span>
           <span className="meta-chip">Players <strong>{mg.players.length}</strong></span>
           <span className="meta-chip">PBP lev <strong>{pbpCount}/{mg.players.length}</strong></span>
+          {mg.gameDate && <span className="meta-chip">{mg.gameDate}</span>}
+          {mg.gameLocation && <span className="meta-chip">{mg.gameLocation}</span>}
           {mg.hasRPI
             ? <span className="meta-chip gp">GIS+ <strong>active</strong></span>
             : <span className="meta-chip">GIS+ <strong style={{ color: 'var(--muted)' }}>RPI N/A</strong></span>
@@ -146,18 +163,30 @@ export default function GameReport({ gameId, mg, isMock, rpiByYear, categoryPgis
             &nbsp;·&nbsp; modifier = 1 + (rpi_value − 0.500) × 0.63 &nbsp;·&nbsp; neutral at RPI 0.500
           </div>
           <div className="formula-eq">
-            pGIS = <em className="pg">power curve percentile of opponent-adjusted per-set efficiency vs D1 peers at same position · leverage captured in GIS+ only</em>
+            pGIS = <em className="pg">power curve percentile of opponent-adjusted per-set efficiency vs D1 peers at same position</em>
           </div>
         </div>
+        {/* pGIS info card — clean primary + benchmark lines */}
         <div className="formula-note">
-          <span>pGIS</span> = percentile rank of opponent-adjusted GIS/set vs D1 2023–2025 (≥50% sets played, same position).
-          Hard scale 0–10 · 10.0 = best ever recorded · 9.80 = top 1% · 8.10 = top 10% · 5 = positional median.
-          Opponent quality baked into pGIS · leverage reflected in GIS+ only.
+          <div className="formula-note-primary">
+            <span>pGIS</span> = Positional GIS · Hard Scale 0–10
+          </div>
+          <div className="formula-note-benchmarks">
+            Top 1% ≥ 9.80 &nbsp;·&nbsp; Top 5% ≥ 9.03 &nbsp;·&nbsp; Top 10% ≥ 8.10 &nbsp;·&nbsp; Top 25% ≥ 5.63
+          </div>
         </div>
       </div>
 
-      <TeamSection mg={mg} teamName={mg.homeTeam} teamNameFull={mg.homeTeamFull} side="home" matchRanks={matchRanks} gameId={gameId} rpiByYear={rpiByYear} onSelect={setSelectedPlayer} />
-      <TeamSection mg={mg} teamName={mg.awayTeam} teamNameFull={mg.awayTeamFull} side="away" matchRanks={matchRanks} gameId={gameId} rpiByYear={rpiByYear} onSelect={setSelectedPlayer} />
+      <TeamSection
+        mg={mg} teamName={mg.homeTeam} teamNameFull={mg.homeTeamFull}
+        side="home" matchRanks={matchRanks} gameId={gameId}
+        rpiByYear={rpiByYear} onSelect={setSelectedPlayer}
+      />
+      <TeamSection
+        mg={mg} teamName={mg.awayTeam} teamNameFull={mg.awayTeamFull}
+        side="away" matchRanks={matchRanks} gameId={gameId}
+        rpiByYear={rpiByYear} onSelect={setSelectedPlayer}
+      />
 
       {selectedPlayer && (
         <PlayerModal
@@ -170,8 +199,8 @@ export default function GameReport({ gameId, mg, isMock, rpiByYear, categoryPgis
 
       <div className="rpt-footer">
         Game {gameId} · GIS tiers: ELITE ≥10 · IMPACT ≥7 · SOLID ≥4.5 · PRESENT ≥2.5 · LIMITED &lt;2.5<br />
-        pGIS tiers: ELITE ≥9.5 · IMPACT ≥8.5 · SOLID ≥7.5 · GOOD ≥6.0 · AVG ≥4.0 · BELOW ≥2.0 · LTD &lt;2 &nbsp;·&nbsp; 10.0 = best ever · hard ceiling · opp-adjusted GIS percentile<br />
-        PBP ✓ = point-level win-probability leverage applied · OPP MOD = GIS+ opponent RPI modifier
+        pGIS tiers: ELITE ≥9.5 · IMPACT ≥8.5 · SOLID ≥7.5 · GOOD ≥6.0 · AVG ≥4.0 · BELOW ≥2.0 · LTD &lt;2<br />
+        pGIS baseline derived from all D1 matches between 2022 and 2025
       </div>
     </div>
   );

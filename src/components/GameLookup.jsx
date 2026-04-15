@@ -1,4 +1,5 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import GameReport from './GameReport.jsx';
 import { useData } from '../lib/DataContext.jsx';
 import {
@@ -60,7 +61,8 @@ function getMockData() {
 }
 
 export default function GameLookup() {
-  const { rpiByYear, pgisTables, categoryPgisTables, gameLogs, loading: dataLoading } = useData();
+  const { rpiByYear, pgisTables, categoryPgisTables, gameLogs, playerArchive, loading: dataLoading } = useData();
+  const location = useLocation();
   const [input, setInput]   = useState('');
   const [status, setStatus] = useState(null);
   const [report, setReport] = useState(null);
@@ -74,6 +76,14 @@ export default function GameLookup() {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const teamInputRef = useRef(null);
   const suggestionsRef = useRef(null);
+
+  // Auto-load game from router navigation state (Change 5)
+  useEffect(() => {
+    if (location.state?.gameId) {
+      loadGame(location.state.gameId); // eslint-disable-line react-hooks/exhaustive-deps
+      window.history.replaceState({}, '');
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Resolve available years from gameLogs
   const availableYears = useMemo(() => {
@@ -90,23 +100,25 @@ export default function GameLookup() {
     return displayMap.get(teamKey) || teamKey.replace(/\b\w/g, c => c.toUpperCase());
   }
 
-  // All teams for the selected browse year, sorted alphabetically by display name
+  // All teams for the selected browse year — sourced from playerArchive for full coverage
   const teamsForYear = useMemo(() => {
-    if (!gameLogs) return [];
-    const keys = new Set();
-    for (const key of Object.keys(gameLogs)) {
-      const parts = key.split('||');
-      if (parts[2] === browseYear) keys.add(parts[1]);
+    if (!playerArchive) return [];
+    const records = playerArchive.seasons?.[browseYear] || [];
+    const seen = new Set();
+    const teams = [];
+    for (const r of records) {
+      if (!seen.has(r.team)) { seen.add(r.team); teams.push(r.team); }
     }
-    return [...keys].sort((a, b) => displayName(a).localeCompare(displayName(b)));
-  }, [gameLogs, browseYear, displayMap]); // eslint-disable-line react-hooks/exhaustive-deps
+    return teams.sort((a, b) => a.localeCompare(b));
+  }, [playerArchive, browseYear]);
 
   // Filtered suggestions while typing
   const suggestions = useMemo(() => {
-    if (!teamSearch.trim()) return teamsForYear.slice(0, 8);
+    const list = teamsForYear;
+    if (!teamSearch.trim()) return list.slice(0, 8);
     const q = teamSearch.toLowerCase();
-    return teamsForYear.filter(t => t.includes(q) || displayName(t).toLowerCase().includes(q)).slice(0, 12);
-  }, [teamsForYear, teamSearch]); // eslint-disable-line react-hooks/exhaustive-deps
+    return list.filter(t => t.toLowerCase().includes(q)).slice(0, 12);
+  }, [teamsForYear, teamSearch]);
 
   // Games for the selected team in the selected year, deduplicated and sorted by gameId
   const gamesForTeam = useMemo(() => {
@@ -141,8 +153,8 @@ export default function GameLookup() {
     setTeamSearch('');
   }
 
-  function pickTeam(key) {
-    setSelectedTeam({ key, display: displayName(key) });
+  function pickTeam(displayName) {
+    setSelectedTeam({ key: displayName.toLowerCase(), display: displayName });
     setTeamSearch('');
     setShowSuggestions(false);
   }
@@ -231,7 +243,7 @@ export default function GameLookup() {
             <button
               className={`gl-mode-btn ${mode === 'browse' ? 'active' : ''}`}
               onClick={() => setMode('browse')}
-              disabled={dataLoading || !gameLogs}
+              disabled={dataLoading || !playerArchive}
             >Browse by Team</button>
           </div>
 
@@ -293,12 +305,12 @@ export default function GameLookup() {
 
                 {showSuggestions && suggestions.length > 0 && !selectedTeam && (
                   <ul ref={suggestionsRef} className="gl-suggestions">
-                    {suggestions.map(key => (
+                    {suggestions.map(name => (
                       <li
-                        key={key}
+                        key={name}
                         className="gl-suggestion-item"
-                        onMouseDown={e => { e.preventDefault(); pickTeam(key); }}
-                      >{displayName(key)}</li>
+                        onMouseDown={e => { e.preventDefault(); pickTeam(name); }}
+                      >{name}</li>
                     ))}
                   </ul>
                 )}
@@ -308,7 +320,11 @@ export default function GameLookup() {
               {selectedTeam && (
                 <div className="gl-game-list">
                   {gamesForTeam.length === 0 ? (
-                    <div className="gl-no-games">No games found for {selectedTeam.display} in {browseYear}.</div>
+                    <div className="gl-no-games">
+                      {gameLogs
+                        ? `No game log data available for ${selectedTeam.display} ${browseYear}.`
+                        : 'Loading…'}
+                    </div>
                   ) : (
                     <>
                       <div className="gl-game-list-header">

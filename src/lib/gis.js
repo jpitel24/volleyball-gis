@@ -57,6 +57,26 @@ export function posGroup(position) {
   return POS_GROUP_MAP[position?.toUpperCase()?.split('/')[0]?.trim()] || null;
 }
 
+/**
+ * Infer a player's position from their per-game stat rates.
+ * Pass either single-game raw stats OR season totals divided by games played.
+ * Returns 'S' | 'OH' | 'MB' | 'L' | null
+ */
+export function inferPosition({ kills=0, assists=0, digs=0, block_solos=0, block_assists=0 }) {
+  const total = kills + assists + digs + block_solos + block_assists;
+  if (total === 0) return null;
+  const bTotal = block_solos + block_assists;
+  // Setter: assists dominate kills by a wide margin
+  if (assists > 8 && assists > kills * 3) return 'S';
+  // Libero/DS: digs dominate, minimal kills/blocks
+  if (digs > 4 && kills < 3 && bTotal < 1) return 'L';
+  // Middle: blocks are a significant fraction of attack contribution
+  if (bTotal >= 2 && kills >= 2 && bTotal / (kills + bTotal) >= 0.30) return 'MB';
+  // Default: outside/right-side hitter
+  if (kills > 0 || digs > 0 || assists > 0) return 'OH';
+  return null;
+}
+
 export function posColor(p) { return POS_COLORS[p] || '#94a3b8'; }
 
 export function gisTier(g) {
@@ -88,9 +108,11 @@ export function normaliseTeamName(name) {
 
 export function seasonFromGameId(gameId) {
   const id = parseInt(gameId);
-  if (id >= 6500000) return '2025';
-  if (id >= 6200000) return '2024';
-  return '2023';
+  if (id >= 6479114) return '2025';
+  if (id >= 6326102) return '2024';
+  if (id >= 6173797) return '2023';
+  if (id >= 6025912) return '2022';
+  return '2021';
 }
 
 // ─── RPI modifier ─────────────────────────────────────────────────────────────
@@ -105,38 +127,82 @@ export function rankToModifier(rank, totalTeams) {
   return Math.max(0.50, 1.00 - (rank - 50) * (0.50 / (totalTeams - 50)));
 }
 
-export function findRPIValue(teamName, gameId, RPI_BY_YEAR) {
+// Schools whose RPI key is a nickname/abbreviation not derivable from either official name.
+// Key: lowercase full name with "university"/"college"/"the" stripped.
+// Value: the stored RPI key.
+const TEAM_RPI_ALIASES = {
+  'pennsylvania state':  'penn state',   // "Penn St." / "Pennsylvania State University"
+  'north carolina state':'nc state',     // "NC State" / "North Carolina State University"
+  'appalachian state':   'app state',    // "App State" / "Appalachian State University"
+};
+
+// findRPIValue accepts both the full official name (nameFull) and the short display name
+// (nameShort / teamName) so it can try both when matching against stored RPI keys.
+// Alias map catches schools whose RPI key is a nickname before any pass that could
+// accidentally match a wrong key (e.g. "North Carolina State Univ." → "north carolina").
+export function findRPIValue(teamNameFull, teamNameShort, gameId, RPI_BY_YEAR) {
   if (!RPI_BY_YEAR) return null;
-  const norm   = normaliseTeamName(teamName);
-  if (!norm) return null;
   const season = seasonFromGameId(gameId);
   const raw    = RPI_BY_YEAR[season] || RPI_BY_YEAR['2025'] || {};
 
-  // Pass 1: slug match — strip only punctuation/spaces, NOT words like "state".
-  // "Texas A&M" → "texasam" matches stored "texas a m" → "texasam" without
-  // colliding with "Texas State" → "texasstate" or "Texas" → "texas".
-  const slug = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
-  const inputSlug = slug(teamName);
-  for (const [k, v] of Object.entries(raw)) {
-    if (slug(k) === inputSlug) return v;
+  // Deduplicate — caller may pass the same string for both if only one is available.
+  const names = [...new Set([teamNameFull, teamNameShort].filter(Boolean))];
+  if (!names.length) return null;
+
+  // Pre-pass: alias check — strips institutional suffixes but NOT "state", then looks up
+  // in the alias map.  Catches Penn State, NC State, App State before any pass that would
+  // accidentally match the wrong key (e.g. "North Carolina State Univ." → "north carolina").
+  for (const n of names) {
+    const stripped = n.toLowerCase()
+      .replace(/\b(university|college|the)\b/g, '')
+      .replace(/[^a-z\s]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    const aliasKey = TEAM_RPI_ALIASES[stripped];
+    if (aliasKey && raw[aliasKey] !== undefined) return raw[aliasKey];
   }
 
-  // Pass 2: exact match on word-stripped norm (handles "University of Kentucky" → "kentucky")
-  if (raw[norm] !== undefined) return raw[norm];
+  // Pass 1: exact slug match (strips only punctuation/spaces, not words).
+  // Handles abbreviated nameShort like "NC State" → slug "ncstate" = slug of stored "nc state",
+  // and standard names like "Colorado State University" → slug matches stored key.
+  // Tries all candidate names — catches abbreviation schools (LSU, UCF, SMU, etc.) whose
+  // nameShort IS the stored key.
+  const slug = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+  for (const n of names) {
+    const inputSlug = slug(n);
+    for (const [k, v] of Object.entries(raw)) {
+      if (slug(k) === inputSlug) return v;
+    }
+  }
 
-  // Pass 3: longest substring match on word-stripped norms
+  // Pass 2: every word in a stored RPI key must appear as a whole word in the input;
+  // longest matching stored key wins across all candidate names.
+  // "Colorado State University" → "colorado state" (15) beats "colorado" (8) → correct.
+  // "University of Colorado Boulder" → "colorado state" needs "state" (absent) → only
+  //   "colorado" matches → correct.
+  // "The Ohio State University" → "ohio state" (10) beats "ohio" (4) if both present → correct.
   let best = null, bestLen = 0;
-  for (const [stored, val] of Object.entries(raw)) {
-    if (stored.includes(norm) || norm.includes(stored)) {
-      if (stored.length > bestLen) { best = val; bestLen = stored.length; }
+  for (const n of names) {
+    const inputWords = new Set(
+      n.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean)
+    );
+    for (const [k, v] of Object.entries(raw)) {
+      const kWords = k.toLowerCase().split(/\s+/).filter(Boolean);
+      if (kWords.length > 0 && kWords.every(w => inputWords.has(w))) {
+        if (k.length > bestLen) { best = v; bestLen = k.length; }
+      }
     }
   }
   if (best !== null) return best;
 
-  // Pass 4: 5-char prefix fallback
-  if (norm.length >= 5) {
-    for (const [stored, val] of Object.entries(raw)) {
-      if (stored.length >= 5 && stored.slice(0,5) === norm.slice(0,5)) return val;
+  // Pass 3: 5-char prefix fallback (last resort)
+  for (const n of names) {
+    const norm = normaliseTeamName(n);
+    if (norm.length >= 5) {
+      for (const [stored, val] of Object.entries(raw)) {
+        const sn = normaliseTeamName(stored);
+        if (sn.length >= 5 && sn.slice(0, 5) === norm.slice(0, 5)) return val;
+      }
     }
   }
   return null;
@@ -167,6 +233,22 @@ export function computePGIS(gisRaw, position, nSets, PGIS_TABLES) {
 
   const pct = lo / n;
   return Math.min(10.0, 10 * Math.pow(pct, PGIS_K));
+}
+
+// Compute pGIS from a raw archive record (seasonal stat totals).
+// Uses neutral GIS × historical opponent-modifier ratio to match the pgis_tables baseline.
+export function computeArchivePGIS(rec, PGIS_TABLES) {
+  if (!rec?.sets || rec.sets <= 0) return null;
+  const raw    = Object.entries(POS_W).reduce((s, [k, w]) => s + (rec[k] || 0) * w, 0);
+  const errSum = Object.entries(ERR_W).reduce((s, [k, w]) => s + (rec[k] || 0) * w, 0);
+  const errPen = Math.max(ERR_FLOOR, Math.min(1.0, 1.0 - (errSum / (raw + 1)) * ERR_DAMP));
+  const gisNeutral    = (raw / rec.sets) * errPen * GIS_SCALE;
+  const oppModRatio   = (rec.gis_per_set > 0 && rec.gis_plus_per_set != null)
+    ? Math.max(0.5, Math.min(1.5, rec.gis_plus_per_set / rec.gis_per_set))
+    : 1.0;
+  const gisNeutralPlus = gisNeutral * oppModRatio;
+  const sc = Math.min(5, Math.max(3, Math.round(rec.sets / (rec.games || 1))));
+  return computePGIS(gisNeutralPlus, rec.pos, sc, PGIS_TABLES);
 }
 
 // ─── Leverage ─────────────────────────────────────────────────────────────────
@@ -220,8 +302,8 @@ export function computeGIS(bs, ss, pbp, gameId, RPI_BY_YEAR, PGIS_TABLES) {
   const rpiTable     = RPI_BY_YEAR?.[season] || RPI_BY_YEAR?.['2025'] || {};
   const totalTeams   = Object.keys(rpiTable).length;
 
-  const homeOppRpiVal = findRPIValue(awayTeam.teamName, gameId, RPI_BY_YEAR);
-  const awayOppRpiVal = findRPIValue(homeTeam.teamName, gameId, RPI_BY_YEAR);
+  const homeOppRpiVal = findRPIValue(awayTeam.teamNameFull, awayTeam.teamName, gameId, RPI_BY_YEAR);
+  const awayOppRpiVal = findRPIValue(homeTeam.teamNameFull, homeTeam.teamName, gameId, RPI_BY_YEAR);
   const homeOppRank   = rpiToRank(homeOppRpiVal, season, RPI_BY_YEAR);
   const awayOppRank   = rpiToRank(awayOppRpiVal, season, RPI_BY_YEAR);
   const homeOppMod    = rankToModifier(homeOppRank, totalTeams);
@@ -246,15 +328,16 @@ export function computeGIS(bs, ss, pbp, gameId, RPI_BY_YEAR, PGIS_TABLES) {
       const vol        = raw / ns;
       const plays      = levMap[p.name] || [];
       const avgLev     = plays.length ? plays.reduce((a, b) => a + b, 0) / plays.length : ml;
-      const gisNeutral = vol * errPen * GIS_SCALE;
-      const gis        = vol * avgLev * errPen * GIS_SCALE;
-      const gisPlus    = gis * oppMod;
-      const pGIS       = computePGIS(gisNeutral, p.position, nSets, PGIS_TABLES);
+      const gisNeutral     = vol * errPen * GIS_SCALE;
+      const gisNeutralPlus = gisNeutral * oppMod;   // opponent-adjusted, no leverage — for pGIS
+      const gis            = vol * avgLev * errPen * GIS_SCALE;
+      const gisPlus        = gis * oppMod;
+      const pGIS           = computePGIS(gisNeutralPlus, p.position, nSets, PGIS_TABLES);
 
       players.push({
         ...p, team: team.teamName, side: team.homeAway,
         ns, vol, errPen, avgLev, levPlays: plays.length, hasPbp: !!pbp,
-        gisNeutral, gis, gisPlus, oppMod, oppRank, pGIS,
+        gisNeutral, gisNeutralPlus, gis, gisPlus, oppMod, oppRank, pGIS,
       });
     }
   }
@@ -264,8 +347,10 @@ export function computeGIS(bs, ss, pbp, gameId, RPI_BY_YEAR, PGIS_TABLES) {
   const scoresUnknown = !!(ss?.scoresUnknown);
   return {
     players, ml, nSets, setScores, periods,
-    homeTeam: homeTeam.teamName || 'Home',
-    awayTeam: awayTeam.teamName || 'Away',
+    homeTeam:     homeTeam.teamName     || 'Home',
+    awayTeam:     awayTeam.teamName     || 'Away',
+    homeTeamFull: homeTeam.teamNameFull || homeTeam.teamName || 'Home',
+    awayTeamFull: awayTeam.teamNameFull || awayTeam.teamName || 'Away',
     result: scoresUnknown
       ? `${homeTeam.teamName || 'Home'} vs ${awayTeam.teamName || 'Away'}`
       : `${homeTeam.teamName || 'Home'} ${hW} – ${aW} ${awayTeam.teamName || 'Away'}`,
@@ -280,25 +365,38 @@ export function computeGIS(bs, ss, pbp, gameId, RPI_BY_YEAR, PGIS_TABLES) {
 export function normalisePlayer(p) {
   const n = s => parseInt(s || 0) || 0;
   const f = s => parseFloat(s || 0) || 0;
-  const name = (p.firstName && p.lastName)
+  const rawName = (p.firstName && p.lastName)
     ? `${p.firstName} ${p.lastName}`
     : (p.name || p.playerName || p.fullName || 'Unknown');
-  const rawPos = (p.position || p.pos || '?').toUpperCase().trim();
-  const position = rawPos.includes('/') ? rawPos.split('/')[0] : rawPos;
+  // Normalise casing — the 2022 API returns all-lowercase first/last names
+  const name = rawName.split(/(\s+|-|')/).map(part => {
+    if (!part || part === ' ' || part === '-' || part === "'") return part;
+    return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
+  }).join('');
+  const rawPos = (p.position || p.pos || '').toUpperCase().trim();
+  const apiPos = rawPos.includes('/') ? rawPos.split('/')[0] : rawPos;
+
+  const kills                = n(p.kills || p.k);
+  const assists              = n(p.assists || p.a);
+  const digs                 = n(p.digs || p.d);
+  const block_solos          = n(p.blockSolos || p.block_solos || p.bs);
+  const block_assists        = n(p.blockAssists || p.block_assists || p.ba);
+
+  // If the API gave no recognised position, infer it from the stats
+  const position = posGroup(apiPos)
+    ? apiPos
+    : (inferPosition({ kills, assists, digs, block_solos, block_assists }) ?? '?');
+
   return {
     name, number: p.number || p.jersey || '', position,
     sets:                 n(p.gamesPlayed || p.sets || p.s || p.gp),
-    kills:                n(p.kills || p.k),
+    kills, assists, digs, block_solos, block_assists,
     errors:               n(p.attackErrors || p.errors || p.e),
     total_attacks:        n(p.attackAttempts || p.total_attacks || p.ta),
     hit_pct:              f(p.hittingPercentage || p.hit_pct || p.pct),
-    assists:              n(p.assists || p.a),
     service_aces:         n(p.serviceAces || p.service_aces || p.sa),
     service_errors:       n(p.serviceErrors || p.service_errors || p.se),
     reception_errors:     n(p.receptionErrors || p.reception_errors || p.re),
-    digs:                 n(p.digs || p.d),
-    block_solos:          n(p.blockSolos || p.block_solos || p.bs),
-    block_assists:        n(p.blockAssists || p.block_assists || p.ba),
     ball_handling_errors: n(p.ballHandlingErrors || p.ball_handling_errors || p.bhe),
     blocking_errors:      n(p.blockingErrors || p.blocking_errors || p.be),
     points:               f(p.points || p.pts),
@@ -320,7 +418,8 @@ export function normaliseBoxscore(raw) {
     const isHome   = teamInfo.isHome ?? (tb.homeAway === 'home' || tb.home_away === 'home');
     const players  = (tb.playerStats || tb.players || tb.playerBoxscore || []).map(normalisePlayer);
     return {
-      teamName: teamInfo.nameShort || teamInfo.nameFull || teamInfo.teamName || teamInfo.name || tb.teamName || 'Unknown',
+      teamName:     teamInfo.nameShort || teamInfo.nameFull || teamInfo.teamName || teamInfo.name || tb.teamName || 'Unknown',
+      teamNameFull: teamInfo.nameFull  || teamInfo.nameShort || teamInfo.teamName || teamInfo.name || tb.teamName || 'Unknown',
       teamId:   tId,
       homeAway: isHome ? 'home' : 'away',
       players,
@@ -331,7 +430,8 @@ export function normaliseBoxscore(raw) {
   if (!teams.length) {
     return {
       teams: (raw.teams || []).map(t => ({
-        teamName: t.nameShort || t.nameFull || t.teamName || 'Unknown',
+        teamName:     t.nameShort || t.nameFull || t.teamName || 'Unknown',
+        teamNameFull: t.nameFull  || t.nameShort || t.teamName || 'Unknown',
         teamId:   String(t.teamId || ''),
         homeAway: t.isHome ? 'home' : 'away',
         players:  [],

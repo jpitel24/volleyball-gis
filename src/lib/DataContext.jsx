@@ -6,8 +6,6 @@ export function DataProvider({ children }) {
   const [data, setData] = useState({
     pgisTables:         null,
     rpiByYear:          null,
-    playerArchive:      null,
-    gameLogs:           null,
     categoryPgisTables: null,
     loading:            true,
     error:              null,
@@ -17,14 +15,12 @@ export function DataProvider({ children }) {
     async function load() {
       try {
         const safeJson = r => r.ok ? r.json().catch(() => null) : null;
-        const [pgisTables, rpiByYear, playerArchive, gameLogs, categoryPgisTables] = await Promise.all([
+        const [pgisTables, rpiByYear, categoryPgisTables] = await Promise.all([
           fetch('/data/pgis_tables.json').then(safeJson),
           fetch('/data/rpi_by_year.json').then(safeJson),
-          fetch('/data/player_archive.json').then(safeJson),
-          fetch('/data/game_logs.json').then(safeJson),
           fetch('/data/category_pgis_tables.json').then(safeJson),
         ]);
-        setData({ pgisTables, rpiByYear, playerArchive, gameLogs, categoryPgisTables, loading: false, error: null });
+        setData({ pgisTables, rpiByYear, categoryPgisTables, loading: false, error: null });
       } catch (e) {
         setData(d => ({ ...d, loading: false, error: e.message }));
       }

@@ -111,8 +111,7 @@ export function seasonFromGameId(gameId) {
   if (id >= 6479114) return '2025';
   if (id >= 6326102) return '2024';
   if (id >= 6173797) return '2023';
-  if (id >= 6025912) return '2022';
-  return '2021';
+  return '2022';
 }
 
 // ─── RPI modifier ─────────────────────────────────────────────────────────────

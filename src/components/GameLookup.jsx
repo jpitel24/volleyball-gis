@@ -3,8 +3,9 @@ import GameReport from './GameReport.jsx';
 import { useData } from '../lib/DataContext.jsx';
 import { loadYear, gameRowsToBoxscore } from '../lib/csvGames.js';
 import { computeGIS } from '../lib/gis.js';
+import { loadGisPlus, makeKey, seasonStrFromYear } from '../lib/gisPlus.js';
 
-const YEARS = [2025, 2024, 2023, 2022, 2021];
+const YEARS = [2025, 2024, 2023, 2022];
 
 export default function GameLookup() {
   const { rpiByYear, pgisTables, categoryPgisTables } = useData();
@@ -27,6 +28,11 @@ export default function GameLookup() {
     return () => { cancelled = true; };
   }, [year]);
 
+  // ── Preload the gis_plus_observations.csv Map (one-time, fire-and-forget) ──
+  // Kicks off the 46 MB fetch as soon as the browser mounts, so by the time the
+  // user clicks a game the Map is usually resolved and `selectGame` doesn't block.
+  useEffect(() => { loadGisPlus(); }, []);
+
   // ── Filter games by search term ────────────────────────────────────────────
   const filteredGames = useMemo(() => {
     if (!yearData) return [];
@@ -39,8 +45,8 @@ export default function GameLookup() {
     return list.slice(0, 200);
   }, [yearData, search]);
 
-  // ── Select a game → compute GIS → show report ─────────────────────────────
-  function selectGame(game) {
+  // ── Select a game → compute GIS → overlay Python GIS+ → show report ───────
+  async function selectGame(game) {
     const rows = yearData.byKey[game.key];
     const bs   = gameRowsToBoxscore(rows);
 
@@ -61,6 +67,27 @@ export default function GameLookup() {
     mg.gameDate     = game.date;
     mg.gameLocation = game.location === 'Neutral' ? 'Neutral site' : null;
 
+    // Overlay Python-computed GIS+ values from gis_plus_observations.csv.
+    // The fetch is kicked off on mount; this awaits the cached Map. Any
+    // unmatched player falls back to the JS values from computeGIS().
+    try {
+      const gisPlusMap = await loadGisPlus();
+      const seasonStr  = seasonStrFromYear(year);
+      let overlayCount = 0;
+      for (const p of mg.players) {
+        const key = makeKey(seasonStr, game.date, p.team, p.name);
+        const hit = gisPlusMap.get(key);
+        if (hit) {
+          p.gis     = hit.gis;
+          p.gisPlus = hit.gisPlus;
+          overlayCount++;
+        }
+      }
+      mg.gisPlusOverlay = overlayCount > 0;
+    } catch (err) {
+      console.warn('[GameLookup] GIS+ overlay failed', err);
+    }
+
     setReport({ gameId, mg });
     // Scroll to report after React paints
     requestAnimationFrame(() =>
@@ -78,24 +105,23 @@ export default function GameLookup() {
         <div className="hero-eyebrow">NCAA D1 Women's Volleyball</div>
         <div className="hero-title">Game Browser</div>
         <div className="hero-sub">
-          Browse every D1 match from 2021 to 2025.
+          Browse every D1 match from 2022 to 2025.
           Select a year, search for a team, then click a game to view the report.
         </div>
       </div>
 
       {/* ── Controls ──────────────────────────────────────────────────── */}
       <div className="gb-controls">
-        <div className="gb-year-tabs">
+        <select
+          className="gb-year-select"
+          value={year}
+          onChange={e => setYear(parseInt(e.target.value, 10))}
+          aria-label="Select season"
+        >
           {YEARS.map(y => (
-            <button
-              key={y}
-              className={`gb-year-tab${y === year ? ' active' : ''}`}
-              onClick={() => setYear(y)}
-            >
-              {y}
-            </button>
+            <option key={y} value={y}>{y}</option>
           ))}
-        </div>
+        </select>
 
         <input
           className="gb-search"

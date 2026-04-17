@@ -67,7 +67,7 @@ export function parseCSV(text) {
  * Build a game-level index from parsed CSV rows.
  *
  * Each game is keyed by ContestID for 2025 (which carries it natively) and by
- * a synthetic `<date>_<sortedTeam1>_<sortedTeam2>` slug for 2021–2024 (which
+ * a synthetic `<date>_<sortedTeam1>_<sortedTeam2>` slug for 2022–2024 (which
  * lack a contest column). The two teams' rosters share the same key — both
  * "perspectives" of a match collapse into one group.
  *

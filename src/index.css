@@ -108,18 +108,20 @@ body {
   max-width: 720px; margin: 0 auto; padding: 0 1.5rem;
   display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center;
 }
-.gb-year-tabs { display: flex; gap: 0.3rem; }
-.gb-year-tab {
+.gb-year-select {
   font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
   font-size: 0.82rem; letter-spacing: 0.04em;
-  padding: 0.35rem 0.75rem; border-radius: 5px;
-  border: 1px solid var(--border); background: transparent;
-  color: var(--muted); cursor: pointer; transition: all 0.15s;
+  padding: 0.4rem 2rem 0.4rem 0.75rem; border-radius: 6px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text); cursor: pointer; outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path fill='%2394a3b8' d='M2 4l4 4 4-4z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 0.55rem center;
+  transition: border-color 0.2s;
 }
-.gb-year-tab:hover { color: var(--text); border-color: #38bdf840; }
-.gb-year-tab.active {
-  color: var(--accent); border-color: #38bdf840; background: #38bdf80d;
-}
+.gb-year-select:focus { border-color: #38bdf855; }
+.gb-year-select:hover { border-color: #38bdf840; }
 .gb-search {
   flex: 1; min-width: 180px;
   font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;

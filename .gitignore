@@ -1,3 +1,9 @@
 node_modules
 dist
 .DS_Store
+
+# Diagnostic output, regenerated on every build_gis_plus.py run
+public/data/unmatched_opponents.txt
+
+# JetBrains IDE
+.idea/

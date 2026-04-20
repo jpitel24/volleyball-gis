@@ -32,7 +32,10 @@ export function computeCategoryGIS(p, ns, avgLev, oppMod) {
     return { key, label, gis, gisPlus: gis * oppMod, gisNeutral };
   });
 }
-export const PGIS_K    = 2.0;
+// Linear percentile → pGIS mapping. Keeps the 0-10 scale intuitive for the
+// reader: "median D1 starter for their position = 5/10". Higher exponents
+// back-load the scale so elites dominate but squish the middle.
+export const PGIS_K    = 1.0;
 
 export const POS_GROUP_MAP = {
   S: 'S',

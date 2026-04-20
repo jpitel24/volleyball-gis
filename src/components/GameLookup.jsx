@@ -34,15 +34,16 @@ export default function GameLookup() {
   useEffect(() => { loadGisPlus(); }, []);
 
   // ── Filter games by search term ────────────────────────────────────────────
+  // No search → show the 5 most recent games. With a search, show every
+  // match in the season that hits (no cap — searches are naturally scoped).
   const filteredGames = useMemo(() => {
     if (!yearData) return [];
     const q = search.trim().toLowerCase();
-    const list = q
-      ? yearData.games.filter(g =>
-          g.homeTeam.toLowerCase().includes(q) ||
-          g.awayTeam.toLowerCase().includes(q))
-      : yearData.games;
-    return list.slice(0, 200);
+    if (!q) return yearData.games.slice(0, 5);
+    return yearData.games.filter(g =>
+      g.homeTeam.toLowerCase().includes(q) ||
+      g.awayTeam.toLowerCase().includes(q)
+    );
   }, [yearData, search]);
 
   // ── Select a game → compute GIS → overlay Python GIS+ → show report ───────
@@ -139,24 +140,25 @@ export default function GameLookup() {
           className="gb-search"
           placeholder="Filter by team name…"
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={e => { setSearch(e.target.value); setReport(null); }}
           disabled={loadingYear}
         />
       </div>
 
       {/* ── Status / game count ───────────────────────────────────────── */}
-      <div className="gb-status">
-        {loadingYear
-          ? <><div className="spinner" /> Loading {year} games…</>
-          : <>{showing === totalGames
-                ? `${totalGames} games`
-                : `${showing} of ${totalGames} games`
-              }{showing === 200 && totalGames > 200 && ' (showing first 200 — refine your search)'}</>
-        }
-      </div>
+      {!report && (
+        <div className="gb-status">
+          {loadingYear
+            ? <><div className="spinner" /> Loading {year} games…</>
+            : search.trim()
+              ? `${showing} match${showing === 1 ? '' : 'es'} for "${search.trim()}"`
+              : `Showing 5 most recent of ${totalGames} games — search to find more`
+          }
+        </div>
+      )}
 
-      {/* ── Game list ─────────────────────────────────────────────────── */}
-      {!loadingYear && filteredGames.length > 0 && (
+      {/* ── Game list (hidden once a game is selected) ────────────────── */}
+      {!report && !loadingYear && filteredGames.length > 0 && (
         <div className="gb-list">
           {filteredGames.map(g => (
             <button
@@ -179,7 +181,7 @@ export default function GameLookup() {
         </div>
       )}
 
-      {!loadingYear && filteredGames.length === 0 && yearData && (
+      {!report && !loadingYear && filteredGames.length === 0 && yearData && (
         <div className="gb-empty">
           No games found{search ? ` matching "${search}"` : ''} for {year}.
         </div>

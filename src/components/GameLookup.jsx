@@ -79,6 +79,11 @@ export default function GameLookup() {
     mg.nSets        = game.nSets;
     mg.gameDate     = game.date;
     mg.gameLocation = game.location === 'Neutral' ? 'Neutral site' : null;
+    // Known season from the year dropdown — more reliable than
+    // seasonFromGameId's numeric-range guess, which miscategorizes games at
+    // season boundaries (the PBP-rebuilt ContestIDs don't match the original
+    // thresholds calibrated to the R-scraped data).
+    mg.season       = String(year);
 
     // Overlay Python-computed GIS+ values from gis_plus_observations.csv.
     // The fetch is kicked off on mount; this awaits the cached Map. Any

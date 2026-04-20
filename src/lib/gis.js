@@ -148,9 +148,9 @@ const TEAM_RPI_ALIASES = {
 // (nameShort / teamName) so it can try both when matching against stored RPI keys.
 // Alias map catches schools whose RPI key is a nickname before any pass that could
 // accidentally match a wrong key (e.g. "North Carolina State Univ." → "north carolina").
-export function findRPIValue(teamNameFull, teamNameShort, gameId, RPI_BY_YEAR) {
+export function findRPIValue(teamNameFull, teamNameShort, gameId, RPI_BY_YEAR, seasonOverride) {
   if (!RPI_BY_YEAR) return null;
-  const season = seasonFromGameId(gameId);
+  const season = seasonOverride || seasonFromGameId(gameId);
   const raw    = RPI_BY_YEAR[season] || RPI_BY_YEAR['2025'] || {};
 
   // Deduplicate — caller may pass the same string for both if only one is available.

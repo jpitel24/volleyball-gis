@@ -30,8 +30,11 @@ function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpi
   const rotationPGIS = validPGIS.length
     ? validPGIS.slice(0, 7).reduce((s, p) => s + p.pGIS, 0) / Math.min(validPGIS.length, 7)
     : null;
-  const gameSeason = seasonFromGameId(gameId || 0);
-  const ownRpiVal  = findRPIValue(teamNameFull, teamName, gameId, rpiByYear);
+  // Prefer the explicit mg.season (set from the year dropdown) over the
+  // gameId-range guess — that heuristic misbuckets games at season
+  // boundaries when ContestIDs don't match the calibrated thresholds.
+  const gameSeason = mg.season || seasonFromGameId(gameId || 0);
+  const ownRpiVal  = findRPIValue(teamNameFull, teamName, gameId, rpiByYear, gameSeason);
   const ownRank    = rpiToRank(ownRpiVal, gameSeason, rpiByYear);
   // Opponent-modifier string removed: GIS+ now bakes in opp mod + efficiency
   // + set leverage, so surfacing the raw mod alongside the totals is noise.

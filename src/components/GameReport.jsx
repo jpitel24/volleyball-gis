@@ -30,15 +30,11 @@ function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpi
   const rotationPGIS = validPGIS.length
     ? validPGIS.slice(0, 7).reduce((s, p) => s + p.pGIS, 0) / Math.min(validPGIS.length, 7)
     : null;
-  const oppMod  = side === 'home' ? mg.homeOppMod : mg.awayOppMod;
-  const oppRank = side === 'home' ? mg.homeOppRank : mg.awayOppRank;
-
   const gameSeason = seasonFromGameId(gameId || 0);
   const ownRpiVal  = findRPIValue(teamNameFull, teamName, gameId, rpiByYear);
   const ownRank    = rpiToRank(ownRpiVal, gameSeason, rpiByYear);
-  const oppStr     = oppRank
-    ? `${oppMod >= 1 ? '+' : ''}${((oppMod-1)*100).toFixed(1)}% opp mod`
-    : 'RPI unavailable';
+  // Opponent-modifier string removed: GIS+ now bakes in opp mod + efficiency
+  // + set leverage, so surfacing the raw mod alongside the totals is noise.
 
   // Build gameData object to pass down to each PlayerCard for export
   const gameData = {
@@ -69,9 +65,6 @@ function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpi
           {rotationPGIS !== null && (
             <span>Rotation pGIS: <strong className="t-pg">{rotationPGIS.toFixed(2)}</strong></span>
           )}
-          <span className="opp-ctx" style={{ color: oppRank ? 'inherit' : 'var(--muted)' }}>
-            {oppStr}
-          </span>
         </div>
       </div>
       <div className="pgrid">

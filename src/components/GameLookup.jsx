@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import GameReport from './GameReport.jsx';
 import { useData } from '../lib/DataContext.jsx';
 import { loadYear, gameRowsToBoxscore, loadSetScores } from '../lib/csvGames.js';
-import { computeGIS } from '../lib/gis.js';
+import { computeGIS, computePGIS } from '../lib/gis.js';
 import { loadGisPlus, makeKey, seasonStrFromYear } from '../lib/gisPlus.js';
 
 const YEARS = [2025, 2024, 2023, 2022];
@@ -83,6 +83,11 @@ export default function GameLookup() {
     // Overlay Python-computed GIS+ values from gis_plus_observations.csv.
     // The fetch is kicked off on mount; this awaits the cached Map. Any
     // unmatched player falls back to the JS values from computeGIS().
+    //
+    // After overlay, recompute pGIS using the overlayed GIS+/S rate so the
+    // percentile lookup is in the same units as pgis_tables.json (built
+    // from Python GIS+/S). JS-derived gisNeutralPlus lacks the efficiency +
+    // set-leverage modifiers the Python pipeline bakes in.
     try {
       const gisPlusMap = await loadGisPlus();
       const seasonStr  = seasonStrFromYear(year);
@@ -94,6 +99,11 @@ export default function GameLookup() {
           p.gis     = hit.gis;
           p.gisPlus = hit.gisPlus;
           overlayCount++;
+          const ns = p.ns || mg.nSets || 0;
+          if (ns > 0 && pgisTables) {
+            const recomputed = computePGIS(hit.gisPlus / ns, p.position, mg.nSets, pgisTables);
+            if (recomputed != null) p.pGIS = recomputed;
+          }
         }
       }
       mg.gisPlusOverlay = overlayCount > 0;

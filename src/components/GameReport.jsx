@@ -171,8 +171,7 @@ export default function GameReport({ gameId, mg, isMock, rpiByYear, categoryPgis
       )}
 
       <div className="rpt-footer">
-        Game {gameId} · GIS tiers: ELITE ≥10 · IMPACT ≥7 · SOLID ≥4.5 · PRESENT ≥2.5 · LIMITED &lt;2.5<br />
-        pGIS tiers: ELITE ≥9.5 · IMPACT ≥8.5 · SOLID ≥7.5 · GOOD ≥6.0 · AVG ≥4.0 · BELOW ≥2.0 · LTD &lt;2<br />
+        Game {gameId} · pGIS tiers: ELITE ≥9.5 · IMPACT ≥8.5 · SOLID ≥7.5 · GOOD ≥6.0 · AVG ≥4.0 · BELOW ≥2.0 · LTD &lt;2<br />
         pGIS baseline derived from all D1 matches between 2022 and 2025
       </div>
     </div>

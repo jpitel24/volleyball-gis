@@ -36,6 +36,18 @@ function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpi
   const gameSeason = mg.season || seasonFromGameId(gameId || 0);
   const ownRpiVal  = findRPIValue(teamNameFull, teamName, gameId, rpiByYear, gameSeason);
   const ownRank    = rpiToRank(ownRpiVal, gameSeason, rpiByYear);
+  // Temporary debug: surface the RPI lookup trace so we can see where
+  // the badge resolution is failing for PBP-rebuilt ContestIDs.
+  if (typeof window !== 'undefined') {
+    // eslint-disable-next-line no-console
+    console.debug('[RPI badge]', {
+      team: teamName, teamFull: teamNameFull, gameSeason,
+      mgSeason: mg.season, gameId,
+      rpiByYearKeys: rpiByYear ? Object.keys(rpiByYear) : null,
+      seasonHasTable: !!(rpiByYear && rpiByYear[gameSeason]),
+      ownRpiVal, ownRank,
+    });
+  }
   // Opponent-modifier string removed: GIS+ now bakes in opp mod + efficiency
   // + set leverage, so surfacing the raw mod alongside the totals is noise.
 
@@ -171,7 +183,8 @@ export default function GameReport({ gameId, mg, isMock, rpiByYear, categoryPgis
       )}
 
       <div className="rpt-footer">
-        Game {gameId} · pGIS tiers: ELITE ≥9.5 · IMPACT ≥8.5 · SOLID ≥7.5 · GOOD ≥6.0 · AVG ≥4.0 · BELOW ≥2.0 · LTD &lt;2<br />
+        Game {gameId}<br />
+        pGIS tiers: ELITE ≥9.5 · IMPACT ≥8.5 · SOLID ≥7.5 · GOOD ≥6.0 · AVG ≥4.0 · BELOW ≥2.0 · LTD &lt;2<br />
         pGIS baseline derived from all D1 matches between 2022 and 2025
       </div>
     </div>

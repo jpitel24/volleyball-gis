@@ -49,7 +49,7 @@ export default function GameLookup() {
   // ── Select a game → compute GIS → overlay Python GIS+ → show report ───────
   async function selectGame(game) {
     const rows = yearData.byKey[game.key];
-    const bs   = gameRowsToBoxscore(rows);
+    const bs   = gameRowsToBoxscore(rows, yearData.playerPos);
 
     // Per-set rally-point scores are served by /data/wvb_setscores_<year>.json,
     // a lightweight lookup built from NCAA play-by-play (ContestID → [[h,a], ...]).

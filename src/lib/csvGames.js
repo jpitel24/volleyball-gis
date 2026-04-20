@@ -80,11 +80,24 @@ export function parseCSV(text) {
  */
 export function buildGameIndex(rows, year) {
   const byKey = {};
+  // Season-stable (team, player) → position map. Some games in the PBP-
+  // rebuilt CSVs have the P column blank for every row (the original R
+  // scrape didn't cover that contest from either side); we backfill those
+  // at read time by tallying positions the same player has in other games
+  // that season and picking the most common non-blank value.
+  const posTally = {};   // `${team}||${player}` → { [pos]: count }
   for (const r of rows) {
     const date    = r.Date;
     const team    = r.Team;
     const oppTeam = r['Opponent Team'];
     if (!date || !team || !oppTeam) continue;
+
+    const p = (r.P || '').trim();
+    if (p && r.Player) {
+      const k = `${team}||${r.Player}`;
+      (posTally[k] = posTally[k] || {});
+      posTally[k][p] = (posTally[k][p] || 0) + 1;
+    }
 
     let key;
     const cid = r.ContestID;
@@ -97,6 +110,15 @@ export function buildGameIndex(rows, year) {
     }
 
     (byKey[key] = byKey[key] || []).push(r);
+  }
+
+  const playerPos = {};  // `${team}||${player}` → most-common pos across season
+  for (const [k, counts] of Object.entries(posTally)) {
+    let best = null, bestN = 0;
+    for (const [pos, n] of Object.entries(counts)) {
+      if (n > bestN) { best = pos; bestN = n; }
+    }
+    if (best) playerPos[k] = best;
   }
 
   const games = [];
@@ -138,7 +160,7 @@ export function buildGameIndex(rows, year) {
   // Most recent first (string compare works for ISO YYYY-MM-DD dates)
   games.sort((a, b) => b.date.localeCompare(a.date));
 
-  return { games, byKey };
+  return { games, byKey, playerPos };
 }
 
 // ── Year cache + loader ───────────────────────────────────────────────────────
@@ -210,11 +232,16 @@ const flo = v => {
   return Number.isFinite(f) ? f : 0;
 };
 
-function rowToPlayer(r) {
+function rowToPlayer(r, playerPos) {
+  const rawP = (r.P || '').trim();
+  const fallback = (!rawP && playerPos && r.Team && r.Player)
+    ? (playerPos[`${r.Team}||${r.Player}`] || '')
+    : '';
+  const pos = (rawP || fallback || '?').toUpperCase();
   return {
     name:                 r.Player || 'Unknown',
     number:               r.Number || '',
-    position:             (r.P || '?').toUpperCase().trim(),
+    position:             pos,
     sets:                 num(r.S),
     kills:                num(r.Kills),
     errors:               num(r.Errors),
@@ -241,7 +268,7 @@ function rowToPlayer(r) {
  * Convert the raw CSV rows for one game (both teams' rosters combined) into
  * the boxscore shape expected by `computeGIS()` in src/lib/gis.js.
  */
-export function gameRowsToBoxscore(rows) {
+export function gameRowsToBoxscore(rows, playerPos) {
   if (!rows || !rows.length) return { teams: [] };
 
   // Group rows by Team (player's own team)
@@ -268,7 +295,7 @@ export function gameRowsToBoxscore(rows) {
       teamName: homeName,
       teamId:   homeName,
       homeAway: 'home',
-      players:  byTeam[homeName].map(rowToPlayer),
+      players:  byTeam[homeName].map(r => rowToPlayer(r, playerPos)),
     });
   }
   if (byTeam[awayName]) {

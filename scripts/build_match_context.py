@@ -52,7 +52,9 @@ Schema:
 
 Notes:
   - serve_attempts.immediate_point: True when the serving team scores a point
-    within 2 events of the serve (i.e. ace, or very quick rally win).
+    within 4 events of the serve — covers aces, shank-recoveries, and
+    out-of-system forced blocks (full serve→opp-receive→opp-set→opp-attack→
+    our-block chain).
   - receive_attempts.immediate_point: True when the receiving team scores a
     point within 2 events of the reception.
   - score_state_events captures: Kill, First ball kill → "Kill";
@@ -76,6 +78,7 @@ from collections import defaultdict
 SCRIPT_DIR = Path(__file__).resolve().parent
 DATA_DIR   = SCRIPT_DIR.parent / "public" / "data"
 OUT_PATH   = DATA_DIR / "match_context.json"
+CACHE_ROOT = SCRIPT_DIR / ".ncaa-api-cache"
 
 ALL_YEARS  = [2021, 2022, 2023, 2024, 2025]
 
@@ -238,10 +241,13 @@ def process_rally(rally, away_team, home_team, players):
             if ev_type in SERVE_EVENTS:
                 imm = False
                 if scoring_ev is not None and scoring_team == ev_team:
-                    # immediate_point: serving team scores within ≤ 2 events
-                    # i is the serve's index; scoring_idx is the scoring event's index
+                    # immediate_point: serving team scores within ≤ 4 events.
+                    # Covers: serve → opp receive → opp set → opp attack → our
+                    # block/dig-kill. Captures aces all the way through to
+                    # out-of-system forced-block points — all reasonably
+                    # credited to a tough serve.
                     events_after_serve = scoring_idx - i
-                    imm = events_after_serve <= 2
+                    imm = events_after_serve <= 4
                 p["serve_attempts"].append({
                     "set":             set_num,
                     "score":           ev_score,
@@ -440,6 +446,69 @@ def main():
 
         print(f"  {year}: {contest_count} contests")
         total_contests += contest_count
+
+    # ── Alias synthetic contest_ids to NCAA numeric gids ─────────────────────
+    # Post-two-sided-rebuild, gis_observations.csv uses numeric NCAA contest IDs
+    # (e.g. '6176032') for 2022-2024 rather than the synthetic
+    # '<date>_<away>_<home>' slugs built above. Reuse the cached contest JSONs
+    # (scripts/.ncaa-api-cache/<year>/contest/<gid>.json + _gameids.json) to
+    # duplicate each synthetic entry under its NCAA gid so the downstream
+    # lookup hits.
+    print("\nAliasing synthetic IDs to NCAA numeric gids …")
+    n_alias = 0
+    for year in target_years:
+        if year == 2025:
+            continue  # 2025 already uses native contestid
+        contest_dir = CACHE_ROOT / str(year) / "contest"
+        ids_path = CACHE_ROOT / str(year) / "_gameids.json"
+        if not ids_path.exists() or not contest_dir.exists():
+            print(f"  [{year}] cache missing — skipping alias pass")
+            continue
+        date_map_raw = json.loads(ids_path.read_text(encoding="utf-8"))
+        gid_to_date = {g: d for d, gids in date_map_raw.items() for g in gids}
+        for cf in contest_dir.glob("[0-9]*.json"):
+            gid = cf.stem
+            date_iso = gid_to_date.get(gid)
+            if not date_iso:
+                continue
+            try:
+                cj = json.loads(cf.read_text(encoding="utf-8"))
+            except Exception:
+                continue
+            c0 = (cj.get("contests") or [{}])[0]
+            teams = c0.get("teams") or []
+            home = away = None
+            for t in teams:
+                n = t.get("nameShort") or t.get("nameFull") or ""
+                if t.get("isHome"):
+                    home = n
+                else:
+                    away = n
+            if not home or not away:
+                continue
+            # PBP CSV dates are MM-DD-YYYY; cache is YYYY-MM-DD. Try both.
+            d_iso = date_iso.replace("/", "-")              # YYYY-MM-DD
+            try:
+                y, mo, da = d_iso.split("-")
+                d_us = f"{mo}-{da}-{y}"                      # MM-DD-YYYY
+            except ValueError:
+                d_us = d_iso
+            h = home.lower().replace(" ", "_").replace("/", "_")
+            a = away.lower().replace(" ", "_").replace("/", "_")
+            # Candidate synthetic keys: both date formats × both orderings + alpha
+            pair = sorted([h, a])
+            candidates = []
+            for d in (d_us, d_iso):
+                candidates += [
+                    f"{d}_{a}_{h}", f"{d}_{h}_{a}",
+                    f"{d}_{pair[0]}_{pair[1]}",
+                ]
+            for syn in candidates:
+                if syn in output and gid not in output:
+                    output[gid] = output[syn]
+                    n_alias += 1
+                    break
+    print(f"  aliased {n_alias:,} contests to numeric gids")
 
     # ── Write output ──────────────────────────────────────────────────────────
     print(f"\nTotal: {total_contests} contests across all processed seasons")

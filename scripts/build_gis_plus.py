@@ -8,15 +8,15 @@ weighted, efficiency-modulated GIS+ score for every 2022–2025 player-match
 observation.
 
 GIS+ = (attacking + blocking + setting + serving + receiving + digs)
-       × OpponentModifier
+       × OpponentModifier × SetLeverageModifier
 
 Where each bucket is:
-    attacking  = (Kills − Errors)                               × leverage
-    blocking   = (BlockSolos + 0.5·BlockAssists − BErr)         × leverage
-    setting    = (0.5·Assists − BHE)              × SetMod      × leverage
-    serving    = (Aces − SErr)                    × ServeMod    × leverage
-    receiving  = (0.25·Passes − RErr)             × RecvMod     × leverage
-    digs       = 0.25·Digs                                      × leverage
+    attacking  = (Kills − Errors)
+    blocking   = (BlockSolos + 0.5·BlockAssists − BErr)
+    setting    = (0.5·Assists − BHE)              × SetMod
+    serving    = (Aces − SErr)                    × ServeMod
+    receiving  = (0.25·Passes − RErr)             × RecvMod
+    digs       = 0.25·Digs
 
 When all modifiers equal 1.0, GIS+ reduces exactly to the raw GIS value.
 
@@ -68,8 +68,21 @@ RECEIVE_MIN_ATTEMPTS  = 8
 SET_MIN_ATTEMPTS      = 20
 
 # Anchor rates for efficiency → multiplier interpolation.
-SERVE_ANCHORS    = (0.0000, 0.0625, 0.1667)   # floor / neutral / ceiling
-RECEIVE_ANCHORS  = (0.1765, 0.3333, 0.5000)
+SERVE_ANCHORS    = (0.0000, 0.1667, 0.3125)   # floor / neutral / ceiling
+# Anchors re-centered after widening the immediate-point window to ≤4 events
+# (serve → opp receive → opp set → opp attack → our block/dig-kill). Under the
+# widened window the empirical distribution of ServeEff among qualifying servers
+# (≥8 attempts, n=209k observations) is: p10=0, p50=0.1667, p90=0.3125, mean=0.17.
+# Old anchors (0.0, 0.0625, 0.1667) were tuned to the ≤2 window and made 0.17
+# look elite; new anchors place the median at neutral and p90 at the ceiling.
+RECEIVE_ANCHORS  = (0.0000, 0.0000, 0.0556)
+# Rationale: under the ≤2-event window the empirical distribution of ReceiveEff
+# among qualifying receivers (≥8 attempts, n=134k) is:
+#   median=0.0000, p75=0.0000, p90=0.0000, p95=0.0556, mean=0.0063.
+# Over 90% of receive-attempts don't yield a same-team scoring event within 2
+# events — that's the realistic baseline, not "bad passing". So 0% maps to
+# NEUTRAL (1.00×), any positive rate gets a bonus, ceiling (1.10×) at p95.
+# floor == neutral degenerate case is handled in interp_mult.
 SET_ANCHORS      = (0.2653, 0.3678, 0.4839)
 MULT_LOW, MULT_MID, MULT_HIGH = 0.90, 1.00, 1.10
 
@@ -77,6 +90,13 @@ OPP_BOOST_CAP    = 1.10   # max opponent modifier (elite opponent)
 OPP_DISCOUNT_CAP = 0.80   # min opponent modifier (weak / non-D1 opponent)
 OPP_BOOST_PCT    = 0.10   # +10% at max RPI
 OPP_DISCOUNT_PCT = 0.20   # -20% at min RPI
+
+# Set-leverage bumps: per-event weight depending on which set the event was
+# played in. Applied as a per-match multiplier on the GIS+ total via the
+# fraction of the player's PBP-tracked events in each set bucket.
+SET_LEV_1TO3 = 1.00
+SET_LEV_4    = 1.05
+SET_LEV_5    = 1.10
 
 # Output schema — all gis_observations cols + the 11 new ones.
 OUTPUT_COLS = [
@@ -92,7 +112,7 @@ OUTPUT_COLS = [
     "ServeEff", "ServeModifier",
     "ReceiveEff", "ReceiveModifier",
     "SetEff", "SetModifier",
-    "LeverageModifier",
+    "SetLeverageModifier",
     "GIS_Plus",
     "ContextMissing",
 ]
@@ -138,8 +158,22 @@ def parse_score(s):
 # ── Efficiency modifiers ──────────────────────────────────────────────────────
 
 def interp_mult(rate, anchors):
-    """Piecewise-linear interpolation between 3 anchor rates and multipliers."""
+    """Piecewise-linear interpolation between 3 anchor rates and multipliers.
+
+    Handles a degenerate lower half (low == mid): when the population median
+    IS the floor (e.g. ReceiveEff where >90% of values are 0), we want 0 to
+    map to NEUTRAL (1.00×), not floor (0.90×), and only positive rates to
+    earn a bonus. In that case skip the lower interpolation entirely.
+    """
     low, mid, high = anchors
+    if low == mid:
+        # Degenerate lower half — every rate ≤ mid is neutral; only > mid interpolates.
+        if rate <= mid:
+            return MULT_MID
+        if rate >= high:
+            return MULT_HIGH
+        t = (rate - mid) / (high - mid)
+        return MULT_MID + t * (MULT_HIGH - MULT_MID)
     if rate <= low:  return MULT_LOW
     if rate >= high: return MULT_HIGH
     if rate <= mid:
@@ -148,7 +182,56 @@ def interp_mult(rate, anchors):
     t = (rate - mid) / (high - mid)
     return MULT_MID + t * (MULT_HIGH - MULT_MID)
 
-# ── Leverage layers ───────────────────────────────────────────────────────────
+# ── Set-leverage modifier ─────────────────────────────────────────────────────
+
+def compute_set_leverage(player_ctx, obs_sets_played, match_sets_detail):
+    """
+    Per-match set-leverage multiplier.
+
+    Preferred: use the player's own PBP events (score_state_events) — weight by
+    the fraction of events that fell in each set bucket. Players whose events
+    are concentrated late (sets 4 & 5) earn a small bump.
+
+    Fallback (player absent from PBP or no events logged): if the observation's
+    `S` equals the match's total sets, assume the player played start-to-finish
+    and weight by the match-structural distribution of ALL events across sets.
+    Otherwise default to 1.0 (we don't know which sets they played).
+
+    Weights: sets 1-3 → 1.00, set 4 → 1.05, set 5 → 1.10.
+    """
+    def weight_from_sets(set_counts):
+        total = sum(set_counts.values())
+        if total <= 0:
+            return 1.0
+        f_1to3 = sum(v for k, v in set_counts.items() if k <= 3) / total
+        f_4    = set_counts.get(4, 0) / total
+        f_5    = set_counts.get(5, 0) / total
+        return SET_LEV_1TO3 * f_1to3 + SET_LEV_4 * f_4 + SET_LEV_5 * f_5
+
+    if player_ctx is not None:
+        evs = player_ctx.get("score_state_events") or []
+        if evs:
+            counts: dict[int, int] = {}
+            for ev in evs:
+                sn = int(ev.get("set") or 0)
+                if sn > 0:
+                    counts[sn] = counts.get(sn, 0) + 1
+            if counts:
+                return weight_from_sets(counts)
+
+    # Fallback: use match-structural weighting only if player played all sets.
+    if match_sets_detail:
+        total_sets = len(match_sets_detail)
+        if obs_sets_played and obs_sets_played == total_sets:
+            counts = {int(s.get("set", 0)): 1 for s in match_sets_detail if s.get("set")}
+            if counts:
+                return weight_from_sets(counts)
+    return 1.0
+
+
+# ── Legacy leverage layers (unused after rally-leverage migration) ───────────
+# Kept so historical callers of compute_leverage() don't break. Not invoked by
+# main() any more — see lookup_rally_leverage() above.
 
 def layer1_match_state(set_num, sets_detail):
     """Match situation multiplier based on set wins entering this set."""
@@ -232,6 +315,49 @@ def resolve_match_context_path():
     if not p.exists():
         raise FileNotFoundError(f"File does not exist: {p}")
     return p
+
+import unicodedata as _ud
+import re as _re
+
+_SUFFIX_RE = _re.compile(r"\b(jr|sr|ii|iii|iv)\b\.?", _re.IGNORECASE)
+
+def norm_name(s: str) -> str:
+    """
+    Normalized form for cross-source player-name matching.
+    - lowercase
+    - strip accents (NFKD)
+    - strip suffixes (jr/sr/ii/iii/iv)
+    - remove punctuation (apostrophes, periods, hyphens)
+    - collapse whitespace
+    """
+    if not s:
+        return ""
+    s = _ud.normalize("NFKD", s)
+    s = "".join(c for c in s if not _ud.combining(c))
+    s = s.lower()
+    s = _SUFFIX_RE.sub(" ", s)
+    s = _re.sub(r"[\'\.\-,]", " ", s)
+    s = _re.sub(r"\s+", " ", s).strip()
+    return s
+
+
+def build_norm_index(ctx: dict) -> dict:
+    """
+    For each contest, map norm_name(player) → original_name, so downstream
+    lookups can fall back via normalized form.  Returns {cid: {normname: orig}}.
+    """
+    idx: dict = {}
+    for cid, players in ctx.items():
+        if not isinstance(players, dict):
+            continue
+        sub: dict = {}
+        for orig in players.keys():
+            nm = norm_name(orig)
+            if nm and nm not in sub:
+                sub[nm] = orig
+        idx[cid] = sub
+    return idx
+
 
 def load_match_context(path):
     """Load match_context.json with pickle cache for fast re-runs."""
@@ -346,7 +472,7 @@ def opponent_modifier(opp_rpi, season_info):
 
 # ── Match-context lookup ──────────────────────────────────────────────────────
 
-def find_player_context(match_ctx, contest_id, date, team, opp_team, player, season_year):
+def find_player_context(match_ctx, contest_id, date, team, opp_team, player, season_year, norm_idx=None):
     """
     Resolve the player's context entry for this match.
 
@@ -378,12 +504,24 @@ def find_player_context(match_ctx, contest_id, date, team, opp_team, player, sea
             if alt_flipped and alt_flipped not in candidates:
                 candidates.append(alt_flipped)
 
+    pnorm = norm_name(player) if norm_idx is not None else None
     for cid in candidates:
         contest = match_ctx.get(cid)
         if contest is not None:
             pc = contest.get(player)
             if pc is not None:
                 return pc, cid, True
+            # Normalized-name fallback: catches accent/punctuation/suffix drift
+            # (e.g. "Abby López" ↔ "Abby Lopez", "Mo'ne Davis" ↔ "Mone Davis",
+            #  "Jasmine Smith Jr." ↔ "Jasmine Smith").
+            if pnorm and norm_idx is not None:
+                sub = norm_idx.get(cid)
+                if sub:
+                    orig = sub.get(pnorm)
+                    if orig:
+                        pc2 = contest.get(orig)
+                        if pc2 is not None:
+                            return pc2, cid, True
     return None, contest_id, False
 
 # ── Main build ────────────────────────────────────────────────────────────────
@@ -405,6 +543,9 @@ def main():
         return
 
     match_ctx = load_match_context(mc_path)
+    print("Building normalized-name index …")
+    norm_idx = build_norm_index(match_ctx)
+    print(f"  indexed {sum(len(v) for v in norm_idx.values()):,} player-normnames across {len(norm_idx):,} contests")
     rpi       = load_rpi(RPI_PATH)
 
     # ── Run ───────────────────────────────────────────────────────────────────
@@ -460,7 +601,7 @@ def main():
             opp_team   = (row.get("Opponent Team") or "").strip()
 
             player_ctx, _resolved_cid, ctx_found = find_player_context(
-                match_ctx, contest_id, date, team, opp_team, player, year
+                match_ctx, contest_id, date, team, opp_team, player, year, norm_idx
             )
             if not ctx_found:
                 n_context_missing += 1
@@ -469,14 +610,13 @@ def main():
                 else:
                     n_player_missing += 1
 
-            # ── Efficiency mods + leverage ───────────────────────────────
+            # ── Efficiency mods (from match_context) ─────────────────────
             serve_eff = None
             serve_mod = 1.0
             recv_eff  = None
             recv_mod  = 1.0
             set_eff   = None
             set_mod   = 1.0
-            leverage  = 1.0
 
             if player_ctx is not None:
                 # Serve
@@ -501,10 +641,20 @@ def main():
                     set_eff = assists_n / set_attempts
                     set_mod = interp_mult(set_eff, SET_ANCHORS)
                     set_mods_nontrivial.append(set_mod)
-                # Leverage
-                sse = player_ctx.get("score_state_events") or []
-                sd  = player_ctx.get("sets_detail") or []
-                leverage = compute_leverage(sse, sd)
+
+            # Set-leverage modifier — small bump for late-set volume (sets 4 & 5).
+            # Uses the player's own PBP event distribution when available; falls
+            # back to match-structural weighting only for players who played every set.
+            match_sets_detail = []
+            if player_ctx is not None:
+                # sets_detail lives at the contest level (same for every player);
+                # look it up via the resolved contest ID.
+                cx = match_ctx.get(_resolved_cid)
+                if isinstance(cx, dict):
+                    match_sets_detail = cx.get("_sets_detail") or cx.get("sets_detail") or []
+            set_lev_mod = compute_set_leverage(
+                player_ctx, safe_int(row.get("S")), match_sets_detail
+            )
 
             # ── GIS+ calculation ──────────────────────────────────────────
             kills   = safe_int(row.get("Kills"))
@@ -520,15 +670,16 @@ def main():
             rerr    = safe_int(row.get("RErr"))
             digs_ct = safe_int(row.get("Digs"))
 
-            attacking = (kills - errors)                                   * leverage
-            blocking  = (bs + 0.5 * ba - berr)                             * leverage
-            setting   = (0.5 * assists - bhe)         * set_mod            * leverage
-            serving   = (aces - serr)                 * serve_mod          * leverage
-            receiving = (0.25 * passes - rerr)        * recv_mod           * leverage
-            digs_b    = (0.25 * digs_ct)                                    * leverage
+            attacking = (kills - errors)
+            blocking  = (bs + 0.5 * ba - berr)
+            setting   = (0.5 * assists - bhe)         * set_mod
+            serving   = (aces - serr)                 * serve_mod
+            receiving = (0.25 * passes - rerr)        * recv_mod
+            digs_b    = (0.25 * digs_ct)
 
             gis_plus = round(
-                (attacking + blocking + setting + serving + receiving + digs_b) * opp_mod,
+                (attacking + blocking + setting + serving + receiving + digs_b)
+                * opp_mod * set_lev_mod,
                 2,
             )
 
@@ -543,7 +694,7 @@ def main():
                 "ReceiveModifier":  round(recv_mod, 4),
                 "SetEff":           round(set_eff, 4)   if set_eff   is not None else "",
                 "SetModifier":      round(set_mod, 4),
-                "LeverageModifier": round(leverage, 4),
+                "SetLeverageModifier": round(set_lev_mod, 4),
                 "GIS_Plus":         gis_plus,
                 "ContextMissing":   not ctx_found,
             })
@@ -554,7 +705,7 @@ def main():
             gis_vals.append(gis_val)
             gis_plus_vals.append(gis_plus)
             opp_mods.append(opp_mod)
-            lev_mods.append(leverage)
+            lev_mods.append(set_lev_mod)
 
             # Top-5 maintenance
             if len(top5) < 5:
@@ -582,7 +733,7 @@ def main():
         print()
         def avg(xs): return sum(xs) / len(xs) if xs else 0.0
         print(f"Mean opponent modifier:       {avg(opp_mods):.4f}")
-        print(f"Mean leverage modifier:       {avg(lev_mods):.4f}")
+        print(f"Mean set-leverage modifier:   {avg(lev_mods):.4f}")
         print(f"Mean serve modifier* :        {avg(serve_mods_nontrivial):.4f}  (n={len(serve_mods_nontrivial):,})")
         print(f"Mean receive modifier* :      {avg(recv_mods_nontrivial):.4f}  (n={len(recv_mods_nontrivial):,})")
         print(f"Mean set modifier* :          {avg(set_mods_nontrivial):.4f}  (n={len(set_mods_nontrivial):,})")

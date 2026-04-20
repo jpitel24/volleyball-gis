@@ -175,6 +175,30 @@ export async function loadYear(year) {
   return promise;
 }
 
+// ── Set-scores loader ─────────────────────────────────────────────────────────
+// Lazily fetches /data/wvb_setscores_<year>.json — a { ContestID → [[h,a], ...] }
+// map built from NCAA play-by-play. Missing/404 → empty map (scoresUnknown path).
+
+const setScoresCache = new Map();
+const setScoresInflight = new Map();
+
+export async function loadSetScores(year) {
+  if (setScoresCache.has(year)) return setScoresCache.get(year);
+  if (setScoresInflight.has(year)) return setScoresInflight.get(year);
+
+  const promise = fetch(`/data/wvb_setscores_${year}.json`)
+    .then(r => r.ok ? r.json() : {})
+    .catch(() => ({}))
+    .then(map => {
+      setScoresCache.set(year, map);
+      setScoresInflight.delete(year);
+      return map;
+    });
+
+  setScoresInflight.set(year, promise);
+  return promise;
+}
+
 // ── CSV → boxscore adapter ────────────────────────────────────────────────────
 
 const num = v => {
@@ -199,7 +223,11 @@ function rowToPlayer(r) {
     assists:              num(r.Assists),
     service_aces:         num(r.Aces),
     service_errors:       num(r.SErr),
+    serve_attempts:       num(r.ServeAtt),
     reception_errors:     num(r.RErr),
+    reception_attempts:   num(r.RetAtt),
+    set_errors:           num(r.SetErr),
+    set_attempts:         num(r.SetAtt),
     digs:                 num(r.Digs),
     block_solos:          num(r.BlockSolos),
     block_assists:        num(r.BlockAssists),

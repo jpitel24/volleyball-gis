@@ -17,7 +17,7 @@ export function DataProvider({ children }) {
         const safeJson = r => r.ok ? r.json().catch(() => null) : null;
         const [pgisTables, rpiByYear, categoryPgisTables] = await Promise.all([
           fetch('/data/pgis_tables.json').then(safeJson),
-          fetch('/data/rpi_by_year.json').then(safeJson),
+          fetch('/data/historical_rpi.json').then(safeJson),
           fetch('/data/category_pgis_tables.json').then(safeJson),
         ]);
         setData({ pgisTables, rpiByYear, categoryPgisTables, loading: false, error: null });

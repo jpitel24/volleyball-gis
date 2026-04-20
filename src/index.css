@@ -468,8 +468,10 @@ body {
 .pgis-bar-ticks { display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 0.48rem; color: #334155; }
 
 /* ── Stat grid ───────────────────────────────────────────────────── */
-.stat-row-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 0.3rem; margin-top: 0.1rem; }
+.stat-row-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 0.3rem; margin-top: 0.1rem; }
+.stat-eff-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.3rem; margin-top: 0.35rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border, #334155); }
 .stat-cell { text-align: center; }
+.stat-cell-dim .stat-num, .stat-cell-dim .stat-lbl { opacity: 0.35; }
 .stat-num { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text); }
 .stat-lbl { font-family: 'JetBrains Mono', monospace; font-size: 0.48rem; color: var(--muted); margin-top: 0.1rem; }
 .pill { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; padding: 0.1rem 0.38rem; border-radius: 3px; }

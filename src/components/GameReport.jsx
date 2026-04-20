@@ -3,14 +3,18 @@ import PlayerCard from './PlayerCard.jsx';
 import PlayerModal from './PlayerModal.jsx';
 import { findRPIValue, rpiToRank, seasonFromGameId } from '../lib/gis.js';
 
-const WEIGHTS = [
-  ['Kill','1.00','#38bdf8'],
-  ['Ace','1.20','#f43f5e'],
-  ['Block Solo','1.10','#a78bfa'],
-  ['Assist','0.28','#4ade80'],
-  ['Block Assist','0.50','#a78bfa'],
-  ['Dig','0.35','#facc15'],
-];
+// A player "participated" if they have any non-zero counting stat line.
+// Matches the per-card visibility rule (p.gis > 0) used in TeamSection.
+function hasStatLine(p) {
+  return (
+    (p.kills || 0) + (p.assists || 0) + (p.digs || 0) +
+    (p.service_aces || 0) + (p.block_solos || 0) + (p.block_assists || 0) +
+    (p.errors || 0) + (p.service_errors || 0) + (p.reception_errors || 0) +
+    (p.blocking_errors || 0) + (p.ball_handling_errors || 0) +
+    (p.total_attacks || 0) + (p.serve_attempts || 0) +
+    (p.reception_attempts || 0) + (p.set_attempts || 0)
+  ) > 0;
+}
 
 function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpiByYear, onSelect }) {
   const players = mg.players
@@ -100,8 +104,8 @@ export default function GameReport({ gameId, mg, isMock, rpiByYear, categoryPgis
     .sort((a, b) => (b.pGIS ?? b.gisPlus) - (a.pGIS ?? a.gisPlus))
     .forEach((p, i) => matchRanks.set(p, i + 1));
 
-  const pbpCount = mg.players.filter(p => p.levPlays > 0).length;
-  const hasPGIS  = mg.players.some(p => p.pGIS !== null);
+  const activeCount = mg.players.filter(hasStatLine).length;
+  const hasPGIS     = mg.players.some(p => p.pGIS !== null);
 
   return (
     <div className="report" ref={ref}>
@@ -115,64 +119,37 @@ export default function GameReport({ gameId, mg, isMock, rpiByYear, categoryPgis
         <div className="rpt-title">{mg.result}</div>
         <div className="meta-row">
           <span className="meta-chip">Sets <strong>{mg.nSets}</strong></span>
-          <span className="meta-chip">Match lev <strong>{mg.ml.toFixed(2)}×</strong></span>
-          <span className="meta-chip">Players <strong>{mg.players.length}</strong></span>
-          <span className="meta-chip">PBP lev <strong>{pbpCount}/{mg.players.length}</strong></span>
+          <span className="meta-chip">Players <strong>{activeCount}</strong></span>
           {mg.gameDate && <span className="meta-chip">{mg.gameDate}</span>}
           {mg.gameLocation && <span className="meta-chip">{mg.gameLocation}</span>}
-          {mg.hasRPI
-            ? <span className="meta-chip gp">GIS+ <strong>active</strong></span>
-            : <span className="meta-chip">GIS+ <strong style={{ color: 'var(--muted)' }}>RPI N/A</strong></span>
-          }
           {hasPGIS && (
             <span className="meta-chip" style={{ borderColor: '#fb923c30', background: '#fb923c08', color: 'var(--pgis)' }}>
               pGIS <strong style={{ color: 'var(--pgis)' }}>active</strong>
             </span>
           )}
         </div>
-        <div className="set-chips">
-          {mg.periods.map((p, i) => {
-            const score = mg.scoresUnknown || (p.homeScore === 0 && p.awayScore === 0)
-              ? '—' : `${p.homeScore}–${p.awayScore}`;
-            return (
+        {!mg.scoresUnknown && mg.periods.length > 0 && (
+          <div className="set-chips">
+            {mg.periods.map((p, i) => (
               <span key={i} className="set-chip">
                 <span className="set-chip-label">SET {i+1}</span>
-                <span>{score}</span>
+                <span>{p.homeScore}–{p.awayScore}</span>
               </span>
-            );
-          })}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="formula-bar">
-        <div className="formula-bar-label">POSITIVE ACTION WEIGHTS</div>
-        <div className="wchips">
-          {WEIGHTS.map(([n, v, c]) => (
-            <span key={n} className="wchip">
-              <span style={{ color: c }}>{n}</span>
-              <span className="wchip-v">{v}</span>
-            </span>
-          ))}
-        </div>
         <div className="formula-lines">
           <div className="formula-eq">
-            GIS = <em>(Volume/Set × Leverage)</em> × <em>Error Penalty</em> × <em>1.25</em>
+            <strong>GIS</strong> — volume &amp; leverage of positive actions per set, penalized for errors.
           </div>
           <div className="formula-eq">
-            GIS+ = <em className="gp">GIS × Opponent RPI modifier</em>
-            &nbsp;·&nbsp; modifier = 1 + (rpi_value − 0.500) × 0.63 &nbsp;·&nbsp; neutral at RPI 0.500
+            <strong className="gp">GIS+</strong> — GIS adjusted for opponent strength (RPI).
           </div>
           <div className="formula-eq">
-            pGIS = <em className="pg">power curve percentile of opponent-adjusted per-set efficiency vs D1 peers at same position</em>
-          </div>
-        </div>
-        {/* pGIS info card — clean primary + benchmark lines */}
-        <div className="formula-note">
-          <div className="formula-note-primary">
-            <span>pGIS</span> = Positional GIS · Hard Scale 0–10
-          </div>
-          <div className="formula-note-benchmarks">
-            Top 1% ≥ 9.80 &nbsp;·&nbsp; Top 5% ≥ 9.03 &nbsp;·&nbsp; Top 10% ≥ 8.10 &nbsp;·&nbsp; Top 25% ≥ 5.63
+            <strong className="pg">pGIS</strong> — 0–10 percentile score vs D1 peers at the same position.
           </div>
         </div>
       </div>

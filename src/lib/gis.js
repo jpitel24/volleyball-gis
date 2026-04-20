@@ -42,15 +42,17 @@ export const POS_GROUP_MAP = {
   L: 'L', DS: 'L', LB: 'L',
 };
 
+// Color by position. Opposite/right-side variants all share orange;
+// libero and defensive-specialist share yellow (defensive back-row).
 export const POS_COLORS = {
-  OH: '#38bdf8', MB: '#a78bfa', RS: '#fb923c',
-  S: '#4ade80', L: '#facc15', DS: '#94a3b8',
+  OH: '#38bdf8', MH: '#a78bfa', MB: '#a78bfa',
+  RS: '#fb923c', OPP: '#fb923c', OP: '#fb923c', O: '#fb923c',
+  OPPOSITE: '#fb923c', OPPO: '#fb923c', OUTSIDE: '#fb923c', OS: '#fb923c',
+  S: '#4ade80',
+  L: '#facc15', DS: '#facc15', LB: '#facc15',
 };
 
-export const POS_COLORS_SB = {
-  OH: '#38bdf8', MB: '#a78bfa', OPP: '#fb923c', RS: '#fb923c',
-  S: '#4ade80', L: '#facc15', DS: '#94a3b8',
-};
+export const POS_COLORS_SB = POS_COLORS;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 export function posGroup(position) {
@@ -77,7 +79,11 @@ export function inferPosition({ kills=0, assists=0, digs=0, block_solos=0, block
   return null;
 }
 
-export function posColor(p) { return POS_COLORS[p] || '#94a3b8'; }
+export function posColor(p) {
+  // Normalize "OH/RS", "DS/L", lowercase, whitespace — take first token.
+  const key = p?.toUpperCase()?.split('/')[0]?.trim();
+  return POS_COLORS[key] || '#94a3b8';
+}
 
 export function gisTier(g) {
   if (g >= 10)  return ['ELITE',   '#f43f5e'];

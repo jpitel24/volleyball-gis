@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import GameReport from './GameReport.jsx';
 import { useData } from '../lib/DataContext.jsx';
-import { loadYear, gameRowsToBoxscore } from '../lib/csvGames.js';
+import { loadYear, gameRowsToBoxscore, loadSetScores } from '../lib/csvGames.js';
 import { computeGIS } from '../lib/gis.js';
 import { loadGisPlus, makeKey, seasonStrFromYear } from '../lib/gisPlus.js';
 
@@ -50,14 +50,26 @@ export default function GameLookup() {
     const rows = yearData.byKey[game.key];
     const bs   = gameRowsToBoxscore(rows);
 
-    // Minimal scoring summary — we don't have per-set scores from the CSV,
-    // so matchLev defaults to 1.00 and set chips are hidden.
-    const ss = {
-      periods: [],
-      finalHomeScore: 0,
-      finalAwayScore: 0,
-      scoresUnknown: true,
-    };
+    // Per-set rally-point scores are served by /data/wvb_setscores_<year>.json,
+    // a lightweight lookup built from NCAA play-by-play (ContestID → [[h,a], ...]).
+    // If missing, fall through to scoresUnknown so matchLev defaults to 1.00.
+    const setScoresMap = await loadSetScores(year).catch(() => ({}));
+    const periodsArr   = game.contestId && setScoresMap[game.contestId]
+      ? setScoresMap[game.contestId].map(([h, a]) => ({ homeScore: h, awayScore: a }))
+      : [];
+    const ss = periodsArr.length
+      ? {
+          periods:        periodsArr,
+          finalHomeScore: periodsArr.filter(p => p.homeScore > p.awayScore).length,
+          finalAwayScore: periodsArr.filter(p => p.awayScore > p.homeScore).length,
+          scoresUnknown:  false,
+        }
+      : {
+          periods:        [],
+          finalHomeScore: 0,
+          finalAwayScore: 0,
+          scoresUnknown:  true,
+        };
 
     const gameId = game.contestId || '0';
     const mg     = computeGIS(bs, ss, null, gameId, rpiByYear || {}, pgisTables || {});

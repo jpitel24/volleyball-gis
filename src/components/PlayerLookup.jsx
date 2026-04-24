@@ -12,6 +12,11 @@ const POS_FILTERS = [
   { id: 'L',   label: 'L/DS' },
 ];
 
+const SORT_OPTIONS = [
+  { id: 'gisPlus', label: 'GIS+' },
+  { id: 'pGIS',    label: 'pGIS' },
+];
+
 function fmt(v, d = 2) {
   if (v == null || !Number.isFinite(v)) return '—';
   return v.toFixed(d);
@@ -175,6 +180,7 @@ export default function PlayerLookup({ onGameDeepLink }) {
   const [buildingIndex, setBuilding]    = useState(false);
   const [search, setSearch]             = useState('');
   const [posFilter, setPosFilter]       = useState('ALL');
+  const [sortBy, setSortBy]             = useState('gisPlus');
   const [expandedPlayer, setExpanded]   = useState(null);
   const [expandedSeason, setExpandedS]  = useState(null);
 
@@ -195,12 +201,18 @@ export default function PlayerLookup({ onGameDeepLink }) {
   const allHits = useMemo(() => {
     if (!index || !isActive) return [];
     const q = search.trim().toLowerCase();
-    return index.players.filter(p => {
+    const hits = index.players.filter(p => {
       if (q && !p.name.toLowerCase().includes(q)) return false;
       if (posFilter !== 'ALL' && posGroup(p.position) !== posFilter) return false;
       return true;
     });
-  }, [index, search, posFilter, isActive]);
+    // Default index order is career GIS+ desc. Only re-sort when the
+    // user picks a different key.
+    if (sortBy !== 'gisPlus') {
+      hits.sort((a, b) => (b.career[sortBy] || 0) - (a.career[sortBy] || 0));
+    }
+    return hits;
+  }, [index, search, posFilter, sortBy, isActive]);
 
   const filtered  = allHits.slice(0, MAX_RESULTS);
   const totalHits = allHits.length;
@@ -246,6 +258,22 @@ export default function PlayerLookup({ onGameDeepLink }) {
               disabled={buildingIndex || !index}
             >
               {f.label}
+            </button>
+          ))}
+        </div>
+        <div className="gl-browse-years" style={{ margin: 0 }}>
+          <span style={{ color: 'var(--muted)', fontSize: '0.7rem', alignSelf: 'center', marginRight: '0.35rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+            Sort
+          </span>
+          {SORT_OPTIONS.map(o => (
+            <button
+              key={o.id}
+              type="button"
+              className={`gl-mode-btn${sortBy === o.id ? ' active' : ''}`}
+              onClick={() => { setSortBy(o.id); setExpanded(null); setExpandedS(null); }}
+              disabled={buildingIndex || !index}
+            >
+              {o.label}
             </button>
           ))}
         </div>

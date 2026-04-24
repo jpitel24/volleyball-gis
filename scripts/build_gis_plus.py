@@ -86,10 +86,17 @@ RECEIVE_ANCHORS  = (0.0000, 0.0000, 0.0556)
 SET_ANCHORS      = (0.2653, 0.3678, 0.4839)
 MULT_LOW, MULT_MID, MULT_HIGH = 0.90, 1.00, 1.10
 
-OPP_BOOST_CAP    = 1.10   # max opponent modifier (elite opponent)
-OPP_DISCOUNT_CAP = 0.80   # min opponent modifier (weak / non-D1 opponent)
-OPP_BOOST_PCT    = 0.10   # +10% at max RPI
-OPP_DISCOUNT_PCT = 0.20   # -20% at min RPI
+# Opponent-strength modifier band. Widened from the original [0.80, 1.10]
+# because the old range gave power-5 schedules only a ~5-8% edge over
+# mid-major schedules, which wasn't enough to offset the raw-volume gap
+# mid-majors got from facing weaker defenses. Neutral point is also shifted
+# from the top-50 RPI to the season median — that makes "average D1
+# opponent" the reference, so every sub-median opponent earns a real
+# discount instead of being squeezed together at the floor.
+OPP_BOOST_CAP    = 1.20   # max opponent modifier (elite opponent)
+OPP_DISCOUNT_CAP = 0.55   # min opponent modifier (weak / non-D1 opponent)
+OPP_BOOST_PCT    = 0.20   # +20% at max RPI
+OPP_DISCOUNT_PCT = 0.45   # -45% at min RPI
 
 # Set-leverage bumps: per-event weight depending on which set the event was
 # played in. Applied as a per-match multiplier on the GIS+ total via the
@@ -424,9 +431,17 @@ def load_rpi(path):
             print(f"  WARN: no numeric RPI values for season {season}", file=sys.stderr)
             continue
         mn, mx = min(numeric), max(numeric)
+        # Override the _neutral_point baked into historical_rpi.json. That
+        # value sits at the top-50 RPI, which means 85% of D1 teams share
+        # the -20% discount half of the old scale. Using the season median
+        # instead makes "average D1 opponent" the zero-point, so sub-median
+        # opponents (half the league) earn a real discount and super-median
+        # opponents earn a real boost.
+        numeric_sorted = sorted(numeric)
+        median = numeric_sorted[len(numeric_sorted) // 2]
         per_season[season] = {
             "teams":         teams,
-            "neutral_point": neutral if neutral is not None else (mn + mx) / 2,
+            "neutral_point": median,
             "min":           mn,
             "max":           mx,
         }

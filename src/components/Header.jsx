@@ -19,6 +19,7 @@ export default function Header({ view = 'games', onChangeView }) {
           {tab('games',   'Games')}
           {tab('players', 'Players')}
           {tab('seasons', 'Seasons')}
+          {tab('teams',   'Teams')}
         </nav>
       )}
     </header>

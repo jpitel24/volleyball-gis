@@ -1,0 +1,293 @@
+import { useEffect, useMemo, useState } from 'react';
+import { useData } from '../lib/DataContext.jsx';
+import { loadPlayerIndex } from '../lib/playerIndex.js';
+import { posColor, pgisLabel } from '../lib/gis.js';
+
+const MAX_RESULTS = 20;
+const YEAR_OPTIONS = [2025, 2024, 2023, 2022];
+
+function fmt(v, d = 2) {
+  if (v == null || !Number.isFinite(v)) return '—';
+  return v.toFixed(d);
+}
+
+function PGISChip({ v }) {
+  if (v == null || !Number.isFinite(v)) return <span className="pb-chip">pGIS —</span>;
+  const [, cls] = pgisLabel(v);
+  return <span className={`pb-chip pgis-${cls}`}>pGIS {v.toFixed(1)}</span>;
+}
+
+// Aggregate the player index into one record per (year, team).
+//
+//   players[]   → every player-season for that team (sorted by GIS+/G desc)
+//   games       → unique match count (union of every player's gameKeys)
+//   t50Games    → matches against RPI Top-50 opponents
+//   sets        → total team-sets (max S per match, summed)
+//   gisPlus     → starter-weighted mean GIS+/G (games-weighted across players)
+//   pGIS        → same — games-weighted mean of per-player season pGIS
+function buildTeamIndex(players) {
+  const byKey = new Map();
+
+  for (const p of players) {
+    for (const s of p.seasons) {
+      if (!s.team || !s.games) continue;
+      const key = `${s.year}||${s.team}`;
+      let t = byKey.get(key);
+      if (!t) {
+        t = {
+          key,
+          year:      s.year,
+          team:      s.team,
+          players:   [],
+          gameKeys:  new Set(),
+          t50Keys:   new Set(),
+          matchSets: {}, // gameKey → max sets (team match length)
+        };
+        byKey.set(key, t);
+      }
+      t.players.push({
+        key:      p.key,
+        name:     p.name,
+        position: s.position || p.position,
+        games:    s.games,
+        sets:     s.sets,
+        gis:      s.gis,
+        gisPlus:  s.gisPlus,
+        pGIS:     s.pGIS,
+        t50:      s.t50,
+      });
+      for (const g of s.gameLog || []) {
+        t.gameKeys.add(g.gameKey);
+        if (g.vsTop50) t.t50Keys.add(g.gameKey);
+        const cur = t.matchSets[g.gameKey] || 0;
+        if (g.sets > cur) t.matchSets[g.gameKey] = g.sets;
+      }
+    }
+  }
+
+  const teams = [];
+  for (const t of byKey.values()) {
+    const sortedPlayers = t.players.slice().sort((a, b) => (b.gisPlus || 0) - (a.gisPlus || 0));
+    // Team metrics — games-weighted (by player games) so a libero who
+    // plays every match pulls weight toward her season line.
+    let gSum = 0, gpSum = 0, pgSum = 0, wSum = 0, pgW = 0;
+    for (const pl of t.players) {
+      const w = pl.games || 0;
+      if (!w) continue;
+      gSum  += (pl.gis     || 0) * w;
+      gpSum += (pl.gisPlus || 0) * w;
+      wSum  += w;
+      if (Number.isFinite(pl.pGIS)) { pgSum += pl.pGIS * w; pgW += w; }
+    }
+    const totalTeamSets = Object.values(t.matchSets).reduce((a, b) => a + b, 0);
+    teams.push({
+      key:         t.key,
+      year:        t.year,
+      team:        t.team,
+      rosterSize:  t.players.length,
+      games:       t.gameKeys.size,
+      t50Games:    t.t50Keys.size,
+      sets:        totalTeamSets,
+      gis:         wSum > 0 ? gSum  / wSum : 0,
+      gisPlus:     wSum > 0 ? gpSum / wSum : 0,
+      pGIS:        pgW  > 0 ? pgSum / pgW  : null,
+      players:     sortedPlayers,
+    });
+  }
+  return teams;
+}
+
+function PlayerMiniRow({ p, rank }) {
+  return (
+    <tr>
+      <td style={{ textAlign: 'right', color: 'var(--muted)' }}>{rank}</td>
+      <td className="pb-name" style={{ color: posColor(p.position) }}>{p.name}</td>
+      <td>{p.position}</td>
+      <td style={{ textAlign: 'right' }}>{p.games}</td>
+      <td style={{ textAlign: 'right' }}>{p.sets}</td>
+      <td style={{ textAlign: 'right' }}>{fmt(p.gis)}</td>
+      <td style={{ textAlign: 'right', color: 'var(--gisplus)' }}>{fmt(p.gisPlus)}</td>
+      <td style={{ textAlign: 'right', color: 'var(--pgis)' }}>{fmt(p.pGIS, 1)}</td>
+      <td style={{ textAlign: 'right', opacity: 0.7 }}>{p.t50 ? p.t50.games : '—'}</td>
+      <td style={{ textAlign: 'right', opacity: 0.7, color: 'var(--gisplus)' }}>{p.t50 ? fmt(p.t50.gisPlus) : '—'}</td>
+      <td style={{ textAlign: 'right', opacity: 0.7 }}>{p.t50 && Number.isFinite(p.t50.pGIS) ? fmt(p.t50.pGIS, 1) : '—'}</td>
+    </tr>
+  );
+}
+
+function TeamCard({ t, expanded, onToggle }) {
+  const top3 = t.players.slice(0, 3);
+  return (
+    <div className="pb-card">
+      <div
+        className="pb-card-header"
+        onClick={onToggle}
+        style={{ cursor: 'pointer' }}
+      >
+        <span className="pb-name">{t.team}</span>
+        <span className="pb-team" style={{ marginLeft: '0.5rem' }}>{t.year}</span>
+        <div className="pb-career-chips">
+          <span className="pb-chip">{t.games} G · {t.sets} S</span>
+          <span className="pb-chip">Roster {t.rosterSize}</span>
+          <span className="pb-chip">GIS/G {fmt(t.gis)}</span>
+          <span className="pb-chip" style={{ color: 'var(--gisplus)' }}>GIS+/G {fmt(t.gisPlus)}</span>
+          <PGISChip v={t.pGIS} />
+          <span className="pb-chip" style={{ opacity: 0.7, borderStyle: 'dashed' }}>
+            {t.t50Games} T50 G
+          </span>
+          <span className="pb-expand-btn">{expanded ? '▾' : '▸'}</span>
+        </div>
+      </div>
+
+      {/* Always show top-3 summary in the collapsed card */}
+      {!expanded && top3.length > 0 && (
+        <div style={{ padding: '0.5rem 1rem', color: 'var(--muted)', fontSize: '0.7rem', fontFamily: "'JetBrains Mono',monospace" }}>
+          Top 3:&nbsp;
+          {top3.map((p, i) => (
+            <span key={p.key}>
+              <span style={{ color: posColor(p.position) }}>{p.name}</span>
+              <span style={{ color: 'var(--gisplus)' }}> ({fmt(p.gisPlus)})</span>
+              {i < top3.length - 1 ? '  ·  ' : ''}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {expanded && (
+        <div className="pb-table-wrap">
+          <table className="pb-season-table" style={{ width: '100%', fontFamily: "'JetBrains Mono',monospace", fontSize: '0.7rem' }}>
+            <thead>
+              <tr style={{ color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                <th style={{ textAlign: 'right' }}>#</th>
+                <th className="text-left">Player</th>
+                <th className="text-left">Pos</th>
+                <th style={{ textAlign: 'right' }}>G</th>
+                <th style={{ textAlign: 'right' }}>S</th>
+                <th style={{ textAlign: 'right' }}>GIS/G</th>
+                <th style={{ textAlign: 'right' }}>GIS+/G</th>
+                <th style={{ textAlign: 'right' }}>pGIS</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }}>T50 G</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }}>T50 GIS+/G</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }}>T50 pGIS</th>
+              </tr>
+            </thead>
+            <tbody>
+              {t.players.map((p, i) => (
+                <PlayerMiniRow key={p.key} p={p} rank={i + 1} />
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function TeamLookup() {
+  const { pgisTables, rpiByYear, loading } = useData();
+  const [index, setIndex]            = useState(null);
+  const [indexErr, setIndexErr]      = useState(null);
+  const [buildingIndex, setBuilding] = useState(false);
+
+  const [year, setYear]       = useState(2025);
+  const [search, setSearch]   = useState('');
+  const [expanded, setExpand] = useState(null);
+
+  useEffect(() => {
+    if (loading || !pgisTables) return;
+    let cancelled = false;
+    setBuilding(true);
+    loadPlayerIndex(pgisTables, rpiByYear)
+      .then(idx => { if (!cancelled) { setIndex(idx); setBuilding(false); } })
+      .catch(err => { if (!cancelled) { setIndexErr(err?.message || String(err)); setBuilding(false); } });
+    return () => { cancelled = true; };
+  }, [loading, pgisTables, rpiByYear]);
+
+  const teams = useMemo(() => {
+    if (!index) return [];
+    return buildTeamIndex(index.players);
+  }, [index]);
+
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    const rows = teams.filter(t => {
+      if (t.year !== year) return false;
+      if (q && !t.team.toLowerCase().includes(q)) return false;
+      return true;
+    });
+    // Rank by team GIS+/G desc — can always add toggles later.
+    rows.sort((a, b) => (b.gisPlus || 0) - (a.gisPlus || 0));
+    return rows;
+  }, [teams, year, search]);
+
+  const visible   = filtered.slice(0, MAX_RESULTS);
+  const totalHits = filtered.length;
+
+  return (
+    <>
+      <div className="hero">
+        <div className="hero-eyebrow">NCAA D1 Women's Volleyball</div>
+        <div className="hero-title">Team Browser</div>
+        <div className="hero-sub">
+          Pick a season and search for a program to see roster-wide GIS+
+          aggregates, schedule strength, and the top contributors that year.
+        </div>
+      </div>
+
+      <div className="gb-controls" style={{ justifyContent: 'center', flexWrap: 'wrap', gap: '0.6rem' }}>
+        <div className="gl-browse-years" style={{ margin: 0 }}>
+          {YEAR_OPTIONS.map(y => (
+            <button
+              key={y}
+              type="button"
+              className={`gl-mode-btn${year === y ? ' active' : ''}`}
+              onClick={() => { setYear(y); setExpand(null); }}
+              disabled={buildingIndex || !index}
+            >
+              {y}
+            </button>
+          ))}
+        </div>
+        <input
+          className="pb-search"
+          placeholder="Filter by team name…"
+          value={search}
+          onChange={e => { setSearch(e.target.value); setExpand(null); }}
+          disabled={buildingIndex || !index}
+        />
+      </div>
+
+      <div className="gb-status">
+        {loading && <><div className="spinner" /> Loading baselines…</>}
+        {!loading && buildingIndex && <><div className="spinner" /> Building team index…</>}
+        {indexErr && <span style={{ color: '#f43f5e' }}>Error: {indexErr}</span>}
+        {index && !buildingIndex && (
+          <>
+            {totalHits.toLocaleString()} team{totalHits === 1 ? '' : 's'} · {year}
+            {search.trim() && ` matching "${search.trim()}"`}
+            {totalHits > MAX_RESULTS && ` — showing top ${MAX_RESULTS}`}
+          </>
+        )}
+      </div>
+
+      {index && visible.length > 0 && (
+        <div className="pb-list">
+          {visible.map(t => (
+            <TeamCard
+              key={t.key}
+              t={t}
+              expanded={expanded === t.key}
+              onToggle={() => setExpand(prev => prev === t.key ? null : t.key)}
+            />
+          ))}
+        </div>
+      )}
+
+      {index && visible.length === 0 && !buildingIndex && (
+        <div className="gb-empty">
+          No teams match the current filters.
+        </div>
+      )}
+    </>
+  );
+}

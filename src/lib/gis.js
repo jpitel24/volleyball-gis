@@ -349,10 +349,13 @@ export function computeGIS(bs, ss, pbp, gameId, RPI_BY_YEAR, PGIS_TABLES) {
       const plays      = levMap[p.name] || [];
       const avgLev     = plays.length ? plays.reduce((a, b) => a + b, 0) / plays.length : ml;
       const gisNeutral     = vol * errPen * GIS_SCALE;
-      const gisNeutralPlus = gisNeutral * oppMod;   // opponent-adjusted, no leverage — for pGIS
+      const gisNeutralPlus = gisNeutral * oppMod;   // opponent-adjusted, no leverage
       const gis            = vol * avgLev * errPen * GIS_SCALE;
       const gisPlus        = gis * oppMod;
-      const pGIS           = computePGIS(gisNeutralPlus, p.position, nSets, PGIS_TABLES);
+      // pGIS baselines in pgis_tables.json are built from the full
+      // GIS_Plus column (opp-adjusted AND leverage-baked), so the
+      // lookup must use the same value for the percentile to match.
+      const pGIS           = computePGIS(gisPlus, p.position, nSets, PGIS_TABLES);
 
       players.push({
         ...p, team: team.teamName, side: team.homeAway,

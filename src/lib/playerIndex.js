@@ -225,6 +225,19 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
           const ns    = stats.sets;
           if (ns <= 0) continue;
 
+          // Skip ghost appearances: the NCAA CSV credits every rostered
+          // player with the match's total sets even when they didn't
+          // take the floor. Those rows come through with ns > 0 but
+          // literally every counting stat at zero. A real appearance
+          // produces at least one action (pass, attack, block, dig,
+          // etc.) so a fully-zero line is effectively DNP.
+          let anyAction = 0;
+          for (const k of COUNTING_STATS) {
+            if (k === 'sets') continue;
+            anyAction += stats[k] || 0;
+          }
+          if (anyAction === 0) continue;
+
           // Overlay lookup; fall back to JS if missing. Both paths return
           // per-match totals (matching the units Game Browser displays).
           const gpKey = makeKey(seasonStr, r.Date, team, player);

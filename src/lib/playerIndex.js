@@ -250,7 +250,9 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
           season.gisPlusTotalSum += gameGisPlus;
 
           const oppTeam  = r['Opponent Team'] || '';
-          const vsTop50  = isTop50Opponent(oppTeam, seasonStr, rpiByYear, top50Sets);
+          // RPI file is keyed on the single year ("2022") rather than
+          // the "2022-2023" season string the GIS+ overlay uses.
+          const vsTop50  = isTop50Opponent(oppTeam, String(year), rpiByYear, top50Sets);
 
           season.games_.push({
             gameKey:   gKey,

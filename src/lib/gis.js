@@ -107,6 +107,18 @@ export function pgisLabel(v) {
   return                  ['LTD',    'low'];
 }
 
+// Title-case a player name, preserving hyphens, apostrophes, and whitespace.
+// Older CSVs (especially 2022) store names all-lowercase; this fixes them
+// at display time without mutating the underlying files.
+export function canonicalName(raw) {
+  if (!raw) return '';
+  return raw.split(/(\s+|-|')/).map(part => {
+    if (!part || part === ' ' || part === '-' || part === "'") return part;
+    if (/\s+/.test(part)) return part;
+    return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
+  }).join('');
+}
+
 export function normaliseTeamName(name) {
   if (!name) return '';
   return name.toLowerCase()

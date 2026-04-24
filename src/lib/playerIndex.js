@@ -38,7 +38,7 @@ import { loadYear } from './csvGames.js';
 import { loadGisPlus, makeKey, seasonStrFromYear } from './gisPlus.js';
 import {
   POS_W, ERR_W, ERR_FLOOR, ERR_DAMP, GIS_SCALE,
-  computePGIS, posGroup,
+  computePGIS, posGroup, canonicalName,
 } from './gis.js';
 
 const YEARS = [2025, 2024, 2023, 2022];
@@ -158,7 +158,7 @@ export function loadPlayerIndex(pgisTables) {
           if (!rec) {
             rec = {
               key,
-              name: player,
+              name: canonicalName(player),
               primaryTeam: team,
               teamCounts: {},
               posCounts: {},

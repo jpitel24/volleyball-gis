@@ -14,6 +14,8 @@
  * the initial fetch+parse.
  */
 
+import { canonicalName } from './gis.js';
+
 // ── CSV parser (RFC 4180-ish, quote-aware) ────────────────────────────────────
 
 /**
@@ -239,7 +241,7 @@ function rowToPlayer(r, playerPos) {
     : '';
   const pos = (rawP || fallback || '?').toUpperCase();
   return {
-    name:                 r.Player || 'Unknown',
+    name:                 canonicalName(r.Player) || 'Unknown',
     number:               r.Number || '',
     position:             pos,
     sets:                 num(r.S),

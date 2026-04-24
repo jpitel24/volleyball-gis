@@ -219,7 +219,7 @@ export default function PlayerLookup({ onGameDeepLink }) {
         </div>
       </div>
 
-      <div className="gb-controls">
+      <div className="gb-controls" style={{ justifyContent: 'center' }}>
         <input
           className="pb-search"
           placeholder="Filter by player name…"

@@ -29,9 +29,10 @@
  * estimate; fine for pre-season / non-D1 rows the overlay excludes).
  *
  * Season and career GIS/GIS+ are sets-weighted means of the per-game rates.
- * pGIS at every level is recomputed fresh via computePGIS() against the
- * per-position × nSets baselines in pgis_tables.json, so the 0-10 scale
- * stays comparable to what the Game Browser surfaces.
+ * Per-game pGIS is computed via computePGIS() against the per-position ×
+ * nSets baselines in pgis_tables.json; season and career pGIS are simple
+ * averages of the per-match pGIS scores, so heavier seasons naturally
+ * carry more weight without the noise of a roll-up rate lookup.
  */
 
 import { loadYear } from './csvGames.js';
@@ -240,26 +241,31 @@ export function loadPlayerIndex(pgisTables) {
       const careerTotals = zeroTotals();
       let careerSets = 0, careerGames = 0;
       let careerGisTotal = 0, careerGisPlusTotal = 0;
+      let careerPGisSum = 0, careerPGisCount = 0;
 
       for (const s of seasonList) {
         const seasonPos = pickMostCommonPosition(s.posCounts) || careerPos;
         // Display = average per-match (same units as Game Browser totals).
-        // pGIS lookup = per-set rate against position × nSets baseline.
         const gisPerGame     = s.games > 0 ? s.gisTotalSum     / s.games : 0;
         const gisPlusPerGame = s.games > 0 ? s.gisPlusTotalSum / s.games : 0;
-        const gisPlusPerSet  = s.sets  > 0 ? s.gisPlusTotalSum / s.sets  : 0;
-        const nSetsBucket    = s.games > 0
-          ? Math.min(5, Math.max(3, Math.round(s.sets / s.games)))
-          : 3;
-        const seasonPGIS = computePGIS(gisPlusPerSet, seasonPos, nSetsBucket, pgisTables);
 
-        // Per-game pGIS — per-set rate for the single match.
+        // Per-game pGIS — per-set rate for the single match, looked up
+        // against that match's position × nSets baseline.
         const gamesSorted = s.games_.slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+        let seasonPGisSum = 0, seasonPGisCount = 0;
         for (const g of gamesSorted) {
           const gNs = Math.min(5, Math.max(3, g.sets));
           const perSet = g.sets > 0 ? g.gisPlus / g.sets : 0;
           g.pGIS = computePGIS(perSet, g.position !== '?' ? g.position : seasonPos, gNs, pgisTables);
+          if (Number.isFinite(g.pGIS)) {
+            seasonPGisSum += g.pGIS;
+            seasonPGisCount += 1;
+          }
         }
+        // Season pGIS = simple average of its games' pGIS. Heavier seasons
+        // naturally weight the career average more without an extra rate
+        // lookup.
+        const seasonPGIS = seasonPGisCount > 0 ? seasonPGisSum / seasonPGisCount : 0;
 
         seasons.push({
           year:     s.year,
@@ -279,17 +285,17 @@ export function loadPlayerIndex(pgisTables) {
         careerGames        += s.games;
         careerGisTotal     += s.gisTotalSum;
         careerGisPlusTotal += s.gisPlusTotalSum;
+        careerPGisSum      += seasonPGisSum;
+        careerPGisCount    += seasonPGisCount;
       }
 
       if (careerSets === 0) continue;  // zero-activity filter
 
-      const careerGis         = careerGames > 0 ? careerGisTotal     / careerGames : 0;
-      const careerGisPlus     = careerGames > 0 ? careerGisPlusTotal / careerGames : 0;
-      const careerGisPlusPerSet = careerSets > 0 ? careerGisPlusTotal / careerSets : 0;
-      const careerNs      = careerGames > 0
-        ? Math.min(5, Math.max(3, Math.round(careerSets / careerGames)))
-        : 3;
-      const careerPGIS = computePGIS(careerGisPlusPerSet, careerPos, careerNs, pgisTables);
+      const careerGis     = careerGames > 0 ? careerGisTotal     / careerGames : 0;
+      const careerGisPlus = careerGames > 0 ? careerGisPlusTotal / careerGames : 0;
+      // Career pGIS = simple average across every match played. A 130-set
+      // season naturally contributes more games than a 40-set season.
+      const careerPGIS = careerPGisCount > 0 ? careerPGisSum / careerPGisCount : 0;
 
       players.push({
         key:      rec.key,

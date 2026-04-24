@@ -687,7 +687,6 @@
     "Mississippi Val.": 0.25984,
     "South Carolina St.": 0.25088,
     "Southern U.": 0.2487,
-    "Hartford": NaN,
     "_neutral_point": 0.58419
   },
   "2023": {
@@ -1384,7 +1383,6 @@
     "Manhattan": 0.24873,
     "Ark.-Pine Bluff": 0.24085,
     "Alcorn": 0.2066,
-    "Vanderbilt": NaN,
     "_neutral_point": 0.58297
   },
   "2025": {

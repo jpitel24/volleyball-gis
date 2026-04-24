@@ -52,7 +52,9 @@ function buildTop50BySeason(rpiByYear, n = T50_THRESHOLD) {
   if (!rpiByYear) return out;
   const slug = s => (s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
   for (const [season, table] of Object.entries(rpiByYear)) {
-    const entries = Object.entries(table).sort((a, b) => b[1] - a[1]);
+    const entries = Object.entries(table)
+      .filter(([name, v]) => name !== '_neutral_point' && Number.isFinite(v))
+      .sort((a, b) => b[1] - a[1]);
     const topSet = new Set();
     for (let i = 0; i < Math.min(n, entries.length); i++) {
       topSet.add(slug(entries[i][0]));

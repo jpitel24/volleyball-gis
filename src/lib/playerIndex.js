@@ -260,15 +260,22 @@ export function loadPlayerIndex(pgisTables) {
         const gisPlusPerGame = s.games > 0 ? s.gisPlusTotalSum / s.games : 0;
 
         // Per-game pGIS — per-set rate for the single match, looked up
-        // against that match's position × nSets baseline.
+        // against that match's position × nSets baseline. If the player
+        // appeared (sets > 0) but produced no measurable GIS+ (bench role,
+        // lopsided sweep, late-sub DS), computePGIS returns null; clamp
+        // that to 0 so the game still counts toward the season/career
+        // average. Otherwise a role player with one big game shows a
+        // season pGIS of that one game's score.
         const gamesSorted = s.games_.slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
         let seasonPGisSum = 0, seasonPGisCount = 0;
         for (const g of gamesSorted) {
           const gNs = Math.min(5, Math.max(3, g.sets));
           const perSet = g.sets > 0 ? g.gisPlus / g.sets : 0;
-          g.pGIS = computePGIS(perSet, g.position !== '?' ? g.position : seasonPos, gNs, pgisTables);
-          if (Number.isFinite(g.pGIS)) {
-            seasonPGisSum += g.pGIS;
+          const raw = computePGIS(perSet, g.position !== '?' ? g.position : seasonPos, gNs, pgisTables);
+          const gPGis = Number.isFinite(raw) ? raw : (g.sets > 0 ? 0 : null);
+          g.pGIS = gPGis;
+          if (g.sets > 0) {
+            seasonPGisSum += (gPGis || 0);
             seasonPGisCount += 1;
           }
         }

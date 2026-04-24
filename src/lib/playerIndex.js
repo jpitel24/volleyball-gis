@@ -186,6 +186,13 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
       if (!idx) continue;
       const seasonStr = seasonStrFromYear(year);
 
+      // Match-level nSets lookup (3, 4, or 5 — total sets played by the
+      // winning team). Used as the pGIS volume denominator so a 1-set
+      // cameo is rated against a full match's baseline rather than being
+      // 3× inflated via the player's own set count.
+      const matchNSets = {};
+      for (const g of idx.games || []) matchNSets[g.key] = g.nSets || 3;
+
       // Flatten all rows from the year's byKey map (this is every team-match
       // row; each player appears once per game they played).
       for (const [gKey, rows] of Object.entries(idx.byKey)) {
@@ -263,6 +270,7 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
             opponent:  oppTeam,
             location:  (r.Location || 'Neutral'),
             sets:      ns,
+            matchSets: matchNSets[gKey] || ns,  // total sets played in the match
             position:  rowPos || '?',
             totals:    stats,
             gis:       gameGis,      // per-match total (matches Game Browser)
@@ -324,9 +332,13 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
         let t50GisSum = 0, t50GisPlusSum = 0;
         let t50PGisSum = 0, t50PGisCount = 0;
         for (const g of gamesSorted) {
-          const gNs = Math.min(5, Math.max(3, g.sets));
-          const perSet = g.sets > 0 ? g.gisPlus / g.sets : 0;
-          const raw = computePGIS(perSet, g.position !== '?' ? g.position : seasonPos, gNs, pgisTables);
+          // Match match-level nSets as Game Browser's computeGIS() does —
+          // a 1-set cameo is rated at the match's scale, not the player's
+          // own sets (which would 3× inflate the per-set rate and peg
+          // pGIS at 10 for any non-zero production).
+          const mNs = Math.min(5, Math.max(3, g.matchSets || g.sets || 3));
+          const perSet = mNs > 0 ? g.gisPlus / mNs : 0;
+          const raw = computePGIS(perSet, g.position !== '?' ? g.position : seasonPos, mNs, pgisTables);
           const gPGis = Number.isFinite(raw) ? raw : (g.sets > 0 ? 0 : null);
           g.pGIS = gPGis;
           if (g.sets > 0) {

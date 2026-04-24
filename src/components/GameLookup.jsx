@@ -7,7 +7,7 @@ import { loadGisPlus, makeKey, seasonStrFromYear } from '../lib/gisPlus.js';
 
 const YEARS = [2025, 2024, 2023, 2022];
 
-export default function GameLookup() {
+export default function GameLookup({ deepLink, onDeepLinkConsumed }) {
   const { rpiByYear, pgisTables, categoryPgisTables } = useData();
 
   const [year, setYear]             = useState(2025);
@@ -27,6 +27,17 @@ export default function GameLookup() {
       .catch(() =>   { if (!cancelled) { setYearData(null); setLoadingYear(false); } });
     return () => { cancelled = true; };
   }, [year]);
+
+  // ── Deep-link from Player Browser: year + gameKey → auto-select ─────────────
+  useEffect(() => {
+    if (!deepLink) return;
+    if (deepLink.year !== year) { setYear(deepLink.year); return; }  // two-phase
+    if (!yearData) return;
+    const g = yearData.games.find(x => x.key === deepLink.gameKey);
+    if (g) selectGame(g);
+    onDeepLinkConsumed && onDeepLinkConsumed();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deepLink, yearData]);
 
   // ── Preload the gis_plus_observations.csv Map (one-time, fire-and-forget) ──
   // Kicks off the 46 MB fetch as soon as the browser mounts, so by the time the

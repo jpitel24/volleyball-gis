@@ -1,10 +1,16 @@
 import { Fragment, useEffect, useMemo, useState } from 'react';
 import { useData } from '../lib/DataContext.jsx';
 import { loadPlayerIndex } from '../lib/playerIndex.js';
-import { posColor, pgisLabel } from '../lib/gis.js';
+import { posColor, pgisLabel, posGroup } from '../lib/gis.js';
 
-const TOP_N_DEFAULT = 20;
-const MAX_RESULTS   = 50;
+const MAX_RESULTS = 50;
+const POS_FILTERS = [
+  { id: 'ALL', label: 'All' },
+  { id: 'OH',  label: 'OH/RS' },
+  { id: 'MB',  label: 'MB' },
+  { id: 'S',   label: 'S' },
+  { id: 'L',   label: 'L/DS' },
+];
 
 function fmt(v, d = 2) {
   if (v == null || !Number.isFinite(v)) return '—';
@@ -168,6 +174,7 @@ export default function PlayerLookup({ onGameDeepLink }) {
   const [indexErr, setIndexErr]         = useState(null);
   const [buildingIndex, setBuilding]    = useState(false);
   const [search, setSearch]             = useState('');
+  const [posFilter, setPosFilter]       = useState('ALL');
   const [expandedPlayer, setExpanded]   = useState(null);
   const [expandedSeason, setExpandedS]  = useState(null);
 
@@ -181,20 +188,22 @@ export default function PlayerLookup({ onGameDeepLink }) {
     return () => { cancelled = true; };
   }, [loading, pgisTables]);
 
-  const filtered = useMemo(() => {
-    if (!index) return [];
-    const q = search.trim().toLowerCase();
-    if (!q) return index.players.slice(0, TOP_N_DEFAULT);
-    const hits = index.players.filter(p => p.name.toLowerCase().includes(q));
-    return hits.slice(0, MAX_RESULTS);
-  }, [index, search]);
+  // Only compute hits once the user has started searching (or picked a
+  // position). Avoids rendering 8k+ cards when the tab first opens.
+  const isActive = search.trim().length > 0 || posFilter !== 'ALL';
 
-  const totalHits = useMemo(() => {
-    if (!index) return 0;
+  const allHits = useMemo(() => {
+    if (!index || !isActive) return [];
     const q = search.trim().toLowerCase();
-    if (!q) return index.players.length;
-    return index.players.filter(p => p.name.toLowerCase().includes(q)).length;
-  }, [index, search]);
+    return index.players.filter(p => {
+      if (q && !p.name.toLowerCase().includes(q)) return false;
+      if (posFilter !== 'ALL' && posGroup(p.position) !== posFilter) return false;
+      return true;
+    });
+  }, [index, search, posFilter, isActive]);
+
+  const filtered  = allHits.slice(0, MAX_RESULTS);
+  const totalHits = allHits.length;
 
   function togglePlayer(key) {
     setExpanded(prev => prev === key ? null : key);
@@ -227,24 +236,39 @@ export default function PlayerLookup({ onGameDeepLink }) {
           onChange={e => { setSearch(e.target.value); setExpanded(null); setExpandedS(null); }}
           disabled={buildingIndex || !index}
         />
+        <div className="gl-browse-years" style={{ margin: 0 }}>
+          {POS_FILTERS.map(f => (
+            <button
+              key={f.id}
+              type="button"
+              className={`gl-mode-btn${posFilter === f.id ? ' active' : ''}`}
+              onClick={() => { setPosFilter(f.id); setExpanded(null); setExpandedS(null); }}
+              disabled={buildingIndex || !index}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="gb-status">
         {loading && <><div className="spinner" /> Loading baselines…</>}
         {!loading && buildingIndex && <><div className="spinner" /> Building player index…</>}
         {indexErr && <span style={{ color: '#f43f5e' }}>Error: {indexErr}</span>}
-        {index && !search.trim() && (
-          <>Showing top {Math.min(TOP_N_DEFAULT, index.players.length)} of {index.players.length.toLocaleString()} players (by career GIS+) — search to find more</>
+        {index && !isActive && (
+          <>{index.players.length.toLocaleString()} players indexed — type a name or pick a position to search</>
         )}
-        {index && search.trim() && (
+        {index && isActive && (
           <>
-            {totalHits.toLocaleString()} player{totalHits === 1 ? '' : 's'} match "{search.trim()}"
+            {totalHits.toLocaleString()} player{totalHits === 1 ? '' : 's'} match
+            {search.trim() && ` "${search.trim()}"`}
+            {posFilter !== 'ALL' && ` · ${POS_FILTERS.find(f => f.id === posFilter).label}`}
             {totalHits > MAX_RESULTS && ` — showing top ${MAX_RESULTS}`}
           </>
         )}
       </div>
 
-      {index && filtered.length > 0 && (
+      {index && isActive && filtered.length > 0 && (
         <div className="pb-list">
           {filtered.map(p => (
             <PlayerCard
@@ -260,9 +284,9 @@ export default function PlayerLookup({ onGameDeepLink }) {
         </div>
       )}
 
-      {index && filtered.length === 0 && (
+      {index && isActive && filtered.length === 0 && (
         <div className="gb-empty">
-          No players found matching "{search}".
+          No players match the current filters.
         </div>
       )}
     </>

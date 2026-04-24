@@ -1,0 +1,302 @@
+import { useEffect, useMemo, useState } from 'react';
+import { useData } from '../lib/DataContext.jsx';
+import { loadPlayerIndex } from '../lib/playerIndex.js';
+import { posColor, pgisLabel, posGroup } from '../lib/gis.js';
+
+const MAX_RESULTS = 100;
+
+const YEAR_FILTERS = [
+  { id: 'ALL',  label: 'All-Time' },
+  { id: '2025', label: '2025' },
+  { id: '2024', label: '2024' },
+  { id: '2023', label: '2023' },
+  { id: '2022', label: '2022' },
+];
+
+const POS_FILTERS = [
+  { id: 'ALL', label: 'All' },
+  { id: 'OH',  label: 'OH/RS' },
+  { id: 'MB',  label: 'MB' },
+  { id: 'S',   label: 'S' },
+  { id: 'L',   label: 'L/DS' },
+];
+
+const T50_MIN_OPTIONS = [
+  { id: 0,  label: 'Any' },
+  { id: 1,  label: '1+' },
+  { id: 3,  label: '3+' },
+  { id: 5,  label: '5+' },
+  { id: 10, label: '10+' },
+  { id: 15, label: '15+' },
+];
+
+const SORT_OPTIONS = [
+  { id: 'gisPlus',   label: 'GIS+' },
+  { id: 'pGIS',      label: 'pGIS' },
+  { id: 't50GisPlus', label: 'T50 GIS+' },
+  { id: 't50PGis',    label: 'T50 pGIS' },
+];
+
+function fmt(v, d = 2) {
+  if (v == null || !Number.isFinite(v)) return '—';
+  return v.toFixed(d);
+}
+
+function PGISCell({ v }) {
+  if (v == null || !Number.isFinite(v)) return <td style={{ textAlign: 'right' }}>—</td>;
+  const [, cls] = pgisLabel(v);
+  return (
+    <td style={{ textAlign: 'right' }}>
+      <span className={`pb-chip pgis-${cls}`} style={{ fontSize: '0.6rem' }}>
+        {v.toFixed(1)}
+      </span>
+    </td>
+  );
+}
+
+// Build a flat list of rows: one per (player × season) for a single year,
+// or one per career aggregate when year = ALL.
+function buildRows(players, year) {
+  const rows = [];
+  if (year === 'ALL') {
+    for (const p of players) {
+      const c = p.career;
+      if (!c.games) continue;
+      rows.push({
+        playerKey: p.key,
+        name:      p.name,
+        team:      p.team,
+        teams:     p.teams,
+        position:  p.position,
+        year:      null,
+        games:     c.games,
+        sets:      c.sets,
+        totals:    c.totals,
+        gis:       c.gis,
+        gisPlus:   c.gisPlus,
+        pGIS:      c.pGIS,
+        t50:       c.t50,
+      });
+    }
+  } else {
+    const y = parseInt(year, 10);
+    for (const p of players) {
+      const s = p.seasons.find(s => s.year === y);
+      if (!s || !s.games) continue;
+      rows.push({
+        playerKey: p.key,
+        name:      p.name,
+        team:      s.team || p.team,
+        teams:     [s.team || p.team],
+        position:  s.position || p.position,
+        year:      y,
+        games:     s.games,
+        sets:      s.sets,
+        totals:    s.totals,
+        gis:       s.gis,
+        gisPlus:   s.gisPlus,
+        pGIS:      s.pGIS,
+        t50:       s.t50,
+      });
+    }
+  }
+  return rows;
+}
+
+export default function SeasonLookup() {
+  const { pgisTables, rpiByYear, loading } = useData();
+  const [index, setIndex]            = useState(null);
+  const [indexErr, setIndexErr]      = useState(null);
+  const [buildingIndex, setBuilding] = useState(false);
+
+  const [year, setYear]           = useState('2025');
+  const [posFilter, setPosFilter] = useState('ALL');
+  const [minT50, setMinT50]       = useState(0);
+  const [sortBy, setSortBy]       = useState('gisPlus');
+
+  useEffect(() => {
+    if (loading || !pgisTables) return;
+    let cancelled = false;
+    setBuilding(true);
+    loadPlayerIndex(pgisTables, rpiByYear)
+      .then(idx => { if (!cancelled) { setIndex(idx); setBuilding(false); } })
+      .catch(err => { if (!cancelled) { setIndexErr(err?.message || String(err)); setBuilding(false); } });
+    return () => { cancelled = true; };
+  }, [loading, pgisTables, rpiByYear]);
+
+  const allRows = useMemo(() => {
+    if (!index) return [];
+    return buildRows(index.players, year);
+  }, [index, year]);
+
+  const filtered = useMemo(() => {
+    const rows = allRows.filter(r => {
+      if (posFilter !== 'ALL' && posGroup(r.position) !== posFilter) return false;
+      if (minT50 > 0) {
+        const g = r.t50?.games || 0;
+        if (g < minT50) return false;
+      }
+      return true;
+    });
+    const get = (r) => {
+      if (sortBy === 'gisPlus')     return r.gisPlus || 0;
+      if (sortBy === 'pGIS')        return r.pGIS    || 0;
+      if (sortBy === 't50GisPlus')  return r.t50?.gisPlus ?? -Infinity;
+      if (sortBy === 't50PGis')     return r.t50?.pGIS    ?? -Infinity;
+      return 0;
+    };
+    rows.sort((a, b) => get(b) - get(a));
+    return rows;
+  }, [allRows, posFilter, minT50, sortBy]);
+
+  const visible  = filtered.slice(0, MAX_RESULTS);
+  const totalHits = filtered.length;
+
+  return (
+    <>
+      <div className="hero">
+        <div className="hero-eyebrow">NCAA D1 Women's Volleyball</div>
+        <div className="hero-title">Season Browser</div>
+        <div className="hero-sub">
+          Leaderboard view — rank D1 players by GIS+ or pGIS, filtered by
+          year, position group, and minimum games vs RPI Top-50 opponents.
+        </div>
+      </div>
+
+      <div className="gb-controls" style={{ justifyContent: 'center', flexWrap: 'wrap', gap: '0.6rem' }}>
+        <div className="gl-browse-years" style={{ margin: 0 }}>
+          {YEAR_FILTERS.map(f => (
+            <button
+              key={f.id}
+              type="button"
+              className={`gl-mode-btn${year === f.id ? ' active' : ''}`}
+              onClick={() => setYear(f.id)}
+              disabled={buildingIndex || !index}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
+        <div className="gl-browse-years" style={{ margin: 0 }}>
+          {POS_FILTERS.map(f => (
+            <button
+              key={f.id}
+              type="button"
+              className={`gl-mode-btn${posFilter === f.id ? ' active' : ''}`}
+              onClick={() => setPosFilter(f.id)}
+              disabled={buildingIndex || !index}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
+        <div className="gl-browse-years" style={{ margin: 0 }}>
+          <span style={{ color: 'var(--muted)', fontSize: '0.7rem', alignSelf: 'center', marginRight: '0.35rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+            T50 G
+          </span>
+          {T50_MIN_OPTIONS.map(o => (
+            <button
+              key={o.id}
+              type="button"
+              className={`gl-mode-btn${minT50 === o.id ? ' active' : ''}`}
+              onClick={() => setMinT50(o.id)}
+              disabled={buildingIndex || !index}
+            >
+              {o.label}
+            </button>
+          ))}
+        </div>
+        <div className="gl-browse-years" style={{ margin: 0 }}>
+          <span style={{ color: 'var(--muted)', fontSize: '0.7rem', alignSelf: 'center', marginRight: '0.35rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+            Sort
+          </span>
+          {SORT_OPTIONS.map(o => (
+            <button
+              key={o.id}
+              type="button"
+              className={`gl-mode-btn${sortBy === o.id ? ' active' : ''}`}
+              onClick={() => setSortBy(o.id)}
+              disabled={buildingIndex || !index}
+            >
+              {o.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="gb-status">
+        {loading && <><div className="spinner" /> Loading baselines…</>}
+        {!loading && buildingIndex && <><div className="spinner" /> Building player index…</>}
+        {indexErr && <span style={{ color: '#f43f5e' }}>Error: {indexErr}</span>}
+        {index && !buildingIndex && (
+          <>
+            {totalHits.toLocaleString()} player{totalHits === 1 ? '' : 's'}
+            {year === 'ALL' ? ' (all-time)' : ` · ${year}`}
+            {posFilter !== 'ALL' && ` · ${POS_FILTERS.find(f => f.id === posFilter).label}`}
+            {minT50 > 0 && ` · ${minT50}+ T50 G`}
+            {totalHits > MAX_RESULTS && ` — showing top ${MAX_RESULTS}`}
+          </>
+        )}
+      </div>
+
+      {index && visible.length > 0 && (
+        <div className="pb-table-wrap" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <table className="pb-season-table" style={{ width: '100%', fontFamily: "'JetBrains Mono',monospace", fontSize: '0.72rem' }}>
+            <thead>
+              <tr style={{ color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                <th style={{ textAlign: 'right' }}>#</th>
+                <th className="text-left">Player</th>
+                <th className="text-left">Team</th>
+                <th className="text-left">Pos</th>
+                {year === 'ALL' && <th className="text-left">Yrs</th>}
+                {year !== 'ALL' && <th style={{ textAlign: 'right' }}>Yr</th>}
+                <th style={{ textAlign: 'right' }}>G</th>
+                <th style={{ textAlign: 'right' }}>S</th>
+                <th style={{ textAlign: 'right' }}>GIS/G</th>
+                <th style={{ textAlign: 'right' }}>GIS+/G</th>
+                <th style={{ textAlign: 'right' }}>pGIS</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }}>T50 G</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }}>T50 GIS+/G</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }}>T50 pGIS</th>
+              </tr>
+            </thead>
+            <tbody>
+              {visible.map((r, i) => (
+                <tr key={r.playerKey + '_' + (r.year || 'all')}>
+                  <td style={{ textAlign: 'right', color: 'var(--muted)' }}>{i + 1}</td>
+                  <td className="pb-name" style={{ color: posColor(r.position) }}>{r.name}</td>
+                  <td className="pb-team">{
+                    year === 'ALL'
+                      ? (r.teams || []).slice(0, 2).join(' · ')
+                      : r.team
+                  }</td>
+                  <td>{r.position}</td>
+                  {year === 'ALL'
+                    ? <td className="text-left" style={{ opacity: 0.7 }}>{r.teams?.length || 1}</td>
+                    : <td style={{ textAlign: 'right' }}>{r.year}</td>
+                  }
+                  <td style={{ textAlign: 'right' }}>{r.games}</td>
+                  <td style={{ textAlign: 'right' }}>{r.sets}</td>
+                  <td style={{ textAlign: 'right' }}>{fmt(r.gis)}</td>
+                  <td style={{ textAlign: 'right', color: 'var(--gisplus)' }}>{fmt(r.gisPlus)}</td>
+                  <PGISCell v={r.pGIS} />
+                  <td style={{ textAlign: 'right', opacity: 0.7 }}>{r.t50 ? r.t50.games : '—'}</td>
+                  <td style={{ textAlign: 'right', opacity: 0.7, color: 'var(--gisplus)' }}>{r.t50 ? fmt(r.t50.gisPlus) : '—'}</td>
+                  <td style={{ textAlign: 'right', opacity: 0.7 }}>
+                    {r.t50 && Number.isFinite(r.t50.pGIS) ? fmt(r.t50.pGIS, 1) : '—'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {index && visible.length === 0 && !buildingIndex && (
+        <div className="gb-empty">
+          No players match the current filters.
+        </div>
+      )}
+    </>
+  );
+}

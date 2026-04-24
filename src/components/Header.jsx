@@ -18,6 +18,7 @@ export default function Header({ view = 'games', onChangeView }) {
         <nav className="nav-pills">
           {tab('games',   'Games')}
           {tab('players', 'Players')}
+          {tab('seasons', 'Seasons')}
         </nav>
       )}
     </header>

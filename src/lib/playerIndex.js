@@ -187,7 +187,8 @@ export function loadPlayerIndex(pgisTables) {
           let season = rec.seasons[year];
           if (!season) {
             season = {
-              year, team,
+              year,
+              teamCounts: {},
               posCounts: {},
               sets: 0, games: 0,
               totals: zeroTotals(),
@@ -196,9 +197,11 @@ export function loadPlayerIndex(pgisTables) {
             };
             rec.seasons[year] = season;
           }
-          // A player can show up for multiple teams in a season (transfer
-          // mid-year; rare). Keep the team with the most games; first team
-          // seen wins ties.
+          // A player can show up for multiple teams in a season (mid-year
+          // transfer, data error, or name collision with a different
+          // player). Tally team + position counts and pick the most-common
+          // at roll-up time.
+          season.teamCounts[team] = (season.teamCounts[team] || 0) + 1;
           if (rowPos) season.posCounts[rowPos] = (season.posCounts[rowPos] || 0) + 1;
 
           season.sets  += ns;
@@ -244,7 +247,14 @@ export function loadPlayerIndex(pgisTables) {
       let careerPGisSum = 0, careerPGisCount = 0;
 
       for (const s of seasonList) {
-        const seasonPos = pickMostCommonPosition(s.posCounts) || careerPos;
+        const seasonPos  = pickMostCommonPosition(s.posCounts) || careerPos;
+        // Most-common team that season — shields against stray rows (e.g.
+        // a single mis-attributed game or a same-name player at another
+        // school).
+        let seasonTeam = null, seasonTeamN = 0;
+        for (const [t, n] of Object.entries(s.teamCounts || {})) {
+          if (n > seasonTeamN) { seasonTeam = t; seasonTeamN = n; }
+        }
         // Display = average per-match (same units as Game Browser totals).
         const gisPerGame     = s.games > 0 ? s.gisTotalSum     / s.games : 0;
         const gisPlusPerGame = s.games > 0 ? s.gisPlusTotalSum / s.games : 0;
@@ -269,7 +279,7 @@ export function loadPlayerIndex(pgisTables) {
 
         seasons.push({
           year:     s.year,
-          team:     s.team,
+          team:     seasonTeam || '',
           position: seasonPos,
           sets:     s.sets,
           games:    s.games,

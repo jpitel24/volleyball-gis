@@ -54,42 +54,23 @@ function PGISCell({ v }) {
   );
 }
 
-// Build a flat list of rows: one per (player × season) for a single year,
-// or one per career aggregate when year = ALL.
+// Build a flat list of rows, one per (player × season). All-Time mode
+// emits every qualifying season across 2022-2025, so a transfer like
+// Torrey Stafford shows as three rows (two Pitt seasons + one Texas).
+// Year-specific mode filters to just that year's rows.
 function buildRows(players, year) {
   const rows = [];
-  if (year === 'ALL') {
-    for (const p of players) {
-      const c = p.career;
-      if (!c.games) continue;
-      rows.push({
-        playerKey: p.key,
-        name:      p.name,
-        team:      p.team,
-        teams:     p.teams,
-        position:  p.position,
-        year:      null,
-        games:     c.games,
-        sets:      c.sets,
-        totals:    c.totals,
-        gis:       c.gis,
-        gisPlus:   c.gisPlus,
-        pGIS:      c.pGIS,
-        t50:       c.t50,
-      });
-    }
-  } else {
-    const y = parseInt(year, 10);
-    for (const p of players) {
-      const s = p.seasons.find(s => s.year === y);
-      if (!s || !s.games) continue;
+  const targetYear = year === 'ALL' ? null : parseInt(year, 10);
+  for (const p of players) {
+    for (const s of p.seasons) {
+      if (!s.games) continue;
+      if (targetYear !== null && s.year !== targetYear) continue;
       rows.push({
         playerKey: p.key,
         name:      p.name,
         team:      s.team || p.team,
-        teams:     [s.team || p.team],
         position:  s.position || p.position,
-        year:      y,
+        year:      s.year,
         games:     s.games,
         sets:      s.sets,
         totals:    s.totals,
@@ -230,8 +211,8 @@ export default function SeasonLookup() {
         {indexErr && <span style={{ color: '#f43f5e' }}>Error: {indexErr}</span>}
         {index && !buildingIndex && (
           <>
-            {totalHits.toLocaleString()} player{totalHits === 1 ? '' : 's'}
-            {year === 'ALL' ? ' (all-time)' : ` · ${year}`}
+            {totalHits.toLocaleString()} player-season{totalHits === 1 ? '' : 's'}
+            {year === 'ALL' ? ' (2022–2025)' : ` · ${year}`}
             {posFilter !== 'ALL' && ` · ${POS_FILTERS.find(f => f.id === posFilter).label}`}
             {minT50 > 0 && ` · ${minT50}+ T50 G`}
             {totalHits > MAX_RESULTS && ` — showing top ${MAX_RESULTS}`}
@@ -248,8 +229,7 @@ export default function SeasonLookup() {
                 <th className="text-left">Player</th>
                 <th className="text-left">Team</th>
                 <th className="text-left">Pos</th>
-                {year === 'ALL' && <th className="text-left">Yrs</th>}
-                {year !== 'ALL' && <th style={{ textAlign: 'right' }}>Yr</th>}
+                <th style={{ textAlign: 'right' }}>Yr</th>
                 <th style={{ textAlign: 'right' }}>G</th>
                 <th style={{ textAlign: 'right' }}>S</th>
                 <th style={{ textAlign: 'right' }}>GIS/G</th>
@@ -262,19 +242,12 @@ export default function SeasonLookup() {
             </thead>
             <tbody>
               {visible.map((r, i) => (
-                <tr key={r.playerKey + '_' + (r.year || 'all')}>
+                <tr key={r.playerKey + '_' + r.year}>
                   <td style={{ textAlign: 'right', color: 'var(--muted)' }}>{i + 1}</td>
                   <td className="pb-name" style={{ color: posColor(r.position) }}>{r.name}</td>
-                  <td className="pb-team">{
-                    year === 'ALL'
-                      ? (r.teams || []).slice(0, 2).join(' · ')
-                      : r.team
-                  }</td>
+                  <td className="pb-team">{r.team}</td>
                   <td>{r.position}</td>
-                  {year === 'ALL'
-                    ? <td className="text-left" style={{ opacity: 0.7 }}>{r.teams?.length || 1}</td>
-                    : <td style={{ textAlign: 'right' }}>{r.year}</td>
-                  }
+                  <td style={{ textAlign: 'right' }}>{r.year}</td>
                   <td style={{ textAlign: 'right' }}>{r.games}</td>
                   <td style={{ textAlign: 'right' }}>{r.sets}</td>
                   <td style={{ textAlign: 'right' }}>{fmt(r.gis)}</td>

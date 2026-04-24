@@ -13,8 +13,10 @@ const POS_FILTERS = [
 ];
 
 const SORT_OPTIONS = [
-  { id: 'gisPlus', label: 'GIS+' },
-  { id: 'pGIS',    label: 'pGIS' },
+  { id: 'gisPlus',    label: 'GIS+' },
+  { id: 'pGIS',       label: 'pGIS' },
+  { id: 't50GisPlus', label: 'T50 GIS+' },
+  { id: 't50PGis',    label: 'T50 pGIS' },
 ];
 
 function fmt(v, d = 2) {
@@ -76,6 +78,20 @@ function GameLog({ season, playerKey, onGameClick }) {
                 <td className="text-left pb-log-opp">
                   {g.location === 'Away' ? '@ ' : g.location === 'Neutral' ? 'vs ' : 'vs '}
                   {g.opponent}
+                  {g.vsTop50 && (
+                    <span
+                      title="RPI Top-50 opponent"
+                      style={{
+                        marginLeft: '0.35rem',
+                        padding: '0 0.25rem',
+                        fontSize: '0.55rem',
+                        border: '1px solid var(--gisplus)',
+                        color: 'var(--gisplus)',
+                        borderRadius: '2px',
+                        letterSpacing: '0.05em',
+                      }}
+                    >T50</span>
+                  )}
                 </td>
                 <td style={{ textAlign: 'right' }}>{g.sets}</td>
                 <StatCells t={g.totals} />
@@ -111,6 +127,20 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
           <span className="pb-chip">GIS/G {fmt(c.gis)}</span>
           <span className="pb-chip" style={{ color: 'var(--gisplus)' }}>GIS+/G {fmt(c.gisPlus)}</span>
           <PGISChip v={c.pGIS} />
+          {c.t50 && (
+            <>
+              <span className="pb-chip" style={{ opacity: 0.6, borderStyle: 'dashed' }}>
+                vs T50 · {c.t50.games}G
+              </span>
+              <span className="pb-chip" style={{ opacity: 0.85 }}>
+                GIS/G {fmt(c.t50.gis)}
+              </span>
+              <span className="pb-chip" style={{ color: 'var(--gisplus)', opacity: 0.85 }}>
+                GIS+/G {fmt(c.t50.gisPlus)}
+              </span>
+              <PGISChip v={c.t50.pGIS} />
+            </>
+          )}
           <span className="pb-expand-btn">{expanded ? '▾' : '▸'}</span>
         </div>
       </div>
@@ -132,6 +162,10 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
                 <th style={{ textAlign: 'right' }}>GIS/G</th>
                 <th style={{ textAlign: 'right' }}>GIS+/G</th>
                 <th style={{ textAlign: 'right' }}>pGIS</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }} title="Games vs RPI Top-50 opponents">T50 G</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }} title="GIS/G vs RPI Top-50 opponents">T50 GIS/G</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }} title="GIS+/G vs RPI Top-50 opponents">T50 GIS+/G</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }} title="pGIS vs RPI Top-50 opponents">T50 pGIS</th>
                 <th></th>
               </tr>
             </thead>
@@ -153,11 +187,15 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
                       <td style={{ textAlign: 'right' }}>{fmt(s.gis)}</td>
                       <td style={{ textAlign: 'right', color: 'var(--gisplus)' }}>{fmt(s.gisPlus)}</td>
                       <td style={{ textAlign: 'right', color: 'var(--pgis)' }}>{fmt(s.pGIS, 1)}</td>
+                      <td style={{ textAlign: 'right', opacity: 0.7 }}>{s.t50 ? s.t50.games : '—'}</td>
+                      <td style={{ textAlign: 'right', opacity: 0.7 }}>{s.t50 ? fmt(s.t50.gis) : '—'}</td>
+                      <td style={{ textAlign: 'right', opacity: 0.7, color: 'var(--gisplus)' }}>{s.t50 ? fmt(s.t50.gisPlus) : '—'}</td>
+                      <td style={{ textAlign: 'right', opacity: 0.7, color: 'var(--pgis)' }}>{s.t50 ? fmt(s.t50.pGIS, 1) : '—'}</td>
                       <td className="pb-expand-btn">{open ? '▾' : '▸'}</td>
                     </tr>
                     {open && (
                       <tr className="pb-log-row">
-                        <td colSpan={14}>
+                        <td colSpan={18}>
                           <GameLog season={s} playerKey={player.key} onGameClick={onGameClick} />
                         </td>
                       </tr>
@@ -174,7 +212,7 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
 }
 
 export default function PlayerLookup({ onGameDeepLink }) {
-  const { pgisTables, loading } = useData();
+  const { pgisTables, rpiByYear, loading } = useData();
   const [index, setIndex]               = useState(null);
   const [indexErr, setIndexErr]         = useState(null);
   const [buildingIndex, setBuilding]    = useState(false);
@@ -188,11 +226,11 @@ export default function PlayerLookup({ onGameDeepLink }) {
     if (loading || !pgisTables) return;
     let cancelled = false;
     setBuilding(true);
-    loadPlayerIndex(pgisTables)
+    loadPlayerIndex(pgisTables, rpiByYear)
       .then(idx => { if (!cancelled) { setIndex(idx); setBuilding(false); } })
       .catch(err => { if (!cancelled) { setIndexErr(err?.message || String(err)); setBuilding(false); } });
     return () => { cancelled = true; };
-  }, [loading, pgisTables]);
+  }, [loading, pgisTables, rpiByYear]);
 
   // Only compute hits once the user has started searching (or picked a
   // position). Avoids rendering 8k+ cards when the tab first opens.
@@ -207,9 +245,17 @@ export default function PlayerLookup({ onGameDeepLink }) {
       return true;
     });
     // Default index order is career GIS+ desc. Only re-sort when the
-    // user picks a different key.
+    // user picks a different key. T50 variants pull from career.t50
+    // (nullable if the player never faced a top-50 opponent).
+    const get = (p) => {
+      if (sortBy === 'gisPlus') return p.career.gisPlus || 0;
+      if (sortBy === 'pGIS')    return p.career.pGIS    || 0;
+      if (sortBy === 't50GisPlus') return p.career.t50?.gisPlus ?? -1;
+      if (sortBy === 't50PGis')    return p.career.t50?.pGIS    ?? -1;
+      return 0;
+    };
     if (sortBy !== 'gisPlus') {
-      hits.sort((a, b) => (b.career[sortBy] || 0) - (a.career[sortBy] || 0));
+      hits.sort((a, b) => get(b) - get(a));
     }
     return hits;
   }, [index, search, posFilter, sortBy, isActive]);

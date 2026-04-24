@@ -39,8 +39,45 @@ import { loadYear } from './csvGames.js';
 import { loadGisPlus, makeKey, seasonStrFromYear } from './gisPlus.js';
 import {
   POS_W, ERR_W, ERR_FLOOR, ERR_DAMP, GIS_SCALE,
-  computePGIS, posGroup, canonicalName,
+  computePGIS, posGroup, canonicalName, findRPIValue,
 } from './gis.js';
+
+const T50_THRESHOLD = 50;
+
+// Build a per-season Set<team-slug> of top-N RPI teams so opponent lookups
+// are O(1). Pre-slugging avoids running the full findRPIValue passes on
+// every CSV row.
+function buildTop50BySeason(rpiByYear, n = T50_THRESHOLD) {
+  const out = {};
+  if (!rpiByYear) return out;
+  const slug = s => (s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  for (const [season, table] of Object.entries(rpiByYear)) {
+    const entries = Object.entries(table).sort((a, b) => b[1] - a[1]);
+    const topSet = new Set();
+    for (let i = 0; i < Math.min(n, entries.length); i++) {
+      topSet.add(slug(entries[i][0]));
+    }
+    out[season] = topSet;
+  }
+  return out;
+}
+
+// Returns true if oppTeam is a Top-50 RPI team for the given season.
+// Uses findRPIValue to resolve abbreviations/aliases, then ranks by value.
+function isTop50Opponent(oppTeam, seasonStr, rpiByYear, top50Sets) {
+  if (!oppTeam || !rpiByYear) return false;
+  // Fast slug path first.
+  const slug = oppTeam.toLowerCase().replace(/[^a-z0-9]/g, '');
+  if (top50Sets?.[seasonStr]?.has(slug)) return true;
+  // Fall back to findRPIValue → rpiToRank for aliased names.
+  const rpi = findRPIValue(oppTeam, oppTeam, null, rpiByYear, seasonStr);
+  if (!rpi) return false;
+  const table = rpiByYear[seasonStr];
+  if (!table) return false;
+  let rank = 1;
+  for (const v of Object.values(table)) { if (v > rpi) rank++; }
+  return rank <= T50_THRESHOLD;
+}
 
 const YEARS = [2025, 2024, 2023, 2022];
 
@@ -122,8 +159,10 @@ function pickMostCommonPosition(posCounts) {
 
 let cachedPromise = null;
 
-export function loadPlayerIndex(pgisTables) {
+export function loadPlayerIndex(pgisTables, rpiByYear) {
   if (cachedPromise) return cachedPromise;
+
+  const top50Sets = buildTop50BySeason(rpiByYear);
 
   cachedPromise = (async () => {
     // Fire everything off in parallel — loadYear/loadGisPlus are memoized
@@ -210,11 +249,14 @@ export function loadPlayerIndex(pgisTables) {
           season.gisTotalSum     += gameGis;
           season.gisPlusTotalSum += gameGisPlus;
 
+          const oppTeam  = r['Opponent Team'] || '';
+          const vsTop50  = isTop50Opponent(oppTeam, seasonStr, rpiByYear, top50Sets);
+
           season.games_.push({
             gameKey:   gKey,
             contestId: r.ContestID || null,
             date:      r.Date,
-            opponent:  r['Opponent Team'] || '',
+            opponent:  oppTeam,
             location:  (r.Location || 'Neutral'),
             sets:      ns,
             position:  rowPos || '?',
@@ -222,6 +264,7 @@ export function loadPlayerIndex(pgisTables) {
             gis:       gameGis,      // per-match total (matches Game Browser)
             gisPlus:   gameGisPlus,
             pGIS:      null,         // filled below
+            vsTop50,
           });
         }
       }
@@ -245,6 +288,10 @@ export function loadPlayerIndex(pgisTables) {
       let careerSets = 0, careerGames = 0;
       let careerGisTotal = 0, careerGisPlusTotal = 0;
       let careerPGisSum = 0, careerPGisCount = 0;
+      // Vs-Top-50 career buckets.
+      let t50CareerGames = 0, t50CareerSets = 0;
+      let t50CareerGisSum = 0, t50CareerGisPlusSum = 0;
+      let t50CareerPGisSum = 0, t50CareerPGisCount = 0;
 
       for (const s of seasonList) {
         const seasonPos  = pickMostCommonPosition(s.posCounts) || careerPos;
@@ -268,6 +315,10 @@ export function loadPlayerIndex(pgisTables) {
         // season pGIS of that one game's score.
         const gamesSorted = s.games_.slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
         let seasonPGisSum = 0, seasonPGisCount = 0;
+        // Vs-Top-50 season buckets.
+        let t50Games = 0, t50Sets = 0;
+        let t50GisSum = 0, t50GisPlusSum = 0;
+        let t50PGisSum = 0, t50PGisCount = 0;
         for (const g of gamesSorted) {
           const gNs = Math.min(5, Math.max(3, g.sets));
           const perSet = g.sets > 0 ? g.gisPlus / g.sets : 0;
@@ -277,12 +328,27 @@ export function loadPlayerIndex(pgisTables) {
           if (g.sets > 0) {
             seasonPGisSum += (gPGis || 0);
             seasonPGisCount += 1;
+            if (g.vsTop50) {
+              t50Games   += 1;
+              t50Sets    += g.sets;
+              t50GisSum  += g.gis;
+              t50GisPlusSum += g.gisPlus;
+              t50PGisSum += (gPGis || 0);
+              t50PGisCount += 1;
+            }
           }
         }
         // Season pGIS = simple average of its games' pGIS. Heavier seasons
         // naturally weight the career average more without an extra rate
         // lookup.
         const seasonPGIS = seasonPGisCount > 0 ? seasonPGisSum / seasonPGisCount : 0;
+        const t50Season = t50Games > 0 ? {
+          games:   t50Games,
+          sets:    t50Sets,
+          gis:     t50GisSum     / t50Games,
+          gisPlus: t50GisPlusSum / t50Games,
+          pGIS:    t50PGisCount > 0 ? t50PGisSum / t50PGisCount : 0,
+        } : null;
 
         seasons.push({
           year:     s.year,
@@ -294,6 +360,7 @@ export function loadPlayerIndex(pgisTables) {
           gis:      gisPerGame,
           gisPlus:  gisPlusPerGame,
           pGIS:     seasonPGIS,
+          t50:      t50Season,
           gameLog:  gamesSorted,
         });
 
@@ -304,6 +371,12 @@ export function loadPlayerIndex(pgisTables) {
         careerGisPlusTotal += s.gisPlusTotalSum;
         careerPGisSum      += seasonPGisSum;
         careerPGisCount    += seasonPGisCount;
+        t50CareerGames     += t50Games;
+        t50CareerSets      += t50Sets;
+        t50CareerGisSum    += t50GisSum;
+        t50CareerGisPlusSum += t50GisPlusSum;
+        t50CareerPGisSum   += t50PGisSum;
+        t50CareerPGisCount += t50PGisCount;
       }
 
       if (careerSets === 0) continue;  // zero-activity filter
@@ -313,6 +386,14 @@ export function loadPlayerIndex(pgisTables) {
       // Career pGIS = simple average across every match played. A 130-set
       // season naturally contributes more games than a 40-set season.
       const careerPGIS = careerPGisCount > 0 ? careerPGisSum / careerPGisCount : 0;
+
+      const t50Career = t50CareerGames > 0 ? {
+        games:   t50CareerGames,
+        sets:    t50CareerSets,
+        gis:     t50CareerGisSum     / t50CareerGames,
+        gisPlus: t50CareerGisPlusSum / t50CareerGames,
+        pGIS:    t50CareerPGisCount > 0 ? t50CareerPGisSum / t50CareerPGisCount : 0,
+      } : null;
 
       players.push({
         key:      rec.key,
@@ -327,6 +408,7 @@ export function loadPlayerIndex(pgisTables) {
           gis:     careerGis,
           gisPlus: careerGisPlus,
           pGIS:    careerPGIS,
+          t50:     t50Career,
         },
         seasons,
       });

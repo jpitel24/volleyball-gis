@@ -170,6 +170,19 @@ def main() -> None:
             contest_teams[(season, contest)].add(team_lc)
             S = safe_int(r.get("S"))
             if S <= 0: continue
+            # Skip ghost appearances (rostered but didn't play — NCAA
+            # credits them with the match's total sets and zero stats).
+            action_total = (
+                safe_int(r.get("Kills"))        + safe_int(r.get("Errors"))
+              + safe_int(r.get("TotalAttacks")) + safe_int(r.get("Assists"))
+              + safe_int(r.get("Aces"))         + safe_int(r.get("SErr"))
+              + safe_int(r.get("ServeAtt"))     + safe_int(r.get("RErr"))
+              + safe_int(r.get("RetAtt"))       + safe_int(r.get("SetErr"))
+              + safe_int(r.get("SetAtt"))       + safe_int(r.get("Digs"))
+              + safe_int(r.get("BlockSolos"))   + safe_int(r.get("BlockAssists"))
+              + safe_int(r.get("BErr"))         + safe_int(r.get("BHE"))
+            )
+            if action_total == 0: continue
             stats = {k: safe_int(r.get(col)) for k, col in STAT_COL.items()}
             roster[(season, contest, team_lc)].append({
                 "player": player, "p_raw": p_raw, "stats": stats, "S": S,

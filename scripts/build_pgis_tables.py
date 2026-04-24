@@ -159,6 +159,24 @@ def main() -> None:
             s = safe_int(r.get("S"))
             if s <= 0:
                 continue
+            # Skip ghost appearances: the NCAA CSV credits every rostered
+            # player with the match's total sets even when they didn't
+            # actually take the floor. Those rows have S>0 but zero across
+            # every counting column. Including them adds GIS+/S=0 values
+            # to the baseline distribution and inflates every real
+            # player's pGIS percentile.
+            action_total = (
+                safe_int(r.get("Kills"))        + safe_int(r.get("Errors"))
+              + safe_int(r.get("TotalAttacks")) + safe_int(r.get("Assists"))
+              + safe_int(r.get("Aces"))         + safe_int(r.get("SErr"))
+              + safe_int(r.get("ServeAtt"))     + safe_int(r.get("RErr"))
+              + safe_int(r.get("RetAtt"))       + safe_int(r.get("SetErr"))
+              + safe_int(r.get("SetAtt"))       + safe_int(r.get("Digs"))
+              + safe_int(r.get("BlockSolos"))   + safe_int(r.get("BlockAssists"))
+              + safe_int(r.get("BErr"))         + safe_int(r.get("BHE"))
+            )
+            if action_total == 0:
+                continue
             gp = safe_float(r.get("GIS_Plus"))
             stats = {
                 "kills":         safe_int(r.get("Kills")),

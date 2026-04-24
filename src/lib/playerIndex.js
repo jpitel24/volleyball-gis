@@ -149,7 +149,10 @@ export function loadPlayerIndex(pgisTables) {
           const team   = r.Team;
           const player = r.Player;
           if (!team || !player) continue;
-          const key = `${team.toLowerCase()}||${player.toLowerCase()}`;
+          // Key on player name only so transfers collapse into one record
+          // with both teams listed. Same-name homonyms collide (rare; plan
+          // design decision #1 — revisit if it surfaces).
+          const key = player.toLowerCase().trim();
 
           let rec = byPlayer.get(key);
           if (!rec) {

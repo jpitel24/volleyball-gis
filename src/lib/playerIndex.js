@@ -90,13 +90,15 @@ function rowToStats(r) {
 
 // JS fallback GIS/GIS+ for a single row when the overlay misses.
 // Mirrors computeGIS() sans opp mod and leverage (avgLev=1, oppMod=1).
+// Returns per-match totals to match the overlay's units.
 function fallbackGis(stats, ns) {
   if (!ns || ns <= 0) return { gis: 0, gisPlus: 0 };
   const raw    = Object.entries(POS_W).reduce((s, [k, w]) => s + (stats[k] || 0) * w, 0);
   const errSum = Object.entries(ERR_W).reduce((s, [k, w]) => s + (stats[k] || 0) * w, 0);
   const errPen = Math.max(ERR_FLOOR, Math.min(1.0, 1.0 - (errSum / (raw + 1)) * ERR_DAMP));
-  const gis    = (raw / ns) * errPen * GIS_SCALE;
-  return { gis, gisPlus: gis };
+  const perSet = (raw / ns) * errPen * GIS_SCALE;
+  const total  = perSet * ns;
+  return { gis: total, gisPlus: total };
 }
 
 // Synthetic game key mirroring buildGameIndex() in csvGames.js so Player
@@ -174,19 +176,12 @@ export function loadPlayerIndex(pgisTables) {
           const ns    = stats.sets;
           if (ns <= 0) continue;
 
-          // Overlay lookup; fall back to JS if missing.
+          // Overlay lookup; fall back to JS if missing. Both paths return
+          // per-match totals (matching the units Game Browser displays).
           const gpKey = makeKey(seasonStr, r.Date, team, player);
           const hit   = gisPlusMap.get(gpKey);
-          let gisPerSet, gisPlusPerSet;
-          if (hit) {
-            // Overlay CSV stores per-match totals, not per-set rates.
-            gisPerSet     = hit.gis     / ns;
-            gisPlusPerSet = hit.gisPlus / ns;
-          } else {
-            const fb = fallbackGis(stats, ns);
-            gisPerSet     = fb.gis;     // already per-set
-            gisPlusPerSet = fb.gisPlus;
-          }
+          const gameGis     = hit ? hit.gis     : fallbackGis(stats, ns).gis;
+          const gameGisPlus = hit ? hit.gisPlus : fallbackGis(stats, ns).gisPlus;
 
           let season = rec.seasons[year];
           if (!season) {
@@ -195,7 +190,7 @@ export function loadPlayerIndex(pgisTables) {
               posCounts: {},
               sets: 0, games: 0,
               totals: zeroTotals(),
-              gisSetsSum: 0, gisPlusSetsSum: 0,
+              gisTotalSum: 0, gisPlusTotalSum: 0,
               games_: [],
             };
             rec.seasons[year] = season;
@@ -208,8 +203,8 @@ export function loadPlayerIndex(pgisTables) {
           season.sets  += ns;
           season.games += 1;
           addTotals(season.totals, stats);
-          season.gisSetsSum     += gisPerSet     * ns;
-          season.gisPlusSetsSum += gisPlusPerSet * ns;
+          season.gisTotalSum     += gameGis;
+          season.gisPlusTotalSum += gameGisPlus;
 
           season.games_.push({
             gameKey:   gKey,
@@ -220,9 +215,9 @@ export function loadPlayerIndex(pgisTables) {
             sets:      ns,
             position:  rowPos || '?',
             totals:    stats,
-            gis:       gisPerSet,
-            gisPlus:   gisPlusPerSet,
-            pGIS:      null,  // filled below
+            gis:       gameGis,      // per-match total (matches Game Browser)
+            gisPlus:   gameGisPlus,
+            pGIS:      null,         // filled below
           });
         }
       }
@@ -244,22 +239,26 @@ export function loadPlayerIndex(pgisTables) {
       const seasons = [];
       const careerTotals = zeroTotals();
       let careerSets = 0, careerGames = 0;
-      let careerGisSum = 0, careerGisPlusSum = 0;
+      let careerGisTotal = 0, careerGisPlusTotal = 0;
 
       for (const s of seasonList) {
         const seasonPos = pickMostCommonPosition(s.posCounts) || careerPos;
-        const gisPerSet     = s.sets > 0 ? s.gisSetsSum     / s.sets : 0;
-        const gisPlusPerSet = s.sets > 0 ? s.gisPlusSetsSum / s.sets : 0;
-        const nSetsBucket   = s.games > 0
+        // Display = average per-match (same units as Game Browser totals).
+        // pGIS lookup = per-set rate against position × nSets baseline.
+        const gisPerGame     = s.games > 0 ? s.gisTotalSum     / s.games : 0;
+        const gisPlusPerGame = s.games > 0 ? s.gisPlusTotalSum / s.games : 0;
+        const gisPlusPerSet  = s.sets  > 0 ? s.gisPlusTotalSum / s.sets  : 0;
+        const nSetsBucket    = s.games > 0
           ? Math.min(5, Math.max(3, Math.round(s.sets / s.games)))
           : 3;
         const seasonPGIS = computePGIS(gisPlusPerSet, seasonPos, nSetsBucket, pgisTables);
 
-        // Per-game pGIS.
+        // Per-game pGIS — per-set rate for the single match.
         const gamesSorted = s.games_.slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
         for (const g of gamesSorted) {
           const gNs = Math.min(5, Math.max(3, g.sets));
-          g.pGIS = computePGIS(g.gisPlus, g.position !== '?' ? g.position : seasonPos, gNs, pgisTables);
+          const perSet = g.sets > 0 ? g.gisPlus / g.sets : 0;
+          g.pGIS = computePGIS(perSet, g.position !== '?' ? g.position : seasonPos, gNs, pgisTables);
         }
 
         seasons.push({
@@ -269,27 +268,28 @@ export function loadPlayerIndex(pgisTables) {
           sets:     s.sets,
           games:    s.games,
           totals:   s.totals,
-          gis:      gisPerSet,
-          gisPlus:  gisPlusPerSet,
+          gis:      gisPerGame,
+          gisPlus:  gisPlusPerGame,
           pGIS:     seasonPGIS,
           gameLog:  gamesSorted,
         });
 
         addTotals(careerTotals, s.totals);
-        careerSets       += s.sets;
-        careerGames      += s.games;
-        careerGisSum     += s.gisSetsSum;
-        careerGisPlusSum += s.gisPlusSetsSum;
+        careerSets         += s.sets;
+        careerGames        += s.games;
+        careerGisTotal     += s.gisTotalSum;
+        careerGisPlusTotal += s.gisPlusTotalSum;
       }
 
       if (careerSets === 0) continue;  // zero-activity filter
 
-      const careerGis     = careerGisSum     / careerSets;
-      const careerGisPlus = careerGisPlusSum / careerSets;
+      const careerGis         = careerGames > 0 ? careerGisTotal     / careerGames : 0;
+      const careerGisPlus     = careerGames > 0 ? careerGisPlusTotal / careerGames : 0;
+      const careerGisPlusPerSet = careerSets > 0 ? careerGisPlusTotal / careerSets : 0;
       const careerNs      = careerGames > 0
         ? Math.min(5, Math.max(3, Math.round(careerSets / careerGames)))
         : 3;
-      const careerPGIS = computePGIS(careerGisPlus, careerPos, careerNs, pgisTables);
+      const careerPGIS = computePGIS(careerGisPlusPerSet, careerPos, careerNs, pgisTables);
 
       players.push({
         key:      rec.key,

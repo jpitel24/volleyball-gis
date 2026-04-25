@@ -58,6 +58,13 @@ function PGISCell({ v }) {
 // emits every qualifying season across 2022-2025, so a transfer like
 // Torrey Stafford shows as three rows (two Pitt seasons + one Texas).
 // Year-specific mode filters to just that year's rows.
+// Constant filter: a player must have appeared in at least this fraction
+// of their team's games to chart on the leaderboard. Without it, one-game
+// cameos with a single huge match dominate the all-time pGIS view (the
+// season pGIS is the simple average of per-match pGIS, so 1-of-1 = pure
+// outlier production).
+const MIN_TEAM_GAME_SHARE = 0.75;
+
 function buildRows(players, year) {
   const rows = [];
   const targetYear = year === 'ALL' ? null : parseInt(year, 10);
@@ -65,6 +72,10 @@ function buildRows(players, year) {
     for (const s of p.seasons) {
       if (!s.games) continue;
       if (targetYear !== null && s.year !== targetYear) continue;
+      // Skip seasons where the player didn't show up for ≥75% of the
+      // team's slate. teamGames=0 means we couldn't resolve the team's
+      // schedule (rare; treat as a fail-closed skip).
+      if (!s.teamGames || s.games / s.teamGames < MIN_TEAM_GAME_SHARE) continue;
       rows.push({
         playerKey: p.key,
         name:      p.name,
@@ -73,6 +84,7 @@ function buildRows(players, year) {
         year:      s.year,
         games:     s.games,
         sets:      s.sets,
+        teamGames: s.teamGames,
         totals:    s.totals,
         gis:       s.gis,
         gisPlus:   s.gisPlus,
@@ -141,6 +153,8 @@ export default function SeasonLookup() {
         <div className="hero-sub">
           Leaderboard view — rank D1 players by GIS+ or pGIS, filtered by
           year, position group, and minimum games vs RPI Top-50 opponents.
+          Players must have appeared in ≥75% of their team's games for
+          the season.
         </div>
       </div>
 

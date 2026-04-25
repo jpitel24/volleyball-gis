@@ -180,6 +180,9 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
     // byPlayer: key → { name, teamCounts, posCounts, teamsOrder, seasons: { [year]: SeasonAgg } }
     const byPlayer = new Map();
 
+    // teamYearGamesByYear[year][team] = Set<gameKey> — populated below.
+    const teamYearGamesByYear = {};
+
     for (let yi = 0; yi < YEARS.length; yi++) {
       const year = YEARS[yi];
       const idx  = yearIndices[yi];
@@ -192,6 +195,20 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
       // 3× inflated via the player's own set count.
       const matchNSets = {};
       for (const g of idx.games || []) matchNSets[g.key] = g.nSets || 3;
+
+      // Per (team, year) game count — count of distinct gameKeys in which
+      // this team appeared. Used downstream to gate Season Browser to
+      // players who actually showed up for most of their team's matches
+      // (otherwise one-game cameos clog the all-time pGIS leaderboard).
+      const teamYearGames = teamYearGamesByYear[year] || (teamYearGamesByYear[year] = {});
+      for (const [gKey, rows] of Object.entries(idx.byKey)) {
+        const teamsInGame = new Set();
+        for (const r of rows) if (r.Team) teamsInGame.add(r.Team);
+        for (const team of teamsInGame) {
+          if (!teamYearGames[team]) teamYearGames[team] = new Set();
+          teamYearGames[team].add(gKey);
+        }
+      }
 
       // Flatten all rows from the year's byKey map (this is every team-match
       // row; each player appears once per game they played).
@@ -383,12 +400,20 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
           pGIS:    t50PGisCount > 0 ? t50PGisSum / t50PGisCount : 0,
         } : null;
 
+        // How many games the player's primary team played that season.
+        // games / teamGames → "share of team's slate the player appeared
+        // in" — the Season Browser uses this to gate out one-off cameos.
+        const teamYearGames = teamYearGamesByYear[s.year] || {};
+        const teamGameSet   = seasonTeam ? teamYearGames[seasonTeam] : null;
+        const teamGames     = teamGameSet ? teamGameSet.size : 0;
+
         seasons.push({
           year:     s.year,
           team:     seasonTeam || '',
           position: seasonPos,
           sets:     s.sets,
           games:    s.games,
+          teamGames,
           totals:   s.totals,
           gis:      gisPerSet,
           gisPlus:  gisPlusPerSet,

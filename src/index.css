@@ -725,3 +725,66 @@ body {
   flex-shrink: 0; width: 58px; text-align: center;
 }
 .about-tier-range { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--muted); }
+
+/* ─── About page ─────────────────────────────────────────────────── */
+.about-wrap {
+  max-width: 760px; margin: 0 auto 4rem; padding: 0 1.4rem;
+  font-size: 0.9rem; line-height: 1.7;
+}
+.about-section { margin-bottom: 2.4rem; }
+.about-section h2 {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--accent); margin-bottom: 0.9rem;
+  padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);
+}
+.about-section p { margin-bottom: 0.85rem; color: var(--text); }
+.about-section p:last-child { margin-bottom: 0; }
+.about-section code {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.78em;
+  background: var(--surface2); padding: 0.05rem 0.35rem; border-radius: 3px;
+  color: var(--gisplus);
+}
+.about-section a { color: var(--accent); text-decoration: none; }
+.about-section a:hover { text-decoration: underline; }
+
+.about-metric {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 1rem 1.2rem; margin-bottom: 0.8rem;
+}
+.about-metric-name {
+  font-family: 'JetBrains Mono', monospace; font-size: 1rem;
+  font-weight: 700; letter-spacing: 0.04em; color: var(--accent);
+  display: inline-block;
+}
+.about-metric-tag {
+  display: inline-block; margin-left: 0.7rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+  text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted);
+}
+.about-metric p { margin-top: 0.55rem; margin-bottom: 0; font-size: 0.86rem; }
+
+.about-tools { list-style: none; padding: 0; }
+.about-tools li { padding: 0.45rem 0; border-bottom: 1px dashed var(--border); }
+.about-tools li:last-child { border-bottom: none; }
+.about-tool-link {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.76rem;
+  font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--accent); margin-right: 0.5rem;
+}
+
+.about-list { list-style: none; padding-left: 0; }
+.about-list li { padding: 0.3rem 0; padding-left: 1rem; position: relative; }
+.about-list li::before {
+  content: '·'; color: var(--muted); position: absolute; left: 0.2rem;
+}
+
+.about-pos-chip {
+  display: inline-block; min-width: 28px; text-align: center;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+  font-weight: 700; padding: 0.05rem 0.4rem; margin-right: 0.5rem;
+  border: 1px solid currentColor; border-radius: 3px;
+}
+
+.about-footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--border); }
+.about-footer p { font-size: 0.78rem; color: var(--muted); }

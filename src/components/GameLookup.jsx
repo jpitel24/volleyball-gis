@@ -4,10 +4,11 @@ import { useData } from '../lib/DataContext.jsx';
 import { loadYear, gameRowsToBoxscore, loadSetScores } from '../lib/csvGames.js';
 import { computeGIS, computePGIS } from '../lib/gis.js';
 import { loadGisPlus, makeKey, seasonStrFromYear } from '../lib/gisPlus.js';
+import { navigate, hrefFor } from '../lib/router.js';
 
 const YEARS = [2025, 2024, 2023, 2022];
 
-export default function GameLookup({ deepLink, onDeepLinkConsumed }) {
+export default function GameLookup({ route }) {
   const { rpiByYear, pgisTables, categoryPgisTables } = useData();
 
   const [year, setYear]             = useState(2025);
@@ -15,12 +16,14 @@ export default function GameLookup({ deepLink, onDeepLinkConsumed }) {
   const [loadingYear, setLoadingYear] = useState(false);
   const [search, setSearch]         = useState('');
   const [report, setReport]         = useState(null);
+  const [openKey, setOpenKey]       = useState(null);  // currently-open game key
 
   // ── Load CSV when year changes ─────────────────────────────────────────────
   useEffect(() => {
     let cancelled = false;
     setLoadingYear(true);
     setReport(null);
+    setOpenKey(null);
     setSearch('');
     loadYear(year)
       .then(data => { if (!cancelled) { setYearData(data); setLoadingYear(false); } })
@@ -28,16 +31,28 @@ export default function GameLookup({ deepLink, onDeepLinkConsumed }) {
     return () => { cancelled = true; };
   }, [year]);
 
-  // ── Deep-link from Player Browser: year + gameKey → auto-select ─────────────
+  // ── URL-driven auto-select: /games/:year/:key opens that match ─────────────
+  // Two-phase: switch year first (triggers CSV load), then on yearData
+  // resolution find the matching game and open the report. The URL is the
+  // source of truth — no consume-callback needed.
   useEffect(() => {
-    if (!deepLink) return;
-    if (deepLink.year !== year) { setYear(deepLink.year); return; }  // two-phase
+    if (!route || route.name !== 'games' || !route.gameKey) return;
+    if (route.year !== year) { setYear(route.year); return; }
     if (!yearData) return;
-    const g = yearData.games.find(x => x.key === deepLink.gameKey);
+    if (openKey === route.gameKey) return;  // already open
+    const g = yearData.games.find(x => x.key === route.gameKey);
     if (g) selectGame(g);
-    onDeepLinkConsumed && onDeepLinkConsumed();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deepLink, yearData]);
+  }, [route, yearData]);
+
+  // ── Closing the report (back to /games) clears the open match ──────────────
+  useEffect(() => {
+    if (route && route.name === 'games' && !route.gameKey && report) {
+      setReport(null);
+      setOpenKey(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [route]);
 
   // ── Preload the gis_plus_observations.csv Map (one-time, fire-and-forget) ──
   // Kicks off the 46 MB fetch as soon as the browser mounts, so by the time the
@@ -128,6 +143,7 @@ export default function GameLookup({ deepLink, onDeepLinkConsumed }) {
     }
 
     setReport({ gameId, mg });
+    setOpenKey(game.key);
     // Scroll to report after React paints
     requestAnimationFrame(() =>
       document.querySelector('.report')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -154,7 +170,11 @@ export default function GameLookup({ deepLink, onDeepLinkConsumed }) {
         <select
           className="gb-year-select"
           value={year}
-          onChange={e => setYear(parseInt(e.target.value, 10))}
+          onChange={e => {
+            setYear(parseInt(e.target.value, 10));
+            // Reset to /games so we don't leave a stale game key in the URL.
+            navigate(hrefFor('games'));
+          }}
           aria-label="Select season"
         >
           {YEARS.map(y => (
@@ -190,7 +210,10 @@ export default function GameLookup({ deepLink, onDeepLinkConsumed }) {
             <button
               key={g.key}
               className="gb-game"
-              onClick={() => selectGame(g)}
+              onClick={() => {
+                // Push the canonical URL; the route effect will call selectGame.
+                navigate(hrefFor('games', year, g.key));
+              }}
             >
               <span className="gb-game-date">{g.date}</span>
               <span className="gb-game-matchup">

@@ -327,9 +327,13 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
         for (const [t, n] of Object.entries(s.teamCounts || {})) {
           if (n > seasonTeamN) { seasonTeam = t; seasonTeamN = n; }
         }
-        // Display = average per-match (same units as Game Browser totals).
-        const gisPerGame     = s.games > 0 ? s.gisTotalSum     / s.games : 0;
-        const gisPlusPerGame = s.games > 0 ? s.gisPlusTotalSum / s.games : 0;
+        // Display = sets-weighted per-set rate. Using /sets instead of
+        // /games removes the bias against players whose teams sweep more
+        // often: a setter on a 3-set sweep team stacks fewer total GIS
+        // points per match than one on a 5-set grinder team without
+        // being any less efficient. Per-set rate compares like to like.
+        const gisPerSet     = s.sets > 0 ? s.gisTotalSum     / s.sets : 0;
+        const gisPlusPerSet = s.sets > 0 ? s.gisPlusTotalSum / s.sets : 0;
 
         // Per-game pGIS — per-set rate for the single match, looked up
         // against that match's position × nSets baseline. If the player
@@ -374,8 +378,8 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
         const t50Season = t50Games > 0 ? {
           games:   t50Games,
           sets:    t50Sets,
-          gis:     t50GisSum     / t50Games,
-          gisPlus: t50GisPlusSum / t50Games,
+          gis:     t50Sets > 0 ? t50GisSum     / t50Sets : 0,
+          gisPlus: t50Sets > 0 ? t50GisPlusSum / t50Sets : 0,
           pGIS:    t50PGisCount > 0 ? t50PGisSum / t50PGisCount : 0,
         } : null;
 
@@ -386,8 +390,8 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
           sets:     s.sets,
           games:    s.games,
           totals:   s.totals,
-          gis:      gisPerGame,
-          gisPlus:  gisPlusPerGame,
+          gis:      gisPerSet,
+          gisPlus:  gisPlusPerSet,
           pGIS:     seasonPGIS,
           t50:      t50Season,
           gameLog:  gamesSorted,
@@ -410,8 +414,11 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
 
       if (careerSets === 0) continue;  // zero-activity filter
 
-      const careerGis     = careerGames > 0 ? careerGisTotal     / careerGames : 0;
-      const careerGisPlus = careerGames > 0 ? careerGisPlusTotal / careerGames : 0;
+      // Sets-weighted per-set rate — same logic as season-level (see
+      // gisPerSet block above). /sets, not /games, so length-biased
+      // schedules don't pad the headline number.
+      const careerGis     = careerSets > 0 ? careerGisTotal     / careerSets : 0;
+      const careerGisPlus = careerSets > 0 ? careerGisPlusTotal / careerSets : 0;
       // Career pGIS = simple average across every match played. A 130-set
       // season naturally contributes more games than a 40-set season.
       const careerPGIS = careerPGisCount > 0 ? careerPGisSum / careerPGisCount : 0;
@@ -419,8 +426,8 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
       const t50Career = t50CareerGames > 0 ? {
         games:   t50CareerGames,
         sets:    t50CareerSets,
-        gis:     t50CareerGisSum     / t50CareerGames,
-        gisPlus: t50CareerGisPlusSum / t50CareerGames,
+        gis:     t50CareerSets > 0 ? t50CareerGisSum     / t50CareerSets : 0,
+        gisPlus: t50CareerSets > 0 ? t50CareerGisPlusSum / t50CareerSets : 0,
         pGIS:    t50CareerPGisCount > 0 ? t50CareerPGisSum / t50CareerPGisCount : 0,
       } : null;
 

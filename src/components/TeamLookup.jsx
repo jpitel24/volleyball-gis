@@ -68,16 +68,19 @@ function buildTeamIndex(players) {
   const teams = [];
   for (const t of byKey.values()) {
     const sortedPlayers = t.players.slice().sort((a, b) => (b.gisPlus || 0) - (a.gisPlus || 0));
-    // Team metrics — games-weighted (by player games) so a libero who
-    // plays every match pulls weight toward her season line.
-    let gSum = 0, gpSum = 0, pgSum = 0, wSum = 0, pgW = 0;
+    // Team metrics — sets-weighted (player rates are per-set), so a
+    // libero who plays every set pulls weight toward her season line.
+    // pGIS still weights by games since pGIS is a per-match average.
+    let gSum = 0, gpSum = 0, sSum = 0, pgSum = 0, pgW = 0;
     for (const pl of t.players) {
-      const w = pl.games || 0;
-      if (!w) continue;
-      gSum  += (pl.gis     || 0) * w;
-      gpSum += (pl.gisPlus || 0) * w;
-      wSum  += w;
-      if (Number.isFinite(pl.pGIS)) { pgSum += pl.pGIS * w; pgW += w; }
+      const ws = pl.sets || 0;
+      if (ws > 0) {
+        gSum  += (pl.gis     || 0) * ws;
+        gpSum += (pl.gisPlus || 0) * ws;
+        sSum  += ws;
+      }
+      const wg = pl.games || 0;
+      if (wg > 0 && Number.isFinite(pl.pGIS)) { pgSum += pl.pGIS * wg; pgW += wg; }
     }
     const totalTeamSets = Object.values(t.matchSets).reduce((a, b) => a + b, 0);
     teams.push({
@@ -88,8 +91,8 @@ function buildTeamIndex(players) {
       games:       t.gameKeys.size,
       t50Games:    t.t50Keys.size,
       sets:        totalTeamSets,
-      gis:         wSum > 0 ? gSum  / wSum : 0,
-      gisPlus:     wSum > 0 ? gpSum / wSum : 0,
+      gis:         sSum > 0 ? gSum  / sSum : 0,
+      gisPlus:     sSum > 0 ? gpSum / sSum : 0,
       pGIS:        pgW  > 0 ? pgSum / pgW  : null,
       players:     sortedPlayers,
     });
@@ -129,8 +132,8 @@ function TeamCard({ t, expanded, onToggle }) {
         <div className="pb-career-chips">
           <span className="pb-chip">{t.games} G · {t.sets} S</span>
           <span className="pb-chip">Roster {t.rosterSize}</span>
-          <span className="pb-chip">GIS/G {fmt(t.gis)}</span>
-          <span className="pb-chip" style={{ color: 'var(--gisplus)' }}>GIS+/G {fmt(t.gisPlus)}</span>
+          <span className="pb-chip">GIS/S {fmt(t.gis)}</span>
+          <span className="pb-chip" style={{ color: 'var(--gisplus)' }}>GIS+/S {fmt(t.gisPlus)}</span>
           <PGISChip v={t.pGIS} />
           <span className="pb-chip" style={{ opacity: 0.7, borderStyle: 'dashed' }}>
             {t.t50Games} T50 G
@@ -163,11 +166,11 @@ function TeamCard({ t, expanded, onToggle }) {
                 <th className="text-left">Pos</th>
                 <th style={{ textAlign: 'right' }}>G</th>
                 <th style={{ textAlign: 'right' }}>S</th>
-                <th style={{ textAlign: 'right' }}>GIS/G</th>
-                <th style={{ textAlign: 'right' }}>GIS+/G</th>
+                <th style={{ textAlign: 'right' }}>GIS/S</th>
+                <th style={{ textAlign: 'right' }}>GIS+/S</th>
                 <th style={{ textAlign: 'right' }}>pGIS</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }}>T50 G</th>
-                <th style={{ textAlign: 'right', opacity: 0.6 }}>T50 GIS+/G</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }}>T50 GIS+/S</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }}>T50 pGIS</th>
               </tr>
             </thead>
@@ -215,7 +218,7 @@ export default function TeamLookup() {
       if (q && !t.team.toLowerCase().includes(q)) return false;
       return true;
     });
-    // Rank by team GIS+/G desc — can always add toggles later.
+    // Rank by team GIS+/S desc — can always add toggles later.
     rows.sort((a, b) => (b.gisPlus || 0) - (a.gisPlus || 0));
     return rows;
   }, [teams, year, search]);

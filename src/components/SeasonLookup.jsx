@@ -232,11 +232,11 @@ export default function SeasonLookup() {
                 <th style={{ textAlign: 'right' }}>Yr</th>
                 <th style={{ textAlign: 'right' }}>G</th>
                 <th style={{ textAlign: 'right' }}>S</th>
-                <th style={{ textAlign: 'right' }}>GIS/G</th>
-                <th style={{ textAlign: 'right' }}>GIS+/G</th>
+                <th style={{ textAlign: 'right' }}>GIS/S</th>
+                <th style={{ textAlign: 'right' }}>GIS+/S</th>
                 <th style={{ textAlign: 'right' }}>pGIS</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }}>T50 G</th>
-                <th style={{ textAlign: 'right', opacity: 0.6 }}>T50 GIS+/G</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }}>T50 GIS+/S</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }}>T50 pGIS</th>
               </tr>
             </thead>

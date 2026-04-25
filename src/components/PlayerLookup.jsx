@@ -124,8 +124,8 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
         </span>
         <div className="pb-career-chips">
           <span className="pb-chip">{c.games} G · {c.sets} S</span>
-          <span className="pb-chip">GIS/G {fmt(c.gis)}</span>
-          <span className="pb-chip" style={{ color: 'var(--gisplus)' }}>GIS+/G {fmt(c.gisPlus)}</span>
+          <span className="pb-chip">GIS/S {fmt(c.gis)}</span>
+          <span className="pb-chip" style={{ color: 'var(--gisplus)' }}>GIS+/S {fmt(c.gisPlus)}</span>
           <PGISChip v={c.pGIS} />
           {c.t50 && (
             <>
@@ -133,10 +133,10 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
                 vs T50 · {c.t50.games}G
               </span>
               <span className="pb-chip" style={{ opacity: 0.85 }}>
-                GIS/G {fmt(c.t50.gis)}
+                GIS/S {fmt(c.t50.gis)}
               </span>
               <span className="pb-chip" style={{ color: 'var(--gisplus)', opacity: 0.85 }}>
-                GIS+/G {fmt(c.t50.gisPlus)}
+                GIS+/S {fmt(c.t50.gisPlus)}
               </span>
               <PGISChip v={c.t50.pGIS} />
             </>
@@ -159,12 +159,12 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
                 <th style={{ textAlign: 'right' }}>D</th>
                 <th style={{ textAlign: 'right' }}>B</th>
                 <th style={{ textAlign: 'right' }}>SA</th>
-                <th style={{ textAlign: 'right' }}>GIS/G</th>
-                <th style={{ textAlign: 'right' }}>GIS+/G</th>
+                <th style={{ textAlign: 'right' }}>GIS/S</th>
+                <th style={{ textAlign: 'right' }}>GIS+/S</th>
                 <th style={{ textAlign: 'right' }}>pGIS</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }} title="Games vs RPI Top-50 opponents">T50 G</th>
-                <th style={{ textAlign: 'right', opacity: 0.6 }} title="GIS/G vs RPI Top-50 opponents">T50 GIS/G</th>
-                <th style={{ textAlign: 'right', opacity: 0.6 }} title="GIS+/G vs RPI Top-50 opponents">T50 GIS+/G</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }} title="GIS/S vs RPI Top-50 opponents">T50 GIS/S</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }} title="GIS+/S vs RPI Top-50 opponents">T50 GIS+/S</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }} title="pGIS vs RPI Top-50 opponents">T50 pGIS</th>
                 <th></th>
               </tr>

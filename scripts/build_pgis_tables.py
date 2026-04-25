@@ -107,6 +107,35 @@ def load_d1_sets(path: Path) -> dict[str, set[str]]:
     return out
 
 
+def load_top_n_sets(path: Path, n: int = 100) -> dict[str, set[str]]:
+    """{rpi_year: set(team_name_lower)} for the top-N teams by numeric RPI.
+
+    Higher RPI = better, so we sort desc and take the head N. Used to gate
+    the pGIS baseline cohort to elite-vs-elite contests, which prevents
+    mid-major top-N production against weak schedules from polluting the
+    percentile distribution.
+    """
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    out: dict[str, set[str]] = {}
+    for year, tm in raw.items():
+        rated: list[tuple[str, float]] = []
+        for k, v in tm.items():
+            if k.startswith("_") or v is None:
+                continue
+            try:
+                if isinstance(v, float) and math.isnan(v):
+                    continue
+            except Exception:
+                pass
+            try:
+                rated.append((k.lower(), float(v)))
+            except (ValueError, TypeError):
+                continue
+        rated.sort(key=lambda x: x[1], reverse=True)
+        out[year] = {name for name, _ in rated[:n]}
+    return out
+
+
 def safe_int(v) -> int:
     try:
         return int(v)
@@ -127,9 +156,10 @@ def main() -> None:
         sys.exit(1)
 
     d1 = load_d1_sets(RPI)
+    top100 = load_top_n_sets(RPI, n=100)
     print("D1 team counts by season:")
     for y in sorted(d1):
-        print(f"  {y}: {len(d1[y])} teams")
+        print(f"  {y}: {len(d1[y])} teams  (top-100: {len(top100.get(y, set()))})")
 
     # Season-stable player → position map (first non-null wins).
     player_pos: dict[tuple[str, str, str], str] = {}
@@ -202,6 +232,7 @@ def main() -> None:
     contests_kept = 0
     contests_skipped_notd1 = 0
     contests_skipped_single = 0
+    contests_skipped_nottop = 0
 
     for (season, contest), teams in contest_teams.items():
         if len(teams) != 2:
@@ -211,6 +242,14 @@ def main() -> None:
         d1_season = d1.get(y, set())
         if not all(t in d1_season for t in teams):
             contests_skipped_notd1 += 1
+            continue
+        # Quality-cohort gate: both teams must be RPI top-100 that season.
+        # The pGIS distribution should reflect elite-vs-elite production so
+        # mid-major top-N production against weaker schedules doesn't anchor
+        # the percentile curve.
+        top_season = top100.get(y, set())
+        if not all(t in top_season for t in teams):
+            contests_skipped_nottop += 1
             continue
         contests_kept += 1
 
@@ -243,8 +282,9 @@ def main() -> None:
                 for pl in players[:n_top]:
                     buckets[(grp, key_ns)].append(round(pl["gp_per_s"] * 100))
 
-    print(f"  contests kept (both D1):         {contests_kept:,}")
+    print(f"  contests kept (both top-100):    {contests_kept:,}")
     print(f"  contests skipped (non-D1 side):  {contests_skipped_notd1:,}")
+    print(f"  contests skipped (sub-100 side): {contests_skipped_nottop:,}")
     print(f"  contests skipped (not 2 teams):  {contests_skipped_single:,}")
 
     # Emit sorted lists + print distribution.

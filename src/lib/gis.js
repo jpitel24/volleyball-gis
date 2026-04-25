@@ -136,15 +136,27 @@ export function seasonFromGameId(gameId) {
 }
 
 // ─── RPI modifier ─────────────────────────────────────────────────────────────
-// Rank 1 → +5% (1.05), rank 50 → +0% (1.00), last place → -50% (0.50).
-// Two linear segments meeting at rank 50.
+// Piecewise-linear over RPI rank, designed to widen the gap between
+// power-conference and mid-major production:
+//   rank   1 → 1.05  (+5% bonus, top of the heap)
+//   rank  25 → 1.00  (kneepoint — no bonus, no penalty)
+//   rank 100 → 0.75
+//   rank 200 → 0.50
+//   rank 350 → 0.40  (effective floor)
+//   non-D1   → 0.50  (treated as worse than the worst D1 team in volume,
+//                     so non-D1 tune-ups don't pad mid-major totals)
+// `totalTeams` is preserved as the third anchor only when it differs from
+// the canonical 350-ish; the curve still bottoms at 0.40.
 export function rankToModifier(rank, totalTeams) {
-  if (!rank || !totalTeams) return 1.0;
-  if (rank <= 50) {
-    return 1.05 - (rank - 1) * (0.05 / 49);
-  }
-  if (totalTeams <= 50) return 1.0;
-  return Math.max(0.50, 1.00 - (rank - 50) * (0.50 / (totalTeams - 50)));
+  // Non-D1 (no rank): treat as a known-weak opponent, not as neutral.
+  if (!rank) return 0.50;
+  if (rank <= 1)   return 1.05;
+  if (rank <= 25)  return 1.05 + (rank -   1) * (1.00 - 1.05) / (25  -   1);  // 1.05 → 1.00
+  if (rank <= 100) return 1.00 + (rank -  25) * (0.75 - 1.00) / (100 -  25);  // 1.00 → 0.75
+  if (rank <= 200) return 0.75 + (rank - 100) * (0.50 - 0.75) / (200 - 100);  // 0.75 → 0.50
+  // Tail: linear from 200 → totalTeams (or 350 fallback), bottoming at 0.40.
+  const tail = Math.max(totalTeams || 350, 201);
+  return Math.max(0.40, 0.50 + (rank - 200) * (0.40 - 0.50) / (tail - 200));
 }
 
 // Schools whose RPI key is a nickname/abbreviation not derivable from either official name.

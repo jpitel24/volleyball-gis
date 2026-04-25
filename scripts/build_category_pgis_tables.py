@@ -119,6 +119,34 @@ def load_d1_sets(path: Path) -> dict[str, set[str]]:
     return out
 
 
+def load_top_n_sets(path: Path, n: int = 100) -> dict[str, set[str]]:
+    """{rpi_year: set(top-N team names)}. Mirror of build_pgis_tables.py.
+
+    Used to gate the per-category baseline cohort to elite-vs-elite
+    contests so mid-major production against weak schedules doesn't
+    anchor the percentile curve.
+    """
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    out: dict[str, set[str]] = {}
+    for year, tm in raw.items():
+        rated: list[tuple[str, float]] = []
+        for k, v in tm.items():
+            if k.startswith("_") or v is None:
+                continue
+            try:
+                if isinstance(v, float) and math.isnan(v):
+                    continue
+            except Exception:
+                pass
+            try:
+                rated.append((k.lower(), float(v)))
+            except (ValueError, TypeError):
+                continue
+        rated.sort(key=lambda x: x[1], reverse=True)
+        out[year] = {name for name, _ in rated[:n]}
+    return out
+
+
 def safe_int(v) -> int:
     try: return int(v)
     except (ValueError, TypeError): return 0
@@ -147,6 +175,7 @@ def main() -> None:
         sys.exit(1)
 
     d1 = load_d1_sets(RPI)
+    top100 = load_top_n_sets(RPI, n=100)
 
     player_pos: dict[tuple[str, str, str], str] = {}
     contest_teams: dict[tuple[str, str], set[str]] = defaultdict(set)
@@ -195,7 +224,7 @@ def main() -> None:
     print("\nPass 2: bucketing …")
     # buckets[(category, group, nsets_key)] = [ints of (category_neutral_per_set * 100)]
     buckets: dict[tuple[str, str, str], list[int]] = defaultdict(list)
-    kept = skipped_d1 = skipped_one = 0
+    kept = skipped_d1 = skipped_one = skipped_nottop = 0
 
     for (season, contest), teams in contest_teams.items():
         if len(teams) != 2:
@@ -204,6 +233,10 @@ def main() -> None:
         d1_season = d1.get(y, set())
         if not all(t in d1_season for t in teams):
             skipped_d1 += 1; continue
+        # Quality-cohort gate: both teams must be RPI top-100 that season.
+        top_season = top100.get(y, set())
+        if not all(t in top_season for t in teams):
+            skipped_nottop += 1; continue
         kept += 1
 
         all_S = [pl["S"] for t in teams for pl in roster.get((season, contest, t), [])]
@@ -229,8 +262,9 @@ def main() -> None:
                     for cat_key, val in cats.items():
                         buckets[(cat_key, grp, ns_key)].append(round(val * 100))
 
-    print(f"  contests kept (both D1):         {kept:,}")
+    print(f"  contests kept (both top-100):    {kept:,}")
     print(f"  contests skipped (non-D1 side):  {skipped_d1:,}")
+    print(f"  contests skipped (sub-100 side): {skipped_nottop:,}")
     print(f"  contests skipped (not 2 teams):  {skipped_one:,}")
 
     # Emit.

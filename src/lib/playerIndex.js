@@ -159,6 +159,38 @@ function pickMostCommonPosition(posCounts) {
   return best;
 }
 
+// Infer a player's bucket (S | OH | MB | L) from per-set production rates
+// over a span of games (a season or a career). Returns null when the
+// stat line is ambiguous so callers can fall back to the CSV-tagged
+// position. Thresholds chosen to fire only on unambiguous deployment
+// signatures — see plan in unified-honking-aho.md (this is the
+// "version of C" approach: stats lead, CSV breaks ties + supplies
+// sub-tags like OPP/RS/MH).
+//
+// Inputs:
+//   totals — { assists, digs, kills, total_attacks, reception_attempts,
+//              block_solos, block_assists } summed across games
+//   sets   — total sets played in the same span
+function inferPositionFromTotals(totals, sets) {
+  if (!sets || sets <= 0) return null;
+  const assistsPerSet = (totals.assists            || 0) / sets;
+  const digsPerSet    = (totals.digs               || 0) / sets;
+  const killsPerSet   = (totals.kills              || 0) / sets;
+  const attksPerSet   = (totals.total_attacks      || 0) / sets;
+  const recvPerSet    = (totals.reception_attempts || 0) / sets;
+  const blocksPerSet  = ((totals.block_solos || 0) + 0.5 * (totals.block_assists || 0)) / sets;
+
+  // Setter: only role that puts up 5+ assists/set.
+  if (assistsPerSet >= 5.0) return 'S';
+  // Libero/DS: no-attack, high-dig, no-block.
+  if (attksPerSet < 0.5 && digsPerSet >= 2.0 && blocksPerSet < 0.15) return 'L';
+  // Middle: heavy blocking, no back-row receive (rotates out).
+  if (blocksPerSet >= 0.8 && recvPerSet < 1.0) return 'MB';
+  // Outside: kill volume + receives serves (six-rotation pin).
+  if (killsPerSet >= 1.5 && recvPerSet >= 1.0) return 'OH';
+  return null;
+}
+
 let cachedPromise = null;
 
 export function loadPlayerIndex(pgisTables, rpiByYear) {
@@ -314,12 +346,21 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
 
     // Roll up seasons → career; compute pGIS at all three levels.
     const players = [];
+    // Diagnostic counters — printed once at end of build.
+    const overrideStats = {
+      seasonOverrides: 0,
+      seasonByDirection: {},  // e.g. "L→S": 4
+      sampleOverrides: [],    // top-N for spot check
+    };
+
     for (const rec of byPlayer.values()) {
       const seasonList = Object.values(rec.seasons)
         .sort((a, b) => b.year - a.year);
 
-      // Career position = most common across career.
-      const careerPos = pickMostCommonPosition(rec.posCounts) || '?';
+      // CSV-tagged career position (most-common roster tag across career).
+      // Used as a fallback when both season-level and career-level stat
+      // signatures are ambiguous.
+      const csvCareerPos = pickMostCommonPosition(rec.posCounts) || '?';
 
       // Teams ordered by most-recent appearance first.
       const teams = [...new Set(seasonList.map(s => s.team))];
@@ -336,7 +377,31 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
       let t50CareerPGisSum = 0, t50CareerPGisCount = 0;
 
       for (const s of seasonList) {
-        const seasonPos  = pickMostCommonPosition(s.posCounts) || careerPos;
+        // Position resolution: stat-line first, CSV tag second.
+        // 1. Compute the bucket implied by the season's per-set production.
+        // 2. If inferred bucket disagrees with the CSV tag's bucket,
+        //    OVERRIDE — display the canonical bucket symbol; we drop the
+        //    CSV's sub-tag because it was attached to the wrong bucket.
+        // 3. If they agree (or stat line is too ambiguous to fire),
+        //    keep the full CSV tag so OPP/RS/MH sub-distinctions survive.
+        const csvSeasonPos = pickMostCommonPosition(s.posCounts) || csvCareerPos;
+        const inferredSeasonBucket = inferPositionFromTotals(s.totals, s.sets);
+        let seasonPos = csvSeasonPos;
+        if (inferredSeasonBucket && posGroup(csvSeasonPos) !== inferredSeasonBucket) {
+          seasonPos = inferredSeasonBucket;
+          overrideStats.seasonOverrides += 1;
+          const dir = `${posGroup(csvSeasonPos) || '?'}→${inferredSeasonBucket}`;
+          overrideStats.seasonByDirection[dir] = (overrideStats.seasonByDirection[dir] || 0) + 1;
+          overrideStats.sampleOverrides.push({
+            name: rec.name, year: s.year, sets: s.sets,
+            csv: csvSeasonPos, inferred: inferredSeasonBucket,
+            assistsPerSet: (s.totals.assists || 0) / s.sets,
+            digsPerSet:    (s.totals.digs    || 0) / s.sets,
+            killsPerSet:   (s.totals.kills   || 0) / s.sets,
+            blocksPerSet:  ((s.totals.block_solos || 0) + 0.5 * (s.totals.block_assists || 0)) / s.sets,
+            recvPerSet:    (s.totals.reception_attempts || 0) / s.sets,
+          });
+        }
         // Most-common team that season — shields against stray rows (e.g.
         // a single mis-attributed game or a same-name player at another
         // school).
@@ -448,6 +513,16 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
       // season naturally contributes more games than a 40-set season.
       const careerPGIS = careerPGisCount > 0 ? careerPGisSum / careerPGisCount : 0;
 
+      // Career position: same stats-first / CSV-fallback logic as season.
+      // A career-long setter shows S; a player who switched mid-career
+      // (Villar L/DS → S in 2025) sees their season-by-season records
+      // resolve correctly while the career display lands on whichever
+      // bucket dominated total sets played.
+      const inferredCareerBucket = inferPositionFromTotals(careerTotals, careerSets);
+      const careerPos = (inferredCareerBucket && posGroup(csvCareerPos) !== inferredCareerBucket)
+        ? inferredCareerBucket
+        : csvCareerPos;
+
       const t50Career = t50CareerGames > 0 ? {
         games:   t50CareerGames,
         sets:    t50CareerSets,
@@ -477,6 +552,19 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
 
     // Sort by career GIS+ desc for default top-N display.
     players.sort((a, b) => (b.career.gisPlus || 0) - (a.career.gisPlus || 0));
+
+    // Diagnostic — fires once per page load. Tells us how often the
+    // stat-line classifier disagrees with the NCAA CSV roster tag and in
+    // which directions, so we can tune thresholds without flying blind.
+    try {
+      const sortedSamples = overrideStats.sampleOverrides
+        .slice()
+        .sort((a, b) => b.sets - a.sets)
+        .slice(0, 20);
+      console.log(`[playerIndex] Position overrides: ${overrideStats.seasonOverrides} season-level`);
+      console.log('[playerIndex] By direction:', overrideStats.seasonByDirection);
+      console.log('[playerIndex] Top-20 overrides by sets:', sortedSamples);
+    } catch (_) { /* console may be unavailable */ }
 
     const byKey = new Map(players.map(p => [p.key, p]));
     return { players, byKey };

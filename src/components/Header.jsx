@@ -1,6 +1,6 @@
 import { hrefFor, useLinkHandler } from '../lib/router.js';
 
-export default function Header({ route }) {
+export default function Header({ route, showHamburger = false, onToggleSidebar }) {
   const onClick = useLinkHandler();
   const active  = route?.name || 'about';
 
@@ -17,10 +17,22 @@ export default function Header({ route }) {
 
   return (
     <header className="app-header">
-      <a href={hrefFor('about')} onClick={onClick} className="logo">
-        <div className="logo-pip" />
-        Volleyball GIS
-      </a>
+      <div className="app-header-left">
+        {showHamburger && (
+          <button
+            type="button"
+            className="sidebar-toggle"
+            onClick={onToggleSidebar}
+            aria-label="Toggle filters"
+          >
+            ☰
+          </button>
+        )}
+        <a href={hrefFor('about')} onClick={onClick} className="logo">
+          <div className="logo-pip" />
+          Volleyball GIS
+        </a>
+      </div>
       <nav className="nav-pills">
         {tab('about',   'About')}
         {tab('games',   'Games')}

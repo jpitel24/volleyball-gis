@@ -155,41 +155,47 @@ export default function GameLookup({ route }) {
 
   return (
     <>
-      {/* ── Hero ──────────────────────────────────────────────────────── */}
-      <div className="hero">
-        <div className="hero-eyebrow">NCAA D1 Women's Volleyball</div>
-        <div className="hero-title">Game Browser</div>
-        <div className="hero-sub">
-          Browse every D1 match from 2022 to 2025.
-          Select a year, search for a team, then click a game to view the report.
+      {/* ── Sidebar — filters live here ───────────────────────────────── */}
+      <aside className="tool-sidebar">
+        <div className="tool-sidebar-title">Games</div>
+        <div className="tool-sidebar-section">
+          <div className="tool-sidebar-label">Season</div>
+          <select
+            className="gb-year-select"
+            value={year}
+            onChange={e => {
+              setYear(parseInt(e.target.value, 10));
+              // Reset to /games so we don't leave a stale game key in the URL.
+              navigate(hrefFor('games'));
+            }}
+            aria-label="Select season"
+          >
+            {YEARS.map(y => (
+              <option key={y} value={y}>{y}</option>
+            ))}
+          </select>
         </div>
-      </div>
+        <div className="tool-sidebar-section">
+          <div className="tool-sidebar-label">Search</div>
+          <input
+            className="gb-search"
+            placeholder="Filter by team name…"
+            value={search}
+            onChange={e => { setSearch(e.target.value); setReport(null); }}
+            disabled={loadingYear}
+          />
+        </div>
+      </aside>
 
-      {/* ── Controls ──────────────────────────────────────────────────── */}
-      <div className="gb-controls">
-        <select
-          className="gb-year-select"
-          value={year}
-          onChange={e => {
-            setYear(parseInt(e.target.value, 10));
-            // Reset to /games so we don't leave a stale game key in the URL.
-            navigate(hrefFor('games'));
-          }}
-          aria-label="Select season"
-        >
-          {YEARS.map(y => (
-            <option key={y} value={y}>{y}</option>
-          ))}
-        </select>
-
-        <input
-          className="gb-search"
-          placeholder="Filter by team name…"
-          value={search}
-          onChange={e => { setSearch(e.target.value); setReport(null); }}
-          disabled={loadingYear}
-        />
-      </div>
+      {/* ── Main content ──────────────────────────────────────────────── */}
+      <main className="tool-main">
+        <div className="page-title-row">
+          <h1 className="page-title">Game Browser</h1>
+          <div className="page-sub">
+            Every D1 match, 2022–2025. Pick a season, search for a team,
+            click a game to see the full GIS+/pGIS report.
+          </div>
+        </div>
 
       {/* ── Status / game count ───────────────────────────────────────── */}
       {!report && (
@@ -246,6 +252,7 @@ export default function GameLookup({ route }) {
           categoryPgisTables={categoryPgisTables}
         />
       )}
+      </main>
     </>
   );
 }

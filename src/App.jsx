@@ -1,5 +1,5 @@
 import { DataProvider } from './lib/DataContext.jsx';
-import Header from './components/Header.jsx';
+import AppShell from './components/AppShell.jsx';
 import About from './components/About.jsx';
 import GameLookup from './components/GameLookup.jsx';
 import PlayerLookup from './components/PlayerLookup.jsx';
@@ -17,14 +17,19 @@ export default function App() {
     navigate(hrefFor('games', year, gameKey));
   }
 
+  // About is a content page — no left sidebar. Every other route is a
+  // tool view that renders its own <aside> + <main> inside the shell.
+  const withSidebar = route.name !== 'about';
+
   return (
     <DataProvider>
-      <Header route={route} />
-      {route.name === 'about'   && <About />}
-      {route.name === 'games'   && <GameLookup route={route} />}
-      {route.name === 'players' && <PlayerLookup onGameDeepLink={handleGameDeepLink} />}
-      {route.name === 'seasons' && <SeasonLookup />}
-      {route.name === 'teams'   && <TeamLookup />}
+      <AppShell route={route} withSidebar={withSidebar}>
+        {route.name === 'about'   && <About />}
+        {route.name === 'games'   && <GameLookup route={route} />}
+        {route.name === 'players' && <PlayerLookup onGameDeepLink={handleGameDeepLink} />}
+        {route.name === 'seasons' && <SeasonLookup />}
+        {route.name === 'teams'   && <TeamLookup />}
+      </AppShell>
     </DataProvider>
   );
 }

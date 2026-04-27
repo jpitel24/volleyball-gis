@@ -147,77 +147,83 @@ export default function SeasonLookup() {
 
   return (
     <>
-      <div className="hero">
-        <div className="hero-eyebrow">NCAA D1 Women's Volleyball</div>
-        <div className="hero-title">Season Browser</div>
-        <div className="hero-sub">
-          Leaderboard view — rank D1 players by GIS+ or pGIS, filtered by
-          year, position group, and minimum games vs RPI Top-50 opponents.
-          Players must have appeared in ≥75% of their team's games for
-          the season.
+      <aside className="tool-sidebar">
+        <div className="tool-sidebar-title">Seasons</div>
+        <div className="tool-sidebar-section">
+          <div className="tool-sidebar-label">Year</div>
+          <div className="tool-sidebar-pills">
+            {YEAR_FILTERS.map(f => (
+              <button
+                key={f.id}
+                type="button"
+                className={`gl-mode-btn${year === f.id ? ' active' : ''}`}
+                onClick={() => setYear(f.id)}
+                disabled={buildingIndex || !index}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+        <div className="tool-sidebar-section">
+          <div className="tool-sidebar-label">Position</div>
+          <div className="tool-sidebar-pills">
+            {POS_FILTERS.map(f => (
+              <button
+                key={f.id}
+                type="button"
+                className={`gl-mode-btn${posFilter === f.id ? ' active' : ''}`}
+                onClick={() => setPosFilter(f.id)}
+                disabled={buildingIndex || !index}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="tool-sidebar-section">
+          <div className="tool-sidebar-label">Min T50 Games</div>
+          <div className="tool-sidebar-pills">
+            {T50_MIN_OPTIONS.map(o => (
+              <button
+                key={o.id}
+                type="button"
+                className={`gl-mode-btn${minT50 === o.id ? ' active' : ''}`}
+                onClick={() => setMinT50(o.id)}
+                disabled={buildingIndex || !index}
+              >
+                {o.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="tool-sidebar-section">
+          <div className="tool-sidebar-label">Sort</div>
+          <div className="tool-sidebar-pills">
+            {SORT_OPTIONS.map(o => (
+              <button
+                key={o.id}
+                type="button"
+                className={`gl-mode-btn${sortBy === o.id ? ' active' : ''}`}
+                onClick={() => setSortBy(o.id)}
+                disabled={buildingIndex || !index}
+              >
+                {o.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </aside>
 
-      <div className="gb-controls" style={{ justifyContent: 'center', flexWrap: 'wrap', gap: '0.6rem' }}>
-        <div className="gl-browse-years" style={{ margin: 0 }}>
-          {YEAR_FILTERS.map(f => (
-            <button
-              key={f.id}
-              type="button"
-              className={`gl-mode-btn${year === f.id ? ' active' : ''}`}
-              onClick={() => setYear(f.id)}
-              disabled={buildingIndex || !index}
-            >
-              {f.label}
-            </button>
-          ))}
+      <main className="tool-main">
+        <div className="page-title-row">
+          <h1 className="page-title">Season Browser</h1>
+          <div className="page-sub">
+            Rank D1 players by GIS+ or pGIS, filtered by year, position group, and
+            minimum games vs RPI Top-50 opponents. Players must have appeared in
+            ≥75% of their team's games to chart.
+          </div>
         </div>
-        <div className="gl-browse-years" style={{ margin: 0 }}>
-          {POS_FILTERS.map(f => (
-            <button
-              key={f.id}
-              type="button"
-              className={`gl-mode-btn${posFilter === f.id ? ' active' : ''}`}
-              onClick={() => setPosFilter(f.id)}
-              disabled={buildingIndex || !index}
-            >
-              {f.label}
-            </button>
-          ))}
-        </div>
-        <div className="gl-browse-years" style={{ margin: 0 }}>
-          <span style={{ color: 'var(--muted)', fontSize: '0.7rem', alignSelf: 'center', marginRight: '0.35rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-            T50 G
-          </span>
-          {T50_MIN_OPTIONS.map(o => (
-            <button
-              key={o.id}
-              type="button"
-              className={`gl-mode-btn${minT50 === o.id ? ' active' : ''}`}
-              onClick={() => setMinT50(o.id)}
-              disabled={buildingIndex || !index}
-            >
-              {o.label}
-            </button>
-          ))}
-        </div>
-        <div className="gl-browse-years" style={{ margin: 0 }}>
-          <span style={{ color: 'var(--muted)', fontSize: '0.7rem', alignSelf: 'center', marginRight: '0.35rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-            Sort
-          </span>
-          {SORT_OPTIONS.map(o => (
-            <button
-              key={o.id}
-              type="button"
-              className={`gl-mode-btn${sortBy === o.id ? ' active' : ''}`}
-              onClick={() => setSortBy(o.id)}
-              disabled={buildingIndex || !index}
-            >
-              {o.label}
-            </button>
-          ))}
-        </div>
-      </div>
 
       <div className="gb-status">
         {loading && <><div className="spinner" /> Loading baselines…</>}
@@ -284,6 +290,7 @@ export default function SeasonLookup() {
           No players match the current filters.
         </div>
       )}
+      </main>
     </>
   );
 }

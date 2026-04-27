@@ -277,53 +277,60 @@ export default function PlayerLookup({ onGameDeepLink }) {
 
   return (
     <>
-      <div className="hero">
-        <div className="hero-eyebrow">NCAA D1 Women's Volleyball</div>
-        <div className="hero-title">Player Browser</div>
-        <div className="hero-sub">
-          Search any D1 player from 2022–2025. Click a name to see per-season
-          totals; click a season to see every game that year.
+      <aside className="tool-sidebar">
+        <div className="tool-sidebar-title">Players</div>
+        <div className="tool-sidebar-section">
+          <div className="tool-sidebar-label">Search</div>
+          <input
+            className="pb-search"
+            placeholder="Player name…"
+            value={search}
+            onChange={e => { setSearch(e.target.value); setExpanded(null); setExpandedS(null); }}
+            disabled={buildingIndex || !index}
+          />
         </div>
-      </div>
+        <div className="tool-sidebar-section">
+          <div className="tool-sidebar-label">Position</div>
+          <div className="tool-sidebar-pills">
+            {POS_FILTERS.map(f => (
+              <button
+                key={f.id}
+                type="button"
+                className={`gl-mode-btn${posFilter === f.id ? ' active' : ''}`}
+                onClick={() => { setPosFilter(f.id); setExpanded(null); setExpandedS(null); }}
+                disabled={buildingIndex || !index}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="tool-sidebar-section">
+          <div className="tool-sidebar-label">Sort</div>
+          <div className="tool-sidebar-pills">
+            {SORT_OPTIONS.map(o => (
+              <button
+                key={o.id}
+                type="button"
+                className={`gl-mode-btn${sortBy === o.id ? ' active' : ''}`}
+                onClick={() => { setSortBy(o.id); setExpanded(null); setExpandedS(null); }}
+                disabled={buildingIndex || !index}
+              >
+                {o.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </aside>
 
-      <div className="gb-controls" style={{ justifyContent: 'center' }}>
-        <input
-          className="pb-search"
-          placeholder="Filter by player name…"
-          value={search}
-          onChange={e => { setSearch(e.target.value); setExpanded(null); setExpandedS(null); }}
-          disabled={buildingIndex || !index}
-        />
-        <div className="gl-browse-years" style={{ margin: 0 }}>
-          {POS_FILTERS.map(f => (
-            <button
-              key={f.id}
-              type="button"
-              className={`gl-mode-btn${posFilter === f.id ? ' active' : ''}`}
-              onClick={() => { setPosFilter(f.id); setExpanded(null); setExpandedS(null); }}
-              disabled={buildingIndex || !index}
-            >
-              {f.label}
-            </button>
-          ))}
+      <main className="tool-main">
+        <div className="page-title-row">
+          <h1 className="page-title">Player Browser</h1>
+          <div className="page-sub">
+            Every D1 player, 2022–2025. Click a name to expand per-season totals;
+            click a season to see every game that year.
+          </div>
         </div>
-        <div className="gl-browse-years" style={{ margin: 0 }}>
-          <span style={{ color: 'var(--muted)', fontSize: '0.7rem', alignSelf: 'center', marginRight: '0.35rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-            Sort
-          </span>
-          {SORT_OPTIONS.map(o => (
-            <button
-              key={o.id}
-              type="button"
-              className={`gl-mode-btn${sortBy === o.id ? ' active' : ''}`}
-              onClick={() => { setSortBy(o.id); setExpanded(null); setExpandedS(null); }}
-              disabled={buildingIndex || !index}
-            >
-              {o.label}
-            </button>
-          ))}
-        </div>
-      </div>
 
       <div className="gb-status">
         {loading && <><div className="spinner" /> Loading baselines…</>}
@@ -363,6 +370,7 @@ export default function PlayerLookup({ onGameDeepLink }) {
           No players match the current filters.
         </div>
       )}
+      </main>
     </>
   );
 }

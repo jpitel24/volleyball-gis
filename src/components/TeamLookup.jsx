@@ -228,37 +228,44 @@ export default function TeamLookup() {
 
   return (
     <>
-      <div className="hero">
-        <div className="hero-eyebrow">NCAA D1 Women's Volleyball</div>
-        <div className="hero-title">Team Browser</div>
-        <div className="hero-sub">
-          Pick a season and search for a program to see roster-wide GIS+
-          aggregates, schedule strength, and the top contributors that year.
+      <aside className="tool-sidebar">
+        <div className="tool-sidebar-title">Teams</div>
+        <div className="tool-sidebar-section">
+          <div className="tool-sidebar-label">Year</div>
+          <div className="tool-sidebar-pills">
+            {YEAR_OPTIONS.map(y => (
+              <button
+                key={y}
+                type="button"
+                className={`gl-mode-btn${year === y ? ' active' : ''}`}
+                onClick={() => { setYear(y); setExpand(null); }}
+                disabled={buildingIndex || !index}
+              >
+                {y}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+        <div className="tool-sidebar-section">
+          <div className="tool-sidebar-label">Search</div>
+          <input
+            className="pb-search"
+            placeholder="Team name…"
+            value={search}
+            onChange={e => { setSearch(e.target.value); setExpand(null); }}
+            disabled={buildingIndex || !index}
+          />
+        </div>
+      </aside>
 
-      <div className="gb-controls" style={{ justifyContent: 'center', flexWrap: 'wrap', gap: '0.6rem' }}>
-        <div className="gl-browse-years" style={{ margin: 0 }}>
-          {YEAR_OPTIONS.map(y => (
-            <button
-              key={y}
-              type="button"
-              className={`gl-mode-btn${year === y ? ' active' : ''}`}
-              onClick={() => { setYear(y); setExpand(null); }}
-              disabled={buildingIndex || !index}
-            >
-              {y}
-            </button>
-          ))}
+      <main className="tool-main">
+        <div className="page-title-row">
+          <h1 className="page-title">Team Browser</h1>
+          <div className="page-sub">
+            Pick a season and search for a program — roster-wide GIS+ aggregates,
+            schedule strength, and top contributors for that year.
+          </div>
         </div>
-        <input
-          className="pb-search"
-          placeholder="Filter by team name…"
-          value={search}
-          onChange={e => { setSearch(e.target.value); setExpand(null); }}
-          disabled={buildingIndex || !index}
-        />
-      </div>
 
       <div className="gb-status">
         {loading && <><div className="spinner" /> Loading baselines…</>}
@@ -291,6 +298,7 @@ export default function TeamLookup() {
           No teams match the current filters.
         </div>
       )}
+      </main>
     </>
   );
 }

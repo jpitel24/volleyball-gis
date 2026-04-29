@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import PlayerCard from './PlayerCard.jsx';
-import PlayerModal from './PlayerModal.jsx';
+import PlayerInspector from './PlayerInspector.jsx';
 import { findRPIValue, rpiToRank, seasonFromGameId } from '../lib/gis.js';
 
 // A player "participated" if they have any non-zero counting stat line.
@@ -16,7 +16,7 @@ function hasStatLine(p) {
   ) > 0;
 }
 
-function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpiByYear, onSelect }) {
+function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpiByYear, onSelect, selectedPlayer }) {
   const players = mg.players
     .filter(p => p.team === teamName && p.gis > 0)
     .sort((a, b) => (b.pGIS ?? b.gisPlus) - (a.pGIS ?? a.gisPlus));
@@ -79,6 +79,7 @@ function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpi
             animDelay={matchRanks.get(p) * 35}
             onSelect={onSelect}
             gameData={gameData}
+            isSelected={selectedPlayer === p}
           />
         ))}
       </div>
@@ -103,8 +104,14 @@ export default function GameReport({ gameId, mg, isMock, rpiByYear, categoryPgis
   const activeCount = mg.players.filter(hasStatLine).length;
   const hasPGIS     = mg.players.some(p => p.pGIS !== null);
 
+  // Toggle: clicking the already-selected card closes the inspector.
+  // Otherwise it swaps to the new player.
+  function handleSelectPlayer(p) {
+    setSelectedPlayer(prev => prev === p ? null : p);
+  }
+
   return (
-    <div className="report" ref={ref}>
+    <div className={`report${selectedPlayer ? ' report-with-inspector' : ''}`} ref={ref}>
       <div className="rpt-header">
         <div className="rpt-eyebrow">
           NCAA D1 Women's Volleyball · Game {gameId}
@@ -153,16 +160,16 @@ export default function GameReport({ gameId, mg, isMock, rpiByYear, categoryPgis
       <TeamSection
         mg={mg} teamName={mg.homeTeam} teamNameFull={mg.homeTeamFull}
         side="home" matchRanks={matchRanks} gameId={gameId}
-        rpiByYear={rpiByYear} onSelect={setSelectedPlayer}
+        rpiByYear={rpiByYear} onSelect={handleSelectPlayer} selectedPlayer={selectedPlayer}
       />
       <TeamSection
         mg={mg} teamName={mg.awayTeam} teamNameFull={mg.awayTeamFull}
         side="away" matchRanks={matchRanks} gameId={gameId}
-        rpiByYear={rpiByYear} onSelect={setSelectedPlayer}
+        rpiByYear={rpiByYear} onSelect={handleSelectPlayer} selectedPlayer={selectedPlayer}
       />
 
       {selectedPlayer && (
-        <PlayerModal
+        <PlayerInspector
           p={selectedPlayer}
           onClose={() => setSelectedPlayer(null)}
           nSets={mg.nSets}

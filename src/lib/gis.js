@@ -4,6 +4,10 @@ export const PROXY_BASE = 'https://volleyball-gis-proxy.gordonno24.workers.dev';
 export const POS_W = {
   kills: 1.00, service_aces: 1.20, block_solos: 1.10,
   assists: 0.28, block_assists: 0.50, digs: 0.35,
+  // Pass-receive credit. ~14-20 reception attempts per match for a
+  // libero × 0.10 ≈ 1.5-2.0 raw — comparable to mid-volume digs but
+  // smaller than attack/serving payoffs.
+  reception_attempts: 0.10,
 };
 export const ERR_W = {
   errors: 0.55, service_errors: 0.35, reception_errors: 0.30,
@@ -13,12 +17,21 @@ export const ERR_FLOOR = 0.55;
 export const ERR_DAMP  = 1.20;
 export const GIS_SCALE = 1.25;
 
+// Per-category decomposition shown in the player inspector. Categories
+// must partition POS_W and ERR_W: every weight that appears in the
+// player-level POS_W/ERR_W lives in exactly one category, so the sum
+// of category contributions equals the player's full GIS.
+//
+// "Receiving" was previously folded into "Defense" via reception_errors
+// only — players got penalized for shanks but never credited for clean
+// passes. Splitting it out exposes the contribution explicitly.
 export const CATEGORIES = [
-  { key: 'attack',   label: 'Attack',   pos: { kills: 1.00 },                            err: { errors: 0.55 } },
-  { key: 'blocking', label: 'Blocking', pos: { block_solos: 1.10, block_assists: 0.50 }, err: { blocking_errors: 0.30 } },
-  { key: 'defense',  label: 'Defense',  pos: { digs: 0.35 },                             err: { reception_errors: 0.30 } },
-  { key: 'serving',  label: 'Serving',  pos: { service_aces: 1.20 },                     err: { service_errors: 0.35 } },
-  { key: 'setting',  label: 'Setting',  pos: { assists: 0.28 },                          err: { ball_handling_errors: 0.45 } },
+  { key: 'attack',    label: 'Attack',    pos: { kills: 1.00 },                            err: { errors: 0.55 } },
+  { key: 'blocking',  label: 'Blocking',  pos: { block_solos: 1.10, block_assists: 0.50 }, err: { blocking_errors: 0.30 } },
+  { key: 'defense',   label: 'Defense',   pos: { digs: 0.35 },                             err: {} },
+  { key: 'receiving', label: 'Receiving', pos: { reception_attempts: 0.10 },               err: { reception_errors: 0.30 } },
+  { key: 'serving',   label: 'Serving',   pos: { service_aces: 1.20 },                     err: { service_errors: 0.35 } },
+  { key: 'setting',   label: 'Setting',   pos: { assists: 0.28 },                          err: { ball_handling_errors: 0.45 } },
 ];
 
 export function computeCategoryGIS(p, ns, avgLev, oppMod) {

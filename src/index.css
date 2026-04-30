@@ -823,6 +823,88 @@ body {
 .about-footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--border); }
 .about-footer p { font-size: 0.8rem; color: var(--muted); }
 
+/* ── Tug-of-war: per-category team-vs-team GIS comparison ───────── */
+.tug-of-war {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem 1.1rem;
+  margin-bottom: 2rem;
+}
+.tug-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 0.7rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+.tug-team-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tug-team-name:first-child  { text-align: right; }
+.tug-team-name:last-child   { text-align: left; }
+.tug-vs {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.tug-rows { display: flex; flex-direction: column; gap: 0.55rem; }
+.tug-row { display: flex; flex-direction: column; gap: 0.18rem; }
+.tug-label {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.tug-bars {
+  display: grid;
+  grid-template-columns: 38px 1fr 3px 1fr 38px;
+  align-items: center;
+  gap: 0.4rem;
+}
+.tug-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+.tug-val-home { text-align: right; }
+.tug-val-away { text-align: left; }
+.tug-val.tug-win { color: var(--text); font-weight: 800; }
+.tug-track { height: 12px; display: flex; }
+.tug-track-home { justify-content: flex-end; }
+.tug-track-away { justify-content: flex-start; }
+.tug-bar {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.45s ease;
+  min-width: 2px;     /* keep zero-rows visible */
+  opacity: 0.92;
+}
+.tug-axis {
+  background: var(--border2);
+  height: 18px;
+  width: 3px;
+  justify-self: center;
+}
+@media (max-width: 640px) {
+  .tug-bars { grid-template-columns: 32px 1fr 2px 1fr 32px; gap: 0.3rem; }
+  .tug-val { font-size: 0.62rem; }
+}
+
 /* ── Player inspector panel (right-side, replaces centered modal) ── */
 .report-with-inspector { padding-right: 0; }
 @media (min-width: 1280px) {

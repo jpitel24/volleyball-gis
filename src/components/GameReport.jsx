@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import PlayerCard from './PlayerCard.jsx';
 import PlayerInspector from './PlayerInspector.jsx';
-import { findRPIValue, rpiToRank, seasonFromGameId } from '../lib/gis.js';
+import { findRPIValue, rpiToRank, seasonFromGameId, computeCategoryGIS, CATEGORIES } from '../lib/gis.js';
+import { getSchoolColors } from '../data/schoolColors.js';
 
 // A player "participated" if they have any non-zero counting stat line.
 // Matches the per-card visibility rule (p.gis > 0) used in TeamSection.
@@ -14,6 +15,73 @@ function hasStatLine(p) {
     (p.total_attacks || 0) + (p.serve_attempts || 0) +
     (p.reception_attempts || 0) + (p.set_attempts || 0)
   ) > 0;
+}
+
+// Tug-of-war chart: per-category team-vs-team comparison. Sums each
+// player's per-set computeCategoryGIS contribution × player.ns to get
+// per-match category GIS, summed across the two team rosters. Each row
+// is scaled to its own max (per-row scaling) so a category that's
+// volume-light (e.g. Serving) reads "who won" as cleanly as a
+// volume-heavy one (Attack). Bars use each team's brand primary color.
+function TugOfWar({ mg }) {
+  const home = mg.homeTeam;
+  const away = mg.awayTeam;
+  const homeColors = getSchoolColors(home);
+  const awayColors = getSchoolColors(away);
+
+  // Per-team category totals in per-match units.
+  const totals = { [home]: {}, [away]: {} };
+  for (const p of mg.players) {
+    if (!p || p.gis <= 0) continue;
+    const team = p.team;
+    if (team !== home && team !== away) continue;
+    const cats = computeCategoryGIS(p, p.ns, p.avgLev, p.oppMod);
+    for (const c of cats) {
+      totals[team][c.key] = (totals[team][c.key] || 0) + c.gis * p.ns;
+    }
+  }
+
+  const rows = CATEGORIES.map(({ key, label }) => {
+    const h = totals[home][key] || 0;
+    const a = totals[away][key] || 0;
+    const max = Math.max(h, a, 0.0001);
+    return {
+      key, label,
+      h, a,
+      hPct: (h / max) * 100,
+      aPct: (a / max) * 100,
+      homeWon: h > a + 1e-6,
+      awayWon: a > h + 1e-6,
+    };
+  });
+
+  return (
+    <section className="tug-of-war">
+      <div className="tug-header">
+        <div className="tug-team-name" style={{ color: homeColors.primary }}>{home}</div>
+        <div className="tug-vs">CATEGORY GIS</div>
+        <div className="tug-team-name" style={{ color: awayColors.primary }}>{away}</div>
+      </div>
+      <div className="tug-rows">
+        {rows.map(r => (
+          <div key={r.key} className="tug-row">
+            <div className="tug-label">{r.label}</div>
+            <div className="tug-bars">
+              <div className={`tug-val tug-val-home${r.homeWon ? ' tug-win' : ''}`}>{r.h.toFixed(1)}</div>
+              <div className="tug-track tug-track-home">
+                <div className="tug-bar" style={{ width: `${r.hPct}%`, background: homeColors.primary }} />
+              </div>
+              <div className="tug-axis" />
+              <div className="tug-track tug-track-away">
+                <div className="tug-bar" style={{ width: `${r.aPct}%`, background: awayColors.primary }} />
+              </div>
+              <div className={`tug-val tug-val-away${r.awayWon ? ' tug-win' : ''}`}>{r.a.toFixed(1)}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 }
 
 function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpiByYear, onSelect, selectedPlayer }) {
@@ -156,6 +224,8 @@ export default function GameReport({ gameId, mg, isMock, rpiByYear, categoryPgis
           </div>
         </div>
       </div>
+
+      <TugOfWar mg={mg} />
 
       <TeamSection
         mg={mg} teamName={mg.homeTeam} teamNameFull={mg.homeTeamFull}

@@ -44,13 +44,16 @@ ERR_FLOOR = 0.55
 ERR_DAMP  = 1.20
 GIS_SCALE = 1.25
 
-# Mirrors CATEGORIES in src/lib/gis.js.
+# Mirrors CATEGORIES in src/lib/gis.js. Receiving is now its own
+# category (clean reception attempts × 0.10, reception errors penalize
+# per-category errPen). Defense reflects digs only.
 CATEGORIES = [
-    ("attack",   {"kills": 1.00},                                 {"errors": 0.55}),
-    ("blocking", {"block_solos": 1.10, "block_assists": 0.50},    {"blocking_errors": 0.30}),
-    ("defense",  {"digs": 0.35},                                  {"reception_errors": 0.30}),
-    ("serving",  {"service_aces": 1.20},                          {"service_errors": 0.35}),
-    ("setting",  {"assists": 0.28},                               {"ball_handling_errors": 0.45}),
+    ("attack",    {"kills": 1.00},                              {"errors": 0.55}),
+    ("blocking",  {"block_solos": 1.10, "block_assists": 0.50}, {"blocking_errors": 0.30}),
+    ("defense",   {"digs": 0.35},                               {}),
+    ("receiving", {"reception_attempts": 0.10},                 {"reception_errors": 0.30}),
+    ("serving",   {"service_aces": 1.20},                       {"service_errors": 0.35}),
+    ("setting",   {"assists": 0.28},                            {"ball_handling_errors": 0.45}),
 ]
 
 # CSV-column aliases for the stat keys computeCategoryGIS uses.
@@ -61,6 +64,7 @@ STAT_COL = {
     "block_assists":        "BlockAssists",
     "blocking_errors":      "BErr",
     "digs":                 "Digs",
+    "reception_attempts":   "RetAtt",
     "reception_errors":     "RErr",
     "service_aces":         "Aces",
     "service_errors":       "SErr",
@@ -274,7 +278,7 @@ def main() -> None:
         out.setdefault(cat, {}).setdefault(grp, {})[ns] = {"p": vals}
 
     print("\nCategory baseline distributions (category_gisNeutral_per_set):")
-    for cat in ("attack", "blocking", "defense", "serving", "setting"):
+    for cat in ("attack", "blocking", "defense", "receiving", "serving", "setting"):
         for grp in ("OH", "MB", "S", "L"):
             for ns in ("3", "4", "5"):
                 v = out.get(cat, {}).get(grp, {}).get(ns, {}).get("p", [])

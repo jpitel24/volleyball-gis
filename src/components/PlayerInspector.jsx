@@ -53,12 +53,12 @@ export default function PlayerInspector({ p, onClose, nSets, categoryPgisTables 
       <div className="inspector-scores">
         <div className="modal-score-block">
           <span className="modal-score-num" style={{ color: tc }}>{p.gis.toFixed(2)}</span>
-          <span className="score-lbl">GIS</span>
+          <span className="score-lbl">GIS/S</span>
         </div>
         <div className="score-divider" />
         <div className="modal-score-block">
           <span className="modal-score-num" style={{ color: 'var(--gisplus)' }}>{p.gisPlus.toFixed(2)}</span>
-          <span className="score-lbl">GIS+</span>
+          <span className="score-lbl">GIS+/S</span>
         </div>
         <div className="score-divider" />
         <div className="modal-score-block">
@@ -66,6 +66,9 @@ export default function PlayerInspector({ p, onClose, nSets, categoryPgisTables 
           <span className="modal-score-num">{p.pGIS !== null ? p.pGIS.toFixed(2) : '—'}</span>
           <span className="score-lbl">pGIS</span>
         </div>
+      </div>
+      <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.58rem', color: 'var(--muted)', marginTop: '-0.4rem', letterSpacing: '0.04em' }}>
+        Per-set rates · category contributions sum to GIS/S.
       </div>
 
       {/* Category breakdown */}

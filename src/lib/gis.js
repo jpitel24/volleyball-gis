@@ -360,10 +360,14 @@ export function computeGIS(bs, ss, pbp, gameId, RPI_BY_YEAR, PGIS_TABLES) {
       const vol        = raw / ns;
       const plays      = levMap[p.name] || [];
       const avgLev     = plays.length ? plays.reduce((a, b) => a + b, 0) / plays.length : ml;
-      const gisNeutral     = vol * errPen * GIS_SCALE;
+      // Define player-level gis as the sum of category contributions so
+      // the inspector's "Breakdown by Category" rows tautologically add
+      // up to the headline. Per-category errPen replaces the global one.
+      const cats           = computeCategoryGIS(p, ns, avgLev, oppMod);
+      const gis            = cats.reduce((s, c) => s + c.gis,        0);
+      const gisPlus        = cats.reduce((s, c) => s + c.gisPlus,    0);
+      const gisNeutral     = cats.reduce((s, c) => s + c.gisNeutral, 0);
       const gisNeutralPlus = gisNeutral * oppMod;   // opponent-adjusted, no leverage
-      const gis            = vol * avgLev * errPen * GIS_SCALE;
-      const gisPlus        = gis * oppMod;
       // pGIS baselines in pgis_tables.json are built from the full
       // GIS_Plus column (opp-adjusted AND leverage-baked), so the
       // lookup must use the same value for the percentile to match.

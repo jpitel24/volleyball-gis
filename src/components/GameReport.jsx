@@ -24,8 +24,13 @@ function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpi
   if (!players.length) return null;
 
   const isWinner     = (side === 'home' && mg.hW > mg.aW) || (side === 'away' && mg.aW > mg.hW);
-  const totalGIS     = players.reduce((s, p) => s + p.gis, 0);
-  const totalGISPlus = players.reduce((s, p) => s + p.gisPlus, 0);
+  // Team totals are sets-weighted per-set rates so they share units with
+  // the per-player headline numbers (which are now per-set after the
+  // GIS+ overlay normalization in GameLookup). Σ(p.gis × p.ns) / Σ(p.ns)
+  // gives a "what would a typical set look like for this team" rate.
+  const teamSets         = players.reduce((s, p) => s + (p.ns || 0), 0);
+  const teamGisRate      = teamSets > 0 ? players.reduce((s, p) => s + (p.gis     || 0) * (p.ns || 0), 0) / teamSets : 0;
+  const teamGisPlusRate  = teamSets > 0 ? players.reduce((s, p) => s + (p.gisPlus || 0) * (p.ns || 0), 0) / teamSets : 0;
   const validPGIS    = players.filter(p => p.pGIS !== null).sort((a, b) => b.pGIS - a.pGIS);
   const rotationPGIS = validPGIS.length
     ? validPGIS.slice(0, 7).reduce((s, p) => s + p.pGIS, 0) / Math.min(validPGIS.length, 7)
@@ -63,8 +68,8 @@ function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpi
           </div>
         </div>
         <div className="team-totals">
-          <span>GIS: <strong>{totalGIS.toFixed(2)}</strong></span>
-          <span>GIS+: <strong className="t-gp">{totalGISPlus.toFixed(2)}</strong></span>
+          <span>GIS/S: <strong>{teamGisRate.toFixed(2)}</strong></span>
+          <span>GIS+/S: <strong className="t-gp">{teamGisPlusRate.toFixed(2)}</strong></span>
           {rotationPGIS !== null && (
             <span>Rotation pGIS: <strong className="t-pg">{rotationPGIS.toFixed(2)}</strong></span>
           )}

@@ -24,6 +24,61 @@ function fmt(v, d = 2) {
   return v.toFixed(d);
 }
 
+// Rolling-window pGIS sparkline. Reads a season's gameLog (which Player
+// Browser sorts newest-first), reverses to chronological, computes a
+// per-set rolling mean over `windowSize` games, and plots it as a tiny
+// inline SVG. Y-axis auto-zooms to the player's own range +/- a small
+// pad so the line shows variability rather than absolute level (the
+// numeric column next to it conveys absolute). Returns null when the
+// player doesn't have enough games for a meaningful trend.
+function PgisSparkline({ games, width = 56, height = 16, windowSize = 5, color = 'var(--pgis)' }) {
+  if (!games || games.length < windowSize) return null;
+  const chrono = [...games]
+    .filter(g => g && g.sets > 0 && Number.isFinite(g.pGIS))
+    .reverse();
+  if (chrono.length < windowSize) return null;
+
+  const rolling = [];
+  for (let i = windowSize - 1; i < chrono.length; i++) {
+    let sum = 0;
+    for (let j = i - windowSize + 1; j <= i; j++) sum += chrono[j].pGIS;
+    rolling.push(sum / windowSize);
+  }
+  if (rolling.length < 2) return null;
+
+  const lo = Math.max(0,  Math.min(...rolling) - 0.4);
+  const hi = Math.min(10, Math.max(...rolling) + 0.4);
+  const span = Math.max(hi - lo, 0.3);   // floor avoids divide-by-zero on flat lines
+
+  const points = rolling.map((v, i) => {
+    const x = (i / (rolling.length - 1)) * (width - 2) + 1;
+    const y = height - ((v - lo) / span) * (height - 2) - 1;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+
+  // Last-point marker so the eye lands on the most recent rolling avg.
+  const last = rolling[rolling.length - 1];
+  const lastX = width - 1;
+  const lastY = height - ((last - lo) / span) * (height - 2) - 1;
+
+  const title = `Rolling ${windowSize}-game pGIS · ${chrono.length} games · range ${Math.min(...rolling).toFixed(1)}–${Math.max(...rolling).toFixed(1)}`;
+
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      style={{ verticalAlign: 'middle', marginRight: '0.4rem' }}
+      role="img"
+      aria-label={title}
+    >
+      <title>{title}</title>
+      <polyline fill="none" stroke={color} strokeWidth="1.3" strokeLinejoin="round" points={points} />
+      <circle cx={lastX} cy={lastY} r="1.6" fill={color} />
+    </svg>
+  );
+}
+
 function PGISChip({ v }) {
   if (v == null) return <span className="pb-chip">pGIS —</span>;
   const [, cls] = pgisLabel(v);
@@ -186,7 +241,10 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
                       <StatCells t={s.totals} />
                       <td style={{ textAlign: 'right' }}>{fmt(s.gis)}</td>
                       <td style={{ textAlign: 'right', color: 'var(--gisplus)' }}>{fmt(s.gisPlus)}</td>
-                      <td style={{ textAlign: 'right', color: 'var(--pgis)' }}>{fmt(s.pGIS, 1)}</td>
+                      <td style={{ textAlign: 'right', color: 'var(--pgis)', whiteSpace: 'nowrap' }}>
+                        <PgisSparkline games={s.gameLog} />
+                        {fmt(s.pGIS, 1)}
+                      </td>
                       <td style={{ textAlign: 'right', opacity: 0.7 }}>{s.t50 ? s.t50.games : '—'}</td>
                       <td style={{ textAlign: 'right', opacity: 0.7 }}>{s.t50 ? fmt(s.t50.gis) : '—'}</td>
                       <td style={{ textAlign: 'right', opacity: 0.7, color: 'var(--gisplus)' }}>{s.t50 ? fmt(s.t50.gisPlus) : '—'}</td>

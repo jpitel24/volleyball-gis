@@ -823,6 +823,93 @@ body {
 .about-footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--border); }
 .about-footer p { font-size: 0.8rem; color: var(--muted); }
 
+/* ── Computer All-American panel (Season Browser, year-specific) ── */
+.aa-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.2rem 1.1rem;
+  margin: 0 auto 1.5rem;
+  max-width: 1200px;
+}
+.aa-panel-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.85rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+.aa-panel-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-weight: 400;
+}
+.aa-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.6rem;
+}
+.aa-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-top-width: 3px;
+  border-radius: 5px;
+  padding: 0.55rem 0.7rem 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+  min-width: 0;
+}
+.aa-slot {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.aa-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 0.95rem;
+  line-height: 1.15;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.aa-team {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.aa-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin-top: 0.25rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+}
+.aa-pgis { font-weight: 700; }
+.aa-gisplus { opacity: 0.85; }
+@media (max-width: 1023px) {
+  .aa-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 540px) {
+  .aa-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 /* ── Tug-of-war: per-category team-vs-team GIS comparison ───────── */
 .tug-of-war {
   background: var(--surface);

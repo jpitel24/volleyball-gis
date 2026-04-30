@@ -145,6 +145,33 @@ export default function SeasonLookup() {
   const visible  = filtered.slice(0, MAX_RESULTS);
   const totalHits = filtered.length;
 
+  // Computer All-American team picks: top by season pGIS at each
+  // position bucket from the year-filtered (but position-unfiltered)
+  // qualifier pool. Position mix mirrors AVCA first-team conventions:
+  // 2 OH, 2 MB, 1 S, 1 L. Career picks (All-Time) need a different
+  // aggregation; for now we only render the panel for a specific year.
+  const allAmericans = useMemo(() => {
+    if (!index || year === 'ALL') return null;
+    const byBucket = { OH: [], MB: [], S: [], L: [] };
+    for (const r of allRows) {
+      const grp = posGroup(r.position);
+      if (!grp || !byBucket[grp]) continue;
+      if (!Number.isFinite(r.pGIS)) continue;
+      byBucket[grp].push(r);
+    }
+    for (const k of Object.keys(byBucket)) {
+      byBucket[k].sort((a, b) => (b.pGIS || 0) - (a.pGIS || 0));
+    }
+    return [
+      { slot: 'OH', pick: byBucket.OH[0] },
+      { slot: 'OH', pick: byBucket.OH[1] },
+      { slot: 'MB', pick: byBucket.MB[0] },
+      { slot: 'MB', pick: byBucket.MB[1] },
+      { slot: 'S',  pick: byBucket.S[0]  },
+      { slot: 'L',  pick: byBucket.L[0]  },
+    ].filter(s => s.pick);
+  }, [index, allRows, year]);
+
   return (
     <>
       <aside className="tool-sidebar">
@@ -239,6 +266,32 @@ export default function SeasonLookup() {
           </>
         )}
       </div>
+
+      {index && allAmericans && allAmericans.length === 6 && (
+        <div className="aa-panel">
+          <div className="aa-panel-title">
+            {year} Computer All-American Team
+            <span className="aa-panel-sub">Top pGIS at each position · 2 OH · 2 MB · 1 S · 1 L</span>
+          </div>
+          <div className="aa-grid">
+            {allAmericans.map((entry, i) => {
+              const r  = entry.pick;
+              const pc = posColor(r.position);
+              return (
+                <div key={i} className="aa-card" style={{ borderTop: `3px solid ${pc}` }}>
+                  <div className="aa-slot" style={{ color: pc }}>{entry.slot}</div>
+                  <div className="aa-name">{r.name}</div>
+                  <div className="aa-team">{r.team}</div>
+                  <div className="aa-stats">
+                    <span className="aa-pgis" style={{ color: 'var(--pgis)' }}>pGIS {r.pGIS.toFixed(1)}</span>
+                    <span className="aa-gisplus" style={{ color: 'var(--gisplus)' }}>{r.gisPlus.toFixed(2)} GIS+/S</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {index && visible.length > 0 && (
         <div className="pb-table-wrap" style={{ maxWidth: '1200px', margin: '0 auto' }}>

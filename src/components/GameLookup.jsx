@@ -127,19 +127,20 @@ export default function GameLookup({ route }) {
         const key = makeKey(seasonStr, game.date, p.team, p.name);
         const hit = gisPlusMap.get(key);
         if (hit) {
-          // Python overlay returns per-MATCH totals; the rest of the app
-          // (Player Browser, Season Browser, category breakdown) all
-          // operate in per-SET units, so normalize on the way in. The
-          // inspector's category sum agrees with the headline only when
-          // both are in the same units.
-          const ns = p.ns || mg.nSets || 0;
-          p.gis     = ns > 0 ? hit.gis     / ns : hit.gis;
-          p.gisPlus = ns > 0 ? hit.gisPlus / ns : hit.gisPlus;
+          // Game Browser displays per-MATCH totals (the Python pipeline
+          // outputs match-level values). Season/Player browsers show
+          // per-set rates by aggregating these and dividing by total
+          // sets. The category breakdown in PlayerInspector rescales
+          // its per-set categories up to per-match so the rows sum to
+          // this headline.
+          p.gis     = hit.gis;
+          p.gisPlus = hit.gisPlus;
           overlayCount++;
+          const ns = p.ns || mg.nSets || 0;
           if (ns > 0 && pgisTables) {
-            // pgis_tables.json is built off per-set GIS+ rates, so pass
-            // the now-per-set p.gisPlus directly.
-            const recomputed = computePGIS(p.gisPlus, p.position, mg.nSets, pgisTables);
+            // pgis_tables.json is built off per-set GIS+ rates, so divide
+            // the per-match overlay by ns for the percentile lookup.
+            const recomputed = computePGIS(hit.gisPlus / ns, p.position, mg.nSets, pgisTables);
             if (recomputed != null) p.pGIS = recomputed;
           }
         }

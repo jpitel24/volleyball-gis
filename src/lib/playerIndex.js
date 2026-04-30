@@ -335,12 +335,8 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
             matchSets: matchNSets[gKey] || ns,  // total sets played in the match
             position:  rowPos || '?',
             totals:    stats,
-            // Per-SET rates so Player Browser game log matches Game
-            // Browser inspector (where per-set is the new convention).
-            // Season aggregation upstream still uses gisTotalSum (sum of
-            // per-match) divided by total sets — that math is unchanged.
-            gis:       ns > 0 ? gameGis     / ns : 0,
-            gisPlus:   ns > 0 ? gameGisPlus / ns : 0,
+            gis:       gameGis,      // per-match total (matches Game Browser)
+            gisPlus:   gameGisPlus,
             pGIS:      null,         // filled below
             vsTop50,
           });
@@ -435,13 +431,13 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
         let t50GisSum = 0, t50GisPlusSum = 0;
         let t50PGisSum = 0, t50PGisCount = 0;
         for (const g of gamesSorted) {
-          // g.gisPlus is now per-set (rate). pgis_tables.json baselines
-          // are per-set rates by (position, matchSets), so feed g.gisPlus
-          // directly. matchSets is still passed as the bucket key —
-          // a 1-set cameo in a 5-set match should still be rated against
-          // the 5-set baseline (otherwise short cameos peg pGIS at 10).
+          // Match match-level nSets as Game Browser's computeGIS() does —
+          // a 1-set cameo is rated at the match's scale, not the player's
+          // own sets (which would 3× inflate the per-set rate and peg
+          // pGIS at 10 for any non-zero production).
           const mNs = Math.min(5, Math.max(3, g.matchSets || g.sets || 3));
-          const raw = computePGIS(g.gisPlus, g.position !== '?' ? g.position : seasonPos, mNs, pgisTables);
+          const perSet = mNs > 0 ? g.gisPlus / mNs : 0;
+          const raw = computePGIS(perSet, g.position !== '?' ? g.position : seasonPos, mNs, pgisTables);
           const gPGis = Number.isFinite(raw) ? raw : (g.sets > 0 ? 0 : null);
           g.pGIS = gPGis;
           if (g.sets > 0) {
@@ -450,12 +446,10 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
             if (g.vsTop50) {
               t50Games   += 1;
               t50Sets    += g.sets;
-              // g.gis / g.gisPlus are per-set; accumulate sets-weighted
-              // so the t50 aggregate stays a per-set rate.
-              t50GisSum     += g.gis     * g.sets;
-              t50GisPlusSum += g.gisPlus * g.sets;
-              t50PGisSum += (gPGis || 0);
-              t50PGisCount += 1;
+              t50GisSum     += g.gis;       // per-match totals
+              t50GisPlusSum += g.gisPlus;
+              t50PGisSum    += (gPGis || 0);
+              t50PGisCount  += 1;
             }
           }
         }

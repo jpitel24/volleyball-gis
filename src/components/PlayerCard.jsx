@@ -62,12 +62,12 @@ export default function PlayerCard({ p, rank, animDelay, onSelect, gameData, isS
       <div className="scores-row">
         <div className="score-block">
           <span className="score-num" style={{ color: tc }}>{p.gis.toFixed(2)}</span>
-          <span className="score-lbl">GIS/S</span>
+          <span className="score-lbl">GIS</span>
         </div>
         <div className="score-divider" />
         <div className="score-block">
           <span className="score-num" style={{ color: 'var(--gisplus)' }}>{p.gisPlus.toFixed(2)}</span>
-          <span className="score-lbl">GIS+/S</span>
+          <span className="score-lbl">GIS+</span>
         </div>
         <div className="score-divider" />
         {/* pGIS block — tier label above number to prevent overlap */}

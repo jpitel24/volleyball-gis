@@ -20,9 +20,22 @@ export default function PlayerInspector({ p, onClose, nSets, categoryPgisTables 
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
 
-  const rawCats = computeCategoryGIS(p, p.ns, p.avgLev, p.oppMod).filter(c => c.gis > 0);
+  // Categories come back from computeCategoryGIS as per-SET rates (vol = raw / ns).
+  // The displayed headline p.gis / p.gisPlus is per-MATCH (Python overlay value).
+  // Rescale each category proportionally so its row sums to the headline,
+  // preserving relative shape while keeping the math additive in the
+  // user's eyes. p.pGIS is per-position percentile and unaffected.
+  // c.gisNeutral is left at per-set so the per-category pGIS lookup
+  // against `categoryPgisTables` (built on per-set baselines) stays valid.
+  const rawCats   = computeCategoryGIS(p, p.ns, p.avgLev, p.oppMod).filter(c => c.gis > 0);
+  const sumGis     = rawCats.reduce((s, c) => s + c.gis,     0) || 1;
+  const sumGisPlus = rawCats.reduce((s, c) => s + c.gisPlus, 0) || 1;
+  const gScale     = (p.gis     || 0) / sumGis;
+  const gpScale    = (p.gisPlus || 0) / sumGisPlus;
   const cats = rawCats.map(c => ({
     ...c,
+    gis:     c.gis     * gScale,
+    gisPlus: c.gisPlus * gpScale,
     pGIS: categoryPgisTables
       ? computePGIS(c.gisNeutral, p.position, nSets, categoryPgisTables[c.key])
       : null,
@@ -53,12 +66,12 @@ export default function PlayerInspector({ p, onClose, nSets, categoryPgisTables 
       <div className="inspector-scores">
         <div className="modal-score-block">
           <span className="modal-score-num" style={{ color: tc }}>{p.gis.toFixed(2)}</span>
-          <span className="score-lbl">GIS/S</span>
+          <span className="score-lbl">GIS</span>
         </div>
         <div className="score-divider" />
         <div className="modal-score-block">
           <span className="modal-score-num" style={{ color: 'var(--gisplus)' }}>{p.gisPlus.toFixed(2)}</span>
-          <span className="score-lbl">GIS+/S</span>
+          <span className="score-lbl">GIS+</span>
         </div>
         <div className="score-divider" />
         <div className="modal-score-block">
@@ -68,7 +81,7 @@ export default function PlayerInspector({ p, onClose, nSets, categoryPgisTables 
         </div>
       </div>
       <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.58rem', color: 'var(--muted)', marginTop: '-0.4rem', letterSpacing: '0.04em' }}>
-        Per-set rates · category contributions sum to GIS/S.
+        Per-match values · category contributions sum to GIS.
       </div>
 
       {/* Category breakdown */}

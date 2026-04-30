@@ -145,22 +145,40 @@ export default function SeasonLookup() {
   const visible  = filtered.slice(0, MAX_RESULTS);
   const totalHits = filtered.length;
 
-  // Computer All-American team picks: top by season pGIS at each
-  // position bucket from the year-filtered (but position-unfiltered)
-  // qualifier pool. Position mix mirrors AVCA first-team conventions:
-  // 2 OH, 2 MB, 1 S, 1 L. Career picks (All-Time) need a different
-  // aggregation; for now we only render the panel for a specific year.
+  // Computer All-American team picks. AVCA-style position mix
+  // (2 OH, 2 MB, 1 S, 1 L) chosen by:
+  //   1. Eligibility — must have at least AA_MIN_T50_GAMES games vs.
+  //      RPI Top-50 opponents that season (the "showed up against good
+  //      teams" filter — pure pGIS without this lets cupcake-schedule
+  //      stars chart even though pGIS already opponent-adjusts).
+  //   2. Hybrid score — AA_W_OVERALL × season pGIS
+  //                   + AA_W_T50     × season T50 pGIS.
+  //      Rewards consistency over the full slate AND production
+  //      specifically against elite opponents.
+  // Career picks (All-Time) need a different aggregation; for now the
+  // panel only renders for a specific year.
   const allAmericans = useMemo(() => {
     if (!index || year === 'ALL') return null;
+    const AA_MIN_T50_GAMES = 7;
+    const AA_W_OVERALL     = 0.60;
+    const AA_W_T50         = 0.40;
+
     const byBucket = { OH: [], MB: [], S: [], L: [] };
     for (const r of allRows) {
       const grp = posGroup(r.position);
       if (!grp || !byBucket[grp]) continue;
       if (!Number.isFinite(r.pGIS)) continue;
-      byBucket[grp].push(r);
+      const t50Games = r.t50?.games || 0;
+      const t50PGis  = r.t50?.pGIS;
+      if (t50Games < AA_MIN_T50_GAMES) continue;
+      if (!Number.isFinite(t50PGis)) continue;
+      byBucket[grp].push({
+        ...r,
+        aaScore: AA_W_OVERALL * r.pGIS + AA_W_T50 * t50PGis,
+      });
     }
     for (const k of Object.keys(byBucket)) {
-      byBucket[k].sort((a, b) => (b.pGIS || 0) - (a.pGIS || 0));
+      byBucket[k].sort((a, b) => (b.aaScore || 0) - (a.aaScore || 0));
     }
     return [
       { slot: 'OH', pick: byBucket.OH[0] },
@@ -271,7 +289,7 @@ export default function SeasonLookup() {
         <div className="aa-panel">
           <div className="aa-panel-title">
             {year} Computer All-American Team
-            <span className="aa-panel-sub">Top pGIS at each position · 2 OH · 2 MB · 1 S · 1 L</span>
+            <span className="aa-panel-sub">≥7 T50 games · 0.6 × pGIS + 0.4 × T50 pGIS · 2 OH · 2 MB · 1 S · 1 L</span>
           </div>
           <div className="aa-grid">
             {allAmericans.map((entry, i) => {
@@ -285,6 +303,10 @@ export default function SeasonLookup() {
                   <div className="aa-stats">
                     <span className="aa-pgis" style={{ color: 'var(--pgis)' }}>pGIS {r.pGIS.toFixed(1)}</span>
                     <span className="aa-gisplus" style={{ color: 'var(--gisplus)' }}>{r.gisPlus.toFixed(2)} GIS+/S</span>
+                    <span className="aa-t50" style={{ color: 'var(--muted)' }}>
+                      T50 pGIS {Number.isFinite(r.t50?.pGIS) ? r.t50.pGIS.toFixed(1) : '—'}
+                      <span style={{ opacity: 0.65 }}> · {r.t50?.games || 0}G</span>
+                    </span>
                   </div>
                 </div>
               );

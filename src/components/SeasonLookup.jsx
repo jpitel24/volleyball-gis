@@ -97,7 +97,7 @@ function buildRows(players, year) {
 }
 
 export default function SeasonLookup() {
-  const { pgisTables, rpiByYear, seasonPgisTables, loading } = useData();
+  const { pgisTables, rpiByYear, loading } = useData();
   const [index, setIndex]            = useState(null);
   const [indexErr, setIndexErr]      = useState(null);
   const [buildingIndex, setBuilding] = useState(false);
@@ -111,11 +111,11 @@ export default function SeasonLookup() {
     if (loading || !pgisTables) return;
     let cancelled = false;
     setBuilding(true);
-    loadPlayerIndex(pgisTables, rpiByYear, seasonPgisTables)
+    loadPlayerIndex(pgisTables, rpiByYear)
       .then(idx => { if (!cancelled) { setIndex(idx); setBuilding(false); } })
       .catch(err => { if (!cancelled) { setIndexErr(err?.message || String(err)); setBuilding(false); } });
     return () => { cancelled = true; };
-  }, [loading, pgisTables, rpiByYear, seasonPgisTables]);
+  }, [loading, pgisTables, rpiByYear]);
 
   const allRows = useMemo(() => {
     if (!index) return [];

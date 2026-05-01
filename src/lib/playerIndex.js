@@ -39,7 +39,7 @@ import { loadYear } from './csvGames.js';
 import { loadGisPlus, makeKey, seasonStrFromYear } from './gisPlus.js';
 import {
   POS_W, ERR_W, ERR_FLOOR, ERR_DAMP, GIS_SCALE,
-  computePGIS, computeSeasonPGIS, posGroup, canonicalName, findRPIValue,
+  computePGIS, posGroup, canonicalName, findRPIValue,
 } from './gis.js';
 
 const T50_THRESHOLD = 50;
@@ -151,6 +151,20 @@ function gameKeyFromRow(r) {
   return `${r.Date}_${a}_${b}`;
 }
 
+// Median of an array of finite numbers. Used for season / career / T50
+// pGIS aggregation. Robust to off-night drag in a way that the mean
+// isn't — consistency-driven roles (libero, DS) lift naturally because
+// their typical-game pGIS lands above the few outlier bad games that
+// previously dragged the mean down.
+function median(vals) {
+  if (!vals || !vals.length) return 0;
+  const s = [...vals].sort((a, b) => a - b);
+  const mid = s.length / 2;
+  return s.length % 2
+    ? s[Math.floor(mid)]
+    : (s[mid - 1] + s[mid]) / 2;
+}
+
 function pickMostCommonPosition(posCounts) {
   let best = null, bestN = 0;
   for (const [p, n] of Object.entries(posCounts)) {
@@ -193,7 +207,7 @@ function inferPositionFromTotals(totals, sets) {
 
 let cachedPromise = null;
 
-export function loadPlayerIndex(pgisTables, rpiByYear, seasonPgisTables = null) {
+export function loadPlayerIndex(pgisTables, rpiByYear) {
   if (cachedPromise) return cachedPromise;
 
   const top50Sets = buildTop50BySeason(rpiByYear);
@@ -370,11 +384,14 @@ export function loadPlayerIndex(pgisTables, rpiByYear, seasonPgisTables = null) 
       const careerTotals = zeroTotals();
       let careerSets = 0, careerGames = 0;
       let careerGisTotal = 0, careerGisPlusTotal = 0;
-      let careerPGisSum = 0, careerPGisCount = 0;
+      // Career pGIS uses median across every game played, so collect
+      // the per-game pGIS values into an array (instead of just the
+      // running sum) — same shape we now use for the season-level calc.
+      const careerPGisVals = [];
       // Vs-Top-50 career buckets.
       let t50CareerGames = 0, t50CareerSets = 0;
       let t50CareerGisSum = 0, t50CareerGisPlusSum = 0;
-      let t50CareerPGisSum = 0, t50CareerPGisCount = 0;
+      const t50CareerPGisVals = [];
 
       for (const s of seasonList) {
         // Position resolution: stat-line first, CSV tag second.
@@ -425,11 +442,16 @@ export function loadPlayerIndex(pgisTables, rpiByYear, seasonPgisTables = null) 
         // average. Otherwise a role player with one big game shows a
         // season pGIS of that one game's score.
         const gamesSorted = s.games_.slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-        let seasonPGisSum = 0, seasonPGisCount = 0;
+        // Collect per-game pGIS values into arrays so season / T50
+        // pGIS can be aggregated as a median — robust to off-night
+        // drag in a way the mean isn't. Liberos and other consistency-
+        // driven roles end up where they should be because their
+        // typical-game pGIS sits above the few outlier bad games.
+        const seasonPGisVals = [];
         // Vs-Top-50 season buckets.
         let t50Games = 0, t50Sets = 0;
         let t50GisSum = 0, t50GisPlusSum = 0;
-        let t50PGisSum = 0, t50PGisCount = 0;
+        const t50PGisVals = [];
         for (const g of gamesSorted) {
           // Match match-level nSets as Game Browser's computeGIS() does —
           // a 1-set cameo is rated at the match's scale, not the player's
@@ -441,37 +463,27 @@ export function loadPlayerIndex(pgisTables, rpiByYear, seasonPgisTables = null) 
           const gPGis = Number.isFinite(raw) ? raw : (g.sets > 0 ? 0 : null);
           g.pGIS = gPGis;
           if (g.sets > 0) {
-            seasonPGisSum += (gPGis || 0);
-            seasonPGisCount += 1;
+            seasonPGisVals.push(gPGis || 0);
             if (g.vsTop50) {
               t50Games   += 1;
               t50Sets    += g.sets;
               t50GisSum     += g.gis;       // per-match totals
               t50GisPlusSum += g.gisPlus;
-              t50PGisSum    += (gPGis || 0);
-              t50PGisCount  += 1;
+              t50PGisVals.push(gPGis || 0);
             }
           }
         }
-        // Season pGIS — true season-aggregate percentile. Looks the
-        // player's season GIS+/S up against the season-aggregate
-        // distribution for their position from
-        // public/data/season_pgis_tables.json. Replaces the old
-        // mean-of-per-game-pGIS, which structurally compressed
-        // consistency-driven roles (libero, DS) because they don't
-        // produce per-match outliers to anchor the mean upward.
-        // Falls back to mean-of-game-pGIS when the new table is
-        // unavailable (older deploys, lookup miss).
-        const seasonPGISFromTable = computeSeasonPGIS(gisPlusPerSet, seasonPos, seasonPgisTables);
-        const seasonPGIS = Number.isFinite(seasonPGISFromTable)
-          ? seasonPGISFromTable
-          : (seasonPGisCount > 0 ? seasonPGisSum / seasonPGisCount : 0);
+        // Season pGIS = median of per-game pGIS values. Replaces the
+        // old mean — bad games drag the mean down disproportionately
+        // for consistency-driven roles, while the median tracks the
+        // typical-game level the player produces.
+        const seasonPGIS = median(seasonPGisVals);
         const t50Season = t50Games > 0 ? {
           games:   t50Games,
           sets:    t50Sets,
           gis:     t50Sets > 0 ? t50GisSum     / t50Sets : 0,
           gisPlus: t50Sets > 0 ? t50GisPlusSum / t50Sets : 0,
-          pGIS:    t50PGisCount > 0 ? t50PGisSum / t50PGisCount : 0,
+          pGIS:    median(t50PGisVals),
         } : null;
 
         // How many games the player's primary team played that season.
@@ -501,14 +513,12 @@ export function loadPlayerIndex(pgisTables, rpiByYear, seasonPgisTables = null) 
         careerGames        += s.games;
         careerGisTotal     += s.gisTotalSum;
         careerGisPlusTotal += s.gisPlusTotalSum;
-        careerPGisSum      += seasonPGisSum;
-        careerPGisCount    += seasonPGisCount;
+        for (const v of seasonPGisVals) careerPGisVals.push(v);
         t50CareerGames     += t50Games;
         t50CareerSets      += t50Sets;
         t50CareerGisSum    += t50GisSum;
         t50CareerGisPlusSum += t50GisPlusSum;
-        t50CareerPGisSum   += t50PGisSum;
-        t50CareerPGisCount += t50PGisCount;
+        for (const v of t50PGisVals) t50CareerPGisVals.push(v);
       }
 
       if (careerSets === 0) continue;  // zero-activity filter
@@ -529,21 +539,16 @@ export function loadPlayerIndex(pgisTables, rpiByYear, seasonPgisTables = null) 
         ? inferredCareerBucket
         : csvCareerPos;
 
-      // Career pGIS — same season-aggregate percentile logic as season
-      // pGIS, but applied to the career rate. Career rate is in the
-      // same units (per-set GIS+) so the same baseline applies.
-      // Falls back to mean-of-game-pGIS when the new table is missing.
-      const careerPGISFromTable = computeSeasonPGIS(careerGisPlus, careerPos, seasonPgisTables);
-      const careerPGIS = Number.isFinite(careerPGISFromTable)
-        ? careerPGISFromTable
-        : (careerPGisCount > 0 ? careerPGisSum / careerPGisCount : 0);
+      // Career pGIS = median across every per-game pGIS the player has
+      // produced. Same robustness benefit as the season-level calc.
+      const careerPGIS = median(careerPGisVals);
 
       const t50Career = t50CareerGames > 0 ? {
         games:   t50CareerGames,
         sets:    t50CareerSets,
         gis:     t50CareerSets > 0 ? t50CareerGisSum     / t50CareerSets : 0,
         gisPlus: t50CareerSets > 0 ? t50CareerGisPlusSum / t50CareerSets : 0,
-        pGIS:    t50CareerPGisCount > 0 ? t50CareerPGisSum / t50CareerPGisCount : 0,
+        pGIS:    median(t50CareerPGisVals),
       } : null;
 
       players.push({

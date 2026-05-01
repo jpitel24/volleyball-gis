@@ -270,7 +270,7 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
 }
 
 export default function PlayerLookup({ onGameDeepLink }) {
-  const { pgisTables, rpiByYear, seasonPgisTables, loading } = useData();
+  const { pgisTables, rpiByYear, loading } = useData();
   const [index, setIndex]               = useState(null);
   const [indexErr, setIndexErr]         = useState(null);
   const [buildingIndex, setBuilding]    = useState(false);
@@ -284,11 +284,11 @@ export default function PlayerLookup({ onGameDeepLink }) {
     if (loading || !pgisTables) return;
     let cancelled = false;
     setBuilding(true);
-    loadPlayerIndex(pgisTables, rpiByYear, seasonPgisTables)
+    loadPlayerIndex(pgisTables, rpiByYear)
       .then(idx => { if (!cancelled) { setIndex(idx); setBuilding(false); } })
       .catch(err => { if (!cancelled) { setIndexErr(err?.message || String(err)); setBuilding(false); } });
     return () => { cancelled = true; };
-  }, [loading, pgisTables, rpiByYear, seasonPgisTables]);
+  }, [loading, pgisTables, rpiByYear]);
 
   // Only compute hits once the user has started searching (or picked a
   // position). Avoids rendering 8k+ cards when the tab first opens.

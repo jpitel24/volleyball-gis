@@ -159,7 +159,7 @@ export default function SeasonLookup() {
   // panel only renders for a specific year.
   const allAmericans = useMemo(() => {
     if (!index || year === 'ALL') return null;
-    const AA_MIN_T50_GAMES = 7;
+    const AA_MIN_T50_GAMES = 10;
     const AA_W_OVERALL     = 0.60;
     const AA_W_T50         = 0.40;
 
@@ -180,14 +180,20 @@ export default function SeasonLookup() {
     for (const k of Object.keys(byBucket)) {
       byBucket[k].sort((a, b) => (b.aaScore || 0) - (a.aaScore || 0));
     }
-    return [
-      { slot: 'OH', pick: byBucket.OH[0] },
-      { slot: 'OH', pick: byBucket.OH[1] },
-      { slot: 'MB', pick: byBucket.MB[0] },
-      { slot: 'MB', pick: byBucket.MB[1] },
-      { slot: 'S',  pick: byBucket.S[0]  },
-      { slot: 'L',  pick: byBucket.L[0]  },
+    // Slot template — reused for both teams. Index into each bucket
+    // shifts by 6 between teams (2 OH, 2 MB, 1 S, 1 L).
+    const teamFor = (offsets) => [
+      { slot: 'OH', pick: byBucket.OH[offsets.OH    ] },
+      { slot: 'OH', pick: byBucket.OH[offsets.OH + 1] },
+      { slot: 'MB', pick: byBucket.MB[offsets.MB    ] },
+      { slot: 'MB', pick: byBucket.MB[offsets.MB + 1] },
+      { slot: 'S',  pick: byBucket.S [offsets.S     ] },
+      { slot: 'L',  pick: byBucket.L [offsets.L     ] },
     ].filter(s => s.pick);
+
+    const firstTeam  = teamFor({ OH: 0, MB: 0, S: 0, L: 0 });
+    const secondTeam = teamFor({ OH: 2, MB: 2, S: 1, L: 1 });
+    return { firstTeam, secondTeam };
   }, [index, allRows, year]);
 
   return (
@@ -285,33 +291,42 @@ export default function SeasonLookup() {
         )}
       </div>
 
-      {index && allAmericans && allAmericans.length === 6 && (
+      {index && allAmericans && allAmericans.firstTeam.length === 6 && (
         <div className="aa-panel">
           <div className="aa-panel-title">
-            {year} Computer All-American Team
-            <span className="aa-panel-sub">≥7 T50 games · 0.6 × pGIS + 0.4 × T50 pGIS · 2 OH · 2 MB · 1 S · 1 L</span>
+            {year} Computer All-American Teams
+            <span className="aa-panel-sub">≥10 T50 games · 0.6 × pGIS + 0.4 × T50 pGIS · 2 OH · 2 MB · 1 S · 1 L</span>
           </div>
-          <div className="aa-grid">
-            {allAmericans.map((entry, i) => {
-              const r  = entry.pick;
-              const pc = posColor(r.position);
-              return (
-                <div key={i} className="aa-card" style={{ borderTop: `3px solid ${pc}` }}>
-                  <div className="aa-slot" style={{ color: pc }}>{entry.slot}</div>
-                  <div className="aa-name">{r.name}</div>
-                  <div className="aa-team">{r.team}</div>
-                  <div className="aa-stats">
-                    <span className="aa-pgis" style={{ color: 'var(--pgis)' }}>pGIS {r.pGIS.toFixed(1)}</span>
-                    <span className="aa-gisplus" style={{ color: 'var(--gisplus)' }}>{r.gisPlus.toFixed(2)} GIS+/S</span>
-                    <span className="aa-t50" style={{ color: 'var(--muted)' }}>
-                      T50 pGIS {Number.isFinite(r.t50?.pGIS) ? r.t50.pGIS.toFixed(1) : '—'}
-                      <span style={{ opacity: 0.65 }}> · {r.t50?.games || 0}G</span>
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+
+          {[
+            { label: 'First Team',  team: allAmericans.firstTeam,  rank: 1 },
+            { label: 'Second Team', team: allAmericans.secondTeam, rank: 2 },
+          ].filter(t => t.team.length === 6).map(({ label, team, rank }) => (
+            <div key={rank} className={`aa-team-block aa-team-${rank}`}>
+              <div className="aa-team-label">{label}</div>
+              <div className="aa-grid">
+                {team.map((entry, i) => {
+                  const r  = entry.pick;
+                  const pc = posColor(r.position);
+                  return (
+                    <div key={i} className="aa-card" style={{ borderTop: `3px solid ${pc}` }}>
+                      <div className="aa-slot" style={{ color: pc }}>{entry.slot}</div>
+                      <div className="aa-name">{r.name}</div>
+                      <div className="aa-team">{r.team}</div>
+                      <div className="aa-stats">
+                        <span className="aa-pgis" style={{ color: 'var(--pgis)' }}>pGIS {r.pGIS.toFixed(1)}</span>
+                        <span className="aa-gisplus" style={{ color: 'var(--gisplus)' }}>{r.gisPlus.toFixed(2)} GIS+/S</span>
+                        <span className="aa-t50" style={{ color: 'var(--muted)' }}>
+                          T50 pGIS {Number.isFinite(r.t50?.pGIS) ? r.t50.pGIS.toFixed(1) : '—'}
+                          <span style={{ opacity: 0.65 }}> · {r.t50?.games || 0}G</span>
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </div>
       )}
 

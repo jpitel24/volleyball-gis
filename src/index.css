@@ -857,6 +857,18 @@ body {
   grid-template-columns: repeat(6, 1fr);
   gap: 0.6rem;
 }
+.aa-team-block + .aa-team-block { margin-top: 1rem; }
+.aa-team-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+  padding-top: 0.4rem;
+}
+.aa-team-2 .aa-team-label { padding-top: 0.65rem; border-top: 1px dashed var(--border); }
+.aa-team-2 .aa-card        { opacity: 0.92; }
 .aa-card {
   background: var(--surface2);
   border: 1px solid var(--border);

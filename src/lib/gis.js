@@ -261,6 +261,32 @@ export function rpiToRank(rpiVal, season, RPI_BY_YEAR) {
   return idx >= 0 ? idx + 1 : null;
 }
 
+// Season-level pGIS — percentile-rank the player's season-aggregate
+// GIS+/S against the season-aggregate distribution for their position.
+// Mirrors `computePGIS()` but the baseline is bucketed by position only
+// (no nSets — season aggregates blend across all match lengths). Used
+// by Season Browser, Player Browser season summaries, and Team Browser.
+//
+// Returns a 0-10 percentile or null when the lookup table is missing
+// the position bucket. SEASON_PGIS_TABLES schema:
+//   { OH: { p: [sorted ints of (GIS+/S * 100)] }, MB: ..., S: ..., L: ... }
+export function computeSeasonPGIS(gisPlusPerSet, position, SEASON_PGIS_TABLES) {
+  if (!gisPlusPerSet || gisPlusPerSet <= 0) return null;
+  const grp  = posGroup(position);
+  if (!grp) return null;
+  const cell = SEASON_PGIS_TABLES?.[grp];
+  if (!cell || !cell.p || !cell.p.length) return null;
+
+  const p   = cell.p;
+  const n   = p.length;
+  const raw = Math.round(gisPlusPerSet * 100);
+  let lo = 0, hi = n;
+  while (lo < hi) { const mid = (lo + hi) >> 1; if (p[mid] <= raw) lo = mid + 1; else hi = mid; }
+
+  const pct = lo / n;
+  return Math.min(10.0, 10 * Math.pow(pct, PGIS_K));
+}
+
 // ─── pGIS ─────────────────────────────────────────────────────────────────────
 export function computePGIS(gisRaw, position, nSets, PGIS_TABLES) {
   if (!gisRaw || gisRaw <= 0) return null;

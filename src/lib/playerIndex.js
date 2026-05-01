@@ -39,7 +39,7 @@ import { loadYear } from './csvGames.js';
 import { loadGisPlus, makeKey, seasonStrFromYear } from './gisPlus.js';
 import {
   POS_W, ERR_W, ERR_FLOOR, ERR_DAMP, GIS_SCALE,
-  computePGIS, posGroup, canonicalName, findRPIValue,
+  computePGIS, computeSeasonPGIS, posGroup, canonicalName, findRPIValue,
 } from './gis.js';
 
 const T50_THRESHOLD = 50;
@@ -193,7 +193,7 @@ function inferPositionFromTotals(totals, sets) {
 
 let cachedPromise = null;
 
-export function loadPlayerIndex(pgisTables, rpiByYear) {
+export function loadPlayerIndex(pgisTables, rpiByYear, seasonPgisTables = null) {
   if (cachedPromise) return cachedPromise;
 
   const top50Sets = buildTop50BySeason(rpiByYear);
@@ -453,10 +453,19 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
             }
           }
         }
-        // Season pGIS = simple average of its games' pGIS. Heavier seasons
-        // naturally weight the career average more without an extra rate
-        // lookup.
-        const seasonPGIS = seasonPGisCount > 0 ? seasonPGisSum / seasonPGisCount : 0;
+        // Season pGIS — true season-aggregate percentile. Looks the
+        // player's season GIS+/S up against the season-aggregate
+        // distribution for their position from
+        // public/data/season_pgis_tables.json. Replaces the old
+        // mean-of-per-game-pGIS, which structurally compressed
+        // consistency-driven roles (libero, DS) because they don't
+        // produce per-match outliers to anchor the mean upward.
+        // Falls back to mean-of-game-pGIS when the new table is
+        // unavailable (older deploys, lookup miss).
+        const seasonPGISFromTable = computeSeasonPGIS(gisPlusPerSet, seasonPos, seasonPgisTables);
+        const seasonPGIS = Number.isFinite(seasonPGISFromTable)
+          ? seasonPGISFromTable
+          : (seasonPGisCount > 0 ? seasonPGisSum / seasonPGisCount : 0);
         const t50Season = t50Games > 0 ? {
           games:   t50Games,
           sets:    t50Sets,
@@ -509,9 +518,6 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
       // schedules don't pad the headline number.
       const careerGis     = careerSets > 0 ? careerGisTotal     / careerSets : 0;
       const careerGisPlus = careerSets > 0 ? careerGisPlusTotal / careerSets : 0;
-      // Career pGIS = simple average across every match played. A 130-set
-      // season naturally contributes more games than a 40-set season.
-      const careerPGIS = careerPGisCount > 0 ? careerPGisSum / careerPGisCount : 0;
 
       // Career position: same stats-first / CSV-fallback logic as season.
       // A career-long setter shows S; a player who switched mid-career
@@ -522,6 +528,15 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
       const careerPos = (inferredCareerBucket && posGroup(csvCareerPos) !== inferredCareerBucket)
         ? inferredCareerBucket
         : csvCareerPos;
+
+      // Career pGIS — same season-aggregate percentile logic as season
+      // pGIS, but applied to the career rate. Career rate is in the
+      // same units (per-set GIS+) so the same baseline applies.
+      // Falls back to mean-of-game-pGIS when the new table is missing.
+      const careerPGISFromTable = computeSeasonPGIS(careerGisPlus, careerPos, seasonPgisTables);
+      const careerPGIS = Number.isFinite(careerPGISFromTable)
+        ? careerPGISFromTable
+        : (careerPGisCount > 0 ? careerPGisSum / careerPGisCount : 0);
 
       const t50Career = t50CareerGames > 0 ? {
         games:   t50CareerGames,

@@ -123,36 +123,61 @@ body {
 }
 
 /* ── Header ─────────────────────────────────────────────────────── */
+/* Brand bar: NCAA-style deep blue with white type. Anchors the page
+   visually so the otherwise-white tool views read as part of a
+   structured app, not a stack of plain panels. */
 .app-header {
   display: flex; align-items: center; justify-content: space-between;
   gap: 1rem; flex-wrap: wrap;
   padding: 0.7rem 1.5rem;
-  background: var(--surface); border-bottom: 1px solid var(--border);
+  background: #1b458f;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.08);
   position: sticky; top: 0; z-index: 100;
   height: 56px;
 }
 .app-header-left { display: flex; align-items: center; gap: 0.85rem; }
 .logo {
   font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900; font-size: 1.25rem;
+  font-weight: 900; font-size: 1.3rem;
   text-transform: uppercase; letter-spacing: 0.05em;
-  color: var(--text);
-  display: flex; align-items: center; gap: 0.5rem;
+  color: #ffffff;
+  display: flex; align-items: center; gap: 0.55rem;
   text-decoration: none;
 }
-.logo-pip { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+.logo-pip {
+  width: 9px; height: 9px;
+  background: #fbbf24;       /* gold accent — pops against the navy */
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
+}
 .nav-pills { display: flex; gap: 0.3rem; }
 .nav-pill {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.66rem; letter-spacing: 0.08em;
-  padding: 0.3rem 0.7rem; border-radius: 4px;
-  border: 1px solid transparent; color: var(--muted);
-  background: transparent; cursor: pointer; transition: all 0.15s;
+  font-size: 0.68rem; letter-spacing: 0.08em; font-weight: 600;
+  padding: 0.32rem 0.75rem; border-radius: 4px;
+  border: 1px solid transparent;
+  color: rgba(255, 255, 255, 0.78);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
   text-decoration: none;
 }
-.nav-pill:hover  { color: var(--text); background: var(--surface2); }
-.nav-pill.active { color: var(--accent); border-color: #0284c733; background: #0284c70d; }
+.nav-pill:hover  { color: #ffffff; background: rgba(255, 255, 255, 0.10); }
+.nav-pill.active {
+  color: #1b458f;
+  background: #ffffff;
+  border-color: #ffffff;
+  font-weight: 700;
+}
 .nav-pill.soon   { opacity: 0.35; cursor: default; pointer-events: none; }
+
+/* Hamburger toggle (mobile) — visible on the dark header. */
+.sidebar-toggle {
+  color: rgba(255, 255, 255, 0.85);
+  border-color: rgba(255, 255, 255, 0.32);
+}
+.sidebar-toggle:hover { color: #ffffff; border-color: #ffffff; }
 
 /* ── Hero (About page only — tools use .page-title-row instead) ── */
 .hero { max-width: 720px; margin: 4rem auto 0; padding: 0 1.5rem; text-align: center; }

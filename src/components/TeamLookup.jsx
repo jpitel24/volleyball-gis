@@ -67,7 +67,16 @@ function buildTeamIndex(players) {
 
   const teams = [];
   for (const t of byKey.values()) {
-    const sortedPlayers = t.players.slice().sort((a, b) => (b.gisPlus || 0) - (a.gisPlus || 0));
+    // Rank a team's roster by season pGIS — opponent-adjusted percentile
+    // is a more meaningful "who carried the team" signal than raw
+    // GIS+/S volume. GIS+/S still tiebreaks for players whose pGIS isn't
+    // available (rare role-player edge cases).
+    const sortedPlayers = t.players.slice().sort((a, b) => {
+      const aP = Number.isFinite(a.pGIS) ? a.pGIS : -Infinity;
+      const bP = Number.isFinite(b.pGIS) ? b.pGIS : -Infinity;
+      if (aP !== bP) return bP - aP;
+      return (b.gisPlus || 0) - (a.gisPlus || 0);
+    });
     // Team metrics — sets-weighted (player rates are per-set), so a
     // libero who plays every set pulls weight toward her season line.
     // pGIS still weights by games since pGIS is a per-match average.
@@ -149,7 +158,7 @@ function TeamCard({ t, expanded, onToggle }) {
           {top3.map((p, i) => (
             <span key={p.key}>
               <span style={{ color: posColor(p.position) }}>{p.name}</span>
-              <span style={{ color: 'var(--gisplus)' }}> ({fmt(p.gisPlus)})</span>
+              <span style={{ color: 'var(--pgis)' }}> ({Number.isFinite(p.pGIS) ? p.pGIS.toFixed(1) : '—'})</span>
               {i < top3.length - 1 ? '  ·  ' : ''}
             </span>
           ))}

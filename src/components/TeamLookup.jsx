@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useData } from '../lib/DataContext.jsx';
 import { loadPlayerIndex } from '../lib/playerIndex.js';
-import { posColor, pgisLabel } from '../lib/gis.js';
+import { posColor, pgisLabel, posGroup } from '../lib/gis.js';
 
 const MAX_RESULTS = 20;
 const YEAR_OPTIONS = [2025, 2024, 2023, 2022];
@@ -92,18 +92,45 @@ function buildTeamIndex(players) {
       if (wg > 0 && Number.isFinite(pl.pGIS)) { pgSum += pl.pGIS * wg; pgW += wg; }
     }
     const totalTeamSets = Object.values(t.matchSets).reduce((a, b) => a + b, 0);
+
+    // Rotation pGIS — mean of the AVCA-style starting six + libero
+    // (top 3 OH/OPP, top 2 MB, top S, top L) by season pGIS. The
+    // metric tracks the players who actually drive wins rather than
+    // a roster-wide weighted average that role players dilute.
+    // Used as the default Team Browser sort key.
+    const ROT_QUOTA = { OH: 3, MB: 2, S: 1, L: 1 };
+    const byPos = { OH: [], MB: [], S: [], L: [] };
+    for (const pl of sortedPlayers) {
+      const grp = posGroup(pl.position);
+      if (!grp || !byPos[grp]) continue;
+      if (!Number.isFinite(pl.pGIS)) continue;
+      byPos[grp].push(pl);
+    }
+    for (const k of Object.keys(byPos)) {
+      byPos[k].sort((a, b) => (b.pGIS || 0) - (a.pGIS || 0));
+    }
+    const rotationPicks = [];
+    for (const [k, n] of Object.entries(ROT_QUOTA)) {
+      rotationPicks.push(...byPos[k].slice(0, n));
+    }
+    const rotationPGIS = rotationPicks.length
+      ? rotationPicks.reduce((s, p) => s + (p.pGIS || 0), 0) / rotationPicks.length
+      : null;
+
     teams.push({
-      key:         t.key,
-      year:        t.year,
-      team:        t.team,
-      rosterSize:  t.players.length,
-      games:       t.gameKeys.size,
-      t50Games:    t.t50Keys.size,
-      sets:        totalTeamSets,
-      gis:         sSum > 0 ? gSum  / sSum : 0,
-      gisPlus:     sSum > 0 ? gpSum / sSum : 0,
-      pGIS:        pgW  > 0 ? pgSum / pgW  : null,
-      players:     sortedPlayers,
+      key:           t.key,
+      year:          t.year,
+      team:          t.team,
+      rosterSize:    t.players.length,
+      games:         t.gameKeys.size,
+      t50Games:      t.t50Keys.size,
+      sets:          totalTeamSets,
+      gis:           sSum > 0 ? gSum  / sSum : 0,
+      gisPlus:       sSum > 0 ? gpSum / sSum : 0,
+      pGIS:          pgW  > 0 ? pgSum / pgW  : null,
+      rotationPGIS,
+      rotationCount: rotationPicks.length,
+      players:       sortedPlayers,
     });
   }
   return teams;
@@ -141,7 +168,15 @@ function TeamCard({ t, expanded, onToggle }) {
         <div className="pb-career-chips">
           <span className="pb-chip">{t.games} G · {t.sets} S</span>
           <span className="pb-chip">Roster {t.rosterSize}</span>
-          <span className="pb-chip">GIS/S {fmt(t.gis)}</span>
+          {Number.isFinite(t.rotationPGIS) && (
+            <span
+              className="pb-chip"
+              style={{ color: 'var(--pgis)', borderColor: '#ea580c40', background: '#ea580c10', fontWeight: 700 }}
+              title="Mean season pGIS of top 3 OH/OPP, top 2 MB, top S, top L"
+            >
+              Rot pGIS {t.rotationPGIS.toFixed(1)}
+            </span>
+          )}
           <span className="pb-chip" style={{ color: 'var(--gisplus)' }}>GIS+/S {fmt(t.gisPlus)}</span>
           <PGISChip v={t.pGIS} />
           <span className="pb-chip" style={{ opacity: 0.7, borderStyle: 'dashed' }}>
@@ -227,8 +262,16 @@ export default function TeamLookup() {
       if (q && !t.team.toLowerCase().includes(q)) return false;
       return true;
     });
-    // Rank by team GIS+/S desc — can always add toggles later.
-    rows.sort((a, b) => (b.gisPlus || 0) - (a.gisPlus || 0));
+    // Rank by rotation pGIS desc (top 3 OH, top 2 MB, top S, top L
+    // averaged) — focuses on the starters who carried the team.
+    // GIS+/S tiebreaks for the rare case of two teams matching on
+    // rotation pGIS to one decimal.
+    rows.sort((a, b) => {
+      const aR = Number.isFinite(a.rotationPGIS) ? a.rotationPGIS : -Infinity;
+      const bR = Number.isFinite(b.rotationPGIS) ? b.rotationPGIS : -Infinity;
+      if (aR !== bR) return bR - aR;
+      return (b.gisPlus || 0) - (a.gisPlus || 0);
+    });
     return rows;
   }, [teams, year, search]);
 

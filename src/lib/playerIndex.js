@@ -165,6 +165,23 @@ function median(vals) {
     : (s[mid - 1] + s[mid]) / 2;
 }
 
+// Yield back to the main thread so the browser can run animation
+// frames, paint, and respond to input between chunks of heavy work.
+// Without this, the row-iteration loop below freezes the page for
+// 5-10 seconds on mobile and the OS kills the tab as unresponsive.
+//
+// Prefer requestIdleCallback (Chrome / Edge / Firefox) so we surrender
+// the rest of the frame budget; setTimeout is a Safari-shaped fallback.
+function yieldToMain() {
+  return new Promise(r => {
+    if (typeof requestIdleCallback === 'function') {
+      requestIdleCallback(() => r(), { timeout: 16 });
+    } else {
+      setTimeout(r, 0);
+    }
+  });
+}
+
 function pickMostCommonPosition(posCounts) {
   let best = null, bestN = 0;
   for (const [p, n] of Object.entries(posCounts)) {
@@ -257,7 +274,11 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
       }
 
       // Flatten all rows from the year's byKey map (this is every team-match
-      // row; each player appears once per game they played).
+      // row; each player appears once per game they played). Yield to
+      // the main thread every CHUNK_ROWS rows so mobile browsers don't
+      // kill the tab as unresponsive during the multi-second build.
+      const CHUNK_ROWS = 5000;
+      let processedRows = 0;
       for (const [gKey, rows] of Object.entries(idx.byKey)) {
         for (const r of rows) {
           const team   = r.Team;
@@ -354,6 +375,7 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
             pGIS:      null,         // filled below
             vsTop50,
           });
+          if (++processedRows % CHUNK_ROWS === 0) await yieldToMain();
         }
       }
     }
@@ -367,6 +389,11 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
       sampleOverrides: [],    // top-N for spot check
     };
 
+    // Same chunked-yield pattern as the row loop above. Per-player
+    // rollup is lighter per iteration but ~8k players × per-game pGIS
+    // lookups still adds up; yield every 500 to keep the page responsive.
+    const CHUNK_PLAYERS = 500;
+    let processedPlayers = 0;
     for (const rec of byPlayer.values()) {
       const seasonList = Object.values(rec.seasons)
         .sort((a, b) => b.year - a.year);
@@ -568,6 +595,7 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
         },
         seasons,
       });
+      if (++processedPlayers % CHUNK_PLAYERS === 0) await yieldToMain();
     }
 
     // Sort by career GIS+ desc for default top-N display.
@@ -587,6 +615,21 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
     } catch (_) { /* console may be unavailable */ }
 
     const byKey = new Map(players.map(p => [p.key, p]));
+
+    // Free intermediate structures so the GC can reclaim them. The
+    // 33 MB gisPlus Map is only consulted during the build; the
+    // byPlayer scratch Map is the precursor to `players`. yearIndices
+    // holds parsed CSV rows that were copied into per-game records.
+    // Together these typically free 50-80 MB on mobile heaps.
+    try {
+      gisPlusMap?.clear?.();
+      byPlayer.clear();
+      // Deref the per-year parsed payloads — yearIndices is local to
+      // the closure but its members hang on to ~570k row objects.
+      for (let i = 0; i < yearIndices.length; i++) yearIndices[i] = null;
+      yearIndices.length = 0;
+    } catch (_) { /* defensive — cleanup must never fail the build */ }
+
     return { players, byKey };
   })().catch(err => {
     cachedPromise = null;

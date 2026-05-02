@@ -5,6 +5,7 @@ import GameLookup from './components/GameLookup.jsx';
 import PlayerLookup from './components/PlayerLookup.jsx';
 import SeasonLookup from './components/SeasonLookup.jsx';
 import TeamLookup from './components/TeamLookup.jsx';
+import Compare from './components/Compare.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import { useRoute, navigate, hrefFor } from './lib/router.js';
 
@@ -33,6 +34,7 @@ export default function App() {
           {route.name === 'players' && <PlayerLookup onGameDeepLink={handleGameDeepLink} />}
           {route.name === 'seasons' && <SeasonLookup />}
           {route.name === 'teams'   && <TeamLookup />}
+          {route.name === 'compare' && <Compare />}
         </ErrorBoundary>
       </AppShell>
     </DataProvider>

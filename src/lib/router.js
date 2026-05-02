@@ -10,6 +10,7 @@
  *   /players              → players
  *   /seasons              → seasons
  *   /teams                → teams
+ *   /compare              → compare (player-season comparison tool)
  *
  * vercel.json already rewrites all non-asset URLs back to / so the SPA
  * boots regardless of which path the user lands on.
@@ -44,6 +45,7 @@ export function matchRoute(path) {
   if (path === '/players' || path.startsWith('/players/')) return { name: 'players', path };
   if (path === '/seasons' || path.startsWith('/seasons/')) return { name: 'seasons', path };
   if (path === '/teams' || path.startsWith('/teams/')) return { name: 'teams', path };
+  if (path === '/compare' || path.startsWith('/compare/')) return { name: 'compare', path };
   if (path === '/about' || path.startsWith('/about/')) return { name: 'about', path };
   // Unknown → fall back to about so the app still renders.
   return { name: 'about', path };
@@ -58,6 +60,7 @@ export function hrefFor(name, ...args) {
   if (name === 'players') return '/players';
   if (name === 'seasons') return '/seasons';
   if (name === 'teams')   return '/teams';
+  if (name === 'compare') return '/compare';
   return '/';
 }
 

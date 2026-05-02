@@ -39,6 +39,7 @@ export default function Header({ route, showHamburger = false, onToggleSidebar }
         {tab('players', 'Players')}
         {tab('seasons', 'Seasons')}
         {tab('teams',   'Teams')}
+        {tab('compare', 'Compare')}
       </nav>
     </header>
   );

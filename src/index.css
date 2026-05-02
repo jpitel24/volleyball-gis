@@ -848,6 +848,144 @@ body {
 .about-footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--border); }
 .about-footer p { font-size: 0.8rem; color: var(--muted); }
 
+/* ── Compare tool ────────────────────────────────────────────────── */
+.cmp-slot {
+  display: flex; flex-direction: column;
+  gap: 0.4rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px dashed var(--border);
+}
+.cmp-slot:last-of-type { border-bottom: none; }
+.cmp-slot-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cmp-slot-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0.5rem 0.65rem;
+}
+.cmp-slot-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 0.95rem;
+  line-height: 1.15;
+}
+.cmp-slot-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--muted);
+  margin-top: 0.18rem;
+}
+.cmp-slot-clear {
+  align-self: flex-start;
+  margin-top: 0.1rem;
+}
+.cmp-suggest {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  max-height: 240px;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+.cmp-suggest-item {
+  padding: 0.45rem 0.7rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  border-bottom: 1px solid var(--border);
+}
+.cmp-suggest-item:last-child { border-bottom: none; }
+.cmp-suggest-item:hover { background: var(--surface2); }
+.cmp-suggest-team {
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+}
+
+/* Stat grid */
+.cmp-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+}
+.cmp-table th {
+  background: var(--surface2);
+  text-align: left;
+  padding: 0.7rem 0.85rem;
+  border-bottom: 2px solid var(--border);
+  vertical-align: top;
+}
+.cmp-table th.cmp-stat-col {
+  width: 200px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cmp-table th.cmp-player-col { text-align: right; }
+.cmp-player-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+}
+.cmp-player-meta {
+  font-size: 0.62rem;
+  color: var(--muted);
+  margin-top: 0.2rem;
+}
+.cmp-empty-head {
+  font-size: 0.7rem;
+  color: var(--muted);
+  font-style: italic;
+}
+.cmp-table td {
+  padding: 0.5rem 0.85rem;
+  border-bottom: 1px solid var(--border);
+}
+.cmp-table tr:last-child td { border-bottom: none; }
+.cmp-table td.cmp-stat-col {
+  font-size: 0.72rem;
+  color: var(--text);
+  letter-spacing: 0.02em;
+}
+.cmp-table td.cmp-val {
+  text-align: right;
+  font-feature-settings: 'tnum' 1;
+}
+.cmp-row-dim td.cmp-val {
+  color: var(--muted);
+}
+.cmp-row-dim td.cmp-stat-col {
+  color: var(--muted);
+}
+.cmp-group-row td {
+  padding: 0.7rem 0.85rem 0.4rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+}
+
 /* ── Computer All-American panel (Season Browser, year-specific) ── */
 .aa-panel {
   background: var(--surface);

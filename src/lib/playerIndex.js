@@ -36,10 +36,10 @@
  */
 
 import { loadYear } from './csvGames.js';
-import { loadGisPlus, makeKey, seasonStrFromYear } from './gisPlus.js';
 import {
   POS_W, ERR_W, ERR_FLOOR, ERR_DAMP, GIS_SCALE,
   computePGIS, posGroup, canonicalName, findRPIValue,
+  rpiToRank, rankToModifier,
 } from './gis.js';
 
 const T50_THRESHOLD = 50;
@@ -128,17 +128,33 @@ function rowToStats(r) {
   };
 }
 
-// JS fallback GIS/GIS+ for a single row when the overlay misses.
-// Mirrors computeGIS() sans opp mod and leverage (avgLev=1, oppMod=1).
-// Returns per-match totals to match the overlay's units.
-function fallbackGis(stats, ns) {
+// Per-game JS GIS / GIS+ for the player-index path. Replaces the
+// previous overlay from gis_plus_observations.csv (33 MB), which
+// blew up iOS Safari's tab budget on the parse step before any of
+// the chunked iteration could help. We still get an opponent-adjusted
+// GIS+ value by applying rankToModifier() against the RPI table
+// (already loaded, ~47 KB). Set leverage isn't replicated here
+// because PBP rally data lives in much larger files we don't load
+// for the index — close enough for percentile bucketing.
+//
+// Game Browser still uses the Python overlay independently (lazy-
+// loaded only when a game is opened) so per-match reports keep their
+// full set-leverage + hit-pct accuracy.
+function jsGisForRow(stats, ns, opponentTeam, season, rpiByYear, totalTeamsBySeason) {
   if (!ns || ns <= 0) return { gis: 0, gisPlus: 0 };
   const raw    = Object.entries(POS_W).reduce((s, [k, w]) => s + (stats[k] || 0) * w, 0);
   const errSum = Object.entries(ERR_W).reduce((s, [k, w]) => s + (stats[k] || 0) * w, 0);
   const errPen = Math.max(ERR_FLOOR, Math.min(1.0, 1.0 - (errSum / (raw + 1)) * ERR_DAMP));
   const perSet = (raw / ns) * errPen * GIS_SCALE;
   const total  = perSet * ns;
-  return { gis: total, gisPlus: total };
+
+  // Opp adjustment (no leverage). rpiByYear is keyed by single-year
+  // string ("2022") even though the season string elsewhere is "2022-2023".
+  const oppRpiVal = findRPIValue(opponentTeam, opponentTeam, null, rpiByYear, season);
+  const oppRank   = rpiToRank(oppRpiVal, season, rpiByYear);
+  const totalTeams = totalTeamsBySeason[season] || 350;
+  const oppMod    = rankToModifier(oppRank, totalTeams);
+  return { gis: total, gisPlus: total * oppMod };
 }
 
 // Synthetic game key mirroring buildGameIndex() in csvGames.js so Player
@@ -230,15 +246,26 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
   const top50Sets = buildTop50BySeason(rpiByYear);
 
   cachedPromise = (async () => {
-    // Fire everything off in parallel — loadYear/loadGisPlus are memoized
-    // module-scope, so these are free if the Game Browser already ran.
-    const [yearIndices, gisPlusMap] = await Promise.all([
-      Promise.all(YEARS.map(y => loadYear(y).catch(err => {
+    // Fire the per-year box-score CSVs in parallel. loadYear is memoized
+    // at module scope so these are free if the Game Browser already
+    // hit them. The 33 MB gis_plus_observations.csv is intentionally
+    // *not* loaded here — its parse step blew the iOS Safari memory
+    // budget. We approximate the Python overlay's opp-adjusted GIS+
+    // in JS via jsGisForRow() below; the Game Browser still loads the
+    // full overlay lazily for its own per-match displays.
+    const yearIndices = await Promise.all(
+      YEARS.map(y => loadYear(y).catch(err => {
         console.warn(`[playerIndex] skip ${y}:`, err?.message || err);
         return null;
-      }))),
-      loadGisPlus().catch(() => new Map()),
-    ]);
+      }))
+    );
+
+    // Pre-compute per-season team count for the opponent multiplier
+    // denominator. Reused for every row instead of recounting Object.keys.
+    const totalTeamsBySeason = {};
+    for (const seasonKey of Object.keys(rpiByYear || {})) {
+      totalTeamsBySeason[seasonKey] = Object.keys(rpiByYear[seasonKey] || {}).length;
+    }
 
     // byPlayer: key → { name, teamCounts, posCounts, teamsOrder, seasons: { [year]: SeasonAgg } }
     const byPlayer = new Map();
@@ -250,7 +277,7 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
       const year = YEARS[yi];
       const idx  = yearIndices[yi];
       if (!idx) continue;
-      const seasonStr = seasonStrFromYear(year);
+      const yearStr = String(year);
 
       // Match-level nSets lookup (3, 4, or 5 — total sets played by the
       // winning team). Used as the pGIS volume denominator so a 1-set
@@ -322,12 +349,15 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
           }
           if (anyAction === 0) continue;
 
-          // Overlay lookup; fall back to JS if missing. Both paths return
-          // per-match totals (matching the units Game Browser displays).
-          const gpKey = makeKey(seasonStr, r.Date, team, player);
-          const hit   = gisPlusMap.get(gpKey);
-          const gameGis     = hit ? hit.gis     : fallbackGis(stats, ns).gis;
-          const gameGisPlus = hit ? hit.gisPlus : fallbackGis(stats, ns).gisPlus;
+          // Per-match GIS / GIS+ from the JS pipeline. Replaces the
+          // Python overlay (33 MB CSV) that used to feed these values
+          // — the parse cost of that CSV crashed iOS Safari. JS calc
+          // bakes in the opponent multiplier from rpiByYear; set
+          // leverage isn't replicated here. Game Browser still uses
+          // the Python overlay lazily for its own per-match reports.
+          const opponentTeam = r['Opponent Team'] || '';
+          const { gis: gameGis, gisPlus: gameGisPlus } =
+            jsGisForRow(stats, ns, opponentTeam, yearStr, rpiByYear, totalTeamsBySeason);
 
           let season = rec.seasons[year];
           if (!season) {
@@ -617,15 +647,11 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
     const byKey = new Map(players.map(p => [p.key, p]));
 
     // Free intermediate structures so the GC can reclaim them. The
-    // 33 MB gisPlus Map is only consulted during the build; the
-    // byPlayer scratch Map is the precursor to `players`. yearIndices
+    // byPlayer scratch Map is the precursor to `players`; yearIndices
     // holds parsed CSV rows that were copied into per-game records.
-    // Together these typically free 50-80 MB on mobile heaps.
+    // Together these typically free 30-50 MB on mobile heaps.
     try {
-      gisPlusMap?.clear?.();
       byPlayer.clear();
-      // Deref the per-year parsed payloads — yearIndices is local to
-      // the closure but its members hang on to ~570k row objects.
       for (let i = 0; i < yearIndices.length; i++) yearIndices[i] = null;
       yearIndices.length = 0;
     } catch (_) { /* defensive — cleanup must never fail the build */ }

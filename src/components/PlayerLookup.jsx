@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useMemo, useState } from 'react';
 import { useData } from '../lib/DataContext.jsx';
 import { loadPlayerIndex } from '../lib/playerIndex.js';
-import { posColor, pgisLabel, posGroup } from '../lib/gis.js';
+import { posColor, pgisLabel, posGroup, computeCategoryGIS } from '../lib/gis.js';
 
 const MAX_RESULTS = 50;
 const POS_FILTERS = [
@@ -76,6 +76,72 @@ function PgisSparkline({ games, width = 56, height = 16, windowSize = 5, color =
       <polyline fill="none" stroke={color} strokeWidth="1.3" strokeLinejoin="round" points={points} />
       <circle cx={lastX} cy={lastY} r="1.6" fill={color} />
     </svg>
+  );
+}
+
+// Aggregate-level category breakdown panel. Used for both career and
+// season views in the Player Browser. Same shape as the Game Browser
+// inspector's "Breakdown by Category" but driven by aggregate totals
+// (career or season) rather than a single match.
+//
+// computeCategoryGIS() returns per-set rates (vol = raw/sets); we
+// rescale each category proportionally so the categories sum exactly
+// to the displayed headline GIS+/S — preserves relative shape while
+// keeping the math additive in the user's eyes (matches the inspector
+// rescaling for per-match values).
+function buildBreakdown(totals, sets, displayGisPerSet, displayGisPlusPerSet) {
+  if (!totals || !sets || sets <= 0) return null;
+  const rawCats = computeCategoryGIS(totals, sets, 1, 1).filter(c => c.gis > 0);
+  if (!rawCats.length) return null;
+  const sumGis = rawCats.reduce((s, c) => s + c.gis,     0) || 1;
+  const sumGp  = rawCats.reduce((s, c) => s + c.gisPlus, 0) || 1;
+  const gScale  = (displayGisPerSet     || 0) / sumGis;
+  const gpScale = (displayGisPlusPerSet || 0) / sumGp;
+  const cats = rawCats.map(c => ({
+    key: c.key,
+    label: c.label,
+    gis:     c.gis     * gScale,
+    gisPlus: c.gisPlus * gpScale,
+  }));
+  const total = cats.reduce((s, c) => s + c.gisPlus, 0);
+  return cats
+    .map(c => ({ ...c, share: total > 0 ? (c.gisPlus / total) * 100 : 0 }))
+    .sort((a, b) => b.gisPlus - a.gisPlus);
+}
+
+function CategoryBreakdownPanel({ label, totals, sets, gis, gisPlus, posColorHex }) {
+  const rows = useMemo(
+    () => buildBreakdown(totals, sets, gis, gisPlus),
+    [totals, sets, gis, gisPlus]
+  );
+  if (!rows || rows.length === 0) return null;
+  const max = Math.max(...rows.map(r => r.gisPlus), 0.01);
+  return (
+    <div className="cb-panel">
+      <div className="cb-label">{label}</div>
+      <div className="cb-rows">
+        {rows.map(r => (
+          <Fragment key={r.key}>
+            <div className="cb-cat">{r.label}</div>
+            <div className="cb-track">
+              <div
+                className="cb-fill"
+                style={{
+                  width: `${Math.max(2, (r.gisPlus / max) * 100).toFixed(1)}%`,
+                  background: posColorHex || 'var(--gisplus)',
+                }}
+              />
+            </div>
+            <div className="cb-gis">{r.gis.toFixed(2)}</div>
+            <div className="cb-val">{r.gisPlus.toFixed(2)}</div>
+            <div className="cb-pct">{r.share.toFixed(0)}%</div>
+          </Fragment>
+        ))}
+      </div>
+      <div className="cb-foot">
+        <span>Per-Set GIS · GIS+/S · Share of Total</span>
+      </div>
+    </div>
   );
 }
 
@@ -200,6 +266,16 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
         </div>
       </div>
       {expanded && (
+        <CategoryBreakdownPanel
+          label="Career — GIS Breakdown"
+          totals={c.totals}
+          sets={c.sets}
+          gis={c.gis}
+          gisPlus={c.gisPlus}
+          posColorHex={posColor(player.position)}
+        />
+      )}
+      {expanded && (
         <div className="pb-table-wrap">
           <table className="pb-season-table" style={{ width: '100%', fontFamily: "'JetBrains Mono',monospace", fontSize: '0.72rem' }}>
             <thead>
@@ -254,6 +330,14 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
                     {open && (
                       <tr className="pb-log-row">
                         <td colSpan={18}>
+                          <CategoryBreakdownPanel
+                            label={`${s.year} — Season GIS Breakdown`}
+                            totals={s.totals}
+                            sets={s.sets}
+                            gis={s.gis}
+                            gisPlus={s.gisPlus}
+                            posColorHex={posColor(s.position)}
+                          />
                           <GameLog season={s} playerKey={player.key} onGameClick={onGameClick} />
                         </td>
                       </tr>

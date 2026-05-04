@@ -5,5 +5,14 @@ dist
 # Diagnostic output, regenerated on every build_gis_plus.py run
 public/data/unmatched_opponents.txt
 
+# Local scraper / probe caches — re-fetchable, often large, not for VCS
+scripts/.pbp-cache/
+scripts/.pbp-build/
+scripts/.ncaa-api-cache/
+scripts/.playermatch-cache/
+scripts/.playermatch-cache-null-backup-2024/
+scripts/.gisplus-build.log
+scripts/__pycache__/
+
 # JetBrains IDE
 .idea/

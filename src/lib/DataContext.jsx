@@ -8,7 +8,8 @@ export function DataProvider({ children }) {
     rpiByYear:          null,
     categoryPgisTables: null,
     receptionQuality:   null,   // { "<player_key>|<school_key>|<year>": { ... } }
-    serveQuality:       null,   // ditto, parallel shape
+    serveQuality:       null,
+    setQuality:         null,
     loading:            true,
     error:              null,
   });
@@ -19,17 +20,18 @@ export function DataProvider({ children }) {
         const safeJson = r => r.ok ? r.json().catch(() => null) : null;
         const [
           pgisTables, rpiByYear, categoryPgisTables,
-          receptionQuality, serveQuality,
+          receptionQuality, serveQuality, setQuality,
         ] = await Promise.all([
           fetch('/data/pgis_tables.json').then(safeJson),
           fetch('/data/historical_rpi.json').then(safeJson),
           fetch('/data/category_pgis_tables.json').then(safeJson),
           fetch('/data/wvb_reception_quality_2025.json').then(safeJson),
           fetch('/data/wvb_serve_quality_2025.json').then(safeJson),
+          fetch('/data/wvb_set_quality_2025.json').then(safeJson),
         ]);
         setData({
           pgisTables, rpiByYear, categoryPgisTables,
-          receptionQuality, serveQuality,
+          receptionQuality, serveQuality, setQuality,
           loading: false, error: null,
         });
       } catch (e) {

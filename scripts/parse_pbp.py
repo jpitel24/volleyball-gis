@@ -79,16 +79,28 @@ TERMINAL_PATTERNS = [
     (re.compile(r"^Block error by (.+)$"),                            "BLOCK_ERROR"),
     # "Set error by X"
     (re.compile(r"^Set error by (.+)$"),                              "SET_ERROR"),
-    # "Reception error by X"
-    (re.compile(r"^Reception error by (.+)$"),                        "RECEPTION_ERROR"),
+    # "Reception error by X" plus the rare "reception firstBall error by X"
+    # variant some scorers use.
+    (re.compile(r"^[Rr]eception(?:\s+firstBall)?\s+error by (.+)$"),  "RECEPTION_ERROR"),
+    # "Dig error by X" — about as common as set errors but was missing
+    # from the original vocabulary.
+    (re.compile(r"^Dig error by (.+)$"),                              "DIG_ERROR"),
     # "Ball handling error by X"
     (re.compile(r"^Ball handling error by (.+)$"),                    "BHE"),
     # "X serves an ace"
     (re.compile(r"^(.+?) serves an ace$"),                            "ACE"),
-    # "X service error"
-    (re.compile(r"^(.+?) service error$"),                            "SERVICE_ERROR"),
+    # "X service error" — sometimes annotated with the receiver (",
+    # to <name>") which we just drop. "Serve error by X" is the same
+    # event under a different scorer's phrasing.
+    (re.compile(r"^(.+?) service error(?:,\s*to\s+.+)?$"),            "SERVICE_ERROR"),
+    (re.compile(r"^Serve error by (.+?)(?:,\s*to\s+.+)?$"),           "SERVICE_ERROR"),
     # Terminal block (kill block) — looks like "Block by X" or "Block by X, Y"
     (re.compile(r"^Block by (.+)$"),                                  "BLOCK_KILL"),
+    # Penalty / replay challenge events. Rare (<10 per season per team)
+    # but real terminals when they fire. Captured separately so they
+    # don't get bucketed with normal play outcomes.
+    (re.compile(r"^Sanction point.*$"),                               "SANCTION"),
+    (re.compile(r"^Challenge outcome(?:\s+error)?\s*(?:by\s+(.+))?$"),"CHALLENGE"),
 ]
 
 NONTERMINAL_PATTERNS = [
@@ -274,6 +286,24 @@ def parse_set_table(table, set_num: int) -> dict:
 
             if terminal:
                 action, primary, secondaries = classify(action_text, is_terminal=True)
+                if action is None:
+                    # NCAA's stat-keeping occasionally puts non-terminal
+                    # action text inside a terminal-shaped HTML row
+                    # (e.g. "Set by X" wrapped in short_play_text). Try
+                    # the non-terminal vocabulary as a fallback so the
+                    # touch is still captured in the rally rather than
+                    # discarded as UNKNOWN.
+                    nt_action, nt_primary, _ = classify(action_text, is_terminal=False)
+                    if nt_action:
+                        rally["touches"].append({
+                            "team":   team,
+                            "action": nt_action,
+                            "player": nt_primary,
+                        })
+                        # Don't set rally.result for these — the actual
+                        # rally-ending event is a separate row we
+                        # already processed (or will, soon).
+                        continue
                 rally["result"] = {
                     "type":        action,
                     "team":        team,

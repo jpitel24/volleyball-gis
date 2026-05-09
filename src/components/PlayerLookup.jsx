@@ -145,6 +145,33 @@ function CategoryBreakdownPanel({ label, totals, sets, gis, gisPlus, posColorHex
   );
 }
 
+// Cell renderer for the season-row REC% column. Tier-colored by Great%
+// using the same conventions volleyball-coaching circles use for "pass
+// rating": ≥50% great is elite, 40-50% solid, 30-40% average, <30%
+// below average. Hover tooltip surfaces the full Great/Good/Bad split
+// and total reception count.
+function RecCell({ rq }) {
+  if (!rq || !rq.qualified) {
+    return <td style={{ textAlign: 'right', opacity: 0.5 }}>—</td>;
+  }
+  let color;
+  if      (rq.greatPct >= 0.50) color = 'var(--green)';
+  else if (rq.greatPct >= 0.40) color = 'var(--accent)';
+  else if (rq.greatPct >= 0.30) color = 'var(--yellow)';
+  else                          color = 'var(--red)';
+  const tooltip = [
+    `${rq.total} receptions`,
+    `Great: ${rq.great} (${Math.round(rq.greatPct * 100)}%) — setter on 2nd, hitter killed on 3rd`,
+    `Good:  ${rq.good} (${Math.round(rq.goodPct  * 100)}%) — setter on 2nd, rally continued`,
+    `Bad:   ${rq.bad}  (${Math.round(rq.badPct   * 100)}%) — non-setter on 2nd, OR 3rd-touch attack blocked / errored`,
+  ].join('\n');
+  return (
+    <td style={{ textAlign: 'right', color, fontWeight: 700 }} title={tooltip}>
+      {Math.round(rq.greatPct * 100)}%
+    </td>
+  );
+}
+
 function PGISChip({ v }) {
   if (v == null) return <span className="pb-chip">pGIS —</span>;
   const [, cls] = pgisLabel(v);
@@ -293,6 +320,7 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
                 <th style={{ textAlign: 'right' }}>GIS/S</th>
                 <th style={{ textAlign: 'right' }}>GIS+/S</th>
                 <th style={{ textAlign: 'right' }}>pGIS</th>
+                <th style={{ textAlign: 'right' }} title="Great-pass %: setter on 2nd touch and hitter killed on 3rd. Hover a row for the full Great/Good/Bad split.">REC%</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }} title="Games vs RPI Top-50 opponents">T50 G</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }} title="GIS/S vs RPI Top-50 opponents">T50 GIS/S</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }} title="GIS+/S vs RPI Top-50 opponents">T50 GIS+/S</th>
@@ -321,6 +349,7 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
                         <PgisSparkline games={s.gameLog} />
                         {fmt(s.pGIS, 1)}
                       </td>
+                      <RecCell rq={s.recQuality} />
                       <td style={{ textAlign: 'right', opacity: 0.7 }}>{s.t50 ? s.t50.games : '—'}</td>
                       <td style={{ textAlign: 'right', opacity: 0.7 }}>{s.t50 ? fmt(s.t50.gis) : '—'}</td>
                       <td style={{ textAlign: 'right', opacity: 0.7, color: 'var(--gisplus)' }}>{s.t50 ? fmt(s.t50.gisPlus) : '—'}</td>
@@ -329,7 +358,7 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
                     </tr>
                     {open && (
                       <tr className="pb-log-row">
-                        <td colSpan={18}>
+                        <td colSpan={19}>
                           <CategoryBreakdownPanel
                             label={`${s.year} — Season GIS Breakdown`}
                             totals={s.totals}
@@ -354,7 +383,7 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
 }
 
 export default function PlayerLookup({ onGameDeepLink }) {
-  const { pgisTables, rpiByYear, loading } = useData();
+  const { pgisTables, rpiByYear, receptionQuality, loading } = useData();
   const [index, setIndex]               = useState(null);
   const [indexErr, setIndexErr]         = useState(null);
   const [buildingIndex, setBuilding]    = useState(false);
@@ -368,11 +397,11 @@ export default function PlayerLookup({ onGameDeepLink }) {
     if (loading || !pgisTables) return;
     let cancelled = false;
     setBuilding(true);
-    loadPlayerIndex(pgisTables, rpiByYear)
+    loadPlayerIndex(pgisTables, rpiByYear, receptionQuality)
       .then(idx => { if (!cancelled) { setIndex(idx); setBuilding(false); } })
       .catch(err => { if (!cancelled) { setIndexErr(err?.message || String(err)); setBuilding(false); } });
     return () => { cancelled = true; };
-  }, [loading, pgisTables, rpiByYear]);
+  }, [loading, pgisTables, rpiByYear, receptionQuality]);
 
   // Only compute hits once the user has started searching (or picked a
   // position). Avoids rendering 8k+ cards when the tab first opens.

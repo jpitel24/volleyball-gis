@@ -7,6 +7,7 @@ export function DataProvider({ children }) {
     pgisTables:         null,
     rpiByYear:          null,
     categoryPgisTables: null,
+    receptionQuality:   null,   // { "<player_key>|<school_key>|<year>": { ... } }
     loading:            true,
     error:              null,
   });
@@ -15,12 +16,16 @@ export function DataProvider({ children }) {
     async function load() {
       try {
         const safeJson = r => r.ok ? r.json().catch(() => null) : null;
-        const [pgisTables, rpiByYear, categoryPgisTables] = await Promise.all([
+        const [pgisTables, rpiByYear, categoryPgisTables, receptionQuality] = await Promise.all([
           fetch('/data/pgis_tables.json').then(safeJson),
           fetch('/data/historical_rpi.json').then(safeJson),
           fetch('/data/category_pgis_tables.json').then(safeJson),
+          fetch('/data/wvb_reception_quality_2025.json').then(safeJson),
         ]);
-        setData({ pgisTables, rpiByYear, categoryPgisTables, loading: false, error: null });
+        setData({
+          pgisTables, rpiByYear, categoryPgisTables, receptionQuality,
+          loading: false, error: null,
+        });
       } catch (e) {
         setData(d => ({ ...d, loading: false, error: e.message }));
       }

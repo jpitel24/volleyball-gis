@@ -224,7 +224,7 @@ function inferPositionFromTotals(totals, sets) {
 
 let cachedPromise = null;
 
-export function loadPlayerIndex(pgisTables, rpiByYear) {
+export function loadPlayerIndex(pgisTables, rpiByYear, receptionQuality = null) {
   if (cachedPromise) return cachedPromise;
 
   const top50Sets = buildTop50BySeason(rpiByYear);
@@ -524,6 +524,18 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
         const teamGameSet   = seasonTeam ? teamYearGames[seasonTeam] : null;
         const teamGames     = teamGameSet ? teamGameSet.size : 0;
 
+        // Reception quality lookup. Keyed by lowercased name|school|year
+        // exactly as scripts/build_reception_quality.py emits. Returns
+        // null when the player either had too few receptions to qualify
+        // or the season's reception-quality data isn't loaded (e.g.
+        // pre-2025 backfill not yet run).
+        let recQuality = null;
+        if (receptionQuality && seasonTeam) {
+          const teamKey = seasonTeam.toLowerCase().trim();
+          const lookupKey = `${rec.key}|${teamKey}|${s.year}`;
+          recQuality = receptionQuality[lookupKey] || null;
+        }
+
         seasons.push({
           year:     s.year,
           team:     seasonTeam || '',
@@ -537,6 +549,7 @@ export function loadPlayerIndex(pgisTables, rpiByYear) {
           pGIS:     seasonPGIS,
           t50:      t50Season,
           gameLog:  gamesSorted,
+          recQuality,
         });
 
         addTotals(careerTotals, s.totals);

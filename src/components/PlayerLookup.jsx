@@ -172,6 +172,36 @@ function RecCell({ rq }) {
   );
 }
 
+// SRV+: serve effective% = (ace + great) / total. "Great" here means
+// the rally terminated in our favor by the 3rd touch after the
+// reception. Tiers calibrated against the 2025 qualified-cohort
+// distribution (avg 17.3%, top decile ≥ 25%).
+function ServeCell({ sq }) {
+  if (!sq || !sq.qualified) {
+    return <td style={{ textAlign: 'right', opacity: 0.5 }}>—</td>;
+  }
+  let color;
+  if      (sq.effectivePct >= 0.25) color = 'var(--green)';
+  else if (sq.effectivePct >= 0.20) color = 'var(--accent)';
+  else if (sq.effectivePct >= 0.15) color = 'var(--yellow)';
+  else                              color = 'var(--red)';
+  const pct = (k) => Math.round((sq[k] || 0) * 100);
+  const tooltip = [
+    `${sq.total} serves`,
+    `Effective: ${sq.ace + sq.great} (${pct('effectivePct')}%) — ace + great`,
+    `Ace:    ${sq.ace}    (${pct('acePct')}%) — direct point`,
+    `Great:  ${sq.great}  (${pct('greatPct')}%) — we scored within 3 touches of reception`,
+    `Good:   ${sq.good}   (${pct('goodPct')}%) — rally extended past 3rd touch after reception`,
+    `Bad:    ${sq.bad}    (${pct('badPct')}%) — they scored within 3 touches of reception`,
+    `Error:  ${sq.error}  (${pct('errorPct')}%) — service error`,
+  ].join('\n');
+  return (
+    <td style={{ textAlign: 'right', color, fontWeight: 700 }} title={tooltip}>
+      {pct('effectivePct')}%
+    </td>
+  );
+}
+
 function PGISChip({ v }) {
   if (v == null) return <span className="pb-chip">pGIS —</span>;
   const [, cls] = pgisLabel(v);
@@ -321,6 +351,7 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
                 <th style={{ textAlign: 'right' }}>GIS+/S</th>
                 <th style={{ textAlign: 'right' }}>pGIS</th>
                 <th style={{ textAlign: 'right' }} title="Great-pass %: setter on 2nd touch and hitter killed on 3rd. Hover a row for the full Great/Good/Bad split.">REC%</th>
+                <th style={{ textAlign: 'right' }} title="Effective serve %: ace + serves where we scored within 3 touches of the reception. Hover a row for the full breakdown.">SRV+</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }} title="Games vs RPI Top-50 opponents">T50 G</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }} title="GIS/S vs RPI Top-50 opponents">T50 GIS/S</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }} title="GIS+/S vs RPI Top-50 opponents">T50 GIS+/S</th>
@@ -350,6 +381,7 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
                         {fmt(s.pGIS, 1)}
                       </td>
                       <RecCell rq={s.recQuality} />
+                      <ServeCell sq={s.srvQuality} />
                       <td style={{ textAlign: 'right', opacity: 0.7 }}>{s.t50 ? s.t50.games : '—'}</td>
                       <td style={{ textAlign: 'right', opacity: 0.7 }}>{s.t50 ? fmt(s.t50.gis) : '—'}</td>
                       <td style={{ textAlign: 'right', opacity: 0.7, color: 'var(--gisplus)' }}>{s.t50 ? fmt(s.t50.gisPlus) : '—'}</td>
@@ -358,7 +390,7 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
                     </tr>
                     {open && (
                       <tr className="pb-log-row">
-                        <td colSpan={19}>
+                        <td colSpan={20}>
                           <CategoryBreakdownPanel
                             label={`${s.year} — Season GIS Breakdown`}
                             totals={s.totals}
@@ -383,7 +415,7 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
 }
 
 export default function PlayerLookup({ onGameDeepLink }) {
-  const { pgisTables, rpiByYear, receptionQuality, loading } = useData();
+  const { pgisTables, rpiByYear, receptionQuality, serveQuality, loading } = useData();
   const [index, setIndex]               = useState(null);
   const [indexErr, setIndexErr]         = useState(null);
   const [buildingIndex, setBuilding]    = useState(false);
@@ -397,11 +429,11 @@ export default function PlayerLookup({ onGameDeepLink }) {
     if (loading || !pgisTables) return;
     let cancelled = false;
     setBuilding(true);
-    loadPlayerIndex(pgisTables, rpiByYear, receptionQuality)
+    loadPlayerIndex(pgisTables, rpiByYear, receptionQuality, serveQuality)
       .then(idx => { if (!cancelled) { setIndex(idx); setBuilding(false); } })
       .catch(err => { if (!cancelled) { setIndexErr(err?.message || String(err)); setBuilding(false); } });
     return () => { cancelled = true; };
-  }, [loading, pgisTables, rpiByYear, receptionQuality]);
+  }, [loading, pgisTables, rpiByYear, receptionQuality, serveQuality]);
 
   // Only compute hits once the user has started searching (or picked a
   // position). Avoids rendering 8k+ cards when the tab first opens.

@@ -68,6 +68,20 @@ BUILD_DIR = Path("scripts/.pbp-build")
 BUILD_DIR.mkdir(parents=True, exist_ok=True)
 
 
+def load_contest_ids_for_year(year: int) -> set[str] | None:
+    """
+    Read the per-year contest-ID list produced by discover_pbp_ids.py
+    and return a set for fast membership checks. None if the file
+    doesn't exist (caller decides whether to fall back to "all cached
+    JSONs" or to abort).
+    """
+    path = BUILD_DIR / f"contest_ids_{year}.txt"
+    if not path.exists():
+        return None
+    ids = {line.strip() for line in path.read_text(encoding="utf-8").splitlines() if line.strip()}
+    return ids if ids else None
+
+
 def safe_read_json(path: Path, retries: int = 5, delay: float = 0.4):
     for _ in range(retries):
         try:
@@ -163,7 +177,24 @@ def main() -> None:
         print("  py -m pip install pyarrow pandas", file=sys.stderr)
         sys.exit(1)
 
-    parsed_files = sorted(CACHE_DIR.glob("*.parsed.json"))
+    # CRITICAL: filter cached parsed files to only those whose contest
+    # IDs belong to the requested season. Without this, the aggregate
+    # would walk EVERY *.parsed.json in the cache (across all years
+    # scraped so far) and write all of their touches into the labeled
+    # year's parquet — bug that contaminates multi-year players'
+    # downstream PBP metrics.
+    year_ids = load_contest_ids_for_year(args.year)
+    if year_ids is None:
+        print(f"ERROR: scripts/.pbp-build/contest_ids_{args.year}.txt not found.",
+              file=sys.stderr)
+        print(f"       Run discover_pbp_ids.py --year {args.year} first.", file=sys.stderr)
+        sys.exit(1)
+    print(f"[aggregate] {len(year_ids):,} contest IDs in year {args.year}")
+
+    all_parsed = sorted(CACHE_DIR.glob("*.parsed.json"))
+    parsed_files = [p for p in all_parsed if p.stem.replace(".parsed", "") in year_ids]
+    print(f"[aggregate] {len(parsed_files):,} of {len(all_parsed):,} cached files "
+          f"match year {args.year}")
     if args.limit:
         parsed_files = parsed_files[: args.limit]
     print(f"[aggregate] reading {len(parsed_files):,} parsed files")

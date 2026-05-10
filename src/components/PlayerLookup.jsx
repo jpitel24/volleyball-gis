@@ -202,6 +202,38 @@ function ServeCell({ sq }) {
   );
 }
 
+// BLK+: net blocks per set, derived purely from box-score totals
+//   (block_solos + 0.5 × block_assists - blocking_errors) / sets
+// NCAA convention: solos count 1.0, assists 0.5 (split-credit), each
+// error subtracts 1. Tier-coloring calibrated for D1 MBs — the
+// position that actually blocks. Liberos / setters / six-rotation OHs
+// who don't block at the net naturally trend low; that's accurate.
+function BlockCell({ value, sets, totals }) {
+  if (!Number.isFinite(value) || (sets || 0) < 50) {
+    return <td style={{ textAlign: 'right', opacity: 0.5 }}>—</td>;
+  }
+  let color;
+  if      (value >= 1.5) color = 'var(--green)';
+  else if (value >= 1.0) color = 'var(--accent)';
+  else if (value >= 0.5) color = 'var(--yellow)';
+  else                   color = 'var(--red)';
+  const solos   = totals?.block_solos     || 0;
+  const assists = totals?.block_assists   || 0;
+  const errors  = totals?.blocking_errors || 0;
+  const tooltip = [
+    `${(solos + assists).toLocaleString()} blocks (${solos} solo, ${assists} assist) over ${sets} sets`,
+    `Block errors: ${errors}`,
+    `Formula: (solos + 0.5 × assists − errors) / sets`,
+    `         = (${solos} + ${0.5 * assists} − ${errors}) / ${sets}`,
+    `         = ${value.toFixed(2)} per set`,
+  ].join('\n');
+  return (
+    <td style={{ textAlign: 'right', color, fontWeight: 700 }} title={tooltip}>
+      {value.toFixed(2)}
+    </td>
+  );
+}
+
 // AST%: assist rate per set = (sets that produced a kill on the next
 // touch) / total sets. Tier-colored against the qualified-cohort
 // distribution (avg 31.5%, top decile ≥ 40%). Hover surfaces the
@@ -384,6 +416,7 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
                 <th style={{ textAlign: 'right' }} title="Great-pass %: setter on 2nd touch and hitter killed on 3rd. Hover a row for the full Great/Good/Bad split.">REC%</th>
                 <th style={{ textAlign: 'right' }} title="Effective serve %: ace + serves where we scored within 3 touches of the reception. Hover a row for the full breakdown.">SRV+</th>
                 <th style={{ textAlign: 'right' }} title="Assist %: fraction of sets producing a kill on the next touch. Hover a row for the full delivery breakdown.">AST%</th>
+                <th style={{ textAlign: 'right' }} title="Net blocks per set: (solos + 0.5 × assists − errors) / sets. NCAA blocking-efficiency convention.">BLK+</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }} title="Games vs RPI Top-50 opponents">T50 G</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }} title="GIS/S vs RPI Top-50 opponents">T50 GIS/S</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }} title="GIS+/S vs RPI Top-50 opponents">T50 GIS+/S</th>
@@ -415,6 +448,7 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
                       <RecCell rq={s.recQuality} />
                       <ServeCell sq={s.srvQuality} />
                       <SetCell sq={s.setQuality} />
+                      <BlockCell value={s.blockEffPerSet} sets={s.sets} totals={s.totals} />
                       <td style={{ textAlign: 'right', opacity: 0.7 }}>{s.t50 ? s.t50.games : '—'}</td>
                       <td style={{ textAlign: 'right', opacity: 0.7 }}>{s.t50 ? fmt(s.t50.gis) : '—'}</td>
                       <td style={{ textAlign: 'right', opacity: 0.7, color: 'var(--gisplus)' }}>{s.t50 ? fmt(s.t50.gisPlus) : '—'}</td>
@@ -423,7 +457,7 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
                     </tr>
                     {open && (
                       <tr className="pb-log-row">
-                        <td colSpan={21}>
+                        <td colSpan={22}>
                           <CategoryBreakdownPanel
                             label={`${s.year} — Season GIS Breakdown`}
                             totals={s.totals}

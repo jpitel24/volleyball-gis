@@ -546,6 +546,19 @@ export function loadPlayerIndex(
           if (setQuality)       setQ       = setQuality[lookupKey]       || null;
         }
 
+        // Block efficiency per set — derived from box-score totals,
+        // no PBP overlay required. NCAA convention is solo blocks
+        // worth 1.0 each, assists 0.5 each (the "team" block credit
+        // is split between two blockers); errors subtract one each.
+        // Result is "net positive blocks per set" — directly
+        // comparable to BPS league leaderboards but error-adjusted.
+        const blockEffPerSet = s.sets > 0
+          ? ((s.totals.block_solos || 0)
+              + 0.5 * (s.totals.block_assists || 0)
+              - (s.totals.blocking_errors || 0)
+            ) / s.sets
+          : 0;
+
         seasons.push({
           year:     s.year,
           team:     seasonTeam || '',
@@ -562,6 +575,7 @@ export function loadPlayerIndex(
           recQuality,
           srvQuality,
           setQuality: setQ,
+          blockEffPerSet,
         });
 
         addTotals(careerTotals, s.totals);

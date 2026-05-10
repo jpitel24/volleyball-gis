@@ -31,10 +31,14 @@ const T50_MIN_OPTIONS = [
 ];
 
 const SORT_OPTIONS = [
-  { id: 'gisPlus',   label: 'GIS+' },
-  { id: 'pGIS',      label: 'pGIS' },
+  { id: 'gisPlus',    label: 'GIS+' },
+  { id: 'pGIS',       label: 'pGIS' },
   { id: 't50GisPlus', label: 'T50 GIS+' },
   { id: 't50PGis',    label: 'T50 pGIS' },
+  { id: 'rec',        label: 'REC%' },
+  { id: 'srv',        label: 'SRV+' },
+  { id: 'ast',        label: 'AST%' },
+  { id: 'blk',        label: 'BLK+' },
 ];
 
 function fmt(v, d = 2) {
@@ -52,6 +56,40 @@ function PGISCell({ v }) {
       </span>
     </td>
   );
+}
+
+// Compact tier-colored cells for the leaderboard. Same coloring rules
+// as PlayerLookup's RecCell / ServeCell / SetCell / BlockCell — kept
+// inline here because the leaderboard cells are smaller and don't need
+// the per-row hover tooltips.
+function tierColor(value, thresholds) {
+  if (!Number.isFinite(value)) return 'var(--muted)';
+  if (value >= thresholds[0]) return 'var(--green)';
+  if (value >= thresholds[1]) return 'var(--accent)';
+  if (value >= thresholds[2]) return 'var(--yellow)';
+  return 'var(--red)';
+}
+function RecLeaderCell({ rq }) {
+  if (!rq?.qualified) return <td style={{ textAlign: 'right', opacity: 0.5 }}>—</td>;
+  const color = tierColor(rq.greatPct, [0.50, 0.40, 0.30]);
+  return <td style={{ textAlign: 'right', color, fontWeight: 700 }}>{Math.round(rq.greatPct * 100)}%</td>;
+}
+function SrvLeaderCell({ sq }) {
+  if (!sq?.qualified) return <td style={{ textAlign: 'right', opacity: 0.5 }}>—</td>;
+  const color = tierColor(sq.effectivePct, [0.25, 0.20, 0.15]);
+  return <td style={{ textAlign: 'right', color, fontWeight: 700 }}>{Math.round(sq.effectivePct * 100)}%</td>;
+}
+function AstLeaderCell({ sq }) {
+  if (!sq?.qualified) return <td style={{ textAlign: 'right', opacity: 0.5 }}>—</td>;
+  const color = tierColor(sq.assistPct, [0.40, 0.35, 0.30]);
+  return <td style={{ textAlign: 'right', color, fontWeight: 700 }}>{Math.round(sq.assistPct * 100)}%</td>;
+}
+function BlkLeaderCell({ value, sets }) {
+  if (!Number.isFinite(value) || (sets || 0) < 50) {
+    return <td style={{ textAlign: 'right', opacity: 0.5 }}>—</td>;
+  }
+  const color = tierColor(value, [1.5, 1.0, 0.5]);
+  return <td style={{ textAlign: 'right', color, fontWeight: 700 }}>{value.toFixed(2)}</td>;
 }
 
 // Build a flat list of rows, one per (player × season). All-Time mode
@@ -77,19 +115,23 @@ function buildRows(players, year) {
       // schedule (rare; treat as a fail-closed skip).
       if (!s.teamGames || s.games / s.teamGames < MIN_TEAM_GAME_SHARE) continue;
       rows.push({
-        playerKey: p.key,
-        name:      p.name,
-        team:      s.team || p.team,
-        position:  s.position || p.position,
-        year:      s.year,
-        games:     s.games,
-        sets:      s.sets,
-        teamGames: s.teamGames,
-        totals:    s.totals,
-        gis:       s.gis,
-        gisPlus:   s.gisPlus,
-        pGIS:      s.pGIS,
-        t50:       s.t50,
+        playerKey:      p.key,
+        name:           p.name,
+        team:           s.team || p.team,
+        position:       s.position || p.position,
+        year:           s.year,
+        games:          s.games,
+        sets:           s.sets,
+        teamGames:      s.teamGames,
+        totals:         s.totals,
+        gis:            s.gis,
+        gisPlus:        s.gisPlus,
+        pGIS:           s.pGIS,
+        t50:            s.t50,
+        recQuality:     s.recQuality,
+        srvQuality:     s.srvQuality,
+        setQuality:     s.setQuality,
+        blockEffPerSet: s.blockEffPerSet,
       });
     }
   }
@@ -97,7 +139,7 @@ function buildRows(players, year) {
 }
 
 export default function SeasonLookup() {
-  const { pgisTables, rpiByYear, loading } = useData();
+  const { pgisTables, rpiByYear, receptionQuality, serveQuality, setQuality, loading } = useData();
   const [index, setIndex]            = useState(null);
   const [indexErr, setIndexErr]      = useState(null);
   const [buildingIndex, setBuilding] = useState(false);
@@ -111,11 +153,11 @@ export default function SeasonLookup() {
     if (loading || !pgisTables) return;
     let cancelled = false;
     setBuilding(true);
-    loadPlayerIndex(pgisTables, rpiByYear)
+    loadPlayerIndex(pgisTables, rpiByYear, receptionQuality, serveQuality, setQuality)
       .then(idx => { if (!cancelled) { setIndex(idx); setBuilding(false); } })
       .catch(err => { if (!cancelled) { setIndexErr(err?.message || String(err)); setBuilding(false); } });
     return () => { cancelled = true; };
-  }, [loading, pgisTables, rpiByYear]);
+  }, [loading, pgisTables, rpiByYear, receptionQuality, serveQuality, setQuality]);
 
   const allRows = useMemo(() => {
     if (!index) return [];
@@ -136,6 +178,15 @@ export default function SeasonLookup() {
       if (sortBy === 'pGIS')        return r.pGIS    || 0;
       if (sortBy === 't50GisPlus')  return r.t50?.gisPlus ?? -Infinity;
       if (sortBy === 't50PGis')     return r.t50?.pGIS    ?? -Infinity;
+      // Unqualified PBP-derived metrics fall to -Infinity so they
+      // sink to the bottom rather than competing with real numbers.
+      if (sortBy === 'rec')         return r.recQuality?.qualified ? r.recQuality.greatPct     : -Infinity;
+      if (sortBy === 'srv')         return r.srvQuality?.qualified ? r.srvQuality.effectivePct : -Infinity;
+      if (sortBy === 'ast')         return r.setQuality?.qualified ? r.setQuality.assistPct    : -Infinity;
+      if (sortBy === 'blk') {
+        if (!Number.isFinite(r.blockEffPerSet) || (r.sets || 0) < 50) return -Infinity;
+        return r.blockEffPerSet;
+      }
       return 0;
     };
     rows.sort((a, b) => get(b) - get(a));
@@ -345,6 +396,10 @@ export default function SeasonLookup() {
                 <th style={{ textAlign: 'right' }}>GIS/S</th>
                 <th style={{ textAlign: 'right' }}>GIS+/S</th>
                 <th style={{ textAlign: 'right' }}>pGIS</th>
+                <th style={{ textAlign: 'right' }} title="Great-pass %: setter on 2nd touch and hitter killed on 3rd">REC%</th>
+                <th style={{ textAlign: 'right' }} title="Effective serve %: ace + serves where we scored within 3 touches of reception">SRV+</th>
+                <th style={{ textAlign: 'right' }} title="Assist %: fraction of sets producing a kill on the next touch">AST%</th>
+                <th style={{ textAlign: 'right' }} title="Net blocks per set: (solos + 0.5 × assists − errors) / sets">BLK+</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }}>T50 G</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }}>T50 GIS+/S</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }}>T50 pGIS</th>
@@ -363,6 +418,10 @@ export default function SeasonLookup() {
                   <td style={{ textAlign: 'right' }}>{fmt(r.gis)}</td>
                   <td style={{ textAlign: 'right', color: 'var(--gisplus)' }}>{fmt(r.gisPlus)}</td>
                   <PGISCell v={r.pGIS} />
+                  <RecLeaderCell rq={r.recQuality} />
+                  <SrvLeaderCell sq={r.srvQuality} />
+                  <AstLeaderCell sq={r.setQuality} />
+                  <BlkLeaderCell value={r.blockEffPerSet} sets={r.sets} />
                   <td style={{ textAlign: 'right', opacity: 0.7 }}>{r.t50 ? r.t50.games : '—'}</td>
                   <td style={{ textAlign: 'right', opacity: 0.7, color: 'var(--gisplus)' }}>{r.t50 ? fmt(r.t50.gisPlus) : '—'}</td>
                   <td style={{ textAlign: 'right', opacity: 0.7 }}>

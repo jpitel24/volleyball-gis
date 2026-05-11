@@ -49,7 +49,10 @@ THROTTLE_S        = 1.5            # sleep between requests
 WARMUP_DWELL_MS   = 3_000          # let homepage settle before scraping
 PAGE_DWELL_MS     = 1_500          # wait after each PBP nav
 NAV_TIMEOUT_MS    = 60_000
-MIN_VALID_SIZE    = 30_000         # below this, response is suspect
+MIN_VALID_SIZE    = 1_000          # below this, response is a genuine Akamai stub
+                                   # (real PBP pages are 100K+, empty-PBP shells are
+                                   # 25-30K — the latter gets routed to "empty" via
+                                   # the has_pbp_table check, not flagged as blocked)
 ABORT_AFTER_BLOCK = 3              # consecutive blocks → abort
 USER_AGENT_EDGE   = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -133,16 +136,21 @@ def safe_write_text(path: Path, text: str, retries: int = 5, delay: float = 0.4)
 
 
 def is_blocked(html: str) -> bool:
-    """A response is suspicious if it's tiny or has the Akamai denial text."""
+    """True only for actual Akamai/WARP blocks — tiny response or denial text."""
     if not html or len(html) < MIN_VALID_SIZE:
         return True
     low = html.lower()
     if "access denied" in low and "errors.edgesuite.net" in low:
         return True
-    # A real PBP page always contains at least one <table>
-    if "<table" not in low:
-        return True
     return False
+
+
+def has_pbp_table(html: str) -> bool:
+    """A real PBP page always contains at least one <table>. Some legitimate
+    matches (typically early-season / unrecorded) come back as a full page
+    shell with no rally table — those should be marked 'empty', not 'blocked',
+    so they don't trip the consecutive-block abort circuit."""
+    return "<table" in (html or "").lower()
 
 
 def update_status(conn, contest_id: str, status: str, size: int = 0, err: str | None = None) -> None:
@@ -186,8 +194,13 @@ def fetch_one(page, conn, contest_id: str, idx: int, total: int) -> str:
 
     if is_blocked(html):
         print(f"BLOCKED ({len(html):,} bytes)")
-        update_status(conn, contest_id, "blocked", len(html), "akamai block / no table")
+        update_status(conn, contest_id, "blocked", len(html), "akamai block")
         return "blocked"
+
+    if not has_pbp_table(html):
+        print(f"EMPTY ({len(html):,} bytes) — no PBP table; recording as known-missing")
+        update_status(conn, contest_id, "empty", len(html), "no <table> in page (PBP not recorded)")
+        return "empty"
 
     if not safe_write_text(cache_path, html):
         print(f"WRITE-LOCKED ({len(html):,} bytes) — file locked, will retry next run")
@@ -293,7 +306,7 @@ def main() -> None:
 
         # Iterate the queue ──────────────────────────────────────────
         consecutive_blocks = 0
-        ok = blocked = failed = 0
+        ok = blocked = failed = empty = 0
         start_ts = time.time()
 
         for i, cid in enumerate(todo, 1):
@@ -304,6 +317,9 @@ def main() -> None:
             elif result == "blocked":
                 blocked += 1
                 consecutive_blocks += 1
+            elif result == "empty":
+                empty += 1
+                consecutive_blocks = 0   # legit no-PBP match, not a block
             else:
                 failed += 1
 
@@ -320,7 +336,7 @@ def main() -> None:
     elapsed = time.time() - start_ts
     print()
     print(f"[scrape] done in {elapsed:.0f}s")
-    print(f"[scrape] ok: {ok}   blocked: {blocked}   failed: {failed}")
+    print(f"[scrape] ok: {ok}   blocked: {blocked}   empty: {empty}   failed: {failed}")
     if ok > 0:
         print(f"[scrape] avg per fetch: {elapsed/ok:.2f}s")
 

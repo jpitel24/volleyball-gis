@@ -1,0 +1,90 @@
+{
+  "cohort": {
+    "description": "Regular starters: top 3 OH / 1 OPP / 2 MB / 1 S / 1 L/DS per team-year, pooled across 2022-25.",
+    "total_starter_seasons": 10237
+  },
+  "reception": {
+    "scalar_formula": "greatPct + 0.5*goodPct - badPct",
+    "n": 4245,
+    "mean": 0.1978,
+    "median": 0.2074,
+    "sd": 0.0988,
+    "p10": 0.0708,
+    "p25": 0.1388,
+    "p50": 0.2074,
+    "p75": 0.2648,
+    "p90": 0.3147,
+    "min": -0.2673,
+    "max": 0.5222
+  },
+  "serve": {
+    "scalar_formula": "acePct + 0.5*greatPct - 0.5*badPct - errorPct",
+    "n": 6514,
+    "mean": -0.1173,
+    "median": -0.1128,
+    "sd": 0.0472,
+    "p10": -0.1782,
+    "p25": -0.1453,
+    "p50": -0.1128,
+    "p75": -0.0852,
+    "p90": -0.0617,
+    "min": -0.3269,
+    "max": 0.0412
+  },
+  "set": {
+    "scalar_formula": "greatPct (= assistPct)",
+    "n": 1345,
+    "mean": 0.3468,
+    "median": 0.3472,
+    "sd": 0.0392,
+    "p10": 0.2996,
+    "p25": 0.3237,
+    "p50": 0.3472,
+    "p75": 0.3718,
+    "p90": 0.395,
+    "min": 0.1528,
+    "max": 0.4723
+  },
+  "attack": {
+    "scalar_formula": "(kills - errors) / total_attacks",
+    "n": 6507,
+    "mean": 0.2215,
+    "median": 0.2176,
+    "sd": 0.081,
+    "p10": 0.1235,
+    "p25": 0.1688,
+    "p50": 0.2176,
+    "p75": 0.274,
+    "p90": 0.3299,
+    "min": -0.104,
+    "max": 0.4971
+  },
+  "block": {
+    "scalar_formula": "(solos + 0.5*assists - errors) / (solos + 0.5*assists + errors)",
+    "n": 6082,
+    "mean": 0.7129,
+    "median": 0.7419,
+    "sd": 0.1727,
+    "p10": 0.4783,
+    "p25": 0.6171,
+    "p50": 0.7419,
+    "p75": 0.8367,
+    "p90": 0.9048,
+    "min": -0.1892,
+    "max": 1.0
+  },
+  "dig": {
+    "scalar_formula": "greatPct + 0.5*goodPct - badPct",
+    "n": 6608,
+    "mean": -0.0923,
+    "median": 0.0,
+    "sd": 0.2953,
+    "p10": -0.5493,
+    "p25": -0.1429,
+    "p50": 0.0,
+    "p75": 0.0882,
+    "p90": 0.1539,
+    "min": -1.0,
+    "max": 0.41
+  }
+}

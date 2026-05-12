@@ -509,7 +509,15 @@ export function loadPlayerIndex(
           // pGIS at 10 for any non-zero production).
           const mNs = Math.min(5, Math.max(3, g.matchSets || g.sets || 3));
           const perSet = mNs > 0 ? g.gisPlus / mNs : 0;
-          const raw = computePGIS(perSet, g.position !== '?' ? g.position : seasonPos, mNs, pgisTables);
+          // Always use the season-level position (`seasonPos`) for the
+          // pGIS lookup. seasonPos already has the stat-line override
+          // applied (line ~457), so per-game CSV labels that NCAA hasn't
+          // updated — e.g. a setter whose roster designation is still
+          // "L/DS" from a prior season — get corrected here. Without
+          // this, the per-game CSV label feeds raw into computePGIS
+          // and the override fires only for display, not for the lookup.
+          const lookupPos = seasonPos;
+          const raw = computePGIS(perSet, lookupPos, mNs, pgisTables);
           const gPGis = Number.isFinite(raw) ? raw : (g.sets > 0 ? 0 : null);
           g.pGIS = gPGis;
           if (g.sets > 0) {

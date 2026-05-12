@@ -152,10 +152,11 @@ function gameKeyFromRow(r) {
 }
 
 // Median of an array of finite numbers. Used for season / career / T50
-// pGIS aggregation. Robust to off-night drag in a way that the mean
-// isn't — consistency-driven roles (libero, DS) lift naturally because
-// their typical-game pGIS lands above the few outlier bad games that
-// previously dragged the mean down.
+// pGIS aggregation. 50/50 blend of mean and median: median anchors to
+// the player's typical-game level (robust to off-night drag), mean
+// captures the full distribution (rewards upside spikes, reflects
+// off-night clusters honestly). Together they answer both "how good
+// are you usually" and "what was your total contribution shape."
 function median(vals) {
   if (!vals || !vals.length) return 0;
   const s = [...vals].sort((a, b) => a - b);
@@ -163,6 +164,18 @@ function median(vals) {
   return s.length % 2
     ? s[Math.floor(mid)]
     : (s[mid - 1] + s[mid]) / 2;
+}
+
+function mean(vals) {
+  if (!vals || !vals.length) return 0;
+  let sum = 0;
+  for (const v of vals) sum += v;
+  return sum / vals.length;
+}
+
+function blendPGIS(vals) {
+  if (!vals || !vals.length) return 0;
+  return 0.5 * mean(vals) + 0.5 * median(vals);
 }
 
 // Yield back to the main thread so the browser can run animation
@@ -510,17 +523,18 @@ export function loadPlayerIndex(
             }
           }
         }
-        // Season pGIS = median of per-game pGIS values. Replaces the
-        // old mean — bad games drag the mean down disproportionately
-        // for consistency-driven roles, while the median tracks the
-        // typical-game level the player produces.
-        const seasonPGIS = median(seasonPGisVals);
+        // Season pGIS = 50/50 blend of mean + median of per-game pGIS.
+        // Median anchors to typical-game level (off-nights don't drag
+        // a starter down disproportionately); mean captures the full
+        // distribution shape so upside peaks and off-night clusters
+        // both register honestly.
+        const seasonPGIS = blendPGIS(seasonPGisVals);
         const t50Season = t50Games > 0 ? {
           games:   t50Games,
           sets:    t50Sets,
           gis:     t50Sets > 0 ? t50GisSum     / t50Sets : 0,
           gisPlus: t50Sets > 0 ? t50GisPlusSum / t50Sets : 0,
-          pGIS:    median(t50PGisVals),
+          pGIS:    blendPGIS(t50PGisVals),
         } : null;
 
         // How many games the player's primary team played that season.
@@ -609,16 +623,16 @@ export function loadPlayerIndex(
         ? inferredCareerBucket
         : csvCareerPos;
 
-      // Career pGIS = median across every per-game pGIS the player has
-      // produced. Same robustness benefit as the season-level calc.
-      const careerPGIS = median(careerPGisVals);
+      // Career pGIS = 50/50 mean+median blend across every per-game
+      // pGIS the player has produced. Same aggregation as season-level.
+      const careerPGIS = blendPGIS(careerPGisVals);
 
       const t50Career = t50CareerGames > 0 ? {
         games:   t50CareerGames,
         sets:    t50CareerSets,
         gis:     t50CareerSets > 0 ? t50CareerGisSum     / t50CareerSets : 0,
         gisPlus: t50CareerSets > 0 ? t50CareerGisPlusSum / t50CareerSets : 0,
-        pGIS:    median(t50CareerPGisVals),
+        pGIS:    blendPGIS(t50CareerPGisVals),
       } : null;
 
       players.push({

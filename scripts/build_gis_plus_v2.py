@@ -270,6 +270,8 @@ def build_year(year: int, rpi: dict, bl: dict) -> Path:
 
     # Vectorize over the merged frame using apply (per-row), then expose
     # the new columns. For ~120K rows / year this is acceptable (~2s each).
+    pme_count_cols = pme_cols   # whatever rec_/srv_/set_/dig_ columns came through
+
     def compute(row):
         eff_rec, n_rec = scalar_rec(row)
         eff_srv, n_srv = scalar_srv(row)
@@ -285,42 +287,84 @@ def build_year(year: int, rpi: dict, bl: dict) -> Path:
         m_atk = multiplier(eff_atk, n_atk, bl_atk, N0["attack"])
         m_blk = multiplier(eff_blk, n_blk, bl_blk, N0["block"])
 
-        pos_atk = row["Kills"]                                       * WEIGHT["atk"] * m_atk
-        pos_blk = (row["BlockSolos"] + 0.5 * row["BlockAssists"])    * WEIGHT["blk"] * m_blk
-        pos_set = row["Assists"]                                     * WEIGHT["set"] * m_set
-        pos_srv = row["Aces"]                                        * WEIGHT["srv"] * m_srv
-        pos_rec = (row["RetAtt"] - row["RErr"])                      * WEIGHT["rec"] * m_rec
-        pos_dig = row["Digs"]                                        * WEIGHT["dig"] * m_dig
+        # Positive volume per skill (no multiplier yet)
+        vol_atk = row["Kills"]
+        vol_blk = row["BlockSolos"] + 0.5 * row["BlockAssists"]
+        vol_set = row["Assists"]
+        vol_srv = row["Aces"]
+        vol_rec = row["RetAtt"] - row["RErr"]
+        vol_dig = row["Digs"]
+
+        # With multipliers
+        pos_atk = vol_atk * WEIGHT["atk"] * m_atk
+        pos_blk = vol_blk * WEIGHT["blk"] * m_blk
+        pos_set = vol_set * WEIGHT["set"] * m_set
+        pos_srv = vol_srv * WEIGHT["srv"] * m_srv
+        pos_rec = vol_rec * WEIGHT["rec"] * m_rec
+        pos_dig = vol_dig * WEIGHT["dig"] * m_dig
 
         errors_total = (row["Errors"] + row["BErr"] + row["BHE"]
                         + row["SErr"] + row["RErr"])
+
+        # GIS: pre-multiplier, pre-opp-mod raw value. Matches v1 semantic
+        # ("when all modifiers equal 1.0, GIS+ reduces to GIS").
+        gis = (vol_atk * WEIGHT["atk"]
+             + vol_blk * WEIGHT["blk"]
+             + vol_set * WEIGHT["set"]
+             + vol_srv * WEIGHT["srv"]
+             + vol_rec * WEIGHT["rec"]
+             + vol_dig * WEIGHT["dig"]
+             - errors_total)
+
         raw_gis_plus = pos_atk + pos_blk + pos_set + pos_srv + pos_rec + pos_dig - errors_total
         gis_plus     = raw_gis_plus * row["OpponentModifier"]
 
+        # HitPct passthrough (NCAA-style hitting %, defaults to 0 on no attempts)
+        ta = row["TotalAttacks"]
+        hit_pct = (row["Kills"] - row["Errors"]) / ta if ta > 0 else 0.0
+
+        # Passes: RetAtt - RErr (clean receptions). Used by pgis as a
+        # backwards-compat column.
+        passes = vol_rec
+
+        # ContextMissing: True when PBP didn't cover this player-match
+        # (every tier count is zero across all four touch-derived skills).
+        ctx_missing = all(row[c] == 0 for c in pme_count_cols)
+
         return pd.Series({
+            "HitPct": hit_pct,
+            "Passes": passes,
+            "GIS":    gis,
+
             "m_atk": m_atk, "m_blk": m_blk, "m_set": m_set,
             "m_srv": m_srv, "m_rec": m_rec, "m_dig": m_dig,
             "pos_atk": pos_atk, "pos_blk": pos_blk, "pos_set": pos_set,
             "pos_srv": pos_srv, "pos_rec": pos_rec, "pos_dig": pos_dig,
             "errors_total": errors_total,
             "raw_gis_plus": raw_gis_plus,
-            "GIS_plus_v2":  gis_plus,
+            "GIS_Plus":     gis_plus,
+            "ContextMissing": ctx_missing,
         })
 
     enriched = merged.apply(compute, axis=1)
     out = pd.concat([
-        merged[["Season", "ContestID", "Date", "Team", "Conference", "Opponent Team",
-                "Location", "Player", "P", "S",
-                "Kills", "Errors", "TotalAttacks", "Assists", "Aces", "SErr",
-                "Digs", "RetAtt", "RErr", "BlockSolos", "BlockAssists", "BErr",
-                "BHE", "OpponentRPI", "OpponentModifier"]],
+        merged[["Season", "ContestID", "Date", "Team", "Conference",
+                "Opponent Team", "Opponent Conference", "Location",
+                "Player", "P", "S",
+                "Kills", "Errors", "TotalAttacks",
+                "Assists", "Aces", "SErr", "ServeAtt",
+                "Digs", "RetAtt", "RErr",
+                "BlockSolos", "BlockAssists", "BErr", "BHE",
+                "SetErr", "SetAtt",
+                "OpponentRPI", "OpponentModifier"]],
         enriched,
     ], axis=1)
 
     # Round float columns for clean output
     float_cols = [c for c in out.columns
-                  if c.startswith(("m_", "pos_", "OpponentRPI", "OpponentModifier"))
-                  or c in ("errors_total", "raw_gis_plus", "GIS_plus_v2")]
+                  if c.startswith(("m_", "pos_"))
+                  or c in ("OpponentRPI", "OpponentModifier", "HitPct",
+                           "errors_total", "raw_gis_plus", "GIS", "GIS_Plus")]
     for c in float_cols:
         out[c] = out[c].astype(float).round(4)
 
@@ -331,6 +375,60 @@ def build_year(year: int, rpi: dict, bl: dict) -> Path:
     print(f"[gisv2 {year}] done in {elapsed:.0f}s  ·  wrote {out_path}  "
           f"({out_path.stat().st_size / (1024 * 1024):.1f} MB)")
     return out_path
+
+
+def concat_to_observations(years: list[int]) -> None:
+    """Concatenate per-year v2 CSVs into the two observation artifacts
+    the existing pipeline expects:
+      - public/data/gis_plus_observations.csv          (6 cols, shipped)
+      - scripts/gis_plus_observations_full_local.csv   (full schema, gitignored)
+    Replaces the v1 versions of both files."""
+    SHIPPED_PATH = DATA_DIR / "gis_plus_observations.csv"
+    FULL_LOCAL_PATH = Path("scripts/gis_plus_observations_full_local.csv")
+
+    print("[gisv2] concatenating per-year CSVs …")
+    frames = []
+    for y in years:
+        p = Path(OUT_TEMPLATE.format(year=y))
+        if not p.exists():
+            print(f"[gisv2] WARN: {p} missing, skipping year {y}", file=sys.stderr)
+            continue
+        frames.append(pd.read_csv(p))
+    if not frames:
+        print("[gisv2] no per-year CSVs found, skipping concat", file=sys.stderr)
+        return
+
+    combined = pd.concat(frames, ignore_index=True)
+    print(f"[gisv2] combined: {len(combined):,} rows across {len(frames)} years")
+
+    # Full-local file: complete schema for the pgis builders. Drop the
+    # v2-only debug columns (m_*, pos_*, raw_gis_plus, errors_total) that
+    # the existing builders don't consume — keeps the schema as compatible
+    # with the v1 full_local file as possible.
+    full_local_cols = [
+        "Season", "ContestID", "Date", "Team", "Conference",
+        "Opponent Team", "Opponent Conference", "Location",
+        "Player", "P", "S",
+        "Kills", "Errors", "TotalAttacks", "HitPct",
+        "Assists", "Aces", "SErr", "Digs", "RetAtt", "RErr",
+        "BlockSolos", "BlockAssists", "BErr", "BHE",
+        "SetErr", "SetAtt", "ServeAtt",
+        "Passes", "GIS",
+        "OpponentRPI", "OpponentModifier",
+        "GIS_Plus", "ContextMissing",
+    ]
+    FULL_LOCAL_PATH.parent.mkdir(parents=True, exist_ok=True)
+    combined[full_local_cols].to_csv(FULL_LOCAL_PATH, index=False)
+    print(f"[gisv2] wrote {FULL_LOCAL_PATH}  "
+          f"({FULL_LOCAL_PATH.stat().st_size / (1024 * 1024):.1f} MB)")
+
+    # Shipped browser file: 6 cols matching the v1 gis_plus_observations.csv
+    # schema. src/lib/gisPlus.js reads exactly Season, Date, Team, Player,
+    # GIS, GIS_Plus from this file.
+    shipped_cols = ["Season", "Date", "Team", "Player", "GIS", "GIS_Plus"]
+    combined[shipped_cols].to_csv(SHIPPED_PATH, index=False)
+    print(f"[gisv2] wrote {SHIPPED_PATH}  "
+          f"({SHIPPED_PATH.stat().st_size / (1024 * 1024):.1f} MB)")
 
 
 def main() -> None:
@@ -346,6 +444,11 @@ def main() -> None:
     years = [2022, 2023, 2024, 2025] if args.year == "all" else [int(args.year)]
     for y in years:
         build_year(y, rpi, bl)
+
+    # Single-year runs don't clobber the combined files; only --year all
+    # writes the canonical observations artifacts.
+    if args.year == "all":
+        concat_to_observations(years)
 
 
 if __name__ == "__main__":

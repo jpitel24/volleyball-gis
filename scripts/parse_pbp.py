@@ -344,8 +344,25 @@ def parse_set_table(table, set_num: int) -> dict:
     }
 
 
+DATE_RE = re.compile(r"(\d{1,2})/(\d{1,2})/(\d{4})")
+
+
+def extract_match_date(html: str) -> str | None:
+    """Pull the M/D/YYYY game date from the HTML and normalize to YYYY-MM-DD.
+
+    NCAA's PBP HTML reliably contains exactly one M/D/YYYY string per page
+    (the contest date); we take the first match. Returns None if absent
+    (shouldn't happen on full-coverage pages but guards metadata-only ones)."""
+    m = DATE_RE.search(html)
+    if not m:
+        return None
+    month, day, year = m.group(1), m.group(2), m.group(3)
+    return f"{year}-{int(month):02d}-{int(day):02d}"
+
+
 def parse_pbp(html: str, contest_id: str) -> dict:
     soup = BeautifulSoup(html, "html.parser")
+    match_date = extract_match_date(html)
 
     # Each set lives in a card → "Nth Set" header → table.table.
     # We grab each card-header, derive set num, then find its sibling table.
@@ -373,6 +390,7 @@ def parse_pbp(html: str, contest_id: str) -> dict:
 
     return {
         "contestId": contest_id,
+        "date":      match_date,
         "homeTeam":  home,
         "awayTeam":  away,
         "sets":      sets_out,

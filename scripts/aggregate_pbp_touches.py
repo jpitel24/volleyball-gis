@@ -96,6 +96,7 @@ def safe_read_json(path: Path, retries: int = 5, delay: float = 0.4):
 def emit_touches_for_match(parsed: dict) -> Iterator[dict]:
     """Yield one row dict per non-terminal touch, with full context."""
     contest_id = str(parsed.get("contestId") or "")
+    match_date = parsed.get("date")
     home_team  = parsed.get("homeTeam")
     away_team  = parsed.get("awayTeam")
 
@@ -133,6 +134,7 @@ def emit_touches_for_match(parsed: dict) -> Iterator[dict]:
 
                 yield {
                     "contest_id":             contest_id,
+                    "match_date":             match_date,
                     "home_team":              home_team,
                     "away_team":              away_team,
                     "set_num":                set_num,

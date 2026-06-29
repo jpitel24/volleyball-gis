@@ -679,6 +679,45 @@ export function loadPlayerIndex(
       console.log('[playerIndex] Top-20 overrides by sets:', sortedSamples);
     } catch (_) { /* console may be unavailable */ }
 
+    // National position rank per season — sort each (year, posGroup)
+    // cohort by pGIS desc and stamp 1-based rank + cohort size onto each
+    // qualified season record. Matches the same posGroup bucketing the
+    // Seasons browser filter uses.
+    //
+    // Qualification gates (both required):
+    //   1. Played in ≥75% of the team's games that season — filters out
+    //      backups, rotation players, and partial-season transfers whose
+    //      pGIS isn't anchored to a full season's body of work.
+    //   2. ≥10 games against RPI Top-50 opponents — ensures the rank
+    //      reflects performance against meaningful competition.
+    //
+    // Unqualified player-seasons get no posRank field, so the PlayerLookup
+    // display naturally hides the rank cell for them.
+    {
+      const MIN_TEAM_SHARE = 0.75;
+      const MIN_T50_GAMES  = 10;
+      const cohorts = new Map();   // 'YEAR|GROUP' → [{season, score}, …]
+      for (const p of players) {
+        for (const s of p.seasons) {
+          const grp = posGroup(s.position);
+          if (!grp) continue;
+          const teamShare = (s.teamGames > 0) ? (s.games / s.teamGames) : 0;
+          if (teamShare < MIN_TEAM_SHARE) continue;
+          if ((s.t50?.games || 0) < MIN_T50_GAMES) continue;
+          const key = `${s.year}|${grp}`;
+          if (!cohorts.has(key)) cohorts.set(key, []);
+          cohorts.get(key).push({ season: s, score: s.pGIS || 0 });
+        }
+      }
+      for (const list of cohorts.values()) {
+        list.sort((a, b) => b.score - a.score);
+        for (let i = 0; i < list.length; i++) {
+          list[i].season.posRank = i + 1;
+          list[i].season.posRankTotal = list.length;
+        }
+      }
+    }
+
     const byKey = new Map(players.map(p => [p.key, p]));
 
     // Free intermediate structures so the GC can reclaim them. The

@@ -435,7 +435,15 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
                     >
                       <td className="pb-yr">{s.year}</td>
                       <td className="pb-team">{s.team}</td>
-                      <td>{s.position}</td>
+                      <td style={{ whiteSpace: 'nowrap' }}>
+                        {s.position}
+                        {s.posRank ? (
+                          <span style={{ color: 'var(--muted)', marginLeft: 6, fontSize: '0.92em' }}>
+                            #{s.posRank}
+                            <span style={{ opacity: 0.55 }}>/{s.posRankTotal}</span>
+                          </span>
+                        ) : null}
+                      </td>
                       <td style={{ textAlign: 'right' }}>{s.games}</td>
                       <td style={{ textAlign: 'right' }}>{s.sets}</td>
                       <StatCells t={s.totals} />

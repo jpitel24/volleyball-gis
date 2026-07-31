@@ -157,6 +157,28 @@ function gameKeyFromRow(r) {
 // captures the full distribution (rewards upside spikes, reflects
 // off-night clusters honestly). Together they answer both "how good
 // are you usually" and "what was your total contribution shape."
+// Aggressive normalization used to build the player key. Two goals:
+//
+//   1. Fold together mojibake variants of the same player name. NCAA's
+//      upstream pipeline occasionally double-encodes UTF-8 for players
+//      with diacritics, producing garbage bytes like `ä\x86` in place
+//      of `ć`. Stripping to lowercase ASCII alphanumerics collapses
+//      variants like `Ana Burilović` and `Ana Buriloviä\x86` to the
+//      same key `anaburilovic`.
+//
+//   2. Combined with the team key (see below), it lets us distinguish
+//      genuine same-name homonyms at different schools — e.g. two
+//      Ella Vogels in 2025 (one at Florida, one at Murray St) become
+//      separate records instead of collapsing into a single 53-game
+//      Frankenstein season.
+//
+// Trade-off: a player who legitimately transfers becomes two records
+// (one per team). Rare-enough on a season-by-season basis to accept;
+// cross-team career rollups would need a separate opt-in merge pass.
+function normalizeNameKey(name) {
+  return (name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
 function median(vals) {
   if (!vals || !vals.length) return 0;
   const s = [...vals].sort((a, b) => a - b);
@@ -307,10 +329,13 @@ export function loadPlayerIndex(
           const team   = r.Team;
           const player = r.Player;
           if (!team || !player) continue;
-          // Key on player name only so transfers collapse into one record
-          // with both teams listed. Same-name homonyms collide (rare; plan
-          // design decision #1 — revisit if it surfaces).
-          const key = player.toLowerCase().trim();
+          // Key on (aggressive-normalized-name, team). See normalizeNameKey
+          // comment for why the aggressive fold (handles mojibake variants
+          // + same-name homonyms at different schools). Team-scoping trades
+          // off transfer collapsing for correct same-name splitting.
+          const nameKey = normalizeNameKey(player);
+          const teamKey = team.toLowerCase().trim();
+          const key = `${nameKey}|${teamKey}`;
 
           let rec = byPlayer.get(key);
           if (!rec) {
@@ -320,11 +345,14 @@ export function loadPlayerIndex(
               primaryTeam: team,
               teamCounts: {},
               posCounts: {},
+              spellingCounts: {},   // raw-name → count, for picking the
+                                    // most-common spelling as display name
               seasons: {},
             };
             byPlayer.set(key, rec);
           }
           rec.teamCounts[team] = (rec.teamCounts[team] || 0) + 1;
+          rec.spellingCounts[player] = (rec.spellingCounts[player] || 0) + 1;
           const rowPos = (r.P || '').trim().toUpperCase();
           if (rowPos) rec.posCounts[rowPos] = (rec.posCounts[rowPos] || 0) + 1;
 
@@ -643,9 +671,23 @@ export function loadPlayerIndex(
         pGIS:    blendPGIS(t50CareerPGisVals),
       } : null;
 
+      // Pick display name = most-common raw spelling seen for this player
+      // record. With aggressive normalization folding mojibake variants
+      // to the same key, this ensures we show the correct spelling
+      // (e.g. "Ana Burilović", 27 games) over its mojibake variants
+      // ("Ana Buriloviä\x86", 3 games) that share the same key.
+      let bestSpelling = null, bestSpellingCount = -1;
+      for (const [spelling, count] of Object.entries(rec.spellingCounts || {})) {
+        if (count > bestSpellingCount) {
+          bestSpellingCount = count;
+          bestSpelling = spelling;
+        }
+      }
+      const displayName = bestSpelling ? canonicalName(bestSpelling) : rec.name;
+
       players.push({
         key:      rec.key,
-        name:     rec.name,
+        name:     displayName,
         team:     teams[0] || rec.primaryTeam,
         teams,
         position: careerPos,

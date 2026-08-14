@@ -123,14 +123,27 @@ def main() -> int:
 
     print(f"[add-from-url] fetched {len(html):,} bytes in {time.time() - t0:.1f}s")
 
-    if len(html) < 5_000 or "<table" not in html.lower():
-        print(f"[add-from-url] ✗ page looks blocked or empty (no <table>). "
-              f"Confirm WARP is on and the URL is correct.", file=sys.stderr)
+    # Distinguish genuine Akamai block (tiny stub + denial text) from a
+    # legitimately empty scoreboard (no games that day = valid page with
+    # no <table>, still ~20-40 KB shell HTML).
+    low = html.lower()
+    is_akamai_block = (
+        len(html) < 5_000
+        or ("access denied" in low and "errors.edgesuite.net" in low)
+    )
+    if is_akamai_block:
+        print("[add-from-url] ✗ page looks blocked by Akamai. "
+              "Confirm WARP is on and try again.", file=sys.stderr)
         return 3
 
     found = extract_contest_ids(html)
     print(f"[add-from-url] extracted {len(found)} contest IDs from page")
     if not found:
+        if "<table" not in low:
+            print("[add-from-url] page has no <table> — likely an empty "
+                  "scoreboard (no games that day). URL structure is valid; "
+                  "just no data to pull. Not an error.")
+            return 0
         print("[add-from-url] no /contests/<id>/ links found — nothing to add")
         return 1
 

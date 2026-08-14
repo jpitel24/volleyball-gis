@@ -471,7 +471,7 @@ def main() -> None:
     print("[gisv2] loading baselines …")
     bl = json.loads(BL_PATH.read_text(encoding="utf-8"))
 
-    years = [2022, 2023, 2024, 2025] if args.year == "all" else [int(args.year)]
+    years = [2022, 2023, 2024, 2025, 2026] if args.year == "all" else [int(args.year)]
     for y in years:
         build_year(y, rpi, bl)
 

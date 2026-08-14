@@ -45,7 +45,7 @@ from pathlib import Path
 
 import pandas as pd
 
-YEARS = [2022, 2023, 2024, 2025]
+YEARS = [2022, 2023, 2024, 2025, 2026]
 DATA_DIR     = Path("public/data")
 STARTERS_PATH = Path("scripts/.pbp-build/starters_by_player_season.json")
 OUT_PATH     = DATA_DIR / "efficiency_baselines.json"

@@ -53,7 +53,7 @@ import pandas as pd
 CSV_TEMPLATE = "public/data/wvb_playermatch_div1_{year}.csv"
 OUT_PATH     = Path("scripts/.pbp-build/starters_by_player_season.json")
 
-YEARS = [2022, 2023, 2024, 2025]
+YEARS = [2022, 2023, 2024, 2025, 2026]
 
 # Per-team-year starter slot counts by position
 SLOTS_PER_POSITION = {
@@ -79,11 +79,13 @@ POSITION_MAP = {
 }
 
 
-def load_year(year: int) -> pd.DataFrame:
+def load_year(year: int) -> pd.DataFrame | None:
+    """Return the year's DataFrame, or None if the CSV doesn't exist yet
+    (e.g. a not-yet-started season listed in YEARS for forward-compat)."""
     path = Path(CSV_TEMPLATE.format(year=year))
     if not path.exists():
-        print(f"ERROR: {path} not found", file=sys.stderr)
-        sys.exit(1)
+        print(f"[starters] SKIP: {path} not found (no data yet)", file=sys.stderr)
+        return None
     df = pd.read_csv(path, usecols=["Team", "Player", "P", "S"])
     df["year"] = year
     return df
@@ -92,7 +94,11 @@ def load_year(year: int) -> pd.DataFrame:
 def main() -> None:
     t0 = time.time()
     print(f"[starters] reading box-score CSVs for {YEARS}")
-    frames = [load_year(y) for y in YEARS]
+    frames = [df for df in (load_year(y) for y in YEARS) if df is not None]
+    if not frames:
+        print("[starters] ERROR: no year CSVs found — nothing to aggregate",
+              file=sys.stderr)
+        sys.exit(1)
     df = pd.concat(frames, ignore_index=True)
     print(f"[starters] {len(df):,} player-match rows total")
 

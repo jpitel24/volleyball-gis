@@ -179,6 +179,19 @@ function normalizeNameKey(name) {
   return (name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 
+// Power conferences for tier-based cohort grouping. Includes Pac-12 so
+// pre-2025 Pac-12 members (Stanford, Washington, Oregon, etc.) get
+// grouped with the other power programs during the years they were in
+// the Pac-12 — their competition tier was equivalent even though the
+// conference has since dissolved.
+export const P4_CONFERENCES = new Set([
+  'ACC', 'Big Ten', 'Big 12', 'SEC', 'Pac-12',
+]);
+
+export function isP4(conference) {
+  return P4_CONFERENCES.has(conference);
+}
+
 function median(vals) {
   if (!vals || !vals.length) return 0;
   const s = [...vals].sort((a, b) => a - b);
@@ -631,9 +644,24 @@ export function loadPlayerIndex(
             ) / s.sets
           : 0;
 
+        // Season conference = most-common conference across the game log.
+        // A team's conference is stable through a regular season, so this
+        // is really just picking the value; the mode-of-many is defensive
+        // against stray tournament/postseason rows tagged differently.
+        const confCounts = {};
+        for (const g of gamesSorted) {
+          const c = g.conference || '';
+          if (c) confCounts[c] = (confCounts[c] || 0) + 1;
+        }
+        let seasonConference = '', seasonConfN = 0;
+        for (const [c, n] of Object.entries(confCounts)) {
+          if (n > seasonConfN) { seasonConference = c; seasonConfN = n; }
+        }
+
         seasons.push({
           year:     s.year,
           team:     seasonTeam || '',
+          conference: seasonConference,
           position: seasonPos,
           sets:     s.sets,
           games:    s.games,
@@ -732,43 +760,62 @@ export function loadPlayerIndex(
       console.log('[playerIndex] Top-20 overrides by sets:', sortedSamples);
     } catch (_) { /* console may be unavailable */ }
 
-    // National position rank per season — sort each (year, posGroup)
-    // cohort by pGIS desc and stamp 1-based rank + cohort size onto each
-    // qualified season record. Matches the same posGroup bucketing the
-    // Seasons browser filter uses.
+    // Per-season national / P4-tier / conference position rankings.
+    // Every qualified season gets three ranks stamped on it, so the
+    // Players browser can show "OH · #12/437 nat · #8/220 P4 · #2/18 SEC"
+    // for a given season.
     //
-    // Qualification gates (both required):
-    //   1. Played in ≥75% of the team's games that season — filters out
-    //      backups, rotation players, and partial-season transfers whose
-    //      pGIS isn't anchored to a full season's body of work.
-    //   2. ≥10 games against RPI Top-50 opponents — ensures the rank
-    //      reflects performance against meaningful competition.
+    // Qualification (single gate):
+    //   - Played in ≥75% of the team's games that season. Filters out
+    //     backups, rotation players, and partial-season transfers whose
+    //     pGIS isn't anchored to a full season's body of work.
     //
-    // Unqualified player-seasons get no posRank field, so the PlayerLookup
-    // display naturally hides the rank cell for them.
+    // Ranks are all computed via the same sort — pGIS desc — and differ
+    // only in which cohort they compare against.
+    //
+    // Unqualified player-seasons get no rank fields, so the PlayerLookup
+    // display naturally hides the rank cells for them.
     {
       const MIN_TEAM_SHARE = 0.75;
-      const MIN_T50_GAMES  = 10;
-      const cohorts = new Map();   // 'YEAR|GROUP' → [{season, score}, …]
+      const natCohorts  = new Map();   // 'YEAR|GROUP' → [{season, score}]
+      const tierCohorts = new Map();   // 'YEAR|GROUP|P4|1' or '…|0'
+      const confCohorts = new Map();   // 'YEAR|GROUP|CONFERENCE'
       for (const p of players) {
         for (const s of p.seasons) {
           const grp = posGroup(s.position);
           if (!grp) continue;
           const teamShare = (s.teamGames > 0) ? (s.games / s.teamGames) : 0;
           if (teamShare < MIN_TEAM_SHARE) continue;
-          if ((s.t50?.games || 0) < MIN_T50_GAMES) continue;
-          const key = `${s.year}|${grp}`;
-          if (!cohorts.has(key)) cohorts.set(key, []);
-          cohorts.get(key).push({ season: s, score: s.pGIS || 0 });
+          const entry = { season: s, score: s.pGIS || 0 };
+
+          const natKey = `${s.year}|${grp}`;
+          if (!natCohorts.has(natKey)) natCohorts.set(natKey, []);
+          natCohorts.get(natKey).push(entry);
+
+          const p4Flag = isP4(s.conference) ? 1 : 0;
+          const tierKey = `${s.year}|${grp}|${p4Flag}`;
+          if (!tierCohorts.has(tierKey)) tierCohorts.set(tierKey, []);
+          tierCohorts.get(tierKey).push(entry);
+
+          if (s.conference) {
+            const confKey = `${s.year}|${grp}|${s.conference}`;
+            if (!confCohorts.has(confKey)) confCohorts.set(confKey, []);
+            confCohorts.get(confKey).push(entry);
+          }
         }
       }
-      for (const list of cohorts.values()) {
-        list.sort((a, b) => b.score - a.score);
-        for (let i = 0; i < list.length; i++) {
-          list[i].season.posRank = i + 1;
-          list[i].season.posRankTotal = list.length;
+      const applyRanks = (map, rankField, totalField) => {
+        for (const list of map.values()) {
+          list.sort((a, b) => b.score - a.score);
+          for (let i = 0; i < list.length; i++) {
+            list[i].season[rankField]  = i + 1;
+            list[i].season[totalField] = list.length;
+          }
         }
-      }
+      };
+      applyRanks(natCohorts,  'posRank',     'posRankTotal');
+      applyRanks(tierCohorts, 'posRankTier', 'posRankTierTotal');
+      applyRanks(confCohorts, 'posRankConf', 'posRankConfTotal');
     }
 
     const byKey = new Map(players.map(p => [p.key, p]));

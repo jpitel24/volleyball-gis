@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useData } from '../lib/DataContext.jsx';
-import { loadPlayerIndex } from '../lib/playerIndex.js';
+import { loadPlayerIndex, isP4, P4_CONFERENCES } from '../lib/playerIndex.js';
 import { posColor, pgisLabel, posGroup } from '../lib/gis.js';
 
 const MAX_RESULTS = 100;
@@ -118,6 +118,7 @@ function buildRows(players, year) {
         playerKey:      p.key,
         name:           p.name,
         team:           s.team || p.team,
+        conference:     s.conference || '',
         position:       s.position || p.position,
         year:           s.year,
         games:          s.games,
@@ -148,6 +149,8 @@ export default function SeasonLookup() {
   const [posFilter, setPosFilter] = useState('ALL');
   const [minT50, setMinT50]       = useState(0);
   const [sortBy, setSortBy]       = useState('gisPlus');
+  // Conference filter: 'ALL' | 'P4' | 'NON_P4' | any specific conference label
+  const [confFilter, setConfFilter] = useState('ALL');
 
   useEffect(() => {
     if (loading || !pgisTables) return;
@@ -164,12 +167,26 @@ export default function SeasonLookup() {
     return buildRows(index.players, year);
   }, [index, year]);
 
+  // Union of every conference seen for the selected year, sorted for
+  // the filter dropdown. Rebuilt when the year changes.
+  const yearConferences = useMemo(() => {
+    const set = new Set();
+    for (const r of allRows) if (r.conference) set.add(r.conference);
+    return Array.from(set).sort((a, b) => a.localeCompare(b));
+  }, [allRows]);
+
   const filtered = useMemo(() => {
     const rows = allRows.filter(r => {
       if (posFilter !== 'ALL' && posGroup(r.position) !== posFilter) return false;
       if (minT50 > 0) {
         const g = r.t50?.games || 0;
         if (g < minT50) return false;
+      }
+      if (confFilter !== 'ALL') {
+        if (confFilter === 'P4' && !isP4(r.conference)) return false;
+        if (confFilter === 'NON_P4' && isP4(r.conference)) return false;
+        if (confFilter !== 'P4' && confFilter !== 'NON_P4'
+            && r.conference !== confFilter) return false;
       }
       return true;
     });
@@ -191,7 +208,7 @@ export default function SeasonLookup() {
     };
     rows.sort((a, b) => get(b) - get(a));
     return rows;
-  }, [allRows, posFilter, minT50, sortBy]);
+  }, [allRows, posFilter, minT50, sortBy, confFilter]);
 
   const visible  = filtered.slice(0, MAX_RESULTS);
   const totalHits = filtered.length;
@@ -284,6 +301,34 @@ export default function SeasonLookup() {
           </div>
         </div>
         <div className="tool-sidebar-section">
+          <div className="tool-sidebar-label">Conference</div>
+          <select
+            value={confFilter}
+            onChange={(e) => setConfFilter(e.target.value)}
+            disabled={buildingIndex || !index}
+            style={{
+              width: '100%',
+              padding: '0.4rem 0.5rem',
+              background: 'var(--panel-2)',
+              color: 'var(--fg)',
+              border: '1px solid var(--border)',
+              borderRadius: 4,
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '0.78rem',
+            }}
+          >
+            <option value="ALL">All Conferences</option>
+            <option value="P4">Power 4 (ACC, B10, B12, SEC, Pac-12)</option>
+            <option value="NON_P4">Non-Power 4</option>
+            <option disabled>──────────</option>
+            {yearConferences.map(c => (
+              <option key={c} value={c}>
+                {c}{P4_CONFERENCES.has(c) ? '  ★' : ''}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="tool-sidebar-section">
           <div className="tool-sidebar-label">Min T50 Games</div>
           <div className="tool-sidebar-pills">
             {T50_MIN_OPTIONS.map(o => (
@@ -336,6 +381,9 @@ export default function SeasonLookup() {
             {totalHits.toLocaleString()} player-season{totalHits === 1 ? '' : 's'}
             {year === 'ALL' ? ' (2022–2025)' : ` · ${year}`}
             {posFilter !== 'ALL' && ` · ${POS_FILTERS.find(f => f.id === posFilter).label}`}
+            {confFilter !== 'ALL' && ` · ${confFilter === 'P4' ? 'Power 4'
+                                        : confFilter === 'NON_P4' ? 'Non-P4'
+                                        : confFilter}`}
             {minT50 > 0 && ` · ${minT50}+ T50 G`}
             {totalHits > MAX_RESULTS && ` — showing top ${MAX_RESULTS}`}
           </>

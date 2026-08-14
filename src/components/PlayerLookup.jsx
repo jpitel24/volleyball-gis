@@ -1,6 +1,11 @@
 import { Fragment, useEffect, useMemo, useState } from 'react';
 import { useData } from '../lib/DataContext.jsx';
-import { loadPlayerIndex } from '../lib/playerIndex.js';
+import { loadPlayerIndex, isP4 } from '../lib/playerIndex.js';
+
+// Small helper for the position-cell tooltip. season.conference is
+// already stored on the season record; we route through isP4() for
+// the tier check to keep the source of truth in playerIndex.
+const isSeasonP4 = (s) => isP4(s.conference);
 import { posColor, pgisLabel, posGroup, computeCategoryGIS } from '../lib/gis.js';
 
 const MAX_RESULTS = 50;
@@ -439,8 +444,31 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
                         {s.position}
                         {s.posRank ? (
                           <span style={{ color: 'var(--muted)', marginLeft: 6, fontSize: '0.92em' }}>
-                            #{s.posRank}
-                            <span style={{ opacity: 0.55 }}>/{s.posRankTotal}</span>
+                            <span title={`National rank at ${s.position} (${s.year})`}>
+                              #{s.posRank}
+                              <span style={{ opacity: 0.55 }}>/{s.posRankTotal}</span>
+                              <span style={{ opacity: 0.55 }}> nat</span>
+                            </span>
+                            {s.posRankTier ? (
+                              <span
+                                style={{ marginLeft: 6 }}
+                                title={`Rank among ${isSeasonP4(s) ? 'Power 4' : 'non-P4'} ${s.position}s`}
+                              >
+                                · #{s.posRankTier}
+                                <span style={{ opacity: 0.55 }}>/{s.posRankTierTotal}</span>
+                                <span style={{ opacity: 0.55 }}> {isSeasonP4(s) ? 'P4' : 'other'}</span>
+                              </span>
+                            ) : null}
+                            {s.posRankConf && s.conference ? (
+                              <span
+                                style={{ marginLeft: 6 }}
+                                title={`Rank at ${s.position} in ${s.conference}`}
+                              >
+                                · #{s.posRankConf}
+                                <span style={{ opacity: 0.55 }}>/{s.posRankConfTotal}</span>
+                                <span style={{ opacity: 0.55 }}> {s.conference}</span>
+                              </span>
+                            ) : null}
                           </span>
                         ) : null}
                       </td>

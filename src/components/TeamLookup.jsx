@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useData } from '../lib/DataContext.jsx';
-import { loadPlayerIndex } from '../lib/playerIndex.js';
+import { loadPlayerIndex, isP4 } from '../lib/playerIndex.js';
 import { posColor, pgisLabel, posGroup } from '../lib/gis.js';
 
 const MAX_RESULTS = 20;
@@ -49,12 +49,19 @@ function buildTeamIndex(players) {
         key:      p.key,
         name:     p.name,
         position: s.position || p.position,
+        conference: s.conference || '',
         games:    s.games,
         sets:     s.sets,
         gis:      s.gis,
         gisPlus:  s.gisPlus,
         pGIS:     s.pGIS,
         t50:      s.t50,
+        posRank:            s.posRank,
+        posRankTotal:       s.posRankTotal,
+        posRankTier:        s.posRankTier,
+        posRankTierTotal:   s.posRankTierTotal,
+        posRankConf:        s.posRankConf,
+        posRankConfTotal:   s.posRankConfTotal,
       });
       for (const g of s.gameLog || []) {
         t.gameKeys.add(g.gameKey);
@@ -137,11 +144,34 @@ function buildTeamIndex(players) {
 }
 
 function PlayerMiniRow({ p, rank }) {
+  const p4 = isP4(p.conference);
   return (
     <tr>
       <td style={{ textAlign: 'right', color: 'var(--muted)' }}>{rank}</td>
       <td className="pb-name" style={{ color: posColor(p.position) }}>{p.name}</td>
-      <td>{p.position}</td>
+      <td style={{ whiteSpace: 'nowrap' }}>
+        {p.position}
+        {p.posRank ? (
+          <span style={{ color: 'var(--muted)', marginLeft: 6, fontSize: '0.9em' }}>
+            <span title={`National rank at ${p.position}`}>
+              #{p.posRank}<span style={{ opacity: 0.55 }}>/{p.posRankTotal}</span>
+              <span style={{ opacity: 0.55 }}> nat</span>
+            </span>
+            {p.posRankTier ? (
+              <span style={{ marginLeft: 6 }} title={`Rank among ${p4 ? 'Power 4' : 'non-P4'} ${p.position}s`}>
+                · #{p.posRankTier}<span style={{ opacity: 0.55 }}>/{p.posRankTierTotal}</span>
+                <span style={{ opacity: 0.55 }}> {p4 ? 'P4' : 'other'}</span>
+              </span>
+            ) : null}
+            {p.posRankConf && p.conference ? (
+              <span style={{ marginLeft: 6 }} title={`Rank at ${p.position} in ${p.conference}`}>
+                · #{p.posRankConf}<span style={{ opacity: 0.55 }}>/{p.posRankConfTotal}</span>
+                <span style={{ opacity: 0.55 }}> {p.conference}</span>
+              </span>
+            ) : null}
+          </span>
+        ) : null}
+      </td>
       <td style={{ textAlign: 'right' }}>{p.games}</td>
       <td style={{ textAlign: 'right' }}>{p.sets}</td>
       <td style={{ textAlign: 'right' }}>{fmt(p.gis)}</td>

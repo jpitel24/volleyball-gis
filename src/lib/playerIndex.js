@@ -457,6 +457,23 @@ export function loadPlayerIndex(
       // Teams ordered by most-recent appearance first.
       const teams = [...new Set(seasonList.map(s => s.team))];
 
+      // Promote the best-spelling display name onto rec.name BEFORE
+      // the season loop, so quality-JSON lookups (which use the display
+      // name lowercased as their key) hit the correct entry for mojibake-
+      // merged records. Ana Burilović's quality JSON is keyed under the
+      // correct diacritic form; without this promotion, rec.name might
+      // still be the first-seen mojibake spelling and the lookup misses.
+      {
+        let bestSpelling = null, bestSpellingCount = -1;
+        for (const [spelling, count] of Object.entries(rec.spellingCounts || {})) {
+          if (count > bestSpellingCount) {
+            bestSpellingCount = count;
+            bestSpelling = spelling;
+          }
+        }
+        if (bestSpelling) rec.name = canonicalName(bestSpelling);
+      }
+
       // Build final season records.
       const seasons = [];
       const careerTotals = zeroTotals();
@@ -582,15 +599,20 @@ export function loadPlayerIndex(
 
         // Reception / serve / set quality lookups. Keyed by lowercased
         // name|school|year exactly as the build_*_quality.py scripts
-        // emit. Returns null when the player either had too few
-        // attempts to qualify or the season's data isn't loaded (e.g.
-        // pre-2025 backfill not yet run).
+        // emit. rec.key now uses aggressive-normalized name (no spaces,
+        // no diacritics) plus team-scoping, so we can't build the
+        // lookup key from it directly — instead, reconstruct from the
+        // canonical display name (highest-count spelling, Title-Cased),
+        // which lowercased matches how the Python builders keyed the
+        // JSON. Returns null when the player had too few attempts to
+        // qualify or the season's data isn't loaded.
         let recQuality = null;
         let srvQuality = null;
         let setQ       = null;
         if (seasonTeam) {
           const teamKey = seasonTeam.toLowerCase().trim();
-          const lookupKey = `${rec.key}|${teamKey}|${s.year}`;
+          const nameKey = (rec.name || '').toLowerCase().trim();
+          const lookupKey = `${nameKey}|${teamKey}|${s.year}`;
           if (receptionQuality) recQuality = receptionQuality[lookupKey] || null;
           if (serveQuality)     srvQuality = serveQuality[lookupKey]     || null;
           if (setQuality)       setQ       = setQuality[lookupKey]       || null;
@@ -671,23 +693,12 @@ export function loadPlayerIndex(
         pGIS:    blendPGIS(t50CareerPGisVals),
       } : null;
 
-      // Pick display name = most-common raw spelling seen for this player
-      // record. With aggressive normalization folding mojibake variants
-      // to the same key, this ensures we show the correct spelling
-      // (e.g. "Ana Burilović", 27 games) over its mojibake variants
-      // ("Ana Buriloviä\x86", 3 games) that share the same key.
-      let bestSpelling = null, bestSpellingCount = -1;
-      for (const [spelling, count] of Object.entries(rec.spellingCounts || {})) {
-        if (count > bestSpellingCount) {
-          bestSpellingCount = count;
-          bestSpelling = spelling;
-        }
-      }
-      const displayName = bestSpelling ? canonicalName(bestSpelling) : rec.name;
-
+      // rec.name has already been set to the best-spelling canonical form
+      // earlier in this loop (before the season loop, so quality-JSON
+      // lookups could see it). Just use it as-is here.
       players.push({
         key:      rec.key,
-        name:     displayName,
+        name:     rec.name,
         team:     teams[0] || rec.primaryTeam,
         teams,
         position: careerPos,

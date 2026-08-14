@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "push-refresh": "python -X utf8 scripts/push_refresh.py",
     "refresh": "python -X utf8 scripts/refresh_inseason.py --year 2026",
-    "add-contest": "python -X utf8 scripts/add_contest_ids.py --year 2026 --ids"
+    "add-contest": "python -X utf8 scripts/add_contest_ids.py --year 2026 --ids",
+    "add-from-url": "python -X utf8 scripts/add_ids_from_page.py --year 2026 --url"
   },
   "dependencies": {
     "react": "^18.3.1",

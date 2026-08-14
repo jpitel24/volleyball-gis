@@ -228,22 +228,30 @@ export default function SeasonLookup() {
   // panel only renders for a specific year.
   const allAmericans = useMemo(() => {
     if (!index || year === 'ALL') return null;
-    const AA_MIN_T50_GAMES = 10;
-    const AA_W_OVERALL     = 0.60;
-    const AA_W_T50         = 0.40;
+    const AA_W_OVERALL   = 0.60;
+    const AA_W_T50       = 0.40;
+    const K_T50_GAMES    = 0.05;   // additive bonus per T50 game played
+    const T50_TRUST_FULL = 20;     // T50 games at which we fully trust T50 pGIS
 
+    // No hard T50-games gate. The 75% team-games filter in buildRows()
+    // is the only qualification. Small-sample T50 pGIS is shrunk toward
+    // zero via the trust weight, so a mid-major with one lucky T50
+    // performance can't leapfrog a real P4 season, and a 0-T50 player
+    // naturally scores low enough to fall out of the AA cohort.
     const byBucket = { OH: [], MB: [], S: [], L: [] };
     for (const r of allRows) {
       const grp = posGroup(r.position);
       if (!grp || !byBucket[grp]) continue;
       if (!Number.isFinite(r.pGIS)) continue;
       const t50Games = r.t50?.games || 0;
-      const t50PGis  = r.t50?.pGIS;
-      if (t50Games < AA_MIN_T50_GAMES) continue;
-      if (!Number.isFinite(t50PGis)) continue;
+      const t50PGis  = Number.isFinite(r.t50?.pGIS) ? r.t50.pGIS : 0;
+      const trust    = Math.min(t50Games / T50_TRUST_FULL, 1.0);
+      const effT50   = t50PGis * trust;
       byBucket[grp].push({
         ...r,
-        aaScore: AA_W_OVERALL * r.pGIS + AA_W_T50 * t50PGis,
+        aaScore: AA_W_OVERALL * r.pGIS
+               + AA_W_T50 * effT50
+               + K_T50_GAMES * t50Games,
       });
     }
     for (const k of Object.keys(byBucket)) {
@@ -395,7 +403,7 @@ export default function SeasonLookup() {
         <div className="aa-panel">
           <div className="aa-panel-title">
             {year} Computer All-American Teams
-            <span className="aa-panel-sub">≥10 T50 games · 0.6 × pGIS + 0.4 × T50 pGIS · 2 OH · 2 MB · 1 S · 1 L</span>
+            <span className="aa-panel-sub">≥75% team games · 0.6 × pGIS + 0.4 × trust(T50) × T50 pGIS + 0.05 × T50 games · 2 OH · 2 MB · 1 S · 1 L</span>
           </div>
 
           {[

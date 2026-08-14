@@ -425,18 +425,20 @@ export function loadPlayerIndex(
           const vsTop50  = isTop50Opponent(oppTeam, String(year), rpiByYear, top50Sets);
 
           season.games_.push({
-            gameKey:   gKey,
-            contestId: r.ContestID || null,
-            date:      r.Date,
-            opponent:  oppTeam,
-            location:  (r.Location || 'Neutral'),
-            sets:      ns,
-            matchSets: matchNSets[gKey] || ns,  // total sets played in the match
-            position:  rowPos || '?',
-            totals:    stats,
-            gis:       gameGis,      // per-match total (matches Game Browser)
-            gisPlus:   gameGisPlus,
-            pGIS:      null,         // filled below
+            gameKey:      gKey,
+            contestId:    r.ContestID || null,
+            date:         r.Date,
+            opponent:     oppTeam,
+            location:     (r.Location || 'Neutral'),
+            conference:   r.Conference || '',
+            oppConference: r['Opponent Conference'] || '',
+            sets:         ns,
+            matchSets:    matchNSets[gKey] || ns,  // total sets played in the match
+            position:     rowPos || '?',
+            totals:       stats,
+            gis:          gameGis,      // per-match total (matches Game Browser)
+            gisPlus:      gameGisPlus,
+            pGIS:         null,         // filled below
             vsTop50,
           });
           if (++processedRows % CHUNK_ROWS === 0) await yieldToMain();

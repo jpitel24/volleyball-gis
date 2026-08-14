@@ -128,6 +128,35 @@ def load_rpi(path: Path) -> dict:
     return per_season
 
 
+def resolve_season_rpi(rpi: dict, year: int) -> tuple[dict | None, int | None]:
+    """
+    Return (season_info, effective_year) for the requested `year`.
+
+    If `year` has no RPI data, walks back to the most recent prior year
+    that does. Emits a stderr note so downstream users know the fallback
+    was used.
+
+    Motivation: NCAA's official RPI doesn't publish for a new season
+    until several weeks in (typically mid-October). Until then, matches
+    from the current season need SOMETHING to score opponent quality
+    against — the prior season's final RPI is a solid approximation
+    (teams are highly correlated year-over-year) and gets recomputed
+    once real RPI publishes.
+
+    Returns (None, None) if no RPI data exists for `year` or any prior.
+    """
+    for offset in range(0, 10):
+        candidate = year - offset
+        info = rpi.get(str(candidate)) or rpi.get(candidate)
+        if info is None:
+            continue
+        if offset > 0:
+            print(f"[gisv2] NOTE: no RPI for {year}; falling back to "
+                  f"{candidate} RPI (final).", file=sys.stderr)
+        return info, candidate
+    return None, None
+
+
 def opp_modifier(opp_rpi: float, season_info: dict) -> float:
     np_ = season_info["neutral_point"]
     mn, mx = season_info["min"], season_info["max"]
@@ -253,9 +282,10 @@ def build_year(year: int, rpi: dict, bl: dict) -> Path:
     print(f"[gisv2 {year}] {len(merged):,} player-match rows")
 
     # ── RPI lookup per match → opponent modifier ─────────────────────────
-    season_info = rpi.get(str(year)) or rpi.get(year)
+    season_info, effective_year = resolve_season_rpi(rpi, year)
     if season_info is None:
-        print(f"ERROR: no RPI data for {year}", file=sys.stderr); sys.exit(1)
+        print(f"ERROR: no RPI data for {year} or any prior season",
+              file=sys.stderr); sys.exit(1)
 
     print(f"[gisv2 {year}] computing opponent modifiers …")
     opp_rpis  = merged["Opponent Team"].apply(lambda o: lookup_opp_rpi(o, season_info))

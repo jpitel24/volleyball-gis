@@ -4,7 +4,7 @@ import { loadPlayerIndex } from '../lib/playerIndex.js';
 import { posColor, pgisLabel, posGroup } from '../lib/gis.js';
 
 const MAX_RESULTS = 20;
-const YEAR_OPTIONS = [2025, 2024, 2023, 2022];
+const YEAR_OPTIONS = [2026, 2025, 2024, 2023, 2022];
 
 function fmt(v, d = 2) {
   if (v == null || !Number.isFinite(v)) return '—';

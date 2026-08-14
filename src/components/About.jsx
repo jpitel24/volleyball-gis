@@ -40,11 +40,18 @@ export default function About() {
             full roster.
           </p>
           <p>
-            The current build covers the <strong>2022, 2023, 2024, and 2025</strong>{' '}
-            D1 seasons. The longer-term goal is live in-season tracking
-            once the <strong>2026 season</strong> opens in August — week-over-week
-            updates, freshly-computed leaderboards, and game reports as
-            soon as the box scores hit the wire.
+            The current build covers the <strong>2022–2025</strong> D1 seasons,
+            with <strong>2026</strong> slots ready to fill as the season plays
+            out. Live in-season tracking arrives once the 2026 season opens
+            in August — week-over-week updates, freshly-computed leaderboards,
+            and game reports as soon as the box scores hit the wire.
+          </p>
+          <p style={{ color: 'var(--muted)', fontSize: '0.85em' }}>
+            Note: NCAA's official RPI rankings don't publish until several
+            weeks into the season. Until then, opponent-strength adjustments
+            for 2026 matches fall back to the 2025 end-of-season RPI —
+            close enough for most programs, and every 2026 match's GIS+
+            gets recomputed once real 2026 RPI is available.
           </p>
         </section>
 

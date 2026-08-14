@@ -23,7 +23,7 @@ export function DataProvider({ children }) {
         // so merging across years stays unique. Years that haven't been
         // backfilled yet 404 → null → silently skipped.
         async function loadAcrossYears(template) {
-          const years = [2022, 2023, 2024, 2025];
+          const years = [2022, 2023, 2024, 2025, 2026];
           const results = await Promise.all(
             years.map(y => fetch(template.replace('{year}', y)).then(safeJson))
           );

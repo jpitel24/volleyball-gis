@@ -6,7 +6,7 @@ import { computeGIS, computePGIS } from '../lib/gis.js';
 import { loadGisPlus, makeKey, seasonStrFromYear } from '../lib/gisPlus.js';
 import { navigate, hrefFor } from '../lib/router.js';
 
-const YEARS = [2025, 2024, 2023, 2022];
+const YEARS = [2026, 2025, 2024, 2023, 2022];
 
 export default function GameLookup({ route }) {
   const { rpiByYear, pgisTables, categoryPgisTables } = useData();

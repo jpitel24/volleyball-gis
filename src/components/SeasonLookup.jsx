@@ -7,6 +7,7 @@ const MAX_RESULTS = 100;
 
 const YEAR_FILTERS = [
   { id: 'ALL',  label: 'All-Time' },
+  { id: '2026', label: '2026' },
   { id: '2025', label: '2025' },
   { id: '2024', label: '2024' },
   { id: '2023', label: '2023' },

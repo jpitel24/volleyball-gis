@@ -81,7 +81,7 @@ function isTop50Opponent(oppTeam, seasonStr, rpiByYear, top50Sets) {
   return rank <= T50_THRESHOLD;
 }
 
-const YEARS = [2025, 2024, 2023, 2022];
+const YEARS = [2026, 2025, 2024, 2023, 2022];
 
 const COUNTING_STATS = [
   'sets', 'kills', 'errors', 'total_attacks', 'assists',

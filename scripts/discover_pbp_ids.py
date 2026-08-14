@@ -95,8 +95,39 @@ def extract_contest_ids(html: str) -> list[str]:
     return out
 
 
-def fetch_with_browser(rpi_url: str, year: int) -> None:
-    """Phase A: fetch RPI page + every team page through Playwright + WARP."""
+def load_team_ids_from_file(path: Path) -> list[str]:
+    """Read one team ID per line from a text file (skips blanks + comments)."""
+    ids: list[str] = []
+    seen: set[str] = set()
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        # Tolerate lines that are '/teams/6386684' or just '6386684'
+        m = TEAM_LINK_RE.search(line)
+        tid = m.group(1) if m else line.split()[0]
+        if tid and tid not in seen:
+            seen.add(tid)
+            ids.append(tid)
+    return ids
+
+
+def fetch_with_browser(year: int, *, rpi_url: str | None = None,
+                       team_ids_override: list[str] | None = None) -> None:
+    """Phase A: fetch RPI page (if URL given) or use provided team-ID list,
+    then walk every team page through Playwright + WARP.
+
+    Two modes:
+      - rpi_url given: fetch + cache the RPI page, then extract team IDs
+        from it (the full-auto path used mid-season once NCAA publishes).
+      - team_ids_override given: skip RPI, use the provided ID list
+        directly (Day-1 / pre-October path — user seeds IDs from any
+        source: a manual paste, a text file, or last-year's cache).
+
+    Exactly one of rpi_url / team_ids_override must be provided.
+    """
+    if (rpi_url is None) == (team_ids_override is None):
+        raise ValueError("provide exactly one of rpi_url or team_ids_override")
     rpi_html_path = rpi_cache_path(year)
     teams_dir = cache_dir(year)
 
@@ -134,30 +165,34 @@ def fetch_with_browser(rpi_url: str, year: int) -> None:
             browser.close()
             sys.exit(2)
 
-        # Step 1: RPI page (cache so re-runs reuse it)
-        if rpi_html_path.exists() and rpi_html_path.stat().st_size > 5_000:
-            print(f"[discover] using cached RPI page → {rpi_html_path}")
-            rpi_html = rpi_html_path.read_text(encoding="utf-8")
+        # Step 1: source team IDs — either from RPI page or override list
+        if team_ids_override is not None:
+            team_ids = [t for t in team_ids_override if len(t) >= 6]
+            print(f"[discover] using {len(team_ids)} team IDs from override list")
         else:
-            print(f"[discover] fetching RPI page → {rpi_url}")
-            page.goto(rpi_url, timeout=NAV_TIMEOUT_MS, wait_until="domcontentloaded")
-            page.wait_for_timeout(PAGE_DWELL_MS)
-            rpi_html = page.content()
-            rpi_html_path.write_text(rpi_html, encoding="utf-8")
-            print(f"[discover]   saved ({len(rpi_html):,} bytes)")
-            time.sleep(THROTTLE_S)
+            if rpi_html_path.exists() and rpi_html_path.stat().st_size > 5_000:
+                print(f"[discover] using cached RPI page → {rpi_html_path}")
+                rpi_html = rpi_html_path.read_text(encoding="utf-8")
+            else:
+                print(f"[discover] fetching RPI page → {rpi_url}")
+                page.goto(rpi_url, timeout=NAV_TIMEOUT_MS, wait_until="domcontentloaded")
+                page.wait_for_timeout(PAGE_DWELL_MS)
+                rpi_html = page.content()
+                rpi_html_path.write_text(rpi_html, encoding="utf-8")
+                print(f"[discover]   saved ({len(rpi_html):,} bytes)")
+                time.sleep(THROTTLE_S)
 
-        team_ids = extract_team_ids(rpi_html)
-        # The RPI page also has navigation/header links to /teams/... we don't
-        # want. Filter to just IDs that look D1-volleyball-team-shaped (7-digit
-        # season-team IDs are typical; nav links are usually shorter).
-        team_ids = [t for t in team_ids if len(t) >= 6]
-        print(f"[discover] {len(team_ids)} team links from RPI page")
-        if len(team_ids) < 100:
-            print(f"[discover] WARNING: expected ~340 D1 teams, only got {len(team_ids)}.")
-            print(f"[discover] First 20 IDs: {team_ids[:20]}")
-            print("[discover] If this looks wrong, inspect "
-                  f"{rpi_html_path} and let me know what the table looks like.")
+            team_ids = extract_team_ids(rpi_html)
+            # The RPI page also has navigation/header links to /teams/... we don't
+            # want. Filter to just IDs that look D1-volleyball-team-shaped (7-digit
+            # season-team IDs are typical; nav links are usually shorter).
+            team_ids = [t for t in team_ids if len(t) >= 6]
+            print(f"[discover] {len(team_ids)} team links from RPI page")
+            if len(team_ids) < 100:
+                print(f"[discover] WARNING: expected ~340 D1 teams, only got {len(team_ids)}.")
+                print(f"[discover] First 20 IDs: {team_ids[:20]}")
+                print("[discover] If this looks wrong, inspect "
+                      f"{rpi_html_path} and let me know what the table looks like.")
 
         # Step 2: each team page
         ok = skip = fail = 0
@@ -260,18 +295,39 @@ def extract_from_cache(year: int) -> None:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--rpi-url", type=str,
-                    help="URL of stats.ncaa.org RPI/nitty-gritty page for the season")
+                    help="URL of stats.ncaa.org RPI/nitty-gritty page for the season "
+                         "(preferred once NCAA publishes it in mid-October)")
+    ap.add_argument("--teams-file", type=str,
+                    help="Alternative to --rpi-url: text file with one team ID per "
+                         "line (or /teams/<id> URLs). Bypasses the RPI page — use "
+                         "for pre-October discovery before NCAA publishes rankings.")
     ap.add_argument("--year", type=int, required=True,
-                    help="Season label for output (e.g. 2025 for 2025-26)")
+                    help="Season label for output (e.g. 2026 for 2026-27)")
     ap.add_argument("--extract-only", action="store_true",
                     help="Skip network; just re-parse cached team pages")
     args = ap.parse_args()
 
     if not args.extract_only:
-        if not args.rpi_url:
-            print("ERROR: --rpi-url required unless --extract-only", file=sys.stderr)
+        if args.rpi_url and args.teams_file:
+            print("ERROR: pass --rpi-url OR --teams-file, not both", file=sys.stderr)
             sys.exit(1)
-        fetch_with_browser(args.rpi_url, args.year)
+        if not args.rpi_url and not args.teams_file:
+            print("ERROR: pass one of --rpi-url / --teams-file (or use "
+                  "--extract-only to re-parse cache without fetching)",
+                  file=sys.stderr)
+            sys.exit(1)
+
+        if args.teams_file:
+            teams_path = Path(args.teams_file)
+            if not teams_path.exists():
+                print(f"ERROR: --teams-file {teams_path} not found",
+                      file=sys.stderr)
+                sys.exit(1)
+            team_ids = load_team_ids_from_file(teams_path)
+            print(f"[discover] loaded {len(team_ids)} team IDs from {teams_path}")
+            fetch_with_browser(args.year, team_ids_override=team_ids)
+        else:
+            fetch_with_browser(args.year, rpi_url=args.rpi_url)
 
     extract_from_cache(args.year)
 

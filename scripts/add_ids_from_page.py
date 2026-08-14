@@ -33,7 +33,11 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 from playwright.sync_api import TimeoutError as PWTimeout
 
-CONTEST_RE = re.compile(r"/contests/(\d+)/")
+# stats.ncaa.org exposes contest IDs under two URL shapes:
+#   /contests/<id>/box_score                       (played games)
+#   /contests/livestream_scoreboards/<id>/box_score (scheduled/pre-season games)
+# Both need to match so daily scoreboard scrapes work in-season AND pre-season.
+CONTEST_RE = re.compile(r"/contests/(?:livestream_scoreboards/)?(\d+)/")
 BUILD_DIR = Path("scripts/.pbp-build")
 HOME_URL = "https://stats.ncaa.org/"
 NAV_TIMEOUT_MS = 60_000

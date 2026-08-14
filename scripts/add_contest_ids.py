@@ -28,7 +28,8 @@ import re
 import sys
 from pathlib import Path
 
-CONTEST_RE = re.compile(r"/contests/(\d+)")
+# Handles both /contests/<id> and /contests/livestream_scoreboards/<id> shapes.
+CONTEST_RE = re.compile(r"/contests/(?:livestream_scoreboards/)?(\d+)")
 DIGIT_RE   = re.compile(r"^\d+$")
 
 BUILD_DIR = Path("scripts/.pbp-build")

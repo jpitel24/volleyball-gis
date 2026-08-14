@@ -56,7 +56,10 @@ USER_AGENT_EDGE  = (
 )
 
 TEAM_LINK_RE    = re.compile(r"/teams/(\d+)")
-CONTEST_LINK_RE = re.compile(r"/contests/(\d+)/")
+# stats.ncaa.org exposes contest IDs under two URL shapes:
+#   /contests/<id>/box_score                       (played games)
+#   /contests/livestream_scoreboards/<id>/box_score (scheduled/pre-season games)
+CONTEST_LINK_RE = re.compile(r"/contests/(?:livestream_scoreboards/)?(\d+)/")
 
 
 def cache_dir(year: int) -> Path:

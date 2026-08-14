@@ -146,6 +146,22 @@ def main() -> int:
         write_report(results, year, aborted=True)
         return 2
 
+    # ── Step 1.5: build team-conference map from RPI HTML ────────
+    # Only runs if discover produced (or previously cached) an RPI page.
+    # If not, enrich_conferences later falls back to a prior year's map.
+    rpi_html = SCRIPTS / ".pbp-build" / f"rpi_page_{year}.html"
+    if rpi_html.exists() or args.dry_run:
+        results.append(run_step("build_team_conferences",
+            [PY, "-X", "utf8", str(SCRIPTS / "build_team_conferences.py"),
+             "--year", str(year)],
+            dry_run=args.dry_run))
+    else:
+        print(f"\n━━━ build_team_conferences ━━━\n  SKIP "
+              f"({rpi_html} not found — will fall back on prior year in enrich)")
+        results.append(StepResult(name="build_team_conferences", ok=True,
+                                  duration_s=0.0, skipped=True,
+                                  skip_reason=f"{rpi_html.name} not found"))
+
     # ── Step 2: scrape PBP ────────────────────────────────────────
     results.append(run_step("scrape_pbp",
         [PY, "-X", "utf8", str(SCRIPTS / "scrape_pbp.py"),
@@ -181,9 +197,15 @@ def main() -> int:
          "--year", str(year)],
         dry_run=args.dry_run))
 
-    # ── Step 8: enrich box scores (needs per-match efficiency + parsed box CSV) ─
+    # ── Step 8a: enrich box scores from PBP tier counts ─────────
     results.append(run_step("enrich_boxscores_from_pbp",
         [PY, "-X", "utf8", str(SCRIPTS / "enrich_boxscores_from_pbp.py"),
+         "--year", str(year)],
+        dry_run=args.dry_run))
+
+    # ── Step 8b: enrich box scores with team conferences ────────
+    results.append(run_step("enrich_conferences",
+        [PY, "-X", "utf8", str(SCRIPTS / "enrich_conferences.py"),
          "--year", str(year)],
         dry_run=args.dry_run))
 

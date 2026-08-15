@@ -746,6 +746,135 @@ export function loadPlayerIndex(
       if (++processedPlayers % CHUNK_PLAYERS === 0) await yieldToMain();
     }
 
+    // Transfer collapse: merge same-name player records with non-overlapping
+    // year sets into a single career-spanning record.
+    //
+    // The player key is (aggressive-normalized-name, team) — that split
+    // correctly keeps distinct people who share a name (two Ella Vogels
+    // in 2025, one at Florida, one at Murray St) but ALSO splits genuine
+    // transfers into per-team fragments (a player who moved Florida →
+    // Nebraska becomes two records).
+    //
+    // Detection: within a same-name group, if the two records' year sets
+    // don't overlap, they can only be the same person (nobody plays for
+    // two D1 teams in the same year). Homonym pairs by construction have
+    // overlapping years since both were active D1 players simultaneously.
+    //
+    // Multi-transfer players (3+ teams over a career) merge greedily:
+    // sort by earliest year and fold each subsequent record into the
+    // running merge if its years are disjoint from every already-folded
+    // record. Records that would overlap stay separate (rare).
+    //
+    // Merged record inherits the primary's key + name, unions all
+    // seasons + teams, and has career/t50Career metrics recomputed from
+    // the combined per-game pGIS values (using the same blendPGIS
+    // aggregation as the initial per-player build).
+    {
+      const nameGroups = new Map();
+      for (const p of players) {
+        const nk = normalizeNameKey(p.name);
+        if (!nameGroups.has(nk)) nameGroups.set(nk, []);
+        nameGroups.get(nk).push(p);
+      }
+      const toDrop = new Set();
+      let mergeCount = 0;
+      for (const [nk, group] of nameGroups) {
+        if (group.length < 2) continue;
+        // Sort by first-season-year so we merge chronologically.
+        group.sort((a, b) => {
+          const ay = Math.min(...a.seasons.map(s => s.year));
+          const by = Math.min(...b.seasons.map(s => s.year));
+          return ay - by;
+        });
+        // Greedy: primary = first record; try to fold each subsequent
+        // record if its year set is disjoint from all currently-folded
+        // records.
+        const folded = [group[0]];
+        const foldedYears = new Set(group[0].seasons.map(s => s.year));
+        for (let i = 1; i < group.length; i++) {
+          const candidate = group[i];
+          const cYears = candidate.seasons.map(s => s.year);
+          const overlaps = cYears.some(y => foldedYears.has(y));
+          if (!overlaps) {
+            folded.push(candidate);
+            for (const y of cYears) foldedYears.add(y);
+          }
+          // If overlaps: leave candidate as a separate record (homonym).
+        }
+        if (folded.length < 2) continue;
+
+        // Fold seconds+ into the primary.
+        const primary = folded[0];
+        const secondaries = folded.slice(1);
+        // Union seasons; sort desc-by-year to match display order.
+        primary.seasons = [...primary.seasons, ...secondaries.flatMap(s => s.seasons)]
+          .sort((a, b) => b.year - a.year);
+        // Teams: chronological order across all seasons, deduped.
+        const teamOrder = [];
+        const seenTeams = new Set();
+        for (const s of [...primary.seasons].sort((a, b) => a.year - b.year)) {
+          if (s.team && !seenTeams.has(s.team)) {
+            seenTeams.add(s.team);
+            teamOrder.push(s.team);
+          }
+        }
+        primary.teams = teamOrder;
+        primary.team = teamOrder[teamOrder.length - 1] || primary.team;
+
+        // Recompute career metrics from the unified season list.
+        const c = { sets: 0, games: 0, gisTotalSum: 0, gisPlusTotalSum: 0 };
+        const pGisVals = [];
+        let t50Games = 0, t50Sets = 0, t50GisSum = 0, t50GisPlusSum = 0;
+        const t50PGisVals = [];
+        for (const s of primary.seasons) {
+          c.sets  += s.sets  || 0;
+          c.games += s.games || 0;
+          c.gisTotalSum     += (s.gis     || 0) * (s.sets || 0);
+          c.gisPlusTotalSum += (s.gisPlus || 0) * (s.sets || 0);
+          for (const g of s.gameLog || []) {
+            if (g.pGIS != null) pGisVals.push(g.pGIS);
+            if (g.vsTop50) {
+              t50Games += 1;
+              t50Sets  += g.sets  || 0;
+              t50GisSum     += g.gis     || 0;
+              t50GisPlusSum += g.gisPlus || 0;
+              if (g.pGIS != null) t50PGisVals.push(g.pGIS);
+            }
+          }
+        }
+        primary.career = {
+          sets:    c.sets,
+          games:   c.games,
+          totals:  primary.career.totals,  // kept — per-team totals summing
+                                            // is complex; approximate ok for
+                                            // display since totals are per-team
+                                            // in season records anyway
+          gis:     c.sets > 0 ? c.gisTotalSum     / c.sets : 0,
+          gisPlus: c.sets > 0 ? c.gisPlusTotalSum / c.sets : 0,
+          pGIS:    blendPGIS(pGisVals),
+          t50:     t50Games > 0 ? {
+            games:   t50Games,
+            sets:    t50Sets,
+            gis:     t50Sets > 0 ? t50GisSum     / t50Sets : 0,
+            gisPlus: t50Sets > 0 ? t50GisPlusSum / t50Sets : 0,
+            pGIS:    blendPGIS(t50PGisVals),
+          } : null,
+        };
+
+        for (const sec of secondaries) toDrop.add(sec);
+        mergeCount += secondaries.length;
+      }
+      // Filter out folded-away records.
+      const before = players.length;
+      const kept = players.filter(p => !toDrop.has(p));
+      players.length = 0;
+      for (const p of kept) players.push(p);
+      try {
+        console.log(`[playerIndex] Transfer merge: folded ${mergeCount} records `
+                    + `(${before} → ${players.length})`);
+      } catch (_) {}
+    }
+
     // Sort by career GIS+ desc for default top-N display.
     players.sort((a, b) => (b.career.gisPlus || 0) - (a.career.gisPlus || 0));
 

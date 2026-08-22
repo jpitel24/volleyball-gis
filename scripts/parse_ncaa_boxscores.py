@@ -223,7 +223,25 @@ def main() -> None:
     out_path = Path(args.output) if args.output else \
                OUTPUT_DIR / f"wvb_playermatch_div1_{args.year}.csv"
 
+    # Year filter: only include contests listed in this year's contest_ids
+    # file. Prevents smoke-test / cross-year HTMLs sitting in the shared
+    # cache from bleeding into other seasons' CSVs. Mirrors the same
+    # contest_ids-based filter aggregate_pbp_touches.py uses.
+    ids_path = Path(f"scripts/.pbp-build/contest_ids_{args.year}.txt")
+    year_ids: set[str] | None = None
+    if ids_path.exists():
+        year_ids = {line.strip() for line in
+                    ids_path.read_text(encoding="utf-8").splitlines()
+                    if line.strip()}
+        print(f"[parse-box] {len(year_ids):,} contest IDs in year {args.year}")
+    else:
+        print(f"[parse-box] WARN: {ids_path} missing — parsing ALL cached "
+              "HTMLs (may include cross-year files)", file=sys.stderr)
+
     html_files = sorted(CACHE_DIR.glob("*.html"))
+    if year_ids is not None:
+        html_files = [p for p in html_files if p.stem in year_ids]
+        print(f"[parse-box] {len(html_files):,} match year filter")
     if args.limit:
         html_files = html_files[: args.limit]
     print(f"[parse-box] {len(html_files):,} cached HTML files to parse")

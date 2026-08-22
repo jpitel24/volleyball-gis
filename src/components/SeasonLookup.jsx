@@ -70,27 +70,43 @@ function tierColor(value, thresholds) {
   if (value >= thresholds[2]) return 'var(--yellow)';
   return 'var(--red)';
 }
+// Small-sample rendering: when a player has SOME data but hasn't hit
+// the qualification threshold, show the value dimmed + italicized (with
+// a "*" suffix indicating unofficial) instead of an em-dash. Prevents
+// the tool from feeling broken at season start when nobody has yet
+// accumulated enough attempts to qualify.
+const smallSampleStyle = (color) => ({
+  textAlign: 'right', color, fontWeight: 500,
+  opacity: 0.55, fontStyle: 'italic',
+});
+const qualifiedStyle = (color) => ({
+  textAlign: 'right', color, fontWeight: 700,
+});
+
 function RecLeaderCell({ rq }) {
-  if (!rq?.qualified) return <td style={{ textAlign: 'right', opacity: 0.5 }}>—</td>;
+  if (!rq || (rq.total || 0) === 0) return <td style={{ textAlign: 'right', opacity: 0.5 }}>—</td>;
   const color = tierColor(rq.greatPct, [0.50, 0.40, 0.30]);
-  return <td style={{ textAlign: 'right', color, fontWeight: 700 }}>{Math.round(rq.greatPct * 100)}%</td>;
+  const style = rq.qualified ? qualifiedStyle(color) : smallSampleStyle(color);
+  return <td style={style} title={`${rq.total} receptions`}>{Math.round(rq.greatPct * 100)}%{rq.qualified ? '' : '*'}</td>;
 }
 function SrvLeaderCell({ sq }) {
-  if (!sq?.qualified) return <td style={{ textAlign: 'right', opacity: 0.5 }}>—</td>;
+  if (!sq || (sq.total || 0) === 0) return <td style={{ textAlign: 'right', opacity: 0.5 }}>—</td>;
   const color = tierColor(sq.effectivePct, [0.25, 0.20, 0.15]);
-  return <td style={{ textAlign: 'right', color, fontWeight: 700 }}>{Math.round(sq.effectivePct * 100)}%</td>;
+  const style = sq.qualified ? qualifiedStyle(color) : smallSampleStyle(color);
+  return <td style={style} title={`${sq.total} serves`}>{Math.round(sq.effectivePct * 100)}%{sq.qualified ? '' : '*'}</td>;
 }
 function AstLeaderCell({ sq }) {
-  if (!sq?.qualified) return <td style={{ textAlign: 'right', opacity: 0.5 }}>—</td>;
+  if (!sq || (sq.total || 0) === 0) return <td style={{ textAlign: 'right', opacity: 0.5 }}>—</td>;
   const color = tierColor(sq.assistPct, [0.40, 0.35, 0.30]);
-  return <td style={{ textAlign: 'right', color, fontWeight: 700 }}>{Math.round(sq.assistPct * 100)}%</td>;
+  const style = sq.qualified ? qualifiedStyle(color) : smallSampleStyle(color);
+  return <td style={style} title={`${sq.total} sets`}>{Math.round(sq.assistPct * 100)}%{sq.qualified ? '' : '*'}</td>;
 }
 function BlkLeaderCell({ value, sets }) {
-  if (!Number.isFinite(value) || (sets || 0) < 50) {
-    return <td style={{ textAlign: 'right', opacity: 0.5 }}>—</td>;
-  }
+  if (!Number.isFinite(value)) return <td style={{ textAlign: 'right', opacity: 0.5 }}>—</td>;
   const color = tierColor(value, [1.5, 1.0, 0.5]);
-  return <td style={{ textAlign: 'right', color, fontWeight: 700 }}>{value.toFixed(2)}</td>;
+  const qualified = (sets || 0) >= 50;
+  const style = qualified ? qualifiedStyle(color) : smallSampleStyle(color);
+  return <td style={style} title={`${sets} sets`}>{value.toFixed(2)}{qualified ? '' : '*'}</td>;
 }
 
 // Build a flat list of rows, one per (player × season). All-Time mode

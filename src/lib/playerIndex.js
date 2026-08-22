@@ -64,17 +64,36 @@ function buildTop50BySeason(rpiByYear, n = T50_THRESHOLD) {
   return out;
 }
 
+// Resolve the season key we should use for RPI lookups — falls back
+// to the most recent prior year that has RPI data. Mirrors the fallback
+// pattern in build_gis_plus_v2.py's resolve_season_rpi(): NCAA doesn't
+// publish current-season RPI until several weeks in, so for the
+// pre-October window we use the prior season's final RPI as an
+// approximation for both opponent-modifier AND T50 classification.
+// Team-RPI tier is highly stable year-over-year.
+function resolveRpiSeason(seasonStr, rpiByYear) {
+  if (!rpiByYear) return null;
+  const y = parseInt(seasonStr, 10);
+  if (!Number.isFinite(y)) return null;
+  for (let offset = 0; offset < 10; offset++) {
+    const key = String(y - offset);
+    if (rpiByYear[key]) return key;
+  }
+  return null;
+}
+
 // Returns true if oppTeam is a Top-50 RPI team for the given season.
 // Uses findRPIValue to resolve abbreviations/aliases, then ranks by value.
 function isTop50Opponent(oppTeam, seasonStr, rpiByYear, top50Sets) {
   if (!oppTeam || !rpiByYear) return false;
+  const effectiveSeason = resolveRpiSeason(seasonStr, rpiByYear) || seasonStr;
   // Fast slug path first.
   const slug = oppTeam.toLowerCase().replace(/[^a-z0-9]/g, '');
-  if (top50Sets?.[seasonStr]?.has(slug)) return true;
+  if (top50Sets?.[effectiveSeason]?.has(slug)) return true;
   // Fall back to findRPIValue → rpiToRank for aliased names.
-  const rpi = findRPIValue(oppTeam, oppTeam, null, rpiByYear, seasonStr);
+  const rpi = findRPIValue(oppTeam, oppTeam, null, rpiByYear, effectiveSeason);
   if (!rpi) return false;
-  const table = rpiByYear[seasonStr];
+  const table = rpiByYear[effectiveSeason];
   if (!table) return false;
   let rank = 1;
   for (const v of Object.values(table)) { if (v > rpi) rank++; }

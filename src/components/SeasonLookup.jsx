@@ -404,7 +404,7 @@ export default function SeasonLookup() {
         {index && !buildingIndex && (
           <>
             {totalHits.toLocaleString()} player-season{totalHits === 1 ? '' : 's'}
-            {year === 'ALL' ? ' (2022–2025)' : ` · ${year}`}
+            {year === 'ALL' ? ' (2022–present)' : ` · ${year}`}
             {posFilter !== 'ALL' && ` · ${POS_FILTERS.find(f => f.id === posFilter).label}`}
             {confFilter !== 'ALL' && ` · ${confFilter === 'P4' ? 'Power 4'
                                         : confFilter === 'NON_P4' ? 'Non-P4'

@@ -66,6 +66,10 @@ function parseCSVLine(line) {
 }
 
 let loaderPromise = null;
+// Tracks the maximum Date value seen across observations rows. Used by the
+// site footer to answer "how current is the data?" — populated during
+// streamGisPlus/parseFullText and exposed via getLatestObservationDate().
+let latestObservationDate = null;
 
 export function loadGisPlus() {
   if (loaderPromise) return loaderPromise;
@@ -74,6 +78,13 @@ export function loadGisPlus() {
     return new Map();
   });
   return loaderPromise;
+}
+
+/** Returns the ISO date (YYYY-MM-DD) of the newest match observation
+ * seen during loadGisPlus, or null if the load hasn't completed / no
+ * dated rows landed. */
+export function getLatestObservationDate() {
+  return latestObservationDate;
 }
 
 async function streamGisPlus() {
@@ -142,9 +153,10 @@ async function streamGisPlus() {
 }
 
 function addRow(map, fields, idx) {
+  const date = fields[idx.Date];
   const key = makeKey(
     fields[idx.Season],
-    fields[idx.Date],
+    date,
     fields[idx.Team],
     fields[idx.Player],
   );
@@ -154,6 +166,11 @@ function addRow(map, fields, idx) {
     gis:     Number.isFinite(gis)     ? gis     : 0,
     gisPlus: Number.isFinite(gisPlus) ? gisPlus : 0,
   });
+  // Track the newest date we see. ISO 'YYYY-MM-DD' compares lexicographically,
+  // so a simple string comparison finds the max.
+  if (date && (!latestObservationDate || date > latestObservationDate)) {
+    latestObservationDate = date;
+  }
 }
 
 // Old-browser fallback: full-text parse. Same logic as the streamed path

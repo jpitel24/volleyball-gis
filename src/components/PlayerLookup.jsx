@@ -633,7 +633,7 @@ export default function PlayerLookup({ onGameDeepLink }) {
         <div className="page-title-row">
           <h1 className="page-title">Player Browser</h1>
           <div className="page-sub">
-            Every D1 player, 2022–2025. Click a name to expand per-season totals;
+            Every D1 player, 2022–present. Click a name to expand per-season totals;
             click a season to see every game that year.
           </div>
         </div>

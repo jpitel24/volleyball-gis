@@ -200,7 +200,7 @@ export default function GameLookup({ route }) {
         <div className="page-title-row">
           <h1 className="page-title">Game Browser</h1>
           <div className="page-sub">
-            Every D1 match, 2022–2025. Pick a season, search for a team,
+            Every D1 match, 2022–present. Pick a season, search for a team,
             click a game to see the full GIS+/pGIS report.
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Header from './Header.jsx';
+import SiteFooter from './SiteFooter.jsx';
 
 // AppShell — top header + (optional) left sidebar + main content grid.
 //
@@ -35,6 +36,7 @@ export default function AppShell({ route, withSidebar = true, children }) {
           <div className="sidebar-backdrop" onClick={() => setSidebarOpen(false)} />
         )}
       </div>
+      <SiteFooter />
     </>
   );
 }

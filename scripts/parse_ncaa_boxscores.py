@@ -144,17 +144,31 @@ def parse_one(html: str, contest_id: str, year: int) -> list[dict]:
     # Pair the two rosters. Extract team name for each; the two teams
     # play each other so we cross-assign.
     parsed_teams = []
+    team_names_seen: set[str] = set()
     for tbl, headers, rows in roster_tables[:2]:
         team_name = extract_team_name(tbl)
+        if team_name:
+            team_names_seen.add(team_name.lower())
         players = []
         for r in rows[1:]:
             cells = [c.get_text(strip=True) for c in r.find_all(["th", "td"])]
             if len(cells) < len(headers):
                 continue
             raw = dict(zip(headers, cells))
-            # Filter out summary/totals rows (usually blank Name or "Totals")
             name = raw.get("Name", "").strip()
-            if not name or name.lower() in ("totals", "total", "team"):
+            if not name:
+                continue
+            # Filter out summary/totals rows. stats.ncaa.org uses various
+            # markers for the team-totals row: literal "Totals"/"Total"/
+            # "Team", OR just the team's own name repeated as the Name
+            # field (e.g. "McNeese" appearing in the Name column of
+            # McNeese's roster). Skip all of those.
+            low = name.lower()
+            if low in ("totals", "total", "team"):
+                continue
+            if low in team_names_seen:
+                continue
+            if team_name and low == team_name.lower():
                 continue
             players.append(raw)
         parsed_teams.append({"team": team_name, "players": players})

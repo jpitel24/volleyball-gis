@@ -146,7 +146,7 @@ export default function SeasonLookup() {
   const [indexErr, setIndexErr]      = useState(null);
   const [buildingIndex, setBuilding] = useState(false);
 
-  const [year, setYear]           = useState('2025');
+  const [year, setYear]           = useState('2026');
   const [posFilter, setPosFilter] = useState('ALL');
   const [minT50, setMinT50]       = useState(0);
   const [sortBy, setSortBy]       = useState('gisPlus');

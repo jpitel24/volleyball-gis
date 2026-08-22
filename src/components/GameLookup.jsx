@@ -11,7 +11,7 @@ const YEARS = [2026, 2025, 2024, 2023, 2022];
 export default function GameLookup({ route }) {
   const { rpiByYear, pgisTables, categoryPgisTables } = useData();
 
-  const [year, setYear]             = useState(2025);
+  const [year, setYear]             = useState(2026);
   const [yearData, setYearData]     = useState(null);
   const [loadingYear, setLoadingYear] = useState(false);
   const [search, setSearch]         = useState('');

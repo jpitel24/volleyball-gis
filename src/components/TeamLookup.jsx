@@ -266,7 +266,7 @@ export default function TeamLookup() {
   const [indexErr, setIndexErr]      = useState(null);
   const [buildingIndex, setBuilding] = useState(false);
 
-  const [year, setYear]       = useState(2025);
+  const [year, setYear]       = useState(2026);
   const [search, setSearch]   = useState('');
   const [expanded, setExpand] = useState(null);
 

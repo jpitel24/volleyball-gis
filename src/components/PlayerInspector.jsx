@@ -27,7 +27,26 @@ export default function PlayerInspector({ p, onClose, nSets, categoryPgisTables 
   // user's eyes. p.pGIS is per-position percentile and unaffected.
   // c.gisNeutral is left at per-set so the per-category pGIS lookup
   // against `categoryPgisTables` (built on per-set baselines) stays valid.
-  const rawCats   = computeCategoryGIS(p, p.ns, p.avgLev, p.oppMod).filter(c => c.gis > 0);
+  // Per-category "did the player participate" activity check. Fixes the
+  // case where a player served (or received, etc.) but produced a neutral
+  // outcome — e.g. a setter with 8 serves, 0 aces, 0 errors would net
+  // out to 0 GIS on the serving line and get filtered out entirely.
+  // Preferred over `c.gis > 0` alone so the display reflects actual
+  // participation, not just scoring outcomes.
+  const CATEGORY_ACTIVITY_KEYS = {
+    attack:    ['total_attacks'],
+    blocking:  ['block_solos', 'block_assists', 'blocking_errors'],
+    defense:   ['digs'],
+    receiving: ['reception_attempts'],
+    serving:   ['serve_attempts'],
+    setting:   ['assists', 'set_errors', 'set_attempts', 'ball_handling_errors'],
+  };
+  const hadActivity = (c) => {
+    const keys = CATEGORY_ACTIVITY_KEYS[c.key] || [];
+    return keys.some(k => (p[k] || 0) > 0);
+  };
+  const rawCats   = computeCategoryGIS(p, p.ns, p.avgLev, p.oppMod)
+                      .filter(c => c.gis > 0 || hadActivity(c));
   const sumGis     = rawCats.reduce((s, c) => s + c.gis,     0) || 1;
   const sumGisPlus = rawCats.reduce((s, c) => s + c.gisPlus, 0) || 1;
   const gScale     = (p.gis     || 0) / sumGis;

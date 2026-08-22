@@ -167,14 +167,17 @@ export default function PlayerInspector({ p, onClose, nSets, categoryPgisTables 
         ))}
       </div>
 
-      {/* Leverage context */}
-      <div className="modal-lev-note">
-        Leverage: <strong>{p.avgLev.toFixed(3)}×</strong> avg ·{' '}
-        {p.levPlays > 0
-          ? `${p.levPlays} PBP plays · win-prob weighted`
-          : 'match-level only (no PBP)'}
-        {p.oppRank && ` · OPP RPI #${p.oppRank} (${p.oppMod >= 1 ? '+' : ''}${((p.oppMod - 1) * 100).toFixed(1)}%)`}
-      </div>
+      {/* Opponent modifier context — the leverage note that used to live
+          here was legacy v1 data that stopped feeding into GIS+ after
+          Phase 7A dropped the SetLeverageModifier from the formula.
+          Only the OPP RPI / modifier line is still meaningful. */}
+      {p.oppRank ? (
+        <div className="modal-lev-note">
+          OPP RPI #{p.oppRank}
+          {' · '}
+          modifier {p.oppMod >= 1 ? '+' : ''}{((p.oppMod - 1) * 100).toFixed(1)}%
+        </div>
+      ) : null}
     </aside>,
     document.body
   );

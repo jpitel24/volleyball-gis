@@ -263,9 +263,18 @@ function inferPositionFromTotals(totals, sets) {
   if (assistsPerSet >= 5.0) return 'S';
   // Libero/DS: no-attack, high-dig, no-block.
   if (attksPerSet < 0.5 && digsPerSet >= 2.0 && blocksPerSet < 0.15) return 'L';
+  // Front-row-only OH/OPP: high offense, no receiving. Common for
+  // pins who rotate out for a libero in back row (or opposites who
+  // sit that rotation entirely). Distinguisher from a real middle:
+  // attack VOLUME is much higher (pins swing 4-8/set, middles get
+  // 2-4 quick-attack swings) and block RATE is lower (real MBs block
+  // 1.5+/set; front-row pins block 0.3-1.2). Must be checked BEFORE
+  // the MB rule so these players don't get miscaught by the "blocks +
+  // no-recv" pattern that also matches middles.
+  if (killsPerSet >= 1.5 && attksPerSet >= 3.5 && blocksPerSet < 1.5) return 'OH';
   // Middle: heavy blocking, no back-row receive (rotates out).
   if (blocksPerSet >= 0.8 && recvPerSet < 1.0) return 'MB';
-  // Outside: kill volume + receives serves (six-rotation pin).
+  // Six-rotation OH: kill volume + receives serves.
   if (killsPerSet >= 1.5 && recvPerSet >= 1.0) return 'OH';
   return null;
 }

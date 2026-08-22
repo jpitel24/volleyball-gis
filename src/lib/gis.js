@@ -50,6 +50,35 @@ export function computeCategoryGIS(p, ns, avgLev, oppMod) {
 // back-load the scale so elites dominate but squish the middle.
 export const PGIS_K    = 1.0;
 
+// Column-header tooltip strings, shared across all leaderboard tables
+// (SeasonLookup, TeamLookup, PlayerLookup) so descriptions stay consistent.
+// Applied via `title=""` on <th> elements — native browser tooltip on hover.
+export const COL_TIPS = {
+  '#':         'Rank in the current filtered/sorted list',
+  Yr:          'Season year (e.g. 2026 = 2026-2027 season)',
+  G:           'Games (matches) played',
+  S:           'Total sets played',
+  K:           'Kills — attacks that terminate the rally in favor of the attacking team',
+  A:           'Assists — passes that lead directly to a teammate’s kill',
+  D:           'Digs — successful defensive contacts on an opponent attack',
+  B:           'Total blocks (solos + assists) — front-row contacts that stuff or deflect an attack',
+  SA:          'Service aces — serves that terminate the rally directly for a point',
+  'GIS/S':     'GIS per set — raw volume-weighted contribution rate. Sums per-category positives minus errors, divided by sets played',
+  'GIS+/S':    'GIS+ per set — same as GIS/S but adjusted by opponent RPI strength (harder opponents scale up, weaker scale down)',
+  pGIS:        'Positional pGIS — 0-10 score placing this player’s GIS+/S in the percentile distribution of D1 players at the same position group',
+  'REC%':      'Reception quality — % of passes that led to a setter-on-2nd + kill-on-3rd sequence. Requires ≥50 receptions to qualify; unqualified values show dimmed with *',
+  'SRV+':      'Effective serve % — ace + serves where we scored within 3 touches of the reception. Requires ≥100 serves to qualify; unqualified values show dimmed with *',
+  'AST%':      'Assist rate — % of set attempts that produced a kill on the immediate next contact. Requires ≥200 sets to qualify; unqualified values show dimmed with *',
+  'BLK+':      'Net blocks per set — (solos + 0.5 × assists − errors) / sets. Requires ≥50 sets to qualify; unqualified values show dimmed with *',
+  'T50 G':     'Games played against RPI Top-50 opponents (opponent quality proxy)',
+  'T50 GIS/S': 'GIS per set — restricted to games vs RPI Top-50 opponents. Isolates how the player performs against elite competition',
+  'T50 GIS+/S':'GIS+ per set — restricted to games vs RPI Top-50 opponents. Same as GIS+/S but only over the quality-schedule subset',
+  'T50 pGIS':  'Positional pGIS — computed only from the player’s Top-50-opponent games',
+  Pos:         'Player position group. Rankings shown after (e.g. #12/437 nat, #4/220 P4, #1/18 Big Ten) compare within position across the noted cohort',
+  Player:      'Player name (click for full detail)',
+  Team:        'Player’s team for the row’s season',
+};
+
 export const POS_GROUP_MAP = {
   S: 'S',
   OH: 'OH', RS: 'OH', OPP: 'OH', OP: 'OH', O: 'OH',

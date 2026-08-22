@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useData } from '../lib/DataContext.jsx';
 import { loadPlayerIndex, isP4 } from '../lib/playerIndex.js';
-import { posColor, pgisLabel, posGroup } from '../lib/gis.js';
+import { posColor, pgisLabel, posGroup, COL_TIPS } from '../lib/gis.js';
 
 const MAX_RESULTS = 20;
 const YEAR_OPTIONS = [2026, 2025, 2024, 2023, 2022];
@@ -235,17 +235,17 @@ function TeamCard({ t, expanded, onToggle }) {
           <table className="pb-season-table" style={{ width: '100%', fontFamily: "'JetBrains Mono',monospace", fontSize: '0.7rem' }}>
             <thead>
               <tr style={{ color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                <th style={{ textAlign: 'right' }}>#</th>
-                <th className="text-left">Player</th>
-                <th className="text-left">Pos</th>
-                <th style={{ textAlign: 'right' }}>G</th>
-                <th style={{ textAlign: 'right' }}>S</th>
-                <th style={{ textAlign: 'right' }}>GIS/S</th>
-                <th style={{ textAlign: 'right' }}>GIS+/S</th>
-                <th style={{ textAlign: 'right' }}>pGIS</th>
-                <th style={{ textAlign: 'right', opacity: 0.6 }}>T50 G</th>
-                <th style={{ textAlign: 'right', opacity: 0.6 }}>T50 GIS+/S</th>
-                <th style={{ textAlign: 'right', opacity: 0.6 }}>T50 pGIS</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS['#']}>#</th>
+                <th className="text-left" title={COL_TIPS.Player}>Player</th>
+                <th className="text-left" title={COL_TIPS.Pos}>Pos</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS.G}>G</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS.S}>S</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS['GIS/S']}>GIS/S</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS['GIS+/S']}>GIS+/S</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS.pGIS}>pGIS</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }} title={COL_TIPS['T50 G']}>T50 G</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }} title={COL_TIPS['T50 GIS+/S']}>T50 GIS+/S</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }} title={COL_TIPS['T50 pGIS']}>T50 pGIS</th>
               </tr>
             </thead>
             <tbody>

@@ -6,7 +6,7 @@ import { loadPlayerIndex, isP4 } from '../lib/playerIndex.js';
 // already stored on the season record; we route through isP4() for
 // the tier check to keep the source of truth in playerIndex.
 const isSeasonP4 = (s) => isP4(s.conference);
-import { posColor, pgisLabel, posGroup, computeCategoryGIS } from '../lib/gis.js';
+import { posColor, pgisLabel, posGroup, computeCategoryGIS, COL_TIPS } from '../lib/gis.js';
 
 const MAX_RESULTS = 50;
 const POS_FILTERS = [
@@ -405,27 +405,27 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
           <table className="pb-season-table" style={{ width: '100%', fontFamily: "'JetBrains Mono',monospace", fontSize: '0.72rem' }}>
             <thead>
               <tr style={{ color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                <th className="text-left">Year</th>
-                <th className="text-left">Team</th>
-                <th className="text-left">Pos</th>
-                <th style={{ textAlign: 'right' }}>G</th>
-                <th style={{ textAlign: 'right' }}>S</th>
-                <th style={{ textAlign: 'right' }}>K</th>
-                <th style={{ textAlign: 'right' }}>A</th>
-                <th style={{ textAlign: 'right' }}>D</th>
-                <th style={{ textAlign: 'right' }}>B</th>
-                <th style={{ textAlign: 'right' }}>SA</th>
-                <th style={{ textAlign: 'right' }}>GIS/S</th>
-                <th style={{ textAlign: 'right' }}>GIS+/S</th>
-                <th style={{ textAlign: 'right' }}>pGIS</th>
-                <th style={{ textAlign: 'right' }} title="Great-pass %: setter on 2nd touch and hitter killed on 3rd. Hover a row for the full Great/Good/Bad split.">REC%</th>
-                <th style={{ textAlign: 'right' }} title="Effective serve %: ace + serves where we scored within 3 touches of the reception. Hover a row for the full breakdown.">SRV+</th>
-                <th style={{ textAlign: 'right' }} title="Assist %: fraction of sets producing a kill on the next touch. Hover a row for the full delivery breakdown.">AST%</th>
-                <th style={{ textAlign: 'right' }} title="Net blocks per set: (solos + 0.5 × assists − errors) / sets. NCAA blocking-efficiency convention.">BLK+</th>
-                <th style={{ textAlign: 'right', opacity: 0.6 }} title="Games vs RPI Top-50 opponents">T50 G</th>
-                <th style={{ textAlign: 'right', opacity: 0.6 }} title="GIS/S vs RPI Top-50 opponents">T50 GIS/S</th>
-                <th style={{ textAlign: 'right', opacity: 0.6 }} title="GIS+/S vs RPI Top-50 opponents">T50 GIS+/S</th>
-                <th style={{ textAlign: 'right', opacity: 0.6 }} title="pGIS vs RPI Top-50 opponents">T50 pGIS</th>
+                <th className="text-left" title={COL_TIPS.Yr}>Year</th>
+                <th className="text-left" title={COL_TIPS.Team}>Team</th>
+                <th className="text-left" title={COL_TIPS.Pos}>Pos</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS.G}>G</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS.S}>S</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS.K}>K</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS.A}>A</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS.D}>D</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS.B}>B</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS.SA}>SA</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS['GIS/S']}>GIS/S</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS['GIS+/S']}>GIS+/S</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS.pGIS}>pGIS</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS['REC%']}>REC%</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS['SRV+']}>SRV+</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS['AST%']}>AST%</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS['BLK+']}>BLK+</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }} title={COL_TIPS['T50 G']}>T50 G</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }} title={COL_TIPS['T50 GIS/S']}>T50 GIS/S</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }} title={COL_TIPS['T50 GIS+/S']}>T50 GIS+/S</th>
+                <th style={{ textAlign: 'right', opacity: 0.6 }} title={COL_TIPS['T50 pGIS']}>T50 pGIS</th>
                 <th></th>
               </tr>
             </thead>

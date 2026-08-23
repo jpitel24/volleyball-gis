@@ -5,7 +5,9 @@ import { findRPIValue, rpiToRank, seasonFromGameId, computeCategoryGIS, CATEGORI
 import { getSchoolColors } from '../data/schoolColors.js';
 
 // A player "participated" if they have any non-zero counting stat line.
-// Matches the per-card visibility rule (p.gis > 0) used in TeamSection.
+// This is the visibility predicate for the roster grid and tug-of-war —
+// we want players who took the floor even if their net GIS was negative
+// (e.g. an OH who ran the full rotation but shot .100 on a rough night).
 function hasStatLine(p) {
   return (
     (p.kills || 0) + (p.assists || 0) + (p.digs || 0) +
@@ -32,7 +34,7 @@ function TugOfWar({ mg }) {
   // Per-team category totals in per-match units.
   const totals = { [home]: {}, [away]: {} };
   for (const p of mg.players) {
-    if (!p || p.gis <= 0) continue;
+    if (!p || !hasStatLine(p)) continue;
     const team = p.team;
     if (team !== home && team !== away) continue;
     const cats = computeCategoryGIS(p, p.ns, p.avgLev, p.oppMod);
@@ -86,7 +88,7 @@ function TugOfWar({ mg }) {
 
 function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpiByYear, onSelect, selectedPlayer }) {
   const players = mg.players
-    .filter(p => p.team === teamName && p.gis > 0)
+    .filter(p => p.team === teamName && hasStatLine(p))
     .sort((a, b) => (b.pGIS ?? b.gisPlus) - (a.pGIS ?? a.gisPlus));
 
   if (!players.length) return null;
@@ -165,7 +167,7 @@ export default function GameReport({ gameId, mg, isMock, rpiByYear, categoryPgis
 
   const matchRanks = new Map();
   [...mg.players]
-    .filter(p => p.gis > 0)
+    .filter(hasStatLine)
     .sort((a, b) => (b.pGIS ?? b.gisPlus) - (a.pGIS ?? a.gisPlus))
     .forEach((p, i) => matchRanks.set(p, i + 1));
 

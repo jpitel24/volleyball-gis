@@ -7,11 +7,28 @@ import { loadGisPlus, makeKey, seasonStrFromYear } from '../lib/gisPlus.js';
 import { navigate, hrefFor } from '../lib/router.js';
 
 const YEARS = [2026, 2025, 2024, 2023, 2022];
+const YEAR_STORAGE_KEY = 'gameLookup.year';
+
+// Restore the last year the user picked. GameLookup unmounts every time the
+// user navigates to another tool, so without persistence the year silently
+// resets to 2026 on return — surfacing a totally different "first game" than
+// the one they were just looking at.
+function readStoredYear() {
+  if (typeof window === 'undefined') return 2026;
+  const raw = window.sessionStorage?.getItem(YEAR_STORAGE_KEY);
+  const y = parseInt(raw, 10);
+  return YEARS.includes(y) ? y : 2026;
+}
 
 export default function GameLookup({ route }) {
   const { rpiByYear, pgisTables, categoryPgisTables } = useData();
 
-  const [year, setYear]             = useState(2026);
+  // If the URL already names a year (/games/:year/:key), prefer it — that's
+  // the user asking for a specific game and its season is authoritative.
+  // Otherwise fall back to the last-viewed year they picked from the dropdown.
+  const [year, setYear]             = useState(() =>
+    (route?.name === 'games' && route.year) ? route.year : readStoredYear()
+  );
   const [yearData, setYearData]     = useState(null);
   const [loadingYear, setLoadingYear] = useState(false);
   const [search, setSearch]         = useState('');
@@ -37,7 +54,11 @@ export default function GameLookup({ route }) {
   // source of truth — no consume-callback needed.
   useEffect(() => {
     if (!route || route.name !== 'games' || !route.gameKey) return;
-    if (route.year !== year) { setYear(route.year); return; }
+    if (route.year !== year) {
+      setYear(route.year);
+      try { window.sessionStorage?.setItem(YEAR_STORAGE_KEY, String(route.year)); } catch (_) { /* ignore */ }
+      return;
+    }
     if (!yearData) return;
     if (openKey === route.gameKey) return;  // already open
     const g = yearData.games.find(x => x.key === route.gameKey);
@@ -60,12 +81,12 @@ export default function GameLookup({ route }) {
   useEffect(() => { loadGisPlus(); }, []);
 
   // ── Filter games by search term ────────────────────────────────────────────
-  // No search → show the 5 most recent games. With a search, show every
+  // No search → show the 25 most recent games. With a search, show every
   // match in the season that hits (no cap — searches are naturally scoped).
   const filteredGames = useMemo(() => {
     if (!yearData) return [];
     const q = search.trim().toLowerCase();
-    if (!q) return yearData.games.slice(0, 5);
+    if (!q) return yearData.games.slice(0, 25);
     return yearData.games.filter(g =>
       g.homeTeam.toLowerCase().includes(q) ||
       g.awayTeam.toLowerCase().includes(q)
@@ -172,7 +193,9 @@ export default function GameLookup({ route }) {
             className="gb-year-select"
             value={year}
             onChange={e => {
-              setYear(parseInt(e.target.value, 10));
+              const y = parseInt(e.target.value, 10);
+              setYear(y);
+              try { window.sessionStorage?.setItem(YEAR_STORAGE_KEY, String(y)); } catch (_) { /* ignore */ }
               // Reset to /games so we don't leave a stale game key in the URL.
               navigate(hrefFor('games'));
             }}
@@ -212,7 +235,7 @@ export default function GameLookup({ route }) {
             ? <><div className="spinner" /> Loading {year} games…</>
             : search.trim()
               ? `${showing} match${showing === 1 ? '' : 'es'} for "${search.trim()}"`
-              : `Showing 5 most recent of ${totalGames} games — search to find more`
+              : `Showing ${Math.min(25, totalGames)} most recent of ${totalGames} games — search to find more`
           }
         </div>
       )}

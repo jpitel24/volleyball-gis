@@ -1,4 +1,26 @@
 Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location,Number,Player,P,S,Kills,Errors,TotalAttacks,HitPct,Assists,Aces,SErr,Digs,RetAtt,RErr,BlockSolos,BlockAssists,BErr,PTS,BHE,SetErr,SetAtt,ServeAtt,TotalBlocks
+2026-2027,2026-08-23,6599090,Texas A&M,SEC,SMU,ACC,Neutral,2,Addi Applegate,L/DS,3,0,0,0,0.0,0,0,0,3,4,0,0,0,0,0.0,0,0.0,3.0,0.0,0
+2026-2027,2026-08-23,6599090,Texas A&M,SEC,SMU,ACC,Neutral,19,Kaia Castle,MB,3,1,5,14,-0.286,0,0,1,1,0,0,0,4,1,3.0,0,0.0,1.0,2.0,4
+2026-2027,2026-08-23,6599090,Texas A&M,SEC,SMU,ACC,Neutral,20,Megan Fitch,OH,3,10,2,28,0.286,2,0,2,8,31,2,0,1,0,10.5,0,0.0,4.0,9.0,1
+2026-2027,2026-08-23,6599090,Texas A&M,SEC,SMU,ACC,Neutral,10,Margot Manning,S,3,0,0,0,0.0,0,0,1,1,0,0,0,0,0,0.0,0,0.0,0.0,7.0,0
+2026-2027,2026-08-23,6599090,Texas A&M,SEC,SMU,ACC,Neutral,6,Taryn Morris,OPP,3,7,1,15,0.4,0,0,3,1,1,0,0,2,0,8.0,0,0.0,0.0,12.0,2
+2026-2027,2026-08-23,6599090,Texas A&M,SEC,SMU,ACC,Neutral,14,Kirra Musgrove,S,3,2,1,7,0.143,17,0,1,4,0,0,0,2,0,3.0,0,0.0,45.0,10.0,2
+2026-2027,2026-08-23,6599090,Texas A&M,SEC,SMU,ACC,Neutral,12,Lily Nicholson,S,3,0,0,0,0.0,12,0,0,5,0,0,0,0,0,0.0,0,0.0,34.0,0.0,0
+2026-2027,2026-08-23,6599090,Texas A&M,SEC,SMU,ACC,Neutral,17,Natalie Ring,OH,3,13,8,36,0.139,0,0,1,2,13,1,0,2,0,14.0,0,0.0,2.0,10.0,2
+2026-2027,2026-08-23,6599090,Texas A&M,SEC,SMU,ACC,Neutral,1,Gabi Rodriguez,L,3,0,0,0,0.0,3,1,1,6,15,0,0,0,0,1.0,0,0.0,13.0,12.0,0
+2026-2027,2026-08-23,6599090,Texas A&M,SEC,SMU,ACC,Neutral,25,Eliza Sharp,MB,3,3,5,12,-0.167,0,0,0,0,0,0,0,3,0,4.5,0,0.0,0.0,1.0,3
+2026-2027,2026-08-23,6599090,Texas A&M,SEC,SMU,ACC,Neutral,8,Amare Hernandez,OH,1,0,0,0,0.0,0,1,0,0,0,0,0,0,0,1.0,0,0.0,1.0,2.0,0
+2026-2027,2026-08-23,6599090,SMU,ACC,Texas A&M,SEC,Neutral,21,Favor Anyanwu,MB,3,7,1,12,0.5,0,0,2,1,0,0,0,7,0,10.5,0,0.0,2.0,7.0,7
+2026-2027,2026-08-23,6599090,SMU,ACC,Texas A&M,SEC,Neutral,11,Hannah Beauford,S,3,3,0,6,0.5,33,0,3,5,0,0,0,2,0,4.0,0,0.0,69.0,12.0,2
+2026-2027,2026-08-23,6599090,SMU,ACC,Texas A&M,SEC,Neutral,25,Suli Davis,OH,3,15,7,38,0.211,2,0,1,5,17,1,0,1,0,15.5,0,0.0,5.0,14.0,1
+2026-2027,2026-08-23,6599090,SMU,ACC,Texas A&M,SEC,Neutral,2,Sarah Frazee,L/DS,3,0,0,0,0.0,1,0,0,7,10,0,0,0,0,0.0,0,0.0,2.0,0.0,0
+2026-2027,2026-08-23,6599090,SMU,ACC,Texas A&M,SEC,Neutral,0,Victoria Harris,L/DS,3,0,0,0,0.0,4,0,0,13,17,0,0,0,0,0.0,0,0.0,9.0,12.0,0
+2026-2027,2026-08-23,6599090,SMU,ACC,Texas A&M,SEC,Neutral,12,Natalia Newsome,MB,3,2,1,6,0.167,0,0,0,0,0,0,2,2,0,5.0,0,0.0,4.0,0.0,4
+2026-2027,2026-08-23,6599090,SMU,ACC,Texas A&M,SEC,Neutral,15,Gabi Placide,OH,3,9,2,18,0.389,0,0,0,2,1,0,1,3,0,11.5,0,0.0,1.0,12.0,4
+2026-2027,2026-08-23,6599090,SMU,ACC,Texas A&M,SEC,Neutral,4,Christa Wilburn,OH,3,5,2,11,0.273,0,1,3,6,9,0,1,2,0,8.0,0,0.0,1.0,8.0,3
+2026-2027,2026-08-23,6599090,SMU,ACC,Texas A&M,SEC,Neutral,5,Elle Vandeweghe,MB,2,1,1,2,0.0,0,2,2,0,0,0,0,1,0,3.5,0,0.0,0.0,7.0,1
+2026-2027,2026-08-23,6599090,SMU,ACC,Texas A&M,SEC,Neutral,7,Ellie Moore,S,1,0,0,0,0.0,0,0,0,1,0,0,0,0,0,0.0,0,0.0,0.0,3.0,0
+2026-2027,2026-08-23,6599090,SMU,ACC,Texas A&M,SEC,Neutral,8,Mia Silva,L/DS,1,0,0,0,0.0,0,0,1,0,0,0,0,0,0,0.0,0,0.0,0.0,1.0,0
 2026-2027,2026-08-21,6603081,Kentucky,SEC,Wisconsin,Big Ten,Neutral,15,Lizzie Carr,MB,3,8,0,14,0.571,0,0,0,2,0,0,0,4,1,10.0,0,0.0,0.0,0.0,4
 2026-2027,2026-08-21,6603081,Kentucky,SEC,Wisconsin,Big Ten,Neutral,27,Brynn Covell,S,3,0,0,0,0.0,0,0,0,2,0,0,0,0,0,0.0,0,0.0,2.0,8.0,0
 2026-2027,2026-08-21,6603081,Kentucky,SEC,Wisconsin,Big Ten,Neutral,17,Brooklyn DeLeye,OH,3,12,2,31,0.323,2,1,3,6,13,0,0,1,0,13.5,0,0.0,2.0,15.0,1
@@ -20,6 +42,27 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-08-21,6603081,Wisconsin,Big Ten,Kentucky,SEC,Neutral,10,Madison Quest,OH,2,0,1,2,-0.5,0,0,0,0,0,0,0,0,0,0.0,0,0.0,0.0,2.0,0
 2026-2027,2026-08-21,6603081,Wisconsin,Big Ten,Kentucky,SEC,Neutral,6,Isabelle Hoppe,S,1,0,0,0,0.0,0,1,0,0,0,0,0,0,0,1.0,0,0.0,1.0,5.0,0
 2026-2027,2026-08-21,6603081,Wisconsin,Big Ten,Kentucky,SEC,Neutral,12,Natalie Wardlow,MB,1,0,0,0,0.0,0,0,1,0,0,0,0,1,0,0.5,0,0.0,0.0,3.0,1
+2026-2027,2026-08-23,6603086,Pittsburgh,ACC,Kentucky,SEC,Neutral,5,Olivia Babcock,OH,4,27,8,56,0.339,0,0,3,9,0,0,0,4,0,29.0,0,0.0,4.0,13.0,4
+2026-2027,2026-08-23,6603086,Pittsburgh,ACC,Kentucky,SEC,Neutral,8,Blaire Bayless,OH,4,10,3,29,0.241,0,0,0,8,17,0,0,3,1,11.5,0,0.0,1.0,0.0,3
+2026-2027,2026-08-23,6603086,Pittsburgh,ACC,Kentucky,SEC,Neutral,3,Jordyn Dailey,MB,4,1,3,7,-0.286,1,0,0,0,0,0,0,6,0,4.0,0,0.0,3.0,0.0,6
+2026-2027,2026-08-23,6603086,Pittsburgh,ACC,Kentucky,SEC,Neutral,2,Maaike Heilig,MB,4,3,0,3,1.0,0,0,3,0,1,0,0,8,0,7.0,0,0.0,1.0,8.0,8
+2026-2027,2026-08-23,6603086,Pittsburgh,ACC,Kentucky,SEC,Neutral,7,Izzy Masten,L/DS,4,0,0,0,0.0,1,0,0,5,12,0,0,0,0,0.0,0,0.0,3.0,0.0,0
+2026-2027,2026-08-23,6603086,Pittsburgh,ACC,Kentucky,SEC,Neutral,13,Mallorie Meyer,L/DS,4,0,0,0,0.0,3,1,1,3,19,2,0,0,0,1.0,0,0.0,10.0,18.0,0
+2026-2027,2026-08-23,6603086,Pittsburgh,ACC,Kentucky,SEC,Neutral,21,Izzy Starck,S,4,2,0,3,0.667,41,0,1,13,0,0,0,5,1,4.5,0,0.0,87.0,17.0,5
+2026-2027,2026-08-23,6603086,Pittsburgh,ACC,Kentucky,SEC,Neutral,25,Haiti Tautua'a,S,4,0,0,0,0.0,0,0,0,0,0,0,0,0,0,0.0,0,0.0,0.0,15.0,0
+2026-2027,2026-08-23,6603086,Pittsburgh,ACC,Kentucky,SEC,Neutral,12,Ayanna Watson,OH,4,6,0,20,0.3,0,2,1,0,14,1,0,2,0,9.0,0,0.0,1.0,24.0,2
+2026-2027,2026-08-23,6603086,Pittsburgh,ACC,Kentucky,SEC,Neutral,9,Trinity Thompson,S,3,0,0,0,0.0,2,0,0,10,0,0,0,0,0,0.0,0,0.0,9.0,0.0,0
+2026-2027,2026-08-23,6603086,Kentucky,SEC,Pittsburgh,ACC,Neutral,15,Lizzie Carr,MB,4,8,6,22,0.091,0,0,0,1,0,0,0,4,0,10.0,0,0.0,1.0,0.0,4
+2026-2027,2026-08-23,6603086,Kentucky,SEC,Pittsburgh,ACC,Neutral,17,Brooklyn DeLeye,OH,4,13,11,42,0.048,0,3,3,6,27,1,0,0,0,16.0,0,0.0,2.0,13.0,0
+2026-2027,2026-08-23,6603086,Kentucky,SEC,Pittsburgh,ACC,Neutral,18,Morgan Gaerte,OH,4,14,7,37,0.189,0,0,0,1,0,0,0,2,0,15.0,0,0.0,0.0,0.0,2
+2026-2027,2026-08-23,6603086,Kentucky,SEC,Pittsburgh,ACC,Neutral,6,Kassie O'Brien,S,4,1,0,4,0.25,38,1,2,4,0,0,0,3,0,3.5,0,0.0,115.0,17.0,3
+2026-2027,2026-08-23,6603086,Kentucky,SEC,Pittsburgh,ACC,Neutral,20,Asia Thigpen,OH,4,2,3,11,-0.091,0,0,1,7,13,0,0,0,0,2.0,0,0.0,2.0,8.0,0
+2026-2027,2026-08-23,6603086,Kentucky,SEC,Pittsburgh,ACC,Neutral,12,Molly Tuozzo,L/DS,4,0,0,0,0.0,4,1,0,16,31,1,0,0,0,1.0,0,0.0,14.0,12.0,0
+2026-2027,2026-08-23,6603086,Kentucky,SEC,Pittsburgh,ACC,Neutral,1,Trinity Ward,L/DS,4,0,0,0,0.0,1,0,0,5,7,1,0,0,0,0.0,0,0.0,3.0,9.0,0
+2026-2027,2026-08-23,6603086,Kentucky,SEC,Pittsburgh,ACC,Neutral,10,Kennedy Washington,MB,4,4,4,14,0.0,0,0,0,1,0,0,1,1,0,5.5,0,0.0,1.0,0.0,2
+2026-2027,2026-08-23,6603086,Kentucky,SEC,Pittsburgh,ACC,Neutral,27,Brynn Covell,S,3,0,0,0,0.0,0,0,0,2,0,0,0,0,0,0.0,0,0.0,0.0,5.0,0
+2026-2027,2026-08-23,6603086,Kentucky,SEC,Pittsburgh,ACC,Neutral,9,Georgia Watson,OH,3,3,2,9,0.111,0,0,2,2,8,0,0,0,0,3.0,1,0.0,0.0,6.0,0
+2026-2027,2026-08-23,6603086,Kentucky,SEC,Pittsburgh,ACC,Neutral,11,Molly Berezowitz,DS,1,0,0,0,0.0,0,0,1,0,0,0,0,0,0,0.0,0,0.0,1.0,4.0,0
 2026-2027,2026-08-21,6603659,Texas A&M,SEC,Louisville,ACC,Neutral,2,Addi Applegate,L/DS,4,0,0,0,0.0,2,0,0,2,23,0,0,0,0,0.0,0,0.0,4.0,4.0,0
 2026-2027,2026-08-21,6603659,Texas A&M,SEC,Louisville,ACC,Neutral,19,Kaia Castle,MB,4,6,4,16,0.125,0,0,0,0,0,0,0,4,0,8.0,0,,,,4
 2026-2027,2026-08-21,6603659,Texas A&M,SEC,Louisville,ACC,Neutral,20,Megan Fitch,OH,4,7,3,25,0.16,0,0,1,4,19,0,0,0,0,7.0,0,0.0,1.0,11.0,0

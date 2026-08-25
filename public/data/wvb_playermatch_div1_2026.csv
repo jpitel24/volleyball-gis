@@ -21,6 +21,30 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-08-23,6599090,SMU,ACC,Texas A&M,SEC,Neutral,5,Elle Vandeweghe,MB,2,1,1,2,0.0,0,2,2,0,0,0,0,1,0,3.5,0,0.0,0.0,7.0,1
 2026-2027,2026-08-23,6599090,SMU,ACC,Texas A&M,SEC,Neutral,7,Ellie Moore,S,1,0,0,0,0.0,0,0,0,1,0,0,0,0,0,0.0,0,0.0,0.0,3.0,0
 2026-2027,2026-08-23,6599090,SMU,ACC,Texas A&M,SEC,Neutral,8,Mia Silva,L/DS,1,0,0,0,0.0,0,0,1,0,0,0,0,0,0,0.0,0,0.0,0.0,1.0,0
+2026-2027,2026-08-24,6599159,Texas,SEC,Marquette,Big East,Neutral,22,Henley Anderson,OH,5,7,7,20,0.0,0,0,2,2,0,0,0,2,0,8.0,0,0.0,2.0,4.0,2
+2026-2027,2026-08-24,6599159,Texas,SEC,Marquette,Big East,Neutral,3,Rella Binney,S,5,0,0,0,0.0,36,2,0,11,0,0,0,0,0,2.0,0,0.0,82.0,26.0,0
+2026-2027,2026-08-24,6599159,Texas,SEC,Marquette,Big East,Neutral,55,Nya Bunton,MB,5,5,2,15,0.2,1,0,0,3,1,0,0,7,0,8.5,0,0.0,3.0,0.0,7
+2026-2027,2026-08-24,6599159,Texas,SEC,Marquette,Big East,Neutral,32,Ramsey Gary,L,5,0,0,0,0.0,3,1,1,16,33,2,0,0,0,1.0,0,0.0,18.0,8.0,0
+2026-2027,2026-08-24,6599159,Texas,SEC,Marquette,Big East,Neutral,5,Genevieve Harris,S,5,0,0,0,0.0,23,0,5,4,0,0,0,0,0,0.0,0,0.0,48.0,15.0,0
+2026-2027,2026-08-24,6599159,Texas,SEC,Marquette,Big East,Neutral,10,Taylor Harvey,MB,5,3,2,9,0.111,0,0,0,1,1,0,0,3,0,4.5,0,0.0,0.0,0.0,3
+2026-2027,2026-08-24,6599159,Texas,SEC,Marquette,Big East,Neutral,16,Anja Kujundzic,L,5,0,0,0,0.0,0,0,0,0,0,0,0,0,0,0.0,0,0.0,0.0,2.0,0
+2026-2027,2026-08-24,6599159,Texas,SEC,Marquette,Big East,Neutral,23,Cari Spears,OH,5,17,4,35,0.371,0,4,4,7,1,0,0,4,0,23.0,0,0.0,1.0,17.0,4
+2026-2027,2026-08-24,6599159,Texas,SEC,Marquette,Big East,Neutral,4,Torrey Stafford,OH,5,19,4,44,0.341,2,1,6,12,15,0,0,4,0,22.0,0,0.0,6.0,13.0,4
+2026-2027,2026-08-24,6599159,Texas,SEC,Marquette,Big East,Neutral,6,Abby Vander Wal,OH,5,14,5,36,0.25,0,2,6,2,29,0,0,2,0,17.0,0,0.0,2.0,14.0,2
+2026-2027,2026-08-24,6599159,Texas,SEC,Marquette,Big East,Neutral,2,Callie Krueger,L/DS,4,0,0,0,0.0,0,0,0,1,7,1,0,0,0,0.0,0,0.0,1.0,10.0,0
+2026-2027,2026-08-24,6599159,Texas,SEC,Marquette,Big East,Neutral,17,Emma Cugino,L/DS,1,0,0,0,0.0,0,0,0,0,0,0,0,0,0,0.0,0,,,,0
+2026-2027,2026-08-24,6599159,Marquette,Big East,Texas,SEC,Neutral,6,Allie Beers,OH,5,0,0,2,0.0,1,1,1,9,15,3,0,1,0,1.5,0,0.0,4.0,16.0,1
+2026-2027,2026-08-24,6599159,Marquette,Big East,Texas,SEC,Neutral,24,Avery Helms,DS,5,0,0,1,0.0,2,0,0,5,15,2,0,0,0,0.0,0,0.0,3.0,11.0,0
+2026-2027,2026-08-24,6599159,Marquette,Big East,Texas,SEC,Neutral,11,Tani Juric,OPP,5,7,5,28,0.071,0,0,0,7,0,0,0,0,0,7.0,0,0.0,2.0,0.0,0
+2026-2027,2026-08-24,6599159,Marquette,Big East,Texas,SEC,Neutral,2,Emi Juric,L/DS,5,0,0,0,0.0,3,1,0,13,16,1,0,0,0,1.0,0,0.0,17.0,21.0,0
+2026-2027,2026-08-24,6599159,Marquette,Big East,Texas,SEC,Neutral,3,Luanna Markus,S,5,2,0,3,0.667,35,0,0,11,0,0,0,6,0,5.0,0,0.0,109.0,12.0,6
+2026-2027,2026-08-24,6599159,Marquette,Big East,Texas,SEC,Neutral,7,Keira Schmidt,MB,5,4,1,9,0.333,0,0,2,2,0,0,0,2,0,5.0,0,0.0,1.0,9.0,2
+2026-2027,2026-08-24,6599159,Marquette,Big East,Texas,SEC,Neutral,20,Carson Tyler,OH,5,18,9,47,0.191,1,1,3,9,32,2,0,2,0,20.0,0,0.0,1.0,15.0,2
+2026-2027,2026-08-24,6599159,Marquette,Big East,Texas,SEC,Neutral,15,Molly Welge,MB,4,3,2,5,0.2,0,0,1,1,0,0,0,5,0,5.5,0,0.0,0.0,7.0,5
+2026-2027,2026-08-24,6599159,Marquette,Big East,Texas,SEC,Neutral,4,Caydence Doolan,OH,3,2,2,12,0.0,0,0,0,0,0,0,0,0,1,2.0,0,0.0,0.0,1.0,0
+2026-2027,2026-08-24,6599159,Marquette,Big East,Texas,SEC,Neutral,10,Emma Parks,OH,3,6,6,22,0.0,0,0,0,2,7,2,0,3,0,7.5,0,0.0,1.0,0.0,3
+2026-2027,2026-08-24,6599159,Marquette,Big East,Texas,SEC,Neutral,1,Julia Stanev,MB,3,0,3,6,-0.5,0,0,0,0,0,0,0,5,0,2.5,0,0.0,2.0,0.0,5
+2026-2027,2026-08-24,6599159,Marquette,Big East,Texas,SEC,Neutral,14,Annika Kowalski,DS,2,0,0,0,0.0,0,0,0,0,0,0,0,0,0,0.0,0,0.0,0.0,2.0,0
 2026-2027,2026-08-21,6603081,Kentucky,SEC,Wisconsin,Big Ten,Neutral,15,Lizzie Carr,MB,3,8,0,14,0.571,0,0,0,2,0,0,0,4,1,10.0,0,0.0,0.0,0.0,4
 2026-2027,2026-08-21,6603081,Kentucky,SEC,Wisconsin,Big Ten,Neutral,27,Brynn Covell,S,3,0,0,0,0.0,0,0,0,2,0,0,0,0,0,0.0,0,0.0,2.0,8.0,0
 2026-2027,2026-08-21,6603081,Kentucky,SEC,Wisconsin,Big Ten,Neutral,17,Brooklyn DeLeye,OH,3,12,2,31,0.323,2,1,3,6,13,0,0,1,0,13.5,0,0.0,2.0,15.0,1
@@ -127,3 +151,27 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-08-22,6607974,Arizona St.,Big 12,Texas,SEC,Neutral,1,Una Vajagic,OH,4,12,5,30,0.233,3,0,1,9,22,1,0,2,1,13.0,0,0.0,7.0,13.0,2
 2026-2027,2026-08-22,6607974,Arizona St.,Big 12,Texas,SEC,Neutral,11,Isabella Costantini,S,3,0,0,0,0.0,0,0,1,2,0,0,0,0,0,0.0,0,0.0,0.0,5.0,0
 2026-2027,2026-08-22,6607974,Arizona St.,Big 12,Texas,SEC,Neutral,4,Ella Lewis,OH,2,0,0,0,0.0,0,0,0,0,0,0,0,0,0,0.0,0,0.0,0.0,4.0,0
+2026-2027,2026-08-24,6615179,Xavier,Big East,Pittsburgh,ACC,Neutral,12,McKinley Boehm,MB,3,4,2,14,0.143,0,0,2,1,0,0,0,3,0,5.5,0,0.0,0.0,3.0,3
+2026-2027,2026-08-24,6615179,Xavier,Big East,Pittsburgh,ACC,Neutral,14,Catherine Flaharty,OH,3,3,4,11,-0.091,0,0,0,1,0,0,0,1,0,3.5,0,0.0,0.0,0.0,1
+2026-2027,2026-08-24,6615179,Xavier,Big East,Pittsburgh,ACC,Neutral,6,Julia Grace,L/DS,3,0,0,0,0.0,0,0,1,2,9,0,0,0,0,0.0,0,0.0,0.0,10.0,0
+2026-2027,2026-08-24,6615179,Xavier,Big East,Pittsburgh,ACC,Neutral,8,Macy Hatkevich,S,3,1,0,2,0.5,22,1,0,3,0,0,0,4,0,4.0,0,0.0,60.0,10.0,4
+2026-2027,2026-08-24,6615179,Xavier,Big East,Pittsburgh,ACC,Neutral,4,Charlotte Moriarty,OH,3,17,4,40,0.325,1,0,2,5,27,2,0,1,0,17.5,0,0.0,1.0,8.0,1
+2026-2027,2026-08-24,6615179,Xavier,Big East,Pittsburgh,ACC,Neutral,2,Kelsey Niesen,L/DS,3,0,0,0,0.0,1,1,1,10,17,2,0,0,0,1.0,0,0.0,3.0,11.0,0
+2026-2027,2026-08-24,6615179,Xavier,Big East,Pittsburgh,ACC,Neutral,11,Kasey Quenichet,L/DS,3,0,0,0,0.0,0,0,0,2,0,0,0,0,0,0.0,0,0.0,0.0,4.0,0
+2026-2027,2026-08-24,6615179,Xavier,Big East,Pittsburgh,ACC,Neutral,15,Ava Tilden,OH,3,1,5,9,-0.444,0,0,0,2,7,1,0,0,0,1.0,0,0.0,1.0,0.0,0
+2026-2027,2026-08-24,6615179,Xavier,Big East,Pittsburgh,ACC,Neutral,18,Iyanna Battle,MB,2,3,0,3,1.0,0,0,0,0,0,0,0,0,0,3.0,0,,,,0
+2026-2027,2026-08-24,6615179,Xavier,Big East,Pittsburgh,ACC,Neutral,7,Elouise Czajkowski,L/DS,2,0,0,0,0.0,0,0,1,0,3,0,0,0,0,0.0,0,0.0,1.0,8.0,0
+2026-2027,2026-08-24,6615179,Xavier,Big East,Pittsburgh,ACC,Neutral,9,Quinci Thomas,OH,2,1,0,5,0.2,0,0,0,0,2,0,0,0,0,1.0,0,0.0,1.0,0.0,0
+2026-2027,2026-08-24,6615179,Xavier,Big East,Pittsburgh,ACC,Neutral,5,Jenna Barhorst,S,1,0,0,0,0.0,6,1,0,1,0,0,0,0,0,1.0,0,0.0,16.0,3.0,0
+2026-2027,2026-08-24,6615179,Xavier,Big East,Pittsburgh,ACC,Neutral,16,Margo Kemp,MB,1,1,1,5,0.0,0,0,0,0,0,0,0,1,0,1.5,0,0.0,1.0,0.0,1
+2026-2027,2026-08-24,6615179,Pittsburgh,ACC,Xavier,Big East,Neutral,5,Olivia Babcock,OH,3,12,3,20,0.45,0,2,3,5,1,0,0,3,0,15.5,0,0.0,1.0,9.0,3
+2026-2027,2026-08-24,6615179,Pittsburgh,ACC,Xavier,Big East,Neutral,8,Blaire Bayless,OH,3,13,5,28,0.286,0,0,0,4,13,0,0,2,0,14.0,0,0.0,0.0,1.0,2
+2026-2027,2026-08-24,6615179,Pittsburgh,ACC,Xavier,Big East,Neutral,20,Abbey Emch,MB,3,4,1,8,0.375,0,0,0,2,1,0,0,4,0,6.0,0,0.0,0.0,0.0,4
+2026-2027,2026-08-24,6615179,Pittsburgh,ACC,Xavier,Big East,Neutral,2,Maaike Heilig,MB,3,4,0,4,1.0,1,2,2,1,0,0,1,4,0,9.0,0,0.0,1.0,12.0,5
+2026-2027,2026-08-24,6615179,Pittsburgh,ACC,Xavier,Big East,Neutral,7,Izzy Masten,L/DS,3,0,0,0,0.0,0,0,0,1,2,0,0,0,0,0.0,0,0.0,0.0,0.0,0
+2026-2027,2026-08-24,6615179,Pittsburgh,ACC,Xavier,Big East,Neutral,13,Mallorie Meyer,L/DS,3,0,0,0,0.0,3,1,1,2,19,2,0,0,0,1.0,0,0.0,5.0,15.0,0
+2026-2027,2026-08-24,6615179,Pittsburgh,ACC,Xavier,Big East,Neutral,21,Izzy Starck,S,3,1,1,2,0.0,29,0,1,10,1,0,0,1,0,1.5,0,0.0,61.0,15.0,1
+2026-2027,2026-08-24,6615179,Pittsburgh,ACC,Xavier,Big East,Neutral,25,Haiti Tautua'a,S,3,0,0,0,0.0,3,1,0,1,0,0,0,0,0,1.0,0,0.0,6.0,10.0,0
+2026-2027,2026-08-24,6615179,Pittsburgh,ACC,Xavier,Big East,Neutral,9,Trinity Thompson,S,3,0,0,1,0.0,3,0,0,7,0,0,0,0,0,0.0,0,0.0,4.0,0.0,0
+2026-2027,2026-08-24,6615179,Pittsburgh,ACC,Xavier,Big East,Neutral,6,Sophia Gregoire,OH,2,4,2,12,0.167,1,0,1,1,5,1,0,0,0,4.0,0,0.0,2.0,5.0,0
+2026-2027,2026-08-24,6615179,Pittsburgh,ACC,Xavier,Big East,Neutral,12,Ayanna Watson,OH,2,8,1,15,0.467,0,0,0,2,8,0,0,2,0,9.0,0,0.0,0.0,7.0,2

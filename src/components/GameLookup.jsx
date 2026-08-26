@@ -6,6 +6,7 @@ import { computeGIS, computePGIS } from '../lib/gis.js';
 import { loadGisPlus, makeKey, seasonStrFromYear } from '../lib/gisPlus.js';
 import { navigate, hrefFor } from '../lib/router.js';
 import { useStickyYear } from '../lib/useStickyYear.js';
+import TeamChip from './TeamChip.jsx';
 
 const YEARS = [2026, 2025, 2024, 2023, 2022];
 
@@ -246,9 +247,9 @@ export default function GameLookup({ route }) {
             >
               <span className="gb-game-date">{g.date}</span>
               <span className="gb-game-matchup">
-                <span className="gb-game-team">{g.homeTeam}</span>
+                <span className="gb-game-team"><TeamChip team={g.homeTeam} />{g.homeTeam}</span>
                 <span className="gb-game-vs">vs</span>
-                <span className="gb-game-team">{g.awayTeam}</span>
+                <span className="gb-game-team"><TeamChip team={g.awayTeam} />{g.awayTeam}</span>
               </span>
               <span className="gb-game-meta">
                 {g.nSets}S

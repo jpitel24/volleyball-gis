@@ -3,6 +3,7 @@ import { useData } from '../lib/DataContext.jsx';
 import { loadPlayerIndex, isP4 } from '../lib/playerIndex.js';
 import { posColor, pgisLabel, posGroup, COL_TIPS } from '../lib/gis.js';
 import { useStickyYear } from '../lib/useStickyYear.js';
+import TeamChip from './TeamChip.jsx';
 
 const MAX_RESULTS = 20;
 const YEAR_OPTIONS = [2026, 2025, 2024, 2023, 2022];
@@ -194,7 +195,7 @@ function TeamCard({ t, expanded, onToggle }) {
         onClick={onToggle}
         style={{ cursor: 'pointer' }}
       >
-        <span className="pb-name">{t.team}</span>
+        <span className="pb-name"><TeamChip team={t.team} size={12} />{t.team}</span>
         <span className="pb-team" style={{ marginLeft: '0.5rem' }}>{t.year}</span>
         <div className="pb-career-chips">
           <span className="pb-chip">{t.games} G · {t.sets} S</span>

@@ -7,6 +7,7 @@ import { loadPlayerIndex, isP4 } from '../lib/playerIndex.js';
 // the tier check to keep the source of truth in playerIndex.
 const isSeasonP4 = (s) => isP4(s.conference);
 import { posColor, pgisLabel, posGroup, computeCategoryGIS, COL_TIPS } from '../lib/gis.js';
+import TeamChip from './TeamChip.jsx';
 
 const MAX_RESULTS = 50;
 const POS_FILTERS = [
@@ -366,7 +367,13 @@ function PlayerCard({ player, expanded, onToggle, expandedSeason, onToggleSeason
         </span>
         <span className="pb-name">{player.name}</span>
         <span className="pb-team" style={{ marginLeft: '0.5rem' }}>
-          {player.teams.slice(0, 3).join(' · ')}
+          {player.teams.slice(0, 3).map((t, i) => (
+            <span key={t}>
+              {i > 0 && ' · '}
+              <TeamChip team={t} />
+              {t}
+            </span>
+          ))}
         </span>
         <div className="pb-career-chips">
           <span className="pb-chip">{c.games} G · {c.sets} S</span>

@@ -3,6 +3,7 @@ import { useData } from '../lib/DataContext.jsx';
 import { loadPlayerIndex, isP4, P4_CONFERENCES } from '../lib/playerIndex.js';
 import { posColor, pgisLabel, posGroup, COL_TIPS } from '../lib/gis.js';
 import { useStickyYear } from '../lib/useStickyYear.js';
+import TeamChip from './TeamChip.jsx';
 
 const MAX_RESULTS = 100;
 
@@ -508,7 +509,7 @@ export default function SeasonLookup() {
                     <div key={i} className="aa-card" style={{ borderTop: `3px solid ${pc}` }}>
                       <div className="aa-slot" style={{ color: pc }}>{entry.slot}</div>
                       <div className="aa-name">{r.name}</div>
-                      <div className="aa-team">{r.team}</div>
+                      <div className="aa-team"><TeamChip team={r.team} />{r.team}</div>
                       <div className="aa-stats">
                         <span className="aa-pgis" style={{ color: 'var(--pgis)' }}>pGIS {r.pGIS.toFixed(1)}</span>
                         <span className="aa-gisplus" style={{ color: 'var(--gisplus)' }}>{r.gisPlus.toFixed(2)} GIS+/S</span>
@@ -555,7 +556,7 @@ export default function SeasonLookup() {
                 <tr key={r.playerKey + '_' + r.year}>
                   <td style={{ textAlign: 'right', color: 'var(--muted)' }}>{i + 1}</td>
                   <td className="pb-name" style={{ color: posColor(r.position) }}>{r.name}</td>
-                  <td className="pb-team">{r.team}</td>
+                  <td className="pb-team"><TeamChip team={r.team} />{r.team}</td>
                   <td>{r.position}</td>
                   <td style={{ textAlign: 'right' }}>{r.year}</td>
                   <td style={{ textAlign: 'right' }}>{r.games}</td>

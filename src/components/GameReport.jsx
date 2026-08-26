@@ -3,6 +3,7 @@ import PlayerCard from './PlayerCard.jsx';
 import PlayerInspector from './PlayerInspector.jsx';
 import { findRPIValue, rpiToRank, seasonFromGameId, computeCategoryGIS, CATEGORIES } from '../lib/gis.js';
 import { getSchoolColors } from '../data/schoolColors.js';
+import TeamChip from './TeamChip.jsx';
 
 // A player "participated" if they have any non-zero counting stat line.
 // This is the visibility predicate for the roster grid and tug-of-war —
@@ -128,6 +129,7 @@ function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpi
         <div className="team-hdr-left">
           {ownRank && <span className="rpi-rank-badge">RPI #{ownRank}</span>}
           <div className="team-name-lbl">
+            <TeamChip team={teamName} size={12} />
             {teamName}
             {isWinner && <span className="winner-crown">🏆 WINNER</span>}
           </div>

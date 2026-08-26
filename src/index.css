@@ -413,11 +413,33 @@ body {
 .pb-chip { font-family:'JetBrains Mono',monospace; font-size:0.64rem;
   color:var(--muted); background:var(--surface2); border:1px solid var(--border);
   padding:0.18rem 0.5rem; border-radius:4px; }
-.pb-table-wrap { overflow-x: auto; }
+/* overflow-y: clip is required so the wrap doesn't become a y-axis scroll
+   ancestor — without it, sticky headers inside would pin to the wrap's
+   top instead of the viewport's, defeating the purpose. `clip` doesn't
+   create a scroll context the way `auto` does. */
+.pb-table-wrap { overflow-x: auto; overflow-y: clip; }
 .pb-season-table { width: 100%; border-collapse: collapse; }
 .pb-season-table td, .pb-season-table th { padding: 0.45rem 0.7rem; }
 .pb-season-table tr:hover td { background: var(--surface2); }
 .pb-season-table tr td { border-bottom: 1px solid var(--border); }
+/* Sticky header rows so column labels stay visible when a long leaderboard
+   scrolls off the top of the viewport. The inset box-shadow substitutes
+   for a bottom border since sticky cells don't render collapsed borders
+   reliably during scroll. */
+.pb-season-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--surface);
+  box-shadow: inset 0 -1px 0 var(--border);
+}
+.pb-log-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--surface2);
+  box-shadow: inset 0 -1px 0 var(--border);
+}
 .pb-yr   { font-weight:700; color:var(--accent); }
 .pb-team { color:var(--muted); font-size:0.72rem; }
 .pb-expand-btn { background:transparent; border:none; color:var(--muted);

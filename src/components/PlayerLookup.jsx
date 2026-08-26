@@ -589,7 +589,7 @@ export default function PlayerLookup({ onGameDeepLink }) {
           <div className="tool-sidebar-label">Search</div>
           <input
             className="pb-search"
-            placeholder="Player name…"
+            placeholder="Filter by player name…"
             value={search}
             onChange={e => { setSearch(e.target.value); setExpanded(null); setExpandedS(null); }}
             disabled={buildingIndex || !index}

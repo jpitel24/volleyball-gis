@@ -5,30 +5,23 @@ import { loadYear, gameRowsToBoxscore, loadSetScores } from '../lib/csvGames.js'
 import { computeGIS, computePGIS } from '../lib/gis.js';
 import { loadGisPlus, makeKey, seasonStrFromYear } from '../lib/gisPlus.js';
 import { navigate, hrefFor } from '../lib/router.js';
+import { useStickyYear } from '../lib/useStickyYear.js';
 
 const YEARS = [2026, 2025, 2024, 2023, 2022];
-const YEAR_STORAGE_KEY = 'gameLookup.year';
-
-// Restore the last year the user picked. GameLookup unmounts every time the
-// user navigates to another tool, so without persistence the year silently
-// resets to 2026 on return — surfacing a totally different "first game" than
-// the one they were just looking at.
-function readStoredYear() {
-  if (typeof window === 'undefined') return 2026;
-  const raw = window.sessionStorage?.getItem(YEAR_STORAGE_KEY);
-  const y = parseInt(raw, 10);
-  return YEARS.includes(y) ? y : 2026;
-}
 
 export default function GameLookup({ route }) {
   const { rpiByYear, pgisTables, categoryPgisTables } = useData();
 
-  // If the URL already names a year (/games/:year/:key), prefer it — that's
-  // the user asking for a specific game and its season is authoritative.
-  // Otherwise fall back to the last-viewed year they picked from the dropdown.
-  const [year, setYear]             = useState(() =>
-    (route?.name === 'games' && route.year) ? route.year : readStoredYear()
-  );
+  const [year, setYear]             = useStickyYear(2026);
+  // If the URL names a specific game, its season wins over the shared
+  // sticky value — a shared /games/2024/keyX link should open in 2024
+  // even if the user was last browsing 2026.
+  useEffect(() => {
+    if (route?.name === 'games' && route.year && route.year !== year) {
+      setYear(route.year);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [yearData, setYearData]     = useState(null);
   const [loadingYear, setLoadingYear] = useState(false);
   const [search, setSearch]         = useState('');
@@ -54,11 +47,7 @@ export default function GameLookup({ route }) {
   // source of truth — no consume-callback needed.
   useEffect(() => {
     if (!route || route.name !== 'games' || !route.gameKey) return;
-    if (route.year !== year) {
-      setYear(route.year);
-      try { window.sessionStorage?.setItem(YEAR_STORAGE_KEY, String(route.year)); } catch (_) { /* ignore */ }
-      return;
-    }
+    if (route.year !== year) { setYear(route.year); return; }
     if (!yearData) return;
     if (openKey === route.gameKey) return;  // already open
     const g = yearData.games.find(x => x.key === route.gameKey);
@@ -193,9 +182,7 @@ export default function GameLookup({ route }) {
             className="gb-year-select"
             value={year}
             onChange={e => {
-              const y = parseInt(e.target.value, 10);
-              setYear(y);
-              try { window.sessionStorage?.setItem(YEAR_STORAGE_KEY, String(y)); } catch (_) { /* ignore */ }
+              setYear(parseInt(e.target.value, 10));
               // Reset to /games so we don't leave a stale game key in the URL.
               navigate(hrefFor('games'));
             }}
@@ -209,7 +196,7 @@ export default function GameLookup({ route }) {
         <div className="tool-sidebar-section">
           <div className="tool-sidebar-label">Search</div>
           <input
-            className="gb-search"
+            className="pb-search"
             placeholder="Filter by team name…"
             value={search}
             onChange={e => { setSearch(e.target.value); setReport(null); }}

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useData } from '../lib/DataContext.jsx';
 import { loadPlayerIndex, isP4, P4_CONFERENCES } from '../lib/playerIndex.js';
 import { posColor, pgisLabel, posGroup, COL_TIPS } from '../lib/gis.js';
+import { useStickyYear } from '../lib/useStickyYear.js';
 
 const MAX_RESULTS = 100;
 
@@ -162,12 +163,29 @@ export default function SeasonLookup() {
   const [indexErr, setIndexErr]      = useState(null);
   const [buildingIndex, setBuilding] = useState(false);
 
-  const [year, setYear]           = useState('2026');
+  // Season Browser's year selector accepts 'ALL' (cross-season leaderboard)
+  // in addition to numeric years, so we keep it as a string here. The shared
+  // sticky year (also used by Games/Teams) stays numeric — we hydrate from
+  // it on mount and write back when the user picks a specific year, but the
+  // 'ALL' pick stays local.
+  const [sharedYear, setSharedYear] = useStickyYear(2026);
+  const [year, setYearState]        = useState(String(sharedYear));
+  const setYear = (next) => {
+    setYearState(next);
+    if (next !== 'ALL') {
+      const n = parseInt(next, 10);
+      if (Number.isFinite(n)) setSharedYear(n);
+    }
+  };
   const [posFilter, setPosFilter] = useState('ALL');
   const [minT50, setMinT50]       = useState(0);
   const [sortBy, setSortBy]       = useState('gisPlus');
   // Conference filter: 'ALL' | 'P4' | 'NON_P4' | any specific conference label
   const [confFilter, setConfFilter] = useState('ALL');
+  // Team filter: 'ALL' | any specific team name. Restricted to teams within
+  // the current conference filter — picking a conference shrinks the team
+  // dropdown to that conference's rosters.
+  const [teamFilter, setTeamFilter] = useState('ALL');
 
   useEffect(() => {
     if (loading || !pgisTables) return;
@@ -192,6 +210,33 @@ export default function SeasonLookup() {
     return Array.from(set).sort((a, b) => a.localeCompare(b));
   }, [allRows]);
 
+  // Teams available in the current (year, conference) slice. Applying the
+  // conference filter first means picking "SEC" narrows the team dropdown
+  // to just SEC schools — the "click a conference, then a team in it"
+  // flow the user asked for.
+  const availableTeams = useMemo(() => {
+    const set = new Set();
+    for (const r of allRows) {
+      if (!r.team) continue;
+      if (confFilter !== 'ALL') {
+        if (confFilter === 'P4' && !isP4(r.conference)) continue;
+        if (confFilter === 'NON_P4' && isP4(r.conference)) continue;
+        if (confFilter !== 'P4' && confFilter !== 'NON_P4'
+            && r.conference !== confFilter) continue;
+      }
+      set.add(r.team);
+    }
+    return Array.from(set).sort((a, b) => a.localeCompare(b));
+  }, [allRows, confFilter]);
+
+  // If the current team pick is no longer in the (year, conference) slice,
+  // fall back to ALL so the leaderboard doesn't silently empty out.
+  useEffect(() => {
+    if (teamFilter !== 'ALL' && !availableTeams.includes(teamFilter)) {
+      setTeamFilter('ALL');
+    }
+  }, [availableTeams, teamFilter]);
+
   const filtered = useMemo(() => {
     const rows = allRows.filter(r => {
       if (posFilter !== 'ALL' && posGroup(r.position) !== posFilter) return false;
@@ -205,6 +250,7 @@ export default function SeasonLookup() {
         if (confFilter !== 'P4' && confFilter !== 'NON_P4'
             && r.conference !== confFilter) return false;
       }
+      if (teamFilter !== 'ALL' && r.team !== teamFilter) return false;
       return true;
     });
     const get = (r) => {
@@ -225,7 +271,7 @@ export default function SeasonLookup() {
     };
     rows.sort((a, b) => get(b) - get(a));
     return rows;
-  }, [allRows, posFilter, minT50, sortBy, confFilter]);
+  }, [allRows, posFilter, minT50, sortBy, confFilter, teamFilter]);
 
   const visible  = filtered.slice(0, MAX_RESULTS);
   const totalHits = filtered.length;
@@ -294,7 +340,7 @@ export default function SeasonLookup() {
       <aside className="tool-sidebar">
         <div className="tool-sidebar-title">Seasons</div>
         <div className="tool-sidebar-section">
-          <div className="tool-sidebar-label">Year</div>
+          <div className="tool-sidebar-label">Season</div>
           <div className="tool-sidebar-pills">
             {YEAR_FILTERS.map(f => (
               <button
@@ -350,6 +396,32 @@ export default function SeasonLookup() {
               <option key={c} value={c}>
                 {c}{P4_CONFERENCES.has(c) ? '  ★' : ''}
               </option>
+            ))}
+          </select>
+        </div>
+        <div className="tool-sidebar-section">
+          <div className="tool-sidebar-label">Team</div>
+          <select
+            value={teamFilter}
+            onChange={(e) => setTeamFilter(e.target.value)}
+            disabled={buildingIndex || !index}
+            style={{
+              width: '100%',
+              padding: '0.4rem 0.5rem',
+              background: 'var(--panel-2)',
+              color: 'var(--fg)',
+              border: '1px solid var(--border)',
+              borderRadius: 4,
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '0.78rem',
+            }}
+          >
+            <option value="ALL">
+              All Teams{confFilter !== 'ALL' ? ` (${availableTeams.length})` : ''}
+            </option>
+            {availableTeams.length > 0 && <option disabled>──────────</option>}
+            {availableTeams.map(t => (
+              <option key={t} value={t}>{t}</option>
             ))}
           </select>
         </div>

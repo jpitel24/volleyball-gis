@@ -396,6 +396,7 @@ body {
   border-radius: 5px; padding: 0.42rem 0.8rem; width: 100%; }
 .pb-search::placeholder { color: var(--muted); }
 .pb-search:focus { outline: none; border-color: var(--accent); }
+.pb-search:disabled { opacity: 0.4; }
 .pb-hint { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
   color: var(--muted); padding: 2rem 0; text-align: center; }
 .pb-card { background: var(--surface); border: 1px solid var(--border);

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useData } from '../lib/DataContext.jsx';
 import { loadPlayerIndex, isP4 } from '../lib/playerIndex.js';
 import { posColor, pgisLabel, posGroup, COL_TIPS } from '../lib/gis.js';
+import { useStickyYear } from '../lib/useStickyYear.js';
 
 const MAX_RESULTS = 20;
 const YEAR_OPTIONS = [2026, 2025, 2024, 2023, 2022];
@@ -266,7 +267,7 @@ export default function TeamLookup() {
   const [indexErr, setIndexErr]      = useState(null);
   const [buildingIndex, setBuilding] = useState(false);
 
-  const [year, setYear]       = useState(2026);
+  const [year, setYear]       = useStickyYear(2026);
   const [search, setSearch]   = useState('');
   const [expanded, setExpand] = useState(null);
 
@@ -313,7 +314,7 @@ export default function TeamLookup() {
       <aside className="tool-sidebar">
         <div className="tool-sidebar-title">Teams</div>
         <div className="tool-sidebar-section">
-          <div className="tool-sidebar-label">Year</div>
+          <div className="tool-sidebar-label">Season</div>
           <div className="tool-sidebar-pills">
             {YEAR_OPTIONS.map(y => (
               <button
@@ -332,7 +333,7 @@ export default function TeamLookup() {
           <div className="tool-sidebar-label">Search</div>
           <input
             className="pb-search"
-            placeholder="Team name…"
+            placeholder="Filter by team name…"
             value={search}
             onChange={e => { setSearch(e.target.value); setExpand(null); }}
             disabled={buildingIndex || !index}

@@ -49,11 +49,16 @@ export default function GameLookup({ route }) {
     if (!route || route.name !== 'games' || !route.gameKey) return;
     if (route.year !== year) { setYear(route.year); return; }
     if (!yearData) return;
+    // Wait for pgisTables from DataContext before computing. On a hard
+    // refresh of /games/:year/:key this effect fires immediately, and if
+    // we open the game before the tables arrive computeGIS runs with an
+    // empty lookup and every pGIS value comes out null.
+    if (!pgisTables) return;
     if (openKey === route.gameKey) return;  // already open
     const g = yearData.games.find(x => x.key === route.gameKey);
     if (g) selectGame(g);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [route, yearData]);
+  }, [route, yearData, pgisTables]);
 
   // ── Closing the report (back to /games) clears the open match ──────────────
   useEffect(() => {

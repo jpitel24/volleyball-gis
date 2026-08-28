@@ -292,7 +292,14 @@ export function rpiToRank(rpiVal, season, RPI_BY_YEAR) {
 
 // ─── pGIS ─────────────────────────────────────────────────────────────────────
 export function computePGIS(gisRaw, position, nSets, PGIS_TABLES) {
-  if (!gisRaw || gisRaw <= 0) return null;
+  // Only reject truly missing input — null/undefined/NaN. A negative or
+  // zero gisRaw is a legitimate below-percentile performance and should
+  // get a real (near-zero) percentile, not null. Returning null for
+  // negatives used to silently pull a player's season pGIS to 0 for
+  // every bad game (which then averaged with other 0s produced a "0.00"
+  // display that looked like a missing-data flag), even though she had
+  // measurable — just poor — production.
+  if (gisRaw == null || Number.isNaN(gisRaw)) return null;
   const grp  = posGroup(position);
   if (!grp) return null;
   const key  = String(Math.min(Math.max(nSets, 3), 5));

@@ -979,12 +979,17 @@ export function loadPlayerIndex(
 
     const byKey = new Map(players.map(p => [p.key, p]));
 
-    // Free intermediate structures so the GC can reclaim them. The
-    // gisPlus Map (~24 MB) is only consulted during build; byPlayer is
-    // the scratch precursor to `players`; yearIndices holds parsed CSV
-    // rows that were copied into per-game records. Frees 50-80 MB.
+    // Free intermediate structures so the GC can reclaim them. byPlayer
+    // is the scratch precursor to `players`; yearIndices holds parsed
+    // CSV rows that were copied into per-game records. Frees 30-50 MB.
+    //
+    // DO NOT clear gisPlusMap here — it is the shared cached Map that
+    // GameLookup's per-match overlay also consults. Clearing it means
+    // any Games-tool visit AFTER a Season/Player/Team browse silently
+    // gets an empty overlay and falls back to the JS-derived (wrong-
+    // scale) pGIS from computeGIS. The Map is cached at module scope,
+    // so keeping it around costs one allocation, not one per visit.
     try {
-      gisPlusMap?.clear?.();
       byPlayer.clear();
       for (let i = 0; i < yearIndices.length; i++) yearIndices[i] = null;
       yearIndices.length = 0;

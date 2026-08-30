@@ -30,6 +30,8 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import json
+import random
 import sqlite3
 import sys
 import time
@@ -37,6 +39,29 @@ from pathlib import Path
 
 from playwright.sync_api import TimeoutError as PWTimeout
 from playwright.sync_api import sync_playwright
+
+
+def _load_fresh_cookie_state(path: Path, max_age_min: int) -> str | None:
+    """Return the persisted storage_state path if a valid ak_bmsc cookie
+    is present and the file is recent. Lets the boxscore scraper skip
+    the cold warmup when the PBP scraper (or a previous boxscore run)
+    already earned a session."""
+    if not path.exists():
+        return None
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        cookies = raw.get("cookies", [])
+        if not any(c.get("name") == "ak_bmsc" for c in cookies):
+            return None
+        age_s = time.time() - path.stat().st_mtime
+        if age_s > max_age_min * 60:
+            print(f"[boxscrape] persisted cookies are {age_s/60:.0f}min old — "
+                  "discarding, will re-warmup")
+            return None
+        return str(path)
+    except Exception as e:
+        print(f"[boxscrape] cookie load failed (non-fatal): {e}")
+        return None
 
 # ── Paths / config ────────────────────────────────────────────────────────────
 
@@ -55,6 +80,18 @@ PAGE_DWELL_MS       = 2_500
 MIN_VALID_SIZE      = 1_000     # below this, response is an Akamai stub
 ABORT_AFTER_BLOCK   = 3
 WARMUP_TIMEOUT_MS   = 30_000
+# Randomized inter-request throttle. The scraper had NO throttle before,
+# so 200 fetches went out ~as-fast-as-the-page-loads — 4-5s apart, all
+# from one IP, in monotonic ID order. That's the exact signature Akamai
+# blocks. Widening the gap and randomizing it makes each session look
+# more like a human clicking through matches.
+THROTTLE_MIN_S      = 6.0
+THROTTLE_MAX_S      = 14.0
+# Persist Akamai cookies across runs so we can skip the cold warmup and
+# reuse whatever session scrape_pbp.py just earned. Path matches PBP
+# scraper's so both scripts share the same jar.
+COOKIE_STATE_PATH   = Path("scripts/.pbp-build/scraper_cookies.json")
+COOKIE_MAX_AGE_MIN  = 60
 
 USER_AGENT_EDGE = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -223,13 +260,22 @@ def main() -> None:
 
     done = already_done_ids(conn)
     todo = [cid for cid in ids if cid not in done]
-    print(f"[boxscrape] already done: {len(done)}   to do: {len(todo)}")
+    # Randomize order — sequential contest ID access is one of the most
+    # obvious scraper fingerprints. The IDs happen to be time-ordered on
+    # NCAA's side too, so monotonic access screams "just grabbed today's
+    # matches." Shuffling breaks that pattern.
+    random.shuffle(todo)
+    print(f"[boxscrape] already done: {len(done)}   to do: {len(todo)}  (shuffled order)")
     if not todo:
         print("[boxscrape] nothing to do — exiting")
         return
 
     print("[boxscrape] make sure Cloudflare WARP is connected before continuing")
     print("[boxscrape] launching Edge (msedge channel) …")
+
+    fresh_state = _load_fresh_cookie_state(COOKIE_STATE_PATH, COOKIE_MAX_AGE_MIN)
+    if fresh_state:
+        print(f"[boxscrape] reusing persisted cookies from {COOKIE_STATE_PATH.name}")
 
     with sync_playwright() as p:
         browser = p.chromium.launch(
@@ -242,24 +288,29 @@ def main() -> None:
             viewport={"width": 1366, "height": 900},
             locale="en-US",
             timezone_id="America/Chicago",
+            storage_state=fresh_state,
         )
         context.add_init_script(
             "Object.defineProperty(navigator, 'webdriver', { get: () => false });"
         )
         page = context.new_page()
 
-        # Warmup — sets Akamai cookies (ak_bmsc, bm_*).
-        print(f"[boxscrape] warmup → {HOME_URL}")
-        try:
-            page.goto(HOME_URL, timeout=WARMUP_TIMEOUT_MS,
-                      wait_until="domcontentloaded")
-            page.wait_for_timeout(2_500)
-        except Exception as e:
-            print(f"[boxscrape] warmup failed: {e}")
-            browser.close()
-            sys.exit(2)
-        cookies = [c["name"] for c in context.cookies()]
-        print(f"[boxscrape] cookies after warmup: {cookies}")
+        # Warmup — skip when persistence already carried ak_bmsc in.
+        preloaded = {c["name"] for c in context.cookies()}
+        if "ak_bmsc" in preloaded:
+            print("[boxscrape] ak_bmsc already loaded — skipping warmup")
+        else:
+            print(f"[boxscrape] warmup → {HOME_URL}")
+            try:
+                page.goto(HOME_URL, timeout=WARMUP_TIMEOUT_MS,
+                          wait_until="domcontentloaded")
+                page.wait_for_timeout(2_500)
+            except Exception as e:
+                print(f"[boxscrape] warmup failed: {e}")
+                browser.close()
+                sys.exit(2)
+            cookies = [c["name"] for c in context.cookies()]
+            print(f"[boxscrape] cookies after warmup: {cookies}")
 
         # Iterate the queue ───────────────────────────────────────────
         consecutive_blocks = 0
@@ -278,6 +329,17 @@ def main() -> None:
                       "aborting. WARP exit may be flagged; toggle WARP off/on "
                       "or wait 30 min.")
                 break
+
+            if i < len(todo):
+                time.sleep(random.uniform(THROTTLE_MIN_S, THROTTLE_MAX_S))
+
+        # Persist cookies so subsequent runs (PBP or boxscore) can skip
+        # the warmup and inherit this session's Akamai handshake.
+        try:
+            context.storage_state(path=str(COOKIE_STATE_PATH))
+            print(f"[boxscrape] saved cookie state → {COOKIE_STATE_PATH.name}")
+        except Exception as e:
+            print(f"[boxscrape] cookie save failed (non-fatal): {e}")
 
         browser.close()
 

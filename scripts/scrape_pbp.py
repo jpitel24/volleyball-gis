@@ -30,12 +30,36 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
+import random
 import sqlite3
 import sys
 import time
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
+
+def _load_fresh_cookie_state(path: Path, max_age_min: int) -> str | None:
+    """Return the persisted storage_state path if it exists AND is recent
+    enough to be plausibly still valid on Akamai's side. Otherwise return
+    None so the caller does a normal cold warmup."""
+    if not path.exists():
+        return None
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        cookies = raw.get("cookies", [])
+        if not any(c.get("name") == "ak_bmsc" for c in cookies):
+            return None
+        age_s = time.time() - path.stat().st_mtime
+        if age_s > max_age_min * 60:
+            print(f"[scrape] persisted cookies are {age_s/60:.0f}min old — "
+                  "discarding, will re-warmup")
+            return None
+        return str(path)
+    except Exception as e:
+        print(f"[scrape] cookie load failed (non-fatal): {e}")
+        return None
+
 
 CACHE_DIR = Path("scripts/.pbp-cache")
 BUILD_DIR = Path("scripts/.pbp-build")
@@ -45,10 +69,22 @@ BUILD_DIR.mkdir(parents=True, exist_ok=True)
 
 # Tunables ────────────────────────────────────────────────────────────
 HOME_URL          = "https://stats.ncaa.org/"
-THROTTLE_S        = 1.5            # sleep between requests
+# Randomized throttle window (min, max seconds). Wider + slower than
+# the old fixed 1.5s to look less like a bot burst. Actual sleep is
+# uniform-random within this range each iteration — the variance is
+# itself a signal Akamai's WAF weights lower than a fixed cadence.
+THROTTLE_MIN_S    = 6.0
+THROTTLE_MAX_S    = 14.0
 WARMUP_DWELL_MS   = 3_000          # let homepage settle before scraping
 PAGE_DWELL_MS     = 1_500          # wait after each PBP nav
 NAV_TIMEOUT_MS    = 60_000
+# Persist Akamai cookies (ak_bmsc, bm_*) across runs so we skip the
+# cold warmup when possible. Cookie file lives inside .pbp-build so
+# it's ignored by git alongside progress.sqlite.
+COOKIE_STATE_PATH = Path("scripts/.pbp-build/scraper_cookies.json")
+# Reuse persisted cookies if they were saved within this many minutes.
+# Akamai's ak_bmsc typically stays valid ~2h; we're conservative here.
+COOKIE_MAX_AGE_MIN = 60
 MIN_VALID_SIZE    = 1_000          # below this, response is a genuine Akamai stub
                                    # (real PBP pages are 100K+, empty-PBP shells are
                                    # 25-30K — the latter gets routed to "empty" via
@@ -263,13 +299,25 @@ def main() -> None:
         conn.commit()
 
     todo = [cid for cid in ids if cid not in done]
-    print(f"[scrape] already done: {len(done)}   to do: {len(todo)}")
+    # Shuffle the queue so we don't hit contest IDs in monotonic order —
+    # sequential ID access is one of the most obvious scraper fingerprints
+    # for Akamai's WAF. Random order looks more like organic browsing.
+    random.shuffle(todo)
+    print(f"[scrape] already done: {len(done)}   to do: {len(todo)}  (shuffled order)")
     if not todo:
         print("[scrape] nothing to do — exiting")
         return
 
     print("[scrape] make sure Cloudflare WARP is connected before continuing")
     print(f"[scrape] launching Edge (msedge channel) …")
+
+    # Try to reuse a persisted Akamai session so we skip the cold warmup
+    # when possible — a "returning visitor with valid cookies" pattern is
+    # much less scrutinized than a fresh session that has to earn ak_bmsc
+    # from scratch every run.
+    fresh_state = _load_fresh_cookie_state(COOKIE_STATE_PATH, COOKIE_MAX_AGE_MIN)
+    if fresh_state:
+        print(f"[scrape] reusing persisted cookies from {COOKIE_STATE_PATH.name}")
 
     with sync_playwright() as p:
         browser = p.chromium.launch(
@@ -282,6 +330,7 @@ def main() -> None:
             viewport={"width": 1366, "height": 900},
             locale="en-US",
             timezone_id="America/Chicago",
+            storage_state=fresh_state,
         )
         context.add_init_script(
             "Object.defineProperty(navigator, 'webdriver', { get: () => false });"
@@ -289,20 +338,25 @@ def main() -> None:
         page = context.new_page()
 
         # Warmup: visit homepage so Akamai sets ak_bmsc / bm_* cookies.
-        print(f"[scrape] warmup → {HOME_URL}")
-        try:
-            page.goto(HOME_URL, timeout=NAV_TIMEOUT_MS, wait_until="domcontentloaded")
-            page.wait_for_timeout(WARMUP_DWELL_MS)
-        except PWTimeout:
-            print("[scrape] warmup timed out — continuing")
-        cookies = context.cookies()
-        akamai_cookie_names = {c["name"] for c in cookies}
-        print(f"[scrape] cookies after warmup: {sorted(akamai_cookie_names)}")
-        if "ak_bmsc" not in akamai_cookie_names:
-            print("[scrape] WARNING: no ak_bmsc cookie — Akamai likely blocking. "
-                  "Check WARP is connected and your IP is masked. Aborting.")
-            browser.close()
-            sys.exit(2)
+        # Skip when we already have a valid ak_bmsc from persistence.
+        preloaded = {c["name"] for c in context.cookies()}
+        if "ak_bmsc" in preloaded:
+            print(f"[scrape] ak_bmsc already loaded — skipping warmup")
+        else:
+            print(f"[scrape] warmup → {HOME_URL}")
+            try:
+                page.goto(HOME_URL, timeout=NAV_TIMEOUT_MS, wait_until="domcontentloaded")
+                page.wait_for_timeout(WARMUP_DWELL_MS)
+            except PWTimeout:
+                print("[scrape] warmup timed out — continuing")
+            cookies = context.cookies()
+            akamai_cookie_names = {c["name"] for c in cookies}
+            print(f"[scrape] cookies after warmup: {sorted(akamai_cookie_names)}")
+            if "ak_bmsc" not in akamai_cookie_names:
+                print("[scrape] WARNING: no ak_bmsc cookie — Akamai likely blocking. "
+                      "Check WARP is connected and your IP is masked. Aborting.")
+                browser.close()
+                sys.exit(2)
 
         # Iterate the queue ──────────────────────────────────────────
         consecutive_blocks = 0
@@ -329,7 +383,18 @@ def main() -> None:
                 break
 
             if i < len(todo):
-                time.sleep(THROTTLE_S)
+                time.sleep(random.uniform(THROTTLE_MIN_S, THROTTLE_MAX_S))
+
+        # Persist the current cookie jar so the next run can skip the
+        # warmup dance. Save whenever we successfully finished the loop
+        # or aborted after some progress — a fresh session with valid
+        # ak_bmsc is worth keeping even if we didn't get through
+        # everything on this pass.
+        try:
+            context.storage_state(path=str(COOKIE_STATE_PATH))
+            print(f"[scrape] saved cookie state → {COOKIE_STATE_PATH.name}")
+        except Exception as e:
+            print(f"[scrape] cookie save failed (non-fatal): {e}")
 
         browser.close()
 

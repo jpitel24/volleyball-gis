@@ -31,10 +31,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import random
 import sqlite3
 import sys
 import time
+import urllib.parse
+import urllib.request
 from pathlib import Path
 
 from playwright.sync_api import TimeoutError as PWTimeout
@@ -215,6 +218,106 @@ def fetch_one(page, conn: sqlite3.Connection, cid: str,
     return "ok"
 
 
+# ── Crawlbase transport ──────────────────────────────────────────────────────
+#
+# When CRAWLBASE_JS_TOKEN is set in the env, main() takes this path instead
+# of Playwright + WARP. Crawlbase's JavaScript-rendering endpoint runs a
+# headless browser on their side and returns the fully-rendered HTML — no
+# Akamai handshake to worry about locally. Each request costs 5 credits
+# against the JS-token quota (5000 free = ~1000 real requests).
+
+CRAWLBASE_ENDPOINT = "https://api.crawlbase.com/"
+
+
+def fetch_one_crawlbase(conn: sqlite3.Connection, cid: str,
+                        idx: int, total: int, token: str) -> str:
+    """Returns 'ok' | 'blocked' | 'empty' | 'fail'."""
+    target = f"{BASE_URL}/contests/{cid}/individual_stats"
+    cache_path = CACHE_DIR / f"{cid}.html"
+    # page_wait tells Crawlbase's headless browser to sit on the page for
+    # this many ms after load, giving Akamai's client-side challenge time
+    # to resolve and the roster table to hydrate.
+    params = {"token": token, "url": target, "page_wait": "3000"}
+    req_url = CRAWLBASE_ENDPOINT + "?" + urllib.parse.urlencode(params)
+    print(f"[boxscrape] [{idx:>4}/{total}] {cid} …", end=" ", flush=True)
+    try:
+        with urllib.request.urlopen(req_url, timeout=120) as resp:
+            body = resp.read()
+            pc_status = resp.headers.get("pc_status")
+            html = body.decode("utf-8", errors="replace")
+    except Exception as e:
+        err = str(e)[:200]
+        print(f"error: {err}")
+        update_status(conn, cid, "fail", 0, err)
+        return "fail"
+
+    if pc_status and pc_status != "200":
+        print(f"CRAWLBASE fail pc_status={pc_status}")
+        update_status(conn, cid, "fail", len(html), f"pc_status={pc_status}")
+        return "fail"
+
+    if is_blocked(html):
+        print(f"BLOCKED ({len(html):,} bytes)")
+        update_status(conn, cid, "blocked", len(html), "akamai block via crawlbase")
+        return "blocked"
+
+    if not has_roster_table(html):
+        print(f"EMPTY ({len(html):,} bytes) — no roster table")
+        update_status(conn, cid, "empty", len(html),
+                      "no roster table (individual_stats not published)")
+        return "empty"
+
+    if not safe_write_text(cache_path, html):
+        print(f"WRITE-LOCKED ({len(html):,} bytes)")
+        update_status(conn, cid, "fail", len(html), "OneDrive lock on write")
+        return "fail"
+    print(f"ok ({len(html):,} bytes)")
+    update_status(conn, cid, "ok", len(html))
+    return "ok"
+
+
+def run_via_crawlbase(conn: sqlite3.Connection, todo: list[str], token: str) -> None:
+    """Run the fetch loop against Crawlbase's JS-rendering API. Same
+    accounting + abort logic as the Playwright path, but simpler because
+    there's no browser context to manage."""
+    print(f"[boxscrape] transport: Crawlbase JS API  (5 credits per request)")
+    print(f"[boxscrape] budget note: ~{len(todo) * 5} credits will be consumed")
+    consecutive_blocks = 0
+    ok = blocked = failed = empty = 0
+    start_ts = time.time()
+
+    for i, cid in enumerate(todo, 1):
+        result = fetch_one_crawlbase(conn, cid, i, len(todo), token)
+        if   result == "ok":       ok += 1;      consecutive_blocks = 0
+        elif result == "blocked":  blocked += 1; consecutive_blocks += 1
+        elif result == "empty":    empty += 1;   consecutive_blocks = 0
+        else:                      failed += 1
+
+        if consecutive_blocks >= ABORT_AFTER_BLOCK:
+            print(f"\n[boxscrape] {ABORT_AFTER_BLOCK} consecutive blocks via "
+                  "Crawlbase — aborting. Their upstream may be flagged too, "
+                  "or their JS backend is having trouble with this site.")
+            break
+
+        if i < len(todo):
+            # Lighter throttle than Playwright — Crawlbase handles the
+            # rate-limit / pattern-hiding on their side. Some pacing still
+            # helps to avoid API-side rate limits.
+            time.sleep(random.uniform(1.0, 3.0))
+
+    elapsed = time.time() - start_ts
+    print(f"\n[boxscrape] done in {elapsed:.0f}s")
+    print(f"[boxscrape] ok: {ok}   blocked: {blocked}   empty: {empty}   failed: {failed}")
+    if ok + empty + failed > 0:
+        print(f"[boxscrape] avg per fetch: {elapsed / max(ok + empty + failed, 1):.2f}s")
+
+    cur = conn.execute("SELECT status, COUNT(*) FROM progress GROUP BY status")
+    totals = dict(cur.fetchall())
+    print("[boxscrape] tracker totals:")
+    for k in sorted(totals):
+        print(f"          {k:<10} {totals[k]}")
+
+
 # ── ID loading ────────────────────────────────────────────────────────────────
 
 def load_ids_from_file(path: Path, limit: int | None = None) -> list[str]:
@@ -268,6 +371,14 @@ def main() -> None:
     print(f"[boxscrape] already done: {len(done)}   to do: {len(todo)}  (shuffled order)")
     if not todo:
         print("[boxscrape] nothing to do — exiting")
+        return
+
+    # Auto-select transport. If CRAWLBASE_JS_TOKEN is set, use Crawlbase's
+    # headless-browser API (bypasses our WARP/Akamai flag situation at 5
+    # credits per request). Otherwise fall back to local Playwright+WARP.
+    crawlbase_token = os.environ.get("CRAWLBASE_JS_TOKEN")
+    if crawlbase_token:
+        run_via_crawlbase(conn, todo, crawlbase_token)
         return
 
     print("[boxscrape] make sure Cloudflare WARP is connected before continuing")

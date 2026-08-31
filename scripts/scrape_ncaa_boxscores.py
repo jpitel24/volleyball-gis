@@ -145,6 +145,22 @@ def update_status(conn: sqlite3.Connection, cid: str, status: str,
 
 # ── Content classification ────────────────────────────────────────────────────
 
+def _print_not_available_report(ids: list[str]) -> None:
+    """Print the list of contests NCAA reported as 'Box score not available'
+    in this run. These are permanently marked 'empty' in the DB so they
+    won't burn scrape credits on future runs, but calling them out here
+    makes it easy to see at a glance what data we're missing today and
+    to spot-check them manually on stats.ncaa.org if needed."""
+    if not ids:
+        return
+    print(f"[boxscrape] {len(ids)} contest(s) returned "
+          f"'Box score not available' this run:")
+    for cid in ids:
+        print(f"          {cid}   https://stats.ncaa.org/contests/{cid}/individual_stats")
+    print(f"[boxscrape] these will not be retried automatically — "
+          f"use --retry-empty if a scoretaker uploads late")
+
+
 def is_no_box_score(html: str) -> bool:
     """True when NCAA explicitly serves 'Box score not available' — a tiny
     stub page (~170-330 bytes) that means the scoretaker never uploaded
@@ -198,7 +214,10 @@ def safe_write_text(path: Path, content: str, retries: int = 5,
 
 def fetch_one(page, conn: sqlite3.Connection, cid: str,
               idx: int, total: int) -> str:
-    """Returns 'ok' | 'blocked' | 'empty' | 'fail'."""
+    """Returns 'ok' | 'blocked' | 'empty' | 'not_available' | 'fail'.
+    'not_available' is a distinct return code so callers can list the
+    affected contest IDs at end-of-run; DB status is still 'empty' so
+    they're skipped on future runs."""
     url = f"{BASE_URL}/contests/{cid}/individual_stats"
     cache_path = CACHE_DIR / f"{cid}.html"
     print(f"[boxscrape] [{idx:>4}/{total}] {cid} …", end=" ", flush=True)
@@ -220,7 +239,7 @@ def fetch_one(page, conn: sqlite3.Connection, cid: str,
         print(f"NOT AVAILABLE ({len(html):,} bytes)")
         update_status(conn, cid, "empty", len(html),
                       "NCAA: Box score not available")
-        return "empty"
+        return "not_available"
 
     if is_blocked(html):
         print(f"BLOCKED ({len(html):,} bytes)")
@@ -255,7 +274,8 @@ CRAWLBASE_ENDPOINT = "https://api.crawlbase.com/"
 
 def fetch_one_crawlbase(conn: sqlite3.Connection, cid: str,
                         idx: int, total: int, token: str) -> str:
-    """Returns 'ok' | 'blocked' | 'empty' | 'fail'."""
+    """Returns 'ok' | 'blocked' | 'empty' | 'not_available' | 'fail'.
+    See fetch_one() docstring re: not_available."""
     target = f"{BASE_URL}/contests/{cid}/individual_stats"
     cache_path = CACHE_DIR / f"{cid}.html"
     # page_wait tells Crawlbase's headless browser to sit on the page for
@@ -284,7 +304,7 @@ def fetch_one_crawlbase(conn: sqlite3.Connection, cid: str,
         print(f"NOT AVAILABLE ({len(html):,} bytes)")
         update_status(conn, cid, "empty", len(html),
                       "NCAA: Box score not available")
-        return "empty"
+        return "not_available"
 
     if is_blocked(html):
         print(f"BLOCKED ({len(html):,} bytes)")
@@ -313,15 +333,23 @@ def run_via_crawlbase(conn: sqlite3.Connection, todo: list[str], token: str) -> 
     print(f"[boxscrape] transport: Crawlbase JS API  (5 credits per request)")
     print(f"[boxscrape] budget note: ~{len(todo) * 5} credits will be consumed")
     consecutive_blocks = 0
-    ok = blocked = failed = empty = 0
+    ok = blocked = failed = empty = not_avail = 0
+    not_avail_ids: list[str] = []
     start_ts = time.time()
 
     for i, cid in enumerate(todo, 1):
         result = fetch_one_crawlbase(conn, cid, i, len(todo), token)
-        if   result == "ok":       ok += 1;      consecutive_blocks = 0
-        elif result == "blocked":  blocked += 1; consecutive_blocks += 1
-        elif result == "empty":    empty += 1;   consecutive_blocks = 0
-        else:                      failed += 1
+        if result == "ok":
+            ok += 1; consecutive_blocks = 0
+        elif result == "blocked":
+            blocked += 1; consecutive_blocks += 1
+        elif result == "empty":
+            empty += 1; consecutive_blocks = 0
+        elif result == "not_available":
+            not_avail += 1; consecutive_blocks = 0
+            not_avail_ids.append(cid)
+        else:
+            failed += 1
 
         if consecutive_blocks >= ABORT_AFTER_BLOCK:
             print(f"\n[boxscrape] {ABORT_AFTER_BLOCK} consecutive blocks via "
@@ -337,9 +365,13 @@ def run_via_crawlbase(conn: sqlite3.Connection, todo: list[str], token: str) -> 
 
     elapsed = time.time() - start_ts
     print(f"\n[boxscrape] done in {elapsed:.0f}s")
-    print(f"[boxscrape] ok: {ok}   blocked: {blocked}   empty: {empty}   failed: {failed}")
-    if ok + empty + failed > 0:
-        print(f"[boxscrape] avg per fetch: {elapsed / max(ok + empty + failed, 1):.2f}s")
+    print(f"[boxscrape] ok: {ok}   blocked: {blocked}   empty: {empty}   "
+          f"not-available: {not_avail}   failed: {failed}")
+    if ok + empty + not_avail + failed > 0:
+        print(f"[boxscrape] avg per fetch: "
+              f"{elapsed / max(ok + empty + not_avail + failed, 1):.2f}s")
+
+    _print_not_available_report(not_avail_ids)
 
     cur = conn.execute("SELECT status, COUNT(*) FROM progress GROUP BY status")
     totals = dict(cur.fetchall())
@@ -462,15 +494,23 @@ def main() -> None:
 
         # Iterate the queue ───────────────────────────────────────────
         consecutive_blocks = 0
-        ok = blocked = failed = empty = 0
+        ok = blocked = failed = empty = not_avail = 0
+        not_avail_ids: list[str] = []
         start_ts = time.time()
 
         for i, cid in enumerate(todo, 1):
             result = fetch_one(page, conn, cid, i, len(todo))
-            if   result == "ok":       ok += 1;      consecutive_blocks = 0
-            elif result == "blocked":  blocked += 1; consecutive_blocks += 1
-            elif result == "empty":    empty += 1;   consecutive_blocks = 0
-            else:                      failed += 1
+            if result == "ok":
+                ok += 1; consecutive_blocks = 0
+            elif result == "blocked":
+                blocked += 1; consecutive_blocks += 1
+            elif result == "empty":
+                empty += 1; consecutive_blocks = 0
+            elif result == "not_available":
+                not_avail += 1; consecutive_blocks = 0
+                not_avail_ids.append(cid)
+            else:
+                failed += 1
 
             if consecutive_blocks >= ABORT_AFTER_BLOCK:
                 print(f"\n[boxscrape] {ABORT_AFTER_BLOCK} consecutive blocks — "
@@ -493,9 +533,13 @@ def main() -> None:
 
     elapsed = time.time() - start_ts
     print(f"\n[boxscrape] done in {elapsed:.0f}s")
-    print(f"[boxscrape] ok: {ok}   blocked: {blocked}   empty: {empty}   failed: {failed}")
-    if ok + empty + failed > 0:
-        print(f"[boxscrape] avg per fetch: {elapsed / max(ok + empty + failed, 1):.2f}s")
+    print(f"[boxscrape] ok: {ok}   blocked: {blocked}   empty: {empty}   "
+          f"not-available: {not_avail}   failed: {failed}")
+    if ok + empty + not_avail + failed > 0:
+        print(f"[boxscrape] avg per fetch: "
+              f"{elapsed / max(ok + empty + not_avail + failed, 1):.2f}s")
+
+    _print_not_available_report(not_avail_ids)
 
     # Tracker totals
     cur = conn.execute("SELECT status, COUNT(*) FROM progress GROUP BY status")

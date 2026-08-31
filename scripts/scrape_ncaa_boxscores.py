@@ -120,7 +120,12 @@ def init_db() -> sqlite3.Connection:
 
 
 def already_done_ids(conn: sqlite3.Connection) -> set[str]:
-    cur = conn.execute("SELECT contest_id FROM progress WHERE status='ok'")
+    # 'empty' status covers contests whose individual_stats page NCAA has
+    # explicitly served as "Box score not available." Those never change
+    # after publish, so skip them permanently — otherwise a stalled
+    # scoretaker's page burns 2 Crawlbase credits per refresh forever.
+    # Use --retry-empty to force a re-check for a specific contest.
+    cur = conn.execute("SELECT contest_id FROM progress WHERE status IN ('ok', 'empty')")
     return {row[0] for row in cur.fetchall()}
 
 
@@ -140,8 +145,21 @@ def update_status(conn: sqlite3.Connection, cid: str, status: str,
 
 # ── Content classification ────────────────────────────────────────────────────
 
+def is_no_box_score(html: str) -> bool:
+    """True when NCAA explicitly serves 'Box score not available' — a tiny
+    stub page (~170-330 bytes) that means the scoretaker never uploaded
+    stats for this contest. Permanent state; classify as 'empty' rather
+    than 'blocked' so we don't retry it every day and don't trip the
+    consecutive-block abort circuit."""
+    if not html:
+        return False
+    return "box score not available" in html.lower()
+
+
 def is_blocked(html: str) -> bool:
-    """True only for genuine Akamai/WARP blocks — tiny stub or denial text."""
+    """True only for genuine Akamai/WARP blocks — tiny stub or denial text.
+    Callers should check is_no_box_score() first, since NCAA's not-available
+    stub is also tiny and would false-positive here."""
     if not html or len(html) < MIN_VALID_SIZE:
         return True
     low = html.lower()
@@ -197,6 +215,12 @@ def fetch_one(page, conn: sqlite3.Connection, cid: str,
         print(f"error: {err}")
         update_status(conn, cid, "fail", 0, err)
         return "fail"
+
+    if is_no_box_score(html):
+        print(f"NOT AVAILABLE ({len(html):,} bytes)")
+        update_status(conn, cid, "empty", len(html),
+                      "NCAA: Box score not available")
+        return "empty"
 
     if is_blocked(html):
         print(f"BLOCKED ({len(html):,} bytes)")
@@ -255,6 +279,12 @@ def fetch_one_crawlbase(conn: sqlite3.Connection, cid: str,
         print(f"CRAWLBASE fail pc_status={pc_status}")
         update_status(conn, cid, "fail", len(html), f"pc_status={pc_status}")
         return "fail"
+
+    if is_no_box_score(html):
+        print(f"NOT AVAILABLE ({len(html):,} bytes)")
+        update_status(conn, cid, "empty", len(html),
+                      "NCAA: Box score not available")
+        return "empty"
 
     if is_blocked(html):
         print(f"BLOCKED ({len(html):,} bytes)")
@@ -345,6 +375,10 @@ def main() -> None:
                     help="Re-attempt contests previously marked blocked")
     ap.add_argument("--retry-failed",  action="store_true",
                     help="Re-attempt contests previously marked fail")
+    ap.add_argument("--retry-empty",   action="store_true",
+                    help="Re-attempt contests previously marked empty "
+                         "(NCAA 'Box score not available' pages — use when "
+                         "a scoretaker uploaded stats late)")
     args = ap.parse_args()
 
     ids_path = Path(args.ids_file) if args.ids_file else \
@@ -359,6 +393,9 @@ def main() -> None:
         conn.commit()
     if args.retry_failed:
         conn.execute("UPDATE progress SET status='retry' WHERE status='fail'")
+        conn.commit()
+    if args.retry_empty:
+        conn.execute("UPDATE progress SET status='retry' WHERE status='empty'")
         conn.commit()
 
     done = already_done_ids(conn)

@@ -31,10 +31,13 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import os
 import random
 import sqlite3
 import sys
 import time
+import urllib.parse
+import urllib.request
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
@@ -247,6 +250,121 @@ def fetch_one(page, conn, contest_id: str, idx: int, total: int) -> str:
     return "ok"
 
 
+# ── Crawlbase transport ──────────────────────────────────────────────────────
+#
+# When CRAWLBASE_JS_TOKEN is set in the env, main() takes this path instead
+# of Playwright + WARP. Crawlbase's JavaScript-rendering endpoint runs a
+# headless browser on their side and returns the fully-rendered HTML — no
+# Akamai handshake or WARP flag to worry about locally. Each request costs
+# 2 credits against the JS-token quota.
+
+CRAWLBASE_ENDPOINT   = "https://api.crawlbase.com/"
+CRAWLBASE_TOKEN_FILE = Path("scripts/.pbp-build/crawlbase_token.txt")
+
+
+def _load_crawlbase_token() -> str | None:
+    """Return the Crawlbase JS token from env var or the local token file.
+    Env wins so you can override per-run; the file is the persistent
+    default so daily scrapes don't require exporting the var each time.
+    File lives inside .pbp-build (gitignored)."""
+    tok = os.environ.get("CRAWLBASE_JS_TOKEN")
+    if tok:
+        return tok.strip() or None
+    if CRAWLBASE_TOKEN_FILE.exists():
+        try:
+            tok = CRAWLBASE_TOKEN_FILE.read_text(encoding="utf-8").strip()
+            return tok or None
+        except Exception:
+            return None
+    return None
+
+
+def fetch_one_crawlbase(conn, contest_id: str, idx: int, total: int, token: str) -> str:
+    """Returns 'ok' | 'blocked' | 'empty' | 'fail'."""
+    target = f"https://stats.ncaa.org/contests/{contest_id}/play_by_play"
+    cache_path = CACHE_DIR / f"{contest_id}.html"
+    # page_wait gives Crawlbase's headless browser time to let the PBP
+    # tables hydrate after Akamai's client-side challenge resolves. PBP
+    # pages are heavier than boxscores so give them a bit more.
+    params = {"token": token, "url": target, "page_wait": "4000"}
+    req_url = CRAWLBASE_ENDPOINT + "?" + urllib.parse.urlencode(params)
+    print(f"[scrape] [{idx:>4}/{total}] {contest_id} …", end=" ", flush=True)
+    try:
+        with urllib.request.urlopen(req_url, timeout=180) as resp:
+            body = resp.read()
+            pc_status = resp.headers.get("pc_status")
+            html = body.decode("utf-8", errors="replace")
+    except Exception as e:
+        err = str(e)[:200]
+        print(f"error: {err}")
+        update_status(conn, contest_id, "fail", 0, err)
+        return "fail"
+
+    if pc_status and pc_status != "200":
+        print(f"CRAWLBASE fail pc_status={pc_status}")
+        update_status(conn, contest_id, "fail", len(html), f"pc_status={pc_status}")
+        return "fail"
+
+    if is_blocked(html):
+        print(f"BLOCKED ({len(html):,} bytes)")
+        update_status(conn, contest_id, "blocked", len(html), "akamai block via crawlbase")
+        return "blocked"
+
+    if not has_pbp_table(html):
+        print(f"EMPTY ({len(html):,} bytes) — no PBP table; recording as known-missing")
+        update_status(conn, contest_id, "empty", len(html),
+                      "no <table> in page (PBP not recorded)")
+        return "empty"
+
+    if not safe_write_text(cache_path, html):
+        print(f"WRITE-LOCKED ({len(html):,} bytes)")
+        update_status(conn, contest_id, "fail", len(html), "OneDrive lock on write")
+        return "fail"
+    print(f"ok ({len(html):,} bytes)")
+    update_status(conn, contest_id, "ok", len(html))
+    return "ok"
+
+
+def run_via_crawlbase(conn, todo: list[str], token: str) -> None:
+    """Fetch loop using Crawlbase's JS API. Mirrors the Playwright loop's
+    accounting + abort circuit but with lighter local throttle (their side
+    handles the pattern-hiding)."""
+    print(f"[scrape] transport: Crawlbase JS API  (2 credits per request)")
+    print(f"[scrape] budget note: ~{len(todo) * 2} credits will be consumed")
+    consecutive_blocks = 0
+    ok = blocked = empty = failed = 0
+    start_ts = time.time()
+
+    for i, cid in enumerate(todo, 1):
+        result = fetch_one_crawlbase(conn, cid, i, len(todo), token)
+        if result == "ok":
+            ok += 1; consecutive_blocks = 0
+        elif result == "blocked":
+            blocked += 1; consecutive_blocks += 1
+        elif result == "empty":
+            empty += 1; consecutive_blocks = 0
+        else:
+            failed += 1
+
+        if consecutive_blocks >= ABORT_AFTER_BLOCK:
+            print(f"\n[scrape] {ABORT_AFTER_BLOCK} consecutive blocks via "
+                  "Crawlbase — aborting. Their JS backend may be flagged "
+                  "for stats.ncaa.org, or the site is unhealthy.")
+            break
+
+        if i < len(todo):
+            time.sleep(random.uniform(1.0, 3.0))
+
+    elapsed = time.time() - start_ts
+    print(f"\n[scrape] done in {elapsed:.0f}s")
+    print(f"[scrape] ok: {ok}   blocked: {blocked}   empty: {empty}   failed: {failed}")
+    cur = conn.execute("SELECT status, COUNT(*) FROM progress GROUP BY status")
+    totals = dict(cur.fetchall())
+    print("[scrape] tracker totals:")
+    for k in sorted(totals):
+        print(f"          {k:<10} {totals[k]}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--year",      type=int, default=2025)
@@ -306,6 +424,16 @@ def main() -> None:
     print(f"[scrape] already done: {len(done)}   to do: {len(todo)}  (shuffled order)")
     if not todo:
         print("[scrape] nothing to do — exiting")
+        return
+
+    # Auto-select transport. Crawlbase is the default going forward —
+    # WARP has been reliably flagged for stats.ncaa.org — so we look for
+    # the JS token in the env first, then fall back to a gitignored token
+    # file. If neither is present we drop through to the Playwright path
+    # as a last resort. See _load_crawlbase_token().
+    crawlbase_token = _load_crawlbase_token()
+    if crawlbase_token:
+        run_via_crawlbase(conn, todo, crawlbase_token)
         return
 
     print("[scrape] make sure Cloudflare WARP is connected before continuing")

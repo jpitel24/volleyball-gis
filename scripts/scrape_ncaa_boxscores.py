@@ -269,7 +269,23 @@ def fetch_one(page, conn: sqlite3.Connection, cid: str,
 # Akamai handshake to worry about locally. Each request costs 5 credits
 # against the JS-token quota (5000 free = ~1000 real requests).
 
-CRAWLBASE_ENDPOINT = "https://api.crawlbase.com/"
+CRAWLBASE_ENDPOINT   = "https://api.crawlbase.com/"
+CRAWLBASE_TOKEN_FILE = Path("scripts/.pbp-build/crawlbase_token.txt")
+
+
+def _load_crawlbase_token() -> str | None:
+    """Env var wins; falls back to gitignored token file. See same helper
+    in scrape_pbp.py for the design note — both scrapers share the file."""
+    tok = os.environ.get("CRAWLBASE_JS_TOKEN")
+    if tok:
+        return tok.strip() or None
+    if CRAWLBASE_TOKEN_FILE.exists():
+        try:
+            tok = CRAWLBASE_TOKEN_FILE.read_text(encoding="utf-8").strip()
+            return tok or None
+        except Exception:
+            return None
+    return None
 
 
 def fetch_one_crawlbase(conn: sqlite3.Connection, cid: str,
@@ -442,10 +458,10 @@ def main() -> None:
         print("[boxscrape] nothing to do — exiting")
         return
 
-    # Auto-select transport. If CRAWLBASE_JS_TOKEN is set, use Crawlbase's
-    # headless-browser API (bypasses our WARP/Akamai flag situation at 5
-    # credits per request). Otherwise fall back to local Playwright+WARP.
-    crawlbase_token = os.environ.get("CRAWLBASE_JS_TOKEN")
+    # Auto-select transport. Crawlbase is the default going forward —
+    # WARP has been reliably flagged for stats.ncaa.org. Token comes from
+    # the env var or the shared token file; see _load_crawlbase_token().
+    crawlbase_token = _load_crawlbase_token()
     if crawlbase_token:
         run_via_crawlbase(conn, todo, crawlbase_token)
         return

@@ -203,6 +203,34 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-08-29,6583835,Dayton,Atlantic 10,Eastern Ill.,OVC,Neutral,10,Emily Harden,S,1,0,0,0,0.0,0,0,0,1,0,0,0,0,0,0.0,0,0.0,5.0,1.0,0
 2026-2027,2026-08-29,6583835,Dayton,Atlantic 10,Eastern Ill.,OVC,Neutral,1,Kaleigh Meritt,OH,1,0,0,3,0.0,0,0,1,0,3,0,0,1,0,0.5,0,0.0,0.0,1.0,1
 2026-2027,2026-08-29,6583835,Dayton,Atlantic 10,Eastern Ill.,OVC,Neutral,15,Isabel Simmons,MB,1,2,0,2,1.0,0,0,0,0,0,0,0,2,0,3.0,0,,,,2
+2026-2027,2026-08-31,6583840,Dayton,Atlantic 10,Louisville,ACC,Neutral,13,Sydney Barrett,OH,3,0,0,1,0.0,0,0,0,0,7,0,0,0,0,0.0,0,0.0,0.0,3.0,0
+2026-2027,2026-08-31,6583840,Dayton,Atlantic 10,Louisville,ACC,Neutral,31,Lily Barry,L/DS,3,0,0,0,0.0,1,0,1,8,13,1,0,0,0,0.0,0,0.0,9.0,4.0,0
+2026-2027,2026-08-31,6583840,Dayton,Atlantic 10,Louisville,ACC,Neutral,6,Addi Gallentine,MB,3,2,0,3,0.667,0,0,0,0,1,0,0,0,0,2.0,0,0.0,2.0,0.0,0
+2026-2027,2026-08-31,6583840,Dayton,Atlantic 10,Louisville,ACC,Neutral,9,Natalie Harrington,S,3,0,0,0,0.0,13,0,1,3,0,0,0,0,0,0.0,0,0.0,36.0,4.0,0
+2026-2027,2026-08-31,6583840,Dayton,Atlantic 10,Louisville,ACC,Neutral,2,Kamryn Hunt,OH,3,2,4,13,-0.154,0,0,0,1,22,3,1,0,0,3.0,0,0.0,3.0,3.0,1
+2026-2027,2026-08-31,6583840,Dayton,Atlantic 10,Louisville,ACC,Neutral,20,Ava Liening,MB,3,1,2,9,-0.111,0,0,1,0,0,0,1,0,2,2.0,0,0.0,1.0,3.0,1
+2026-2027,2026-08-31,6583840,Dayton,Atlantic 10,Louisville,ACC,Neutral,16,Gabriela Machin Borges,OH,3,6,4,16,0.125,0,0,0,1,0,0,0,0,0,6.0,0,0.0,0.0,0.0,0
+2026-2027,2026-08-31,6583840,Dayton,Atlantic 10,Louisville,ACC,Neutral,12,Rylee Sloss,S,3,0,1,1,-1.0,10,1,1,2,0,0,0,0,0,1.0,0,0.0,37.0,8.0,0
+2026-2027,2026-08-31,6583840,Dayton,Atlantic 10,Louisville,ACC,Neutral,22,Sidney Sprada,OH,3,2,4,22,-0.091,0,0,1,6,18,0,0,0,0,2.0,0,0.0,1.0,10.0,0
+2026-2027,2026-08-31,6583840,Dayton,Atlantic 10,Louisville,ACC,Neutral,19,Charlotte Vinson,OH,3,10,6,21,0.19,0,0,0,2,2,0,0,0,0,10.0,0,0.0,0.0,0.0,0
+2026-2027,2026-08-31,6583840,Dayton,Atlantic 10,Louisville,ACC,Neutral,8,Morgan Asleson,L/DS,2,0,0,0,0.0,0,0,0,2,0,0,0,0,0,0.0,0,0.0,0.0,3.0,0
+2026-2027,2026-08-31,6583840,Dayton,Atlantic 10,Louisville,ACC,Neutral,10,Emily Harden,S,2,0,0,0,0.0,0,0,1,0,0,0,0,0,0,0.0,0,0.0,0.0,2.0,0
+2026-2027,2026-08-31,6583840,Dayton,Atlantic 10,Louisville,ACC,Neutral,1,Kaleigh Meritt,OH,1,1,0,3,0.333,0,0,0,0,2,0,0,0,0,1.0,0,0.0,0.0,0.0,0
+2026-2027,2026-08-31,6583840,Louisville,ACC,Dayton,Atlantic 10,Neutral,24,Kalyssa Blackshear,OPP,3,8,2,14,0.429,0,0,0,0,0,0,0,1,0,8.5,0,,,,1
+2026-2027,2026-08-31,6583840,Louisville,ACC,Dayton,Atlantic 10,Neutral,44,Brooke Bultema,MB,3,6,0,9,0.667,0,0,0,0,0,0,0,1,0,6.5,0,,,,1
+2026-2027,2026-08-31,6583840,Louisville,ACC,Dayton,Atlantic 10,Neutral,8,Nayelis Cabello,S,3,1,0,5,0.2,29,2,0,4,0,0,0,2,0,4.0,0,0.0,46.0,13.0,2
+2026-2027,2026-08-31,6583840,Louisville,ACC,Dayton,Atlantic 10,Neutral,7,Chloe Chicoine,OH,3,10,0,18,0.556,2,0,1,11,11,0,0,1,0,10.5,0,0.0,5.0,14.0,1
+2026-2027,2026-08-31,6583840,Louisville,ACC,Dayton,Atlantic 10,Neutral,6,Hannah Kenny,S,3,0,0,0,0.0,3,0,1,6,5,0,0,0,0,0.0,0,0.0,4.0,8.0,0
+2026-2027,2026-08-31,6583840,Louisville,ACC,Dayton,Atlantic 10,Neutral,2,Chloe Meester,OH,3,14,0,18,0.778,0,1,2,4,1,0,0,1,0,15.5,0,0.0,0.0,7.0,1
+2026-2027,2026-08-31,6583840,Louisville,ACC,Dayton,Atlantic 10,Neutral,21,Payton Petersen,L,3,0,0,0,0.0,1,1,1,7,7,1,0,0,0,1.0,0,0.0,4.0,13.0,0
+2026-2027,2026-08-31,6583840,Louisville,ACC,Dayton,Atlantic 10,Neutral,3,Kamden Schrand,L/DS,3,0,0,1,0.0,0,0,0,5,8,0,0,0,0,0.0,0,0.0,1.0,0.0,0
+2026-2027,2026-08-31,6583840,Louisville,ACC,Dayton,Atlantic 10,Neutral,22,Blair Thiebaud,S,3,1,1,2,0.0,7,1,2,1,0,0,0,1,0,2.5,0,0.0,12.0,15.0,1
+2026-2027,2026-08-31,6583840,Louisville,ACC,Dayton,Atlantic 10,Neutral,4,Addison Makun,MB,2,3,1,5,0.4,0,0,0,0,0,0,2,4,0,7.0,0,,,,6
+2026-2027,2026-08-31,6583840,Louisville,ACC,Dayton,Atlantic 10,Neutral,12,Jessica Drapp,L/DS,1,0,0,0,0.0,0,0,0,0,0,0,0,0,0,0.0,0,0.0,0.0,2.0,0
+2026-2027,2026-08-31,6583840,Louisville,ACC,Dayton,Atlantic 10,Neutral,9,Jordyn Gray,OH,1,0,0,2,0.0,0,0,0,0,0,0,0,0,0,0.0,0,0.0,0.0,1.0,0
+2026-2027,2026-08-31,6583840,Louisville,ACC,Dayton,Atlantic 10,Neutral,10,Elsi Karjanlahti,L/DS,1,0,0,0,0.0,0,0,0,0,1,0,0,0,0,0.0,0,0.0,1.0,0.0,0
+2026-2027,2026-08-31,6583840,Louisville,ACC,Dayton,Atlantic 10,Neutral,11,Hannah Sherman,MB,1,0,2,2,-1.0,0,0,0,0,0,0,0,1,0,0.5,0,,,,1
+2026-2027,2026-08-31,6583840,Louisville,ACC,Dayton,Atlantic 10,Neutral,17,Molly Urban,L/DS,1,0,0,0,0.0,0,0,1,0,1,0,0,0,0,0.0,0,0.0,0.0,1.0,0
 2026-2027,2026-08-28,6583872,Utah Tech,WAC,Utah Valley,WAC,Neutral,4,Nana Asiata,OPP,4,16,6,34,0.294,0,0,0,4,0,0,0,6,0,19.0,0,0.0,7.0,0.0,6
 2026-2027,2026-08-28,6583872,Utah Tech,WAC,Utah Valley,WAC,Neutral,7,Lusia Langi,MB,4,9,1,14,0.571,0,0,0,2,0,0,1,4,0,12.0,1,0.0,0.0,0.0,5
 2026-2027,2026-08-28,6583872,Utah Tech,WAC,Utah Valley,WAC,Neutral,12,Mya Laufiso,L/DS,4,0,1,2,-0.5,4,3,2,18,40,1,0,0,0,3.0,0,0.0,11.0,23.0,0

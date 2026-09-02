@@ -38,6 +38,7 @@ import sys
 import time
 import urllib.parse
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
@@ -258,8 +259,11 @@ def fetch_one(page, conn, contest_id: str, idx: int, total: int) -> str:
 # Akamai handshake or WARP flag to worry about locally. Each request costs
 # 2 credits against the JS-token quota.
 
-CRAWLBASE_ENDPOINT   = "https://api.crawlbase.com/"
-CRAWLBASE_TOKEN_FILE = Path("scripts/.pbp-build/crawlbase_token.txt")
+CRAWLBASE_ENDPOINT     = "https://api.crawlbase.com/"
+CRAWLBASE_TOKEN_FILE   = Path("scripts/.pbp-build/crawlbase_token.txt")
+# Concurrency for parallel Crawlbase requests. Same env-var + default as
+# the boxscore scraper — 5 is safe under the free-tier 20-connection cap.
+CRAWLBASE_CONCURRENCY  = int(os.environ.get("CRAWLBASE_CONCURRENCY", "5"))
 
 
 def _load_crawlbase_token() -> str | None:
@@ -279,81 +283,118 @@ def _load_crawlbase_token() -> str | None:
     return None
 
 
-def fetch_one_crawlbase(conn, contest_id: str, idx: int, total: int, token: str) -> str:
-    """Returns 'ok' | 'blocked' | 'empty' | 'fail'."""
-    target = f"https://stats.ncaa.org/contests/{contest_id}/play_by_play"
-    cache_path = CACHE_DIR / f"{contest_id}.html"
-    # page_wait gives Crawlbase's headless browser time to let the PBP
-    # tables hydrate after Akamai's client-side challenge resolves. PBP
-    # pages are heavier than boxscores so give them a bit more.
+def _crawlbase_http_fetch_pbp(cid: str, token: str) -> tuple[str, str | None, str | None, str | None]:
+    """Pure I/O: fetch one PBP page via Crawlbase. Thread-safe."""
+    target = f"https://stats.ncaa.org/contests/{cid}/play_by_play"
+    # PBP pages are heavier than boxscores; give the headless browser a
+    # bit more time before returning the rendered HTML.
     params = {"token": token, "url": target, "page_wait": "4000"}
     req_url = CRAWLBASE_ENDPOINT + "?" + urllib.parse.urlencode(params)
-    print(f"[scrape] [{idx:>4}/{total}] {contest_id} …", end=" ", flush=True)
     try:
         with urllib.request.urlopen(req_url, timeout=180) as resp:
             body = resp.read()
             pc_status = resp.headers.get("pc_status")
             html = body.decode("utf-8", errors="replace")
+        return (cid, html, pc_status, None)
     except Exception as e:
-        err = str(e)[:200]
-        print(f"error: {err}")
-        update_status(conn, contest_id, "fail", 0, err)
+        return (cid, None, None, str(e)[:200])
+
+
+def _classify_and_persist_pbp(conn, cid: str, html: str | None,
+                              pc_status: str | None, error: str | None,
+                              label: str) -> str:
+    """Main-thread half of the parallel fetch: classify + DB write + cache."""
+    print(f"[scrape] {label} {cid} …", end=" ", flush=True)
+
+    if error is not None:
+        print(f"error: {error}")
+        update_status(conn, cid, "fail", 0, error)
         return "fail"
 
     if pc_status and pc_status != "200":
         print(f"CRAWLBASE fail pc_status={pc_status}")
-        update_status(conn, contest_id, "fail", len(html), f"pc_status={pc_status}")
+        update_status(conn, cid, "fail", len(html or ""), f"pc_status={pc_status}")
         return "fail"
 
     if is_blocked(html):
         print(f"BLOCKED ({len(html):,} bytes)")
-        update_status(conn, contest_id, "blocked", len(html), "akamai block via crawlbase")
+        update_status(conn, cid, "blocked", len(html), "akamai block via crawlbase")
         return "blocked"
 
     if not has_pbp_table(html):
         print(f"EMPTY ({len(html):,} bytes) — no PBP table; recording as known-missing")
-        update_status(conn, contest_id, "empty", len(html),
+        update_status(conn, cid, "empty", len(html),
                       "no <table> in page (PBP not recorded)")
         return "empty"
 
+    cache_path = CACHE_DIR / f"{cid}.html"
     if not safe_write_text(cache_path, html):
         print(f"WRITE-LOCKED ({len(html):,} bytes)")
-        update_status(conn, contest_id, "fail", len(html), "OneDrive lock on write")
+        update_status(conn, cid, "fail", len(html), "OneDrive lock on write")
         return "fail"
+
     print(f"ok ({len(html):,} bytes)")
-    update_status(conn, contest_id, "ok", len(html))
+    update_status(conn, cid, "ok", len(html))
     return "ok"
 
 
 def run_via_crawlbase(conn, todo: list[str], token: str) -> None:
-    """Fetch loop using Crawlbase's JS API. Mirrors the Playwright loop's
-    accounting + abort circuit but with lighter local throttle (their side
-    handles the pattern-hiding)."""
+    """Parallel fetch loop via Crawlbase's JS API. Workers do the HTTP
+    call only; the main thread classifies + persists so SQLite writes
+    stay serialized. Abort uses a rolling window over completion order
+    since strict "consecutive" is fuzzy under concurrency."""
+    n = len(todo)
+    concurrency = max(1, min(CRAWLBASE_CONCURRENCY, 20))
     print(f"[scrape] transport: Crawlbase JS API  (2 credits per request)")
-    print(f"[scrape] budget note: ~{len(todo) * 2} credits will be consumed")
-    consecutive_blocks = 0
+    print(f"[scrape] budget note: ~{n * 2} credits will be consumed")
+    print(f"[scrape] concurrency: {concurrency}")
+
     ok = blocked = empty = failed = 0
+    recent_results: list[str] = []
+    aborted = False
+    completed = 0
     start_ts = time.time()
 
-    for i, cid in enumerate(todo, 1):
-        result = fetch_one_crawlbase(conn, cid, i, len(todo), token)
-        if result == "ok":
-            ok += 1; consecutive_blocks = 0
-        elif result == "blocked":
-            blocked += 1; consecutive_blocks += 1
-        elif result == "empty":
-            empty += 1; consecutive_blocks = 0
-        else:
-            failed += 1
+    with ThreadPoolExecutor(max_workers=concurrency) as pool:
+        futures = {pool.submit(_crawlbase_http_fetch_pbp, cid, token): cid for cid in todo}
+        try:
+            for fut in as_completed(futures):
+                cid, html, pc_status, error = fut.result()
+                completed += 1
+                label = f"[{completed:>4}/{n}]"
+                result = _classify_and_persist_pbp(
+                    conn, cid, html, pc_status, error, label
+                )
+                if result == "ok":
+                    ok += 1
+                elif result == "blocked":
+                    blocked += 1
+                elif result == "empty":
+                    empty += 1
+                else:
+                    failed += 1
 
-        if consecutive_blocks >= ABORT_AFTER_BLOCK:
-            print(f"\n[scrape] {ABORT_AFTER_BLOCK} consecutive blocks via "
-                  "Crawlbase — aborting. Their JS backend may be flagged "
-                  "for stats.ncaa.org, or the site is unhealthy.")
-            break
-
-        if i < len(todo):
-            time.sleep(random.uniform(1.0, 3.0))
+                recent_results.append(result)
+                if len(recent_results) > ABORT_AFTER_BLOCK:
+                    recent_results.pop(0)
+                if (len(recent_results) == ABORT_AFTER_BLOCK
+                        and all(r == "blocked" for r in recent_results)):
+                    print(f"\n[scrape] last {ABORT_AFTER_BLOCK} results all "
+                          "blocked — aborting; cancelling remaining futures.")
+                    aborted = True
+                    for f in futures:
+                        if not f.done():
+                            f.cancel()
+                    break
+        finally:
+            if aborted:
+                for f in futures:
+                    if f.cancelled():
+                        continue
+                    try:
+                        f.result(timeout=0.1)
+                    except Exception:
+                        pass
 
     elapsed = time.time() - start_ts
     print(f"\n[scrape] done in {elapsed:.0f}s")

@@ -38,6 +38,7 @@ import sys
 import time
 import urllib.parse
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 from playwright.sync_api import TimeoutError as PWTimeout
@@ -269,8 +270,12 @@ def fetch_one(page, conn: sqlite3.Connection, cid: str,
 # Akamai handshake to worry about locally. Each request costs 5 credits
 # against the JS-token quota (5000 free = ~1000 real requests).
 
-CRAWLBASE_ENDPOINT   = "https://api.crawlbase.com/"
-CRAWLBASE_TOKEN_FILE = Path("scripts/.pbp-build/crawlbase_token.txt")
+CRAWLBASE_ENDPOINT     = "https://api.crawlbase.com/"
+CRAWLBASE_TOKEN_FILE   = Path("scripts/.pbp-build/crawlbase_token.txt")
+# Number of concurrent Crawlbase requests. Their free tier allows up to
+# 20 concurrent connections; 5 is a conservative default that ~5xs
+# throughput without risking rate-limit responses. Override via env var.
+CRAWLBASE_CONCURRENCY  = int(os.environ.get("CRAWLBASE_CONCURRENCY", "5"))
 
 
 def _load_crawlbase_token() -> str | None:
@@ -288,38 +293,44 @@ def _load_crawlbase_token() -> str | None:
     return None
 
 
-def fetch_one_crawlbase(conn: sqlite3.Connection, cid: str,
-                        idx: int, total: int, token: str) -> str:
-    """Returns 'ok' | 'blocked' | 'empty' | 'not_available' | 'fail'.
-    See fetch_one() docstring re: not_available."""
+def _crawlbase_http_fetch(cid: str, token: str) -> tuple[str, str | None, str | None, str | None]:
+    """Pure I/O: fetch one contest boxscore via Crawlbase. Returns
+    (cid, html, pc_status, error). No DB, no cache write — safe to
+    run on a worker thread. Errors are stringified into `error`."""
     target = f"{BASE_URL}/contests/{cid}/individual_stats"
-    cache_path = CACHE_DIR / f"{cid}.html"
-    # page_wait tells Crawlbase's headless browser to sit on the page for
-    # this many ms after load, giving Akamai's client-side challenge time
-    # to resolve and the roster table to hydrate.
     params = {"token": token, "url": target, "page_wait": "3000"}
     req_url = CRAWLBASE_ENDPOINT + "?" + urllib.parse.urlencode(params)
-    print(f"[boxscrape] [{idx:>4}/{total}] {cid} …", end=" ", flush=True)
     try:
         with urllib.request.urlopen(req_url, timeout=120) as resp:
             body = resp.read()
             pc_status = resp.headers.get("pc_status")
             html = body.decode("utf-8", errors="replace")
+        return (cid, html, pc_status, None)
     except Exception as e:
-        err = str(e)[:200]
-        print(f"error: {err}")
-        update_status(conn, cid, "fail", 0, err)
+        return (cid, None, None, str(e)[:200])
+
+
+def _classify_and_persist_boxscore(conn: sqlite3.Connection, cid: str,
+                                   html: str | None, pc_status: str | None,
+                                   error: str | None, label: str) -> str:
+    """Classify the fetch result, write to cache + DB, print status line.
+    Runs on the main thread so SQLite writes stay serialized. `label` is
+    the leading text (e.g. '[N/T]') to preserve progress display shape."""
+    print(f"[boxscrape] {label} {cid} …", end=" ", flush=True)
+
+    if error is not None:
+        print(f"error: {error}")
+        update_status(conn, cid, "fail", 0, error)
         return "fail"
 
     if pc_status and pc_status != "200":
         print(f"CRAWLBASE fail pc_status={pc_status}")
-        update_status(conn, cid, "fail", len(html), f"pc_status={pc_status}")
+        update_status(conn, cid, "fail", len(html or ""), f"pc_status={pc_status}")
         return "fail"
 
     if is_no_box_score(html):
         print(f"NOT AVAILABLE ({len(html):,} bytes)")
-        update_status(conn, cid, "empty", len(html),
-                      "NCAA: Box score not available")
+        update_status(conn, cid, "empty", len(html), "NCAA: Box score not available")
         return "not_available"
 
     if is_blocked(html):
@@ -333,59 +344,92 @@ def fetch_one_crawlbase(conn: sqlite3.Connection, cid: str,
                       "no roster table (individual_stats not published)")
         return "empty"
 
+    cache_path = CACHE_DIR / f"{cid}.html"
     if not safe_write_text(cache_path, html):
         print(f"WRITE-LOCKED ({len(html):,} bytes)")
         update_status(conn, cid, "fail", len(html), "OneDrive lock on write")
         return "fail"
+
     print(f"ok ({len(html):,} bytes)")
     update_status(conn, cid, "ok", len(html))
     return "ok"
 
 
 def run_via_crawlbase(conn: sqlite3.Connection, todo: list[str], token: str) -> None:
-    """Run the fetch loop against Crawlbase's JS-rendering API. Same
-    accounting + abort logic as the Playwright path, but simpler because
-    there's no browser context to manage."""
-    print(f"[boxscrape] transport: Crawlbase JS API  (5 credits per request)")
-    print(f"[boxscrape] budget note: ~{len(todo) * 5} credits will be consumed")
-    consecutive_blocks = 0
+    """Fetch loop against Crawlbase's JS-rendering API, parallelized via
+    ThreadPoolExecutor. Workers do only the HTTP call; the main thread
+    classifies + persists so SQLite writes stay serialized.
+
+    Abort semantics under concurrency: with N in flight simultaneously
+    the classic "consecutive blocks" counter is fuzzy, so we use a
+    rolling window instead — if the last ABORT_AFTER_BLOCK results (in
+    completion order) were all blocked, cancel any remaining futures
+    and stop."""
+    n = len(todo)
+    concurrency = max(1, min(CRAWLBASE_CONCURRENCY, 20))  # cap at Crawlbase free-tier ceiling
+    print(f"[boxscrape] transport: Crawlbase JS API  (2 credits per request)")
+    print(f"[boxscrape] budget note: ~{n * 2} credits will be consumed")
+    print(f"[boxscrape] concurrency: {concurrency}")
+
     ok = blocked = failed = empty = not_avail = 0
     not_avail_ids: list[str] = []
+    recent_results: list[str] = []  # rolling window for abort check
+    aborted = False
+    completed = 0
     start_ts = time.time()
 
-    for i, cid in enumerate(todo, 1):
-        result = fetch_one_crawlbase(conn, cid, i, len(todo), token)
-        if result == "ok":
-            ok += 1; consecutive_blocks = 0
-        elif result == "blocked":
-            blocked += 1; consecutive_blocks += 1
-        elif result == "empty":
-            empty += 1; consecutive_blocks = 0
-        elif result == "not_available":
-            not_avail += 1; consecutive_blocks = 0
-            not_avail_ids.append(cid)
-        else:
-            failed += 1
+    with ThreadPoolExecutor(max_workers=concurrency) as pool:
+        futures = {pool.submit(_crawlbase_http_fetch, cid, token): cid for cid in todo}
+        try:
+            for fut in as_completed(futures):
+                cid, html, pc_status, error = fut.result()
+                completed += 1
+                label = f"[{completed:>4}/{n}]"
+                result = _classify_and_persist_boxscore(
+                    conn, cid, html, pc_status, error, label
+                )
+                if result == "ok":
+                    ok += 1
+                elif result == "blocked":
+                    blocked += 1
+                elif result == "empty":
+                    empty += 1
+                elif result == "not_available":
+                    not_avail += 1
+                    not_avail_ids.append(cid)
+                else:
+                    failed += 1
 
-        if consecutive_blocks >= ABORT_AFTER_BLOCK:
-            print(f"\n[boxscrape] {ABORT_AFTER_BLOCK} consecutive blocks via "
-                  "Crawlbase — aborting. Their upstream may be flagged too, "
-                  "or their JS backend is having trouble with this site.")
-            break
-
-        if i < len(todo):
-            # Lighter throttle than Playwright — Crawlbase handles the
-            # rate-limit / pattern-hiding on their side. Some pacing still
-            # helps to avoid API-side rate limits.
-            time.sleep(random.uniform(1.0, 3.0))
+                recent_results.append(result)
+                if len(recent_results) > ABORT_AFTER_BLOCK:
+                    recent_results.pop(0)
+                if (len(recent_results) == ABORT_AFTER_BLOCK
+                        and all(r == "blocked" for r in recent_results)):
+                    print(f"\n[boxscrape] last {ABORT_AFTER_BLOCK} results all "
+                          "blocked — aborting; cancelling remaining futures.")
+                    aborted = True
+                    for f in futures:
+                        if not f.done():
+                            f.cancel()
+                    break
+        finally:
+            if aborted:
+                # Drain — cancelled futures still need result() consumed
+                for f in futures:
+                    if f.cancelled():
+                        continue
+                    try:
+                        f.result(timeout=0.1)
+                    except Exception:
+                        pass
 
     elapsed = time.time() - start_ts
     print(f"\n[boxscrape] done in {elapsed:.0f}s")
     print(f"[boxscrape] ok: {ok}   blocked: {blocked}   empty: {empty}   "
           f"not-available: {not_avail}   failed: {failed}")
-    if ok + empty + not_avail + failed > 0:
-        print(f"[boxscrape] avg per fetch: "
-              f"{elapsed / max(ok + empty + not_avail + failed, 1):.2f}s")
+    processed = ok + empty + not_avail + failed + blocked
+    if processed > 0:
+        print(f"[boxscrape] avg per fetch: {elapsed / processed:.2f}s")
 
     _print_not_available_report(not_avail_ids)
 

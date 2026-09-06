@@ -415,6 +415,30 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-09-04,6583843,Dayton,Atlantic 10,Ball St.,MAC,Neutral,22,Sidney Sprada,OH,3,16,4,40,0.3,1,0,0,9,13,0,0,2,0,17.0,0,0.0,2.0,11.0,2
 2026-2027,2026-09-04,6583843,Dayton,Atlantic 10,Ball St.,MAC,Neutral,19,Charlotte Vinson,OH,3,8,5,27,0.111,0,0,0,4,0,0,0,1,0,8.5,0,0.0,1.0,0.0,1
 2026-2027,2026-09-04,6583843,Dayton,Atlantic 10,Ball St.,MAC,Neutral,1,Kaleigh Meritt,OH,1,0,0,0,0.0,0,0,1,1,3,0,0,0,0,0.0,0,0.0,0.0,1.0,0
+2026-2027,2026-09-05,6583846,Dayton,Atlantic 10,Western Ky.,CUSA,Neutral,8,Morgan Asleson,L/DS,5,0,0,0,0.0,0,1,0,1,0,0,0,0,0,1.0,0,0.0,0.0,6.0,0
+2026-2027,2026-09-05,6583846,Dayton,Atlantic 10,Western Ky.,CUSA,Neutral,31,Lily Barry,L/DS,5,0,0,0,0.0,7,1,2,7,13,4,0,0,0,1.0,0,0.0,14.0,11.0,0
+2026-2027,2026-09-05,6583846,Dayton,Atlantic 10,Western Ky.,CUSA,Neutral,3,Abigail Cresse,MB,5,9,1,13,0.615,1,0,1,3,2,0,0,7,0,12.5,0,0.0,1.0,8.0,7
+2026-2027,2026-09-05,6583846,Dayton,Atlantic 10,Western Ky.,CUSA,Neutral,6,Addi Gallentine,MB,5,3,1,7,0.286,0,0,0,3,1,0,0,2,0,4.0,0,0.0,3.0,0.0,2
+2026-2027,2026-09-05,6583846,Dayton,Atlantic 10,Western Ky.,CUSA,Neutral,9,Natalie Harrington,S,5,1,0,1,1.0,20,3,0,2,0,0,0,0,0,4.0,0,0.0,43.0,24.0,0
+2026-2027,2026-09-05,6583846,Dayton,Atlantic 10,Western Ky.,CUSA,Neutral,2,Kamryn Hunt,OH,5,17,4,28,0.464,0,1,2,10,34,2,0,2,0,19.0,0,0.0,0.0,17.0,2
+2026-2027,2026-09-05,6583846,Dayton,Atlantic 10,Western Ky.,CUSA,Neutral,16,Gabriela Machin Borges,OH,5,10,2,21,0.381,0,0,0,1,0,0,0,2,0,11.0,0,0.0,0.0,0.0,2
+2026-2027,2026-09-05,6583846,Dayton,Atlantic 10,Western Ky.,CUSA,Neutral,12,Rylee Sloss,S,5,0,0,0,0.0,22,0,1,6,0,0,0,0,0,0.0,0,0.0,50.0,5.0,0
+2026-2027,2026-09-05,6583846,Dayton,Atlantic 10,Western Ky.,CUSA,Neutral,22,Sidney Sprada,OH,5,15,6,37,0.243,2,1,1,4,26,2,0,0,0,16.0,0,0.0,5.0,16.0,0
+2026-2027,2026-09-05,6583846,Dayton,Atlantic 10,Western Ky.,CUSA,Neutral,19,Charlotte Vinson,OH,5,2,5,14,-0.214,0,1,2,1,1,0,2,6,0,8.0,0,0.0,0.0,7.0,8
+2026-2027,2026-09-05,6583846,Dayton,Atlantic 10,Western Ky.,CUSA,Neutral,10,Emily Harden,S,4,0,0,0,0.0,0,0,0,0,0,0,0,0,0,0.0,0,0.0,0.0,6.0,0
+2026-2027,2026-09-05,6583846,Dayton,Atlantic 10,Western Ky.,CUSA,Neutral,13,Sydney Barrett,OH,2,0,0,0,0.0,0,0,1,0,3,1,0,0,0,0.0,0,0.0,0.0,2.0,0
+2026-2027,2026-09-05,6583846,Western Ky.,CUSA,Dayton,Atlantic 10,Neutral,2,Tayler Baron,L/DS,5,0,0,0,0.0,2,1,0,19,21,2,0,0,0,1.0,0,0.0,12.0,16.0,0
+2026-2027,2026-09-05,6583846,Western Ky.,CUSA,Dayton,Atlantic 10,Neutral,3,Kennedy Cherry,L/DS,5,0,0,1,0.0,4,0,2,5,33,3,0,0,0,0.0,0,0.0,5.0,19.0,0
+2026-2027,2026-09-05,6583846,Western Ky.,CUSA,Dayton,Atlantic 10,Neutral,8,Cali Foster,L/DS,5,0,0,0,0.0,2,0,0,2,33,2,0,0,0,0.0,0,0.0,3.0,0.0,0
+2026-2027,2026-09-05,6583846,Western Ky.,CUSA,Dayton,Atlantic 10,Neutral,5,Kaira Knox,OH,5,13,6,23,0.304,1,3,4,5,0,0,0,1,0,16.5,0,0.0,1.0,17.0,1
+2026-2027,2026-09-05,6583846,Western Ky.,CUSA,Dayton,Atlantic 10,Neutral,21,Eliza McKnight,OH,5,9,2,17,0.412,0,0,0,1,1,0,0,4,0,11.0,0,0.0,2.0,0.0,4
+2026-2027,2026-09-05,6583846,Western Ky.,CUSA,Dayton,Atlantic 10,Neutral,20,Kate Rush,S,5,11,1,21,0.476,41,3,4,4,0,0,1,2,1,16.0,0,0.0,90.0,16.0,3
+2026-2027,2026-09-05,6583846,Western Ky.,CUSA,Dayton,Atlantic 10,Neutral,17,Alivia Skidmore,OH,5,7,3,23,0.174,0,3,2,2,0,0,0,3,0,11.5,0,0.0,0.0,14.0,3
+2026-2027,2026-09-05,6583846,Western Ky.,CUSA,Dayton,Atlantic 10,Neutral,22,Faith Young,OH,5,9,1,15,0.533,1,0,1,1,1,0,0,2,0,10.0,0,0.0,1.0,7.0,2
+2026-2027,2026-09-05,6583846,Western Ky.,CUSA,Dayton,Atlantic 10,Neutral,9,Camila Adams,DS,4,0,0,1,0.0,0,0,0,0,0,0,0,0,0,0.0,0,0.0,0.0,5.0,0
+2026-2027,2026-09-05,6583846,Western Ky.,CUSA,Dayton,Atlantic 10,Neutral,16,Sonja Laaksonen,OH,4,4,7,14,-0.214,0,0,0,0,2,0,1,0,1,5.0,0,0.0,0.0,0.0,1
+2026-2027,2026-09-05,6583846,Western Ky.,CUSA,Dayton,Atlantic 10,Neutral,13,Kendall Meller,OH,1,1,3,6,-0.333,0,0,0,2,0,0,0,0,0,1.0,0,0.0,0.0,0.0,0
+2026-2027,2026-09-05,6583846,Western Ky.,CUSA,Dayton,Atlantic 10,Neutral,18,Aubrey Sears,OH,1,0,1,1,-1.0,0,0,0,0,0,0,0,0,0,0.0,0,,,,0
 2026-2027,2026-08-28,6583872,Utah Tech,WAC,Utah Valley,WAC,Neutral,4,Nana Asiata,OPP,4,16,6,34,0.294,0,0,0,4,0,0,0,6,0,19.0,0,0.0,7.0,0.0,6
 2026-2027,2026-08-28,6583872,Utah Tech,WAC,Utah Valley,WAC,Neutral,7,Lusia Langi,MB,4,9,1,14,0.571,0,0,0,2,0,0,1,4,0,12.0,1,0.0,0.0,0.0,5
 2026-2027,2026-08-28,6583872,Utah Tech,WAC,Utah Valley,WAC,Neutral,12,Mya Laufiso,L/DS,4,0,1,2,-0.5,4,3,2,18,40,1,0,0,0,3.0,0,0.0,11.0,23.0,0
@@ -9908,6 +9932,32 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-08-30,6600166,Pacific,WCC,Southern Utah,WAC,Neutral,2,Hannah Koester,OH,3,4,3,18,0.056,0,0,0,6,10,2,0,1,1,4.5,0,0.0,0.0,10.0,1
 2026-2027,2026-08-30,6600166,Pacific,WCC,Southern Utah,WAC,Neutral,3,Ellie Prindl,MB,3,0,1,5,-0.2,0,0,0,0,1,0,0,2,0,1.0,0,0.0,3.0,10.0,2
 2026-2027,2026-08-30,6600166,Pacific,WCC,Southern Utah,WAC,Neutral,19,Adeline Sirbu,MB,3,2,3,6,-0.167,1,0,0,0,0,0,1,1,0,3.5,0,0.0,1.0,0.0,2
+2026-2027,2026-09-03,6600167,Pacific,WCC,UC Riverside,Big West,Neutral,1,Alessia Couchond,S,5,0,0,1,0.0,23,5,1,12,0,0,0,0,0,5.0,0,0.0,77.0,21.0,0
+2026-2027,2026-09-03,6600167,Pacific,WCC,UC Riverside,Big West,Neutral,7,Chloe Giehtbrock,S,5,0,0,0,0.0,15,2,2,7,0,0,0,0,0,2.0,0,0.0,53.0,17.0,0
+2026-2027,2026-09-03,6600167,Pacific,WCC,UC Riverside,Big West,Neutral,30,Isabella Gutierrez,L/DS,5,0,0,1,0.0,5,2,1,19,16,1,0,0,0,2.0,0,0.0,24.0,17.0,0
+2026-2027,2026-09-03,6600167,Pacific,WCC,UC Riverside,Big West,Neutral,16,Suzanne Kemle,MB,5,4,1,15,0.2,0,1,2,4,0,0,2,3,0,8.5,0,0.0,2.0,13.0,5
+2026-2027,2026-09-03,6600167,Pacific,WCC,UC Riverside,Big West,Neutral,2,Hannah Koester,OH,5,7,6,28,0.036,0,3,2,8,20,2,0,0,0,10.0,0,0.0,1.0,18.0,0
+2026-2027,2026-09-03,6600167,Pacific,WCC,UC Riverside,Big West,Neutral,9,Julia Porath,OPP,5,9,5,31,0.129,0,0,0,1,0,0,1,2,0,11.0,0,0.0,1.0,0.0,3
+2026-2027,2026-09-03,6600167,Pacific,WCC,UC Riverside,Big West,Neutral,15,Hanna Vorhies,MB,5,10,5,23,0.217,0,0,0,1,1,0,0,1,0,10.5,0,0.0,0.0,0.0,1
+2026-2027,2026-09-03,6600167,Pacific,WCC,UC Riverside,Big West,Neutral,13,Nicole Zake,OH,5,14,7,44,0.159,0,2,0,10,33,6,0,0,0,16.0,0,0.0,2.0,13.0,0
+2026-2027,2026-09-03,6600167,Pacific,WCC,UC Riverside,Big West,Neutral,14,Ella Gridley,DS,4,0,1,1,-1.0,0,1,0,2,6,0,0,0,0,1.0,0,0.0,0.0,4.0,0
+2026-2027,2026-09-03,6600167,Pacific,WCC,UC Riverside,Big West,Neutral,19,Adeline Sirbu,MB,4,5,1,14,0.286,0,0,0,0,0,0,0,0,0,5.0,0,,,,0
+2026-2027,2026-09-03,6600167,Pacific,WCC,UC Riverside,Big West,Neutral,8,Vanessa Zussino,OH,3,0,3,9,-0.333,0,0,1,0,11,1,1,0,0,1.0,0,0.0,0.0,4.0,1
+2026-2027,2026-09-03,6600167,Pacific,WCC,UC Riverside,Big West,Neutral,5,Gracie Armato,S,1,0,0,0,0.0,0,0,0,0,0,0,0,0,0,0.0,0,0.0,0.0,2.0,0
+2026-2027,2026-09-03,6600167,Pacific,WCC,UC Riverside,Big West,Neutral,3,Ellie Prindl,MB,1,0,1,2,-0.5,1,0,0,0,0,0,0,0,0,0.0,0,0.0,1.0,0.0,0
+2026-2027,2026-09-03,6600167,UC Riverside,Big West,Pacific,WCC,Neutral,22,Maya Barron,S,5,0,0,1,0.0,15,0,1,9,1,0,0,0,0,0.0,0,0.0,54.0,17.0,0
+2026-2027,2026-09-03,6600167,UC Riverside,Big West,Pacific,WCC,Neutral,4,Zeynep Belgutay,MB,5,9,1,12,0.667,0,2,3,4,0,0,2,3,0,14.5,0,0.0,3.0,21.0,5
+2026-2027,2026-09-03,6600167,UC Riverside,Big West,Pacific,WCC,Neutral,20,Andrea Brewer,OH,5,16,5,47,0.234,1,3,4,11,33,4,0,2,1,20.0,0,0.0,6.0,14.0,2
+2026-2027,2026-09-03,6600167,UC Riverside,Big West,Pacific,WCC,Neutral,15,Evelyn Hendrix,MB,5,4,2,13,0.154,0,0,0,0,1,1,0,7,0,7.5,0,0.0,1.0,0.0,7
+2026-2027,2026-09-03,6600167,UC Riverside,Big West,Pacific,WCC,Neutral,13,Nicole Hughes,OH,5,6,4,21,0.095,0,0,0,3,0,0,0,6,0,9.0,0,0.0,1.0,0.0,6
+2026-2027,2026-09-03,6600167,UC Riverside,Big West,Pacific,WCC,Neutral,11,Elena Kasavica,S,5,0,0,0,0.0,28,1,2,11,0,0,0,0,0,1.0,0,0.0,64.0,17.0,0
+2026-2027,2026-09-03,6600167,UC Riverside,Big West,Pacific,WCC,Neutral,19,Misu Nguyen,L/DS,5,0,0,0,0.0,5,2,4,19,27,5,0,0,0,2.0,0,0.0,15.0,15.0,0
+2026-2027,2026-09-03,6600167,UC Riverside,Big West,Pacific,WCC,Neutral,9,Casi Doll,OH,3,9,1,17,0.471,1,2,2,4,23,2,0,0,0,11.0,0,0.0,3.0,12.0,0
+2026-2027,2026-09-03,6600167,UC Riverside,Big West,Pacific,WCC,Neutral,5,McKenna Giles,L/DS,3,0,0,0,0.0,0,0,2,3,6,1,0,0,0,0.0,0,0.0,0.0,4.0,0
+2026-2027,2026-09-03,6600167,UC Riverside,Big West,Pacific,WCC,Neutral,3,Sariah Johnson,OH,3,4,2,14,0.143,0,0,0,3,0,0,0,0,0,4.0,0,0.0,1.0,0.0,0
+2026-2027,2026-09-03,6600167,UC Riverside,Big West,Pacific,WCC,Neutral,12,Malia Tanksley,OH,3,6,5,18,0.056,0,0,0,0,0,0,0,1,0,6.5,0,0.0,2.0,0.0,1
+2026-2027,2026-09-03,6600167,UC Riverside,Big West,Pacific,WCC,Neutral,14,Juliette D'Eliseo,OH,1,0,2,6,-0.333,0,0,0,2,6,2,0,0,0,0.0,0,0.0,0.0,5.0,0
+2026-2027,2026-09-03,6600167,UC Riverside,Big West,Pacific,WCC,Neutral,1,Madison Pulsipher,OH,1,0,2,6,-0.333,0,0,1,2,3,1,0,1,0,0.5,0,0.0,0.0,1.0,1
 2026-2027,2026-09-04,6600168,Pacific,WCC,San Jose St.,Mountain West,Neutral,1,Alessia Couchond,S,4,1,2,3,-0.333,25,3,1,7,0,0,0,1,0,4.5,0,0.0,85.0,17.0,1
 2026-2027,2026-09-04,6600168,Pacific,WCC,San Jose St.,Mountain West,Neutral,30,Isabella Gutierrez,L/DS,4,1,0,1,1.0,3,1,1,12,21,3,0,0,0,2.0,0,0.0,12.0,12.0,0
 2026-2027,2026-09-04,6600168,Pacific,WCC,San Jose St.,Mountain West,Neutral,16,Suzanne Kemle,MB,4,8,1,14,0.5,1,0,1,3,0,0,0,2,0,9.0,0,0.0,2.0,7.0,2
@@ -17443,6 +17493,30 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-09-03,6613014,Idaho,Big Sky,Marist,MAAC,Neutral,2,Alaina Armstrong,OH,1,2,1,4,0.25,0,0,0,0,2,0,0,0,0,2.0,0,0.0,0.0,0.0,0
 2026-2027,2026-09-03,6613014,Idaho,Big Sky,Marist,MAAC,Neutral,6,Gabrielle Smith,MB,1,0,0,0,0.0,0,0,0,0,0,0,0,1,0,0.5,0,0.0,1.0,0.0,1
 2026-2027,2026-09-03,6613014,Idaho,Big Sky,Marist,MAAC,Neutral,1,Kailee Wakatake,DS,1,0,0,0,0.0,0,0,0,0,4,0,0,0,0,0.0,0,0.0,0.0,1.0,0
+2026-2027,2026-09-05,6613020,Idaho,Big Sky,SIUE,OVC,Neutral,13,Allie Ferrin,OH,4,17,5,35,0.343,0,0,4,2,11,0,0,2,0,18.0,0,0.0,0.0,13.0,2
+2026-2027,2026-09-05,6613020,Idaho,Big Sky,SIUE,OVC,Neutral,9,Kiana Greer,OH,4,13,5,33,0.242,2,1,2,12,27,1,0,1,2,14.5,0,0.0,4.0,16.0,1
+2026-2027,2026-09-05,6613020,Idaho,Big Sky,SIUE,OVC,Neutral,21,Csenge Krakoczki,S,4,1,0,2,0.5,30,0,0,11,0,0,0,1,1,1.5,0,0.0,76.0,10.0,1
+2026-2027,2026-09-05,6613020,Idaho,Big Sky,SIUE,OVC,Neutral,16,Anika Prisby,MB,4,7,4,15,0.2,0,0,0,3,0,0,0,4,1,9.0,0,0.0,1.0,0.0,4
+2026-2027,2026-09-05,6613020,Idaho,Big Sky,SIUE,OVC,Neutral,5,Sarah Sullivan,OH,4,9,3,27,0.222,0,0,1,6,0,0,0,2,1,10.0,0,0.0,0.0,7.0,2
+2026-2027,2026-09-05,6613020,Idaho,Big Sky,SIUE,OVC,Neutral,12,Kyriah Trefren,L,4,0,0,0,0.0,6,0,0,18,14,0,0,0,0,0.0,0,0.0,16.0,15.0,0
+2026-2027,2026-09-05,6613020,Idaho,Big Sky,SIUE,OVC,Neutral,1,Kailee Wakatake,DS,4,0,0,0,0.0,2,0,0,4,14,0,0,0,0,0.0,0,0.0,4.0,1.0,0
+2026-2027,2026-09-05,6613020,Idaho,Big Sky,SIUE,OVC,Neutral,14,Sophie Danielson,OPP,3,6,2,12,0.333,0,0,0,1,0,0,0,1,0,6.5,0,0.0,0.0,0.0,1
+2026-2027,2026-09-05,6613020,Idaho,Big Sky,SIUE,OVC,Neutral,7,Keira Kleidon,L,3,0,0,0,0.0,0,1,0,1,6,2,0,0,0,1.0,0,0.0,0.0,6.0,0
+2026-2027,2026-09-05,6613020,Idaho,Big Sky,SIUE,OVC,Neutral,6,Gabrielle Smith,MB,3,5,0,9,0.556,2,1,3,3,1,0,0,3,1,7.5,0,0.0,3.0,14.0,3
+2026-2027,2026-09-05,6613020,Idaho,Big Sky,SIUE,OVC,Neutral,4,Zola Zuccolo,S,3,0,0,0,0.0,13,0,0,2,1,0,0,1,0,0.5,0,0.0,32.0,9.0,1
+2026-2027,2026-09-05,6613020,Idaho,Big Sky,SIUE,OVC,Neutral,11,Koen Makaula,MB,1,2,0,6,0.333,0,0,0,0,0,0,0,0,0,2.0,0,0.0,0.0,2.0,0
+2026-2027,2026-09-05,6613020,Idaho,Big Sky,SIUE,OVC,Neutral,3,Lucy Ryan,OH,1,0,0,0,0.0,0,0,0,0,0,0,0,0,0,0.0,0,0.0,0.0,1.0,0
+2026-2027,2026-09-05,6613020,SIUE,OVC,Idaho,Big Sky,Neutral,9,Paige Bernstein,S,4,0,0,0,0.0,24,0,2,7,0,0,0,0,0,0.0,0,0.0,70.0,14.0,0
+2026-2027,2026-09-05,6613020,SIUE,OVC,Idaho,Big Sky,Neutral,10,Georgia Bresnahan,OH,4,14,6,33,0.242,0,0,3,13,21,1,0,0,0,14.0,0,0.0,3.0,16.0,0
+2026-2027,2026-09-05,6613020,SIUE,OVC,Idaho,Big Sky,Neutral,8,Ally Hughes,S,4,0,1,1,-1.0,15,1,2,7,0,0,0,0,0,1.0,0,0.0,43.0,18.0,0
+2026-2027,2026-09-05,6613020,SIUE,OVC,Idaho,Big Sky,Neutral,18,Anika Ivester,MB,4,8,1,13,0.538,1,0,0,0,0,0,0,2,0,9.0,0,0.0,1.0,0.0,2
+2026-2027,2026-09-05,6613020,SIUE,OVC,Idaho,Big Sky,Neutral,5,Claire Jones,DS,4,0,0,0,0.0,2,0,0,8,23,1,0,0,0,0.0,0,0.0,10.0,2.0,0
+2026-2027,2026-09-05,6613020,SIUE,OVC,Idaho,Big Sky,Neutral,14,Karli Mann,OH,4,5,1,14,0.286,0,0,0,0,0,0,0,0,0,5.0,0,,,,0
+2026-2027,2026-09-05,6613020,SIUE,OVC,Idaho,Big Sky,Neutral,6,Kennedy Pike,OH,4,5,5,30,0.0,1,0,0,2,0,0,0,2,0,6.0,0,0.0,2.0,0.0,2
+2026-2027,2026-09-05,6613020,SIUE,OVC,Idaho,Big Sky,Neutral,3,Kinley Quast,DS,4,0,0,0,0.0,2,0,1,6,0,0,0,0,0,0.0,0,0.0,6.0,9.0,0
+2026-2027,2026-09-05,6613020,SIUE,OVC,Idaho,Big Sky,Neutral,11,Sophie Robinson,OH,4,12,3,28,0.321,1,0,3,8,40,1,0,0,0,12.0,0,0.0,4.0,11.0,0
+2026-2027,2026-09-05,6613020,SIUE,OVC,Idaho,Big Sky,Neutral,7,Ashlyn Schulze,MB,4,7,2,26,0.192,2,2,2,3,0,0,1,0,1,10.0,0,0.0,3.0,17.0,1
+2026-2027,2026-09-05,6613020,SIUE,OVC,Idaho,Big Sky,Neutral,12,Maddie Determan,OH,1,0,0,1,0.0,0,0,0,0,0,0,0,0,0,0.0,0,,,,0
 2026-2027,2026-08-29,6613065,VCU,Atlantic 10,Florida St.,ACC,Neutral,19,Jordan Baksh,L,4,0,0,0,0.0,1,0,0,2,16,1,0,0,0,0.0,0,0.0,3.0,0.0,0
 2026-2027,2026-08-29,6613065,VCU,Atlantic 10,Florida St.,ACC,Neutral,16,Nina Boledovicova,MB,4,7,1,21,0.286,1,1,3,3,1,0,0,5,0,10.5,0,0.0,1.0,15.0,5
 2026-2027,2026-08-29,6613065,VCU,Atlantic 10,Florida St.,ACC,Neutral,7,Sarah Dibbs-Frantz,MB,4,2,2,10,0.0,0,0,0,0,0,0,1,3,0,4.5,0,,,,4

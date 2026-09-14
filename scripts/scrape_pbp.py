@@ -93,7 +93,11 @@ MIN_VALID_SIZE    = 1_000          # below this, response is a genuine Akamai st
                                    # (real PBP pages are 100K+, empty-PBP shells are
                                    # 25-30K — the latter gets routed to "empty" via
                                    # the has_pbp_table check, not flagged as blocked)
-ABORT_AFTER_BLOCK = 3              # consecutive blocks → abort
+ABORT_AFTER_BLOCK = 8              # consecutive blocks → abort
+# After N blocked attempts a contest is promoted 'blocked' → 'abandoned'
+# and dropped from the retry queue. See same setting in the boxscore
+# scraper for rationale.
+ABANDON_AFTER_ATTEMPTS = 3
 USER_AGENT_EDGE   = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -209,8 +213,29 @@ def update_status(conn, contest_id: str, status: str, size: int = 0, err: str | 
 
 
 def already_done_ids(conn) -> set[str]:
-    cur = conn.execute("SELECT contest_id FROM progress WHERE status='ok'")
+    # 'abandoned' — contest was blocked ABANDON_AFTER_ATTEMPTS times and
+    #               is unlikely to succeed on further retries. Dropped
+    #               from the retry queue so it stops clogging every run
+    #               and tripping the abort circuit with stale bad IDs.
+    # Use --retry-abandoned to force a re-check.
+    cur = conn.execute(
+        "SELECT contest_id FROM progress WHERE status IN ('ok', 'abandoned')"
+    )
     return {row[0] for row in cur.fetchall()}
+
+
+def _record_block(conn, contest_id: str, size: int, err: str) -> str:
+    """Promote 'blocked' → 'abandoned' after ABANDON_AFTER_ATTEMPTS."""
+    row = conn.execute(
+        "SELECT attempts FROM progress WHERE contest_id=?", (contest_id,)
+    ).fetchone()
+    next_attempt = (row[0] if row else 0) + 1
+    if next_attempt >= ABANDON_AFTER_ATTEMPTS:
+        update_status(conn, contest_id, "abandoned", size,
+                      f"{err} (abandoned after {next_attempt} attempts)")
+        return "abandoned"
+    update_status(conn, contest_id, "blocked", size, err)
+    return "blocked"
 
 
 def fetch_one(page, conn, contest_id: str, idx: int, total: int) -> str:
@@ -233,9 +258,9 @@ def fetch_one(page, conn, contest_id: str, idx: int, total: int) -> str:
         return "fail"
 
     if is_blocked(html):
-        print(f"BLOCKED ({len(html):,} bytes)")
-        update_status(conn, contest_id, "blocked", len(html), "akamai block")
-        return "blocked"
+        status = _record_block(conn, contest_id, len(html), "akamai block")
+        print(f"{'ABANDONED' if status == 'abandoned' else 'BLOCKED'} ({len(html):,} bytes)")
+        return status
 
     if not has_pbp_table(html):
         print(f"EMPTY ({len(html):,} bytes) — no PBP table; recording as known-missing")
@@ -317,9 +342,9 @@ def _classify_and_persist_pbp(conn, cid: str, html: str | None,
         return "fail"
 
     if is_blocked(html):
-        print(f"BLOCKED ({len(html):,} bytes)")
-        update_status(conn, cid, "blocked", len(html), "akamai block via crawlbase")
-        return "blocked"
+        status = _record_block(conn, cid, len(html), "akamai block via crawlbase")
+        print(f"{'ABANDONED' if status == 'abandoned' else 'BLOCKED'} ({len(html):,} bytes)")
+        return status
 
     if not has_pbp_table(html):
         print(f"EMPTY ({len(html):,} bytes) — no PBP table; recording as known-missing")
@@ -367,14 +392,16 @@ def run_via_crawlbase(conn, todo: list[str], token: str) -> None:
                 )
                 if result == "ok":
                     ok += 1
-                elif result == "blocked":
+                elif result in ("blocked", "abandoned"):
                     blocked += 1
                 elif result == "empty":
                     empty += 1
                 else:
                     failed += 1
 
-                recent_results.append(result)
+                # Fold 'abandoned' into 'blocked' for the abort-circuit
+                # window — same underlying signal, just terminally marked.
+                recent_results.append("blocked" if result == "abandoned" else result)
                 if len(recent_results) > ABORT_AFTER_BLOCK:
                     recent_results.pop(0)
                 if (len(recent_results) == ABORT_AFTER_BLOCK
@@ -421,6 +448,9 @@ def main() -> None:
                     help="Re-attempt contests previously marked 'blocked'")
     ap.add_argument("--retry-failed",  action="store_true",
                     help="Re-attempt contests previously marked 'fail'")
+    ap.add_argument("--retry-abandoned", action="store_true",
+                    help="Re-attempt contests previously marked 'abandoned' "
+                         "(blocked >=3 times, dropped from auto-retry queue)")
     args = ap.parse_args()
 
     # Build the ID list ───────────────────────────────────────────────
@@ -455,6 +485,9 @@ def main() -> None:
         conn.commit()
     if args.retry_failed:
         conn.execute("UPDATE progress SET status='retry' WHERE status='fail'")
+        conn.commit()
+    if args.retry_abandoned:
+        conn.execute("UPDATE progress SET status='retry' WHERE status='abandoned'")
         conn.commit()
 
     todo = [cid for cid in ids if cid not in done]
@@ -537,7 +570,7 @@ def main() -> None:
             if result == "ok":
                 ok += 1
                 consecutive_blocks = 0
-            elif result == "blocked":
+            elif result in ("blocked", "abandoned"):
                 blocked += 1
                 consecutive_blocks += 1
             elif result == "empty":

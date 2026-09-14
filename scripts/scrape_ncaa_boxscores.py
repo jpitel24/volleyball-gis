@@ -82,7 +82,12 @@ HOME_URL  = "https://stats.ncaa.org/"
 NAV_TIMEOUT_MS      = 60_000
 PAGE_DWELL_MS       = 2_500
 MIN_VALID_SIZE      = 1_000     # below this, response is an Akamai stub
-ABORT_AFTER_BLOCK   = 3
+ABORT_AFTER_BLOCK   = 8
+# After N consecutive blocked attempts, a contest is promoted from
+# 'blocked' → 'abandoned' and dropped from the retry queue. Prevents
+# the historical retry pool from clogging every daily run and tripping
+# the abort circuit with stale known-bad IDs.
+ABANDON_AFTER_ATTEMPTS = 3
 WARMUP_TIMEOUT_MS   = 30_000
 # Randomized inter-request throttle. The scraper had NO throttle before,
 # so 200 fetches went out ~as-fast-as-the-page-loads — 4-5s apart, all
@@ -121,13 +126,31 @@ def init_db() -> sqlite3.Connection:
 
 
 def already_done_ids(conn: sqlite3.Connection) -> set[str]:
-    # 'empty' status covers contests whose individual_stats page NCAA has
-    # explicitly served as "Box score not available." Those never change
-    # after publish, so skip them permanently — otherwise a stalled
-    # scoretaker's page burns 2 Crawlbase credits per refresh forever.
-    # Use --retry-empty to force a re-check for a specific contest.
-    cur = conn.execute("SELECT contest_id FROM progress WHERE status IN ('ok', 'empty')")
+    # 'empty'     — NCAA served "Box score not available" (permanent).
+    # 'abandoned' — contest was blocked ABANDON_AFTER_ATTEMPTS times and
+    #               is unlikely to succeed on further retries; excluded
+    #               so it doesn't burn credits every run or trip the
+    #               abort circuit with stale known-bad IDs.
+    # Use --retry-empty / --retry-abandoned to force a re-check.
+    cur = conn.execute(
+        "SELECT contest_id FROM progress WHERE status IN ('ok', 'empty', 'abandoned')"
+    )
     return {row[0] for row in cur.fetchall()}
+
+
+def _record_block(conn: sqlite3.Connection, cid: str, size: int,
+                  err: str) -> str:
+    """Record a blocked fetch — promotes to 'abandoned' once the contest
+    has hit ABANDON_AFTER_ATTEMPTS blocks. Returns the status written
+    ('blocked' or 'abandoned') so the caller can print appropriately."""
+    row = conn.execute("SELECT attempts FROM progress WHERE contest_id=?", (cid,)).fetchone()
+    next_attempt = (row[0] if row else 0) + 1
+    if next_attempt >= ABANDON_AFTER_ATTEMPTS:
+        update_status(conn, cid, "abandoned", size,
+                      f"{err} (abandoned after {next_attempt} attempts)")
+        return "abandoned"
+    update_status(conn, cid, "blocked", size, err)
+    return "blocked"
 
 
 def update_status(conn: sqlite3.Connection, cid: str, status: str,
@@ -243,9 +266,9 @@ def fetch_one(page, conn: sqlite3.Connection, cid: str,
         return "not_available"
 
     if is_blocked(html):
-        print(f"BLOCKED ({len(html):,} bytes)")
-        update_status(conn, cid, "blocked", len(html), "akamai block")
-        return "blocked"
+        status = _record_block(conn, cid, len(html), "akamai block")
+        print(f"{'ABANDONED' if status == 'abandoned' else 'BLOCKED'} ({len(html):,} bytes)")
+        return status
 
     if not has_roster_table(html):
         print(f"EMPTY ({len(html):,} bytes) — no roster table")
@@ -334,9 +357,9 @@ def _classify_and_persist_boxscore(conn: sqlite3.Connection, cid: str,
         return "not_available"
 
     if is_blocked(html):
-        print(f"BLOCKED ({len(html):,} bytes)")
-        update_status(conn, cid, "blocked", len(html), "akamai block via crawlbase")
-        return "blocked"
+        status = _record_block(conn, cid, len(html), "akamai block via crawlbase")
+        print(f"{'ABANDONED' if status == 'abandoned' else 'BLOCKED'} ({len(html):,} bytes)")
+        return status
 
     if not has_roster_table(html):
         print(f"EMPTY ({len(html):,} bytes) — no roster table")
@@ -390,7 +413,7 @@ def run_via_crawlbase(conn: sqlite3.Connection, todo: list[str], token: str) -> 
                 )
                 if result == "ok":
                     ok += 1
-                elif result == "blocked":
+                elif result in ("blocked", "abandoned"):
                     blocked += 1
                 elif result == "empty":
                     empty += 1
@@ -400,7 +423,12 @@ def run_via_crawlbase(conn: sqlite3.Connection, todo: list[str], token: str) -> 
                 else:
                     failed += 1
 
-                recent_results.append(result)
+                # Treat 'abandoned' as 'blocked' for the abort-circuit
+                # window — same underlying signal (fetch didn't succeed
+                # via the current transport), just with a terminal flag
+                # set. Prevents the circuit from being fooled by mixed
+                # blocked/abandoned patterns.
+                recent_results.append("blocked" if result == "abandoned" else result)
                 if len(recent_results) > ABORT_AFTER_BLOCK:
                     recent_results.pop(0)
                 if (len(recent_results) == ABORT_AFTER_BLOCK
@@ -471,6 +499,9 @@ def main() -> None:
                     help="Re-attempt contests previously marked empty "
                          "(NCAA 'Box score not available' pages — use when "
                          "a scoretaker uploaded stats late)")
+    ap.add_argument("--retry-abandoned", action="store_true",
+                    help="Re-attempt contests previously marked abandoned "
+                         "(blocked >=3 times, dropped from auto-retry queue)")
     args = ap.parse_args()
 
     ids_path = Path(args.ids_file) if args.ids_file else \
@@ -488,6 +519,9 @@ def main() -> None:
         conn.commit()
     if args.retry_empty:
         conn.execute("UPDATE progress SET status='retry' WHERE status='empty'")
+        conn.commit()
+    if args.retry_abandoned:
+        conn.execute("UPDATE progress SET status='retry' WHERE status='abandoned'")
         conn.commit()
 
     done = already_done_ids(conn)
@@ -562,7 +596,7 @@ def main() -> None:
             result = fetch_one(page, conn, cid, i, len(todo))
             if result == "ok":
                 ok += 1; consecutive_blocks = 0
-            elif result == "blocked":
+            elif result in ("blocked", "abandoned"):
                 blocked += 1; consecutive_blocks += 1
             elif result == "empty":
                 empty += 1; consecutive_blocks = 0

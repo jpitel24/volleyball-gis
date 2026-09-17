@@ -4,6 +4,7 @@ import { loadPlayerIndex, isP4 } from '../lib/playerIndex.js';
 import { posColor, pgisLabel, posGroup, COL_TIPS } from '../lib/gis.js';
 import { useStickyYear } from '../lib/useStickyYear.js';
 import TeamChip from './TeamChip.jsx';
+import { RecCell, ServeCell, SetCell, BlockCell } from './PlayerLookup.jsx';
 
 const MAX_RESULTS = 20;
 const YEAR_OPTIONS = [2026, 2025, 2024, 2023, 2022];
@@ -64,6 +65,14 @@ function buildTeamIndex(players) {
         posRankTierTotal:   s.posRankTierTotal,
         posRankConf:        s.posRankConf,
         posRankConfTotal:   s.posRankConfTotal,
+        // Advanced-stat fields — needed for REC%/SRV+/AST%/BLK+ cells
+        // in the roster table, with the same qualified-vs-small-sample
+        // styling used on the Seasons and Players tools.
+        recQuality:      s.recQuality,
+        srvQuality:      s.srvQuality,
+        setQuality:      s.setQuality,
+        blockEffPerSet:  s.blockEffPerSet,
+        totals:          s.totals,
       });
       for (const g of s.gameLog || []) {
         t.gameKeys.add(g.gameKey);
@@ -179,6 +188,10 @@ function PlayerMiniRow({ p, rank }) {
       <td style={{ textAlign: 'right' }}>{fmt(p.gis)}</td>
       <td style={{ textAlign: 'right', color: 'var(--gisplus)' }}>{fmt(p.gisPlus)}</td>
       <td style={{ textAlign: 'right', color: 'var(--pgis)' }}>{fmt(p.pGIS, 1)}</td>
+      <RecCell rq={p.recQuality} />
+      <ServeCell sq={p.srvQuality} />
+      <SetCell sq={p.setQuality} />
+      <BlockCell value={p.blockEffPerSet} sets={p.sets} totals={p.totals} />
       <td style={{ textAlign: 'right', opacity: 0.7 }}>{p.t50 ? p.t50.games : '—'}</td>
       <td style={{ textAlign: 'right', opacity: 0.7, color: 'var(--gisplus)' }}>{p.t50 ? fmt(p.t50.gisPlus) : '—'}</td>
       <td style={{ textAlign: 'right', opacity: 0.7 }}>{p.t50 && Number.isFinite(p.t50.pGIS) ? fmt(p.t50.pGIS, 1) : '—'}</td>
@@ -245,6 +258,10 @@ function TeamCard({ t, expanded, onToggle }) {
                 <th style={{ textAlign: 'right' }} title={COL_TIPS['GIS/S']}>GIS/S</th>
                 <th style={{ textAlign: 'right' }} title={COL_TIPS['GIS+/S']}>GIS+/S</th>
                 <th style={{ textAlign: 'right' }} title={COL_TIPS.pGIS}>pGIS</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS['REC%']}>REC%</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS['SRV+']}>SRV+</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS['AST%']}>AST%</th>
+                <th style={{ textAlign: 'right' }} title={COL_TIPS['BLK+']}>BLK+</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }} title={COL_TIPS['T50 G']}>T50 G</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }} title={COL_TIPS['T50 GIS+/S']}>T50 GIS+/S</th>
                 <th style={{ textAlign: 'right', opacity: 0.6 }} title={COL_TIPS['T50 pGIS']}>T50 pGIS</th>

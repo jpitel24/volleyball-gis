@@ -156,8 +156,19 @@ function CategoryBreakdownPanel({ label, totals, sets, gis, gisPlus, posColorHex
 // rating": ≥50% great is elite, 40-50% solid, 30-40% average, <30%
 // below average. Hover tooltip surfaces the full Great/Good/Bad split
 // and total reception count.
-function RecCell({ rq }) {
-  if (!rq || !rq.qualified) {
+// Style helpers matching SeasonLookup's convention: dimmed italic +
+// asterisk when the sample doesn't meet the qualification threshold,
+// full color + bold when it does. Empty/absent data → dashed placeholder.
+const advSmallSampleStyle = (color) => ({
+  textAlign: 'right', color, fontWeight: 500,
+  opacity: 0.55, fontStyle: 'italic',
+});
+const advQualifiedStyle = (color) => ({
+  textAlign: 'right', color, fontWeight: 700,
+});
+
+export function RecCell({ rq }) {
+  if (!rq || (rq.total || 0) === 0) {
     return <td style={{ textAlign: 'right', opacity: 0.5 }}>—</td>;
   }
   let color;
@@ -165,15 +176,16 @@ function RecCell({ rq }) {
   else if (rq.greatPct >= 0.40) color = 'var(--accent)';
   else if (rq.greatPct >= 0.30) color = 'var(--yellow)';
   else                          color = 'var(--red)';
+  const style = rq.qualified ? advQualifiedStyle(color) : advSmallSampleStyle(color);
   const tooltip = [
-    `${rq.total} receptions`,
+    `${rq.total} receptions${rq.qualified ? '' : ' (below qualification threshold)'}`,
     `Great: ${rq.great} (${Math.round(rq.greatPct * 100)}%) — setter on 2nd, hitter killed on 3rd`,
     `Good:  ${rq.good} (${Math.round(rq.goodPct  * 100)}%) — setter on 2nd, rally continued`,
     `Bad:   ${rq.bad}  (${Math.round(rq.badPct   * 100)}%) — non-setter on 2nd, OR 3rd-touch attack blocked / errored`,
   ].join('\n');
   return (
-    <td style={{ textAlign: 'right', color, fontWeight: 700 }} title={tooltip}>
-      {Math.round(rq.greatPct * 100)}%
+    <td style={style} title={tooltip}>
+      {Math.round(rq.greatPct * 100)}%{rq.qualified ? '' : '*'}
     </td>
   );
 }
@@ -182,8 +194,8 @@ function RecCell({ rq }) {
 // the rally terminated in our favor by the 3rd touch after the
 // reception. Tiers calibrated against the 2025 qualified-cohort
 // distribution (avg 17.3%, top decile ≥ 25%).
-function ServeCell({ sq }) {
-  if (!sq || !sq.qualified) {
+export function ServeCell({ sq }) {
+  if (!sq || (sq.total || 0) === 0) {
     return <td style={{ textAlign: 'right', opacity: 0.5 }}>—</td>;
   }
   let color;
@@ -191,9 +203,10 @@ function ServeCell({ sq }) {
   else if (sq.effectivePct >= 0.20) color = 'var(--accent)';
   else if (sq.effectivePct >= 0.15) color = 'var(--yellow)';
   else                              color = 'var(--red)';
+  const style = sq.qualified ? advQualifiedStyle(color) : advSmallSampleStyle(color);
   const pct = (k) => Math.round((sq[k] || 0) * 100);
   const tooltip = [
-    `${sq.total} serves`,
+    `${sq.total} serves${sq.qualified ? '' : ' (below qualification threshold)'}`,
     `Effective: ${sq.ace + sq.great} (${pct('effectivePct')}%) — ace + great`,
     `Ace:    ${sq.ace}    (${pct('acePct')}%) — direct point`,
     `Great:  ${sq.great}  (${pct('greatPct')}%) — we scored within 3 touches of reception`,
@@ -202,8 +215,8 @@ function ServeCell({ sq }) {
     `Error:  ${sq.error}  (${pct('errorPct')}%) — service error`,
   ].join('\n');
   return (
-    <td style={{ textAlign: 'right', color, fontWeight: 700 }} title={tooltip}>
-      {pct('effectivePct')}%
+    <td style={style} title={tooltip}>
+      {pct('effectivePct')}%{sq.qualified ? '' : '*'}
     </td>
   );
 }
@@ -214,8 +227,8 @@ function ServeCell({ sq }) {
 // error subtracts 1. Tier-coloring calibrated for D1 MBs — the
 // position that actually blocks. Liberos / setters / six-rotation OHs
 // who don't block at the net naturally trend low; that's accurate.
-function BlockCell({ value, sets, totals }) {
-  if (!Number.isFinite(value) || (sets || 0) < 50) {
+export function BlockCell({ value, sets, totals }) {
+  if (!Number.isFinite(value)) {
     return <td style={{ textAlign: 'right', opacity: 0.5 }}>—</td>;
   }
   let color;
@@ -223,19 +236,21 @@ function BlockCell({ value, sets, totals }) {
   else if (value >= 1.0) color = 'var(--accent)';
   else if (value >= 0.5) color = 'var(--yellow)';
   else                   color = 'var(--red)';
+  const qualified = (sets || 0) >= 50;
+  const style = qualified ? advQualifiedStyle(color) : advSmallSampleStyle(color);
   const solos   = totals?.block_solos     || 0;
   const assists = totals?.block_assists   || 0;
   const errors  = totals?.blocking_errors || 0;
   const tooltip = [
-    `${(solos + assists).toLocaleString()} blocks (${solos} solo, ${assists} assist) over ${sets} sets`,
+    `${(solos + assists).toLocaleString()} blocks (${solos} solo, ${assists} assist) over ${sets} sets${qualified ? '' : ' (below qualification threshold)'}`,
     `Block errors: ${errors}`,
     `Formula: (solos + 0.5 × assists − errors) / sets`,
     `         = (${solos} + ${0.5 * assists} − ${errors}) / ${sets}`,
     `         = ${value.toFixed(2)} per set`,
   ].join('\n');
   return (
-    <td style={{ textAlign: 'right', color, fontWeight: 700 }} title={tooltip}>
-      {value.toFixed(2)}
+    <td style={style} title={tooltip}>
+      {value.toFixed(2)}{qualified ? '' : '*'}
     </td>
   );
 }
@@ -245,8 +260,8 @@ function BlockCell({ value, sets, totals }) {
 // distribution (avg 31.5%, top decile ≥ 40%). Hover surfaces the
 // underlying delivery breakdown plus successPct ("did the set
 // deliver to a hitter at all?").
-function SetCell({ sq }) {
-  if (!sq || !sq.qualified) {
+export function SetCell({ sq }) {
+  if (!sq || (sq.total || 0) === 0) {
     return <td style={{ textAlign: 'right', opacity: 0.5 }}>—</td>;
   }
   let color;
@@ -254,9 +269,10 @@ function SetCell({ sq }) {
   else if (sq.assistPct >= 0.35) color = 'var(--accent)';
   else if (sq.assistPct >= 0.30) color = 'var(--yellow)';
   else                           color = 'var(--red)';
+  const style = sq.qualified ? advQualifiedStyle(color) : advSmallSampleStyle(color);
   const pct = (k) => Math.round((sq[k] || 0) * 100);
   const tooltip = [
-    `${sq.total} sets`,
+    `${sq.total} sets${sq.qualified ? '' : ' (below qualification threshold)'}`,
     `Assist:  ${sq.great} (${pct('assistPct')}%) — set produced a kill on next touch`,
     `Success: ${sq.great + sq.good} (${pct('successPct')}%) — set delivered for an attack`,
     `  └ Great: ${sq.great} (${pct('greatPct')}%) — kill on next touch (=assist)`,
@@ -265,8 +281,8 @@ function SetCell({ sq }) {
     `Error:   ${sq.error}  (${pct('errorPct')}%)  — set error terminal`,
   ].join('\n');
   return (
-    <td style={{ textAlign: 'right', color, fontWeight: 700 }} title={tooltip}>
-      {pct('assistPct')}%
+    <td style={style} title={tooltip}>
+      {pct('assistPct')}%{sq.qualified ? '' : '*'}
     </td>
   );
 }

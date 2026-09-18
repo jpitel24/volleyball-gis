@@ -16,6 +16,13 @@ export const ERR_W = {
 export const ERR_FLOOR = 0.55;
 export const ERR_DAMP  = 1.20;
 export const GIS_SCALE = 1.25;
+// Weight of the direct error subtraction. errPen already dampens the
+// positive-volume side, but with vol=0 that dampening is a no-op — a
+// player with 0 aces and 8 serve errors would score the same 0 as a
+// player who never served. This constant pushes pure-error contributions
+// into honest negative territory. Kept modest (0.5) so high-volume
+// players with a few errors don't get double-punished vs the old formula.
+export const DIRECT_ERR_WEIGHT = 0.5;
 
 // Per-category decomposition shown in the player inspector. Categories
 // must partition POS_W and ERR_W: every weight that appears in the
@@ -40,9 +47,19 @@ export function computeCategoryGIS(p, ns, avgLev, oppMod) {
     const errSum = Object.entries(err).reduce((s, [k, w]) => s + (p[k] || 0) * w, 0);
     const errPen = Math.max(ERR_FLOOR, Math.min(1.0, 1.0 - (errSum / (raw + 1)) * ERR_DAMP));
     const vol    = raw / ns;
-    const gis        = vol * avgLev * errPen * GIS_SCALE;
-    const gisNeutral = vol * errPen * GIS_SCALE;
-    return { key, label, gis, gisPlus: gis * oppMod, gisNeutral };
+    // Positive contribution: dampened positive volume (existing errPen mechanic).
+    // Negative contribution: direct per-set error cost — necessary so
+    // pure-error categories (0 aces, N errors) go negative instead of
+    // clamping at 0. See DIRECT_ERR_WEIGHT comment.
+    const posPart = vol * errPen;
+    const negPart = (errSum / ns) * DIRECT_ERR_WEIGHT;
+    const gisNeutral = (posPart - negPart) * GIS_SCALE;
+    const gis        = gisNeutral * avgLev;
+    // Opponent modifier flips sign for negative gis: being bad against
+    // a WEAK team is worse than being bad against a STRONG team (against
+    // elites, struggle is expected). Symmetric flip around 1.0.
+    const effOpp = gis >= 0 ? oppMod : (2 - oppMod);
+    return { key, label, gis, gisPlus: gis * effOpp, gisNeutral };
   });
 }
 // Linear percentile → pGIS mapping. Keeps the 0-10 scale intuitive for the
@@ -323,11 +340,18 @@ export function computeArchivePGIS(rec, PGIS_TABLES) {
   const raw    = Object.entries(POS_W).reduce((s, [k, w]) => s + (rec[k] || 0) * w, 0);
   const errSum = Object.entries(ERR_W).reduce((s, [k, w]) => s + (rec[k] || 0) * w, 0);
   const errPen = Math.max(ERR_FLOOR, Math.min(1.0, 1.0 - (errSum / (raw + 1)) * ERR_DAMP));
-  const gisNeutral    = (raw / rec.sets) * errPen * GIS_SCALE;
+  // Mirror the computeCategoryGIS formula: positive dampened volume
+  // MINUS a direct per-set error cost, so pure-error careers register
+  // as negative rather than zero.
+  const posPart = (raw / rec.sets) * errPen;
+  const negPart = (errSum / rec.sets) * DIRECT_ERR_WEIGHT;
+  const gisNeutral = (posPart - negPart) * GIS_SCALE;
   const oppModRatio   = (rec.gis_per_set > 0 && rec.gis_plus_per_set != null)
     ? Math.max(0.5, Math.min(1.5, rec.gis_plus_per_set / rec.gis_per_set))
     : 1.0;
-  const gisNeutralPlus = gisNeutral * oppModRatio;
+  // Negative-value flip: bad archive vs weak opp modifier scales worse.
+  const effOpp = gisNeutral >= 0 ? oppModRatio : (2 - oppModRatio);
+  const gisNeutralPlus = gisNeutral * effOpp;
   const sc = Math.min(5, Math.max(3, Math.round(rec.sets / (rec.games || 1))));
   return computePGIS(gisNeutralPlus, rec.pos, sc, PGIS_TABLES);
 }
@@ -416,7 +440,10 @@ export function computeGIS(bs, ss, pbp, gameId, RPI_BY_YEAR, PGIS_TABLES) {
       const gis            = cats.reduce((s, c) => s + c.gis,        0);
       const gisPlus        = cats.reduce((s, c) => s + c.gisPlus,    0);
       const gisNeutral     = cats.reduce((s, c) => s + c.gisNeutral, 0);
-      const gisNeutralPlus = gisNeutral * oppMod;   // opponent-adjusted, no leverage
+      // Same negative-value flip logic as computeCategoryGIS — a bad
+      // no-leverage game vs a weak team is worse than the same vs a
+      // strong team.
+      const gisNeutralPlus = gisNeutral * (gisNeutral >= 0 ? oppMod : (2 - oppMod));
       // pGIS baselines in pgis_tables.json are built from the full
       // GIS_Plus column (opp-adjusted AND leverage-baked), so the
       // lookup must use the same value for the percentile to match.

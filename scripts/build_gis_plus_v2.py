@@ -347,7 +347,17 @@ def build_year(year: int, rpi: dict, bl: dict) -> Path:
              - errors_total)
 
         raw_gis_plus = pos_atk + pos_blk + pos_set + pos_srv + pos_rec + pos_dig - errors_total
-        gis_plus     = raw_gis_plus * row["OpponentModifier"]
+        # Opponent-modifier adjustment. For positive contributions the
+        # modifier scales as usual (>1 vs strong opp, <1 vs weak opp).
+        # For NEGATIVE contributions we flip the modifier symmetrically
+        # around 1.0 (opp' = 2 - opp) so a bad game against a WEAK team
+        # is punished more than the same bad game against a STRONG team.
+        # Rationale: struggling against elite competition is expected,
+        # so it shouldn't dig the score deeper; struggling against a
+        # weak opponent is the more damning signal.
+        opp = row["OpponentModifier"]
+        eff_opp = opp if raw_gis_plus >= 0 else (2.0 - opp)
+        gis_plus = raw_gis_plus * eff_opp
 
         # HitPct passthrough (NCAA-style hitting %, defaults to 0 on no attempts)
         ta = row["TotalAttacks"]

@@ -360,6 +360,7 @@ body {
   display: flex; align-items: center; gap: 0.45rem;
 }
 .set-chip-label { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--muted); }
+.set-chip-win   { color: var(--accent); }
 
 /* ── Formula bar ─────────────────────────────────────────────────── */
 .formula-bar {

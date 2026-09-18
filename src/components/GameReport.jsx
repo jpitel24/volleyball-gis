@@ -215,12 +215,19 @@ export default function GameReport({ gameId, mg, isMock, rpiByYear, categoryPgis
         </div>
         {!mg.scoresUnknown && mg.periods.length > 0 && (
           <div className="set-chips">
-            {mg.periods.map((p, i) => (
-              <span key={i} className="set-chip">
-                <span className="set-chip-label">SET {i+1}</span>
-                <span>{p.homeScore}–{p.awayScore}</span>
-              </span>
-            ))}
+            {mg.periods.map((p, i) => {
+              const homeWon = p.homeScore > p.awayScore;
+              return (
+                <span key={i} className="set-chip">
+                  <span className="set-chip-label">SET {i+1}</span>
+                  <span>
+                    <strong className={homeWon ? 'set-chip-win' : ''}>{p.homeScore}</strong>
+                    –
+                    <strong className={homeWon ? '' : 'set-chip-win'}>{p.awayScore}</strong>
+                  </span>
+                </span>
+              );
+            })}
           </div>
         )}
       </div>

@@ -197,6 +197,12 @@ def main() -> int:
          "--year", str(year)],
         dry_run=args.dry_run))
 
+    # ── Step 7b: per-set final scores (feeds Game Browser header) ──
+    results.append(run_step("build_setscores",
+        [PY, "-X", "utf8", str(SCRIPTS / "build_setscores.py"),
+         "--year", str(year)],
+        dry_run=args.dry_run))
+
     # ── Step 8a: enrich box scores from PBP tier counts ─────────
     results.append(run_step("enrich_boxscores_from_pbp",
         [PY, "-X", "utf8", str(SCRIPTS / "enrich_boxscores_from_pbp.py"),

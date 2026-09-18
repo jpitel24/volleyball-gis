@@ -5,6 +5,8 @@ import { posColor, pgisLabel, posGroup, COL_TIPS } from '../lib/gis.js';
 import { useStickyYear } from '../lib/useStickyYear.js';
 import { useKeyboardShortcuts } from '../lib/useKeyboardShortcuts.js';
 import { getUrlFilter, useSyncUrlFilter } from '../lib/urlFilters.js';
+import { useRecent } from '../lib/recentlyViewed.js';
+import { navigate } from '../lib/router.js';
 import TeamChip from './TeamChip.jsx';
 import { RecCell, ServeCell, SetCell, BlockCell } from './PlayerLookup.jsx';
 
@@ -291,6 +293,23 @@ export default function TeamLookup() {
   const [search, setSearch]   = useState(() => getUrlFilter('q') ?? '');
   const [expanded, setExpand] = useState(null);
   useSyncUrlFilter('q', search, '');
+  const [recent, recordRecent] = useRecent('teams');
+
+  // Record when a team card is expanded. Team keys are `${year}||${team}`
+  // (see buildTeamIndex) — the deep-link is the current year selector +
+  // a query-string search preseeded with the team name.
+  useEffect(() => {
+    if (!expanded) return;
+    const [expYear, expTeam] = expanded.split('||');
+    if (!expTeam) return;
+    recordRecent({
+      id:    expanded,
+      label: expTeam,
+      sub:   expYear,
+      href:  `/teams?q=${encodeURIComponent(expTeam)}`,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [expanded]);
   const searchRef             = useRef(null);
 
   useKeyboardShortcuts({
@@ -371,6 +390,25 @@ export default function TeamLookup() {
             disabled={buildingIndex || !index}
           />
         </div>
+        {recent.length > 0 && (
+          <div className="tool-sidebar-section">
+            <div className="tool-sidebar-label">Recent</div>
+            <ul className="recent-list">
+              {recent.map(r => (
+                <li key={r.id}>
+                  <a
+                    href={r.href}
+                    onClick={e => { e.preventDefault(); navigate(r.href); setSearch(r.label); }}
+                    title={r.sub || ''}
+                  >
+                    <span className="recent-label">{r.label}</span>
+                    {r.sub && <span className="recent-sub">{r.sub}</span>}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </aside>
 
       <main className="tool-main">

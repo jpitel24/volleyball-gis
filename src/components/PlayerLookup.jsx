@@ -3,6 +3,8 @@ import { useData } from '../lib/DataContext.jsx';
 import { loadPlayerIndex, isP4 } from '../lib/playerIndex.js';
 import { useKeyboardShortcuts } from '../lib/useKeyboardShortcuts.js';
 import { getUrlFilter, useSyncUrlFilter } from '../lib/urlFilters.js';
+import { useRecent } from '../lib/recentlyViewed.js';
+import { navigate, hrefFor } from '../lib/router.js';
 
 // Small helper for the position-cell tooltip. season.conference is
 // already stored on the season record; we route through isP4() for
@@ -557,6 +559,21 @@ export default function PlayerLookup({ onGameDeepLink }) {
   const [expandedPlayer, setExpanded]   = useState(null);
   const [expandedSeason, setExpandedS]  = useState(null);
   const searchRef                       = useRef(null);
+  const [recent, recordRecent]          = useRecent('players');
+
+  // Record whenever the user opens (expands) a player card.
+  useEffect(() => {
+    if (!expandedPlayer || !index) return;
+    const p = index.byKey.get(expandedPlayer);
+    if (!p) return;
+    recordRecent({
+      id:    p.key,
+      label: p.name,
+      sub:   (p.teams && p.teams[0]) || p.team || '',
+      href:  hrefFor('players') + `?q=${encodeURIComponent(p.name)}`,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [expandedPlayer, index]);
 
   useKeyboardShortcuts({
     '/': (e) => {
@@ -672,6 +689,25 @@ export default function PlayerLookup({ onGameDeepLink }) {
             ))}
           </div>
         </div>
+        {recent.length > 0 && (
+          <div className="tool-sidebar-section">
+            <div className="tool-sidebar-label">Recent</div>
+            <ul className="recent-list">
+              {recent.map(r => (
+                <li key={r.id}>
+                  <a
+                    href={r.href}
+                    onClick={e => { e.preventDefault(); navigate(r.href); setSearch(r.label); }}
+                    title={r.sub || ''}
+                  >
+                    <span className="recent-label">{r.label}</span>
+                    {r.sub && <span className="recent-sub">{r.sub}</span>}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </aside>
 
       <main className="tool-main">

@@ -67,6 +67,26 @@ body {
   display: flex; flex-wrap: wrap; gap: 0.3rem;
 }
 
+/* Recent-viewed MRU list in the sidebar. Compact stack of clickable
+   entries with a small secondary line (date/team/etc). */
+.recent-list {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: 0.15rem;
+}
+.recent-list a {
+  display: flex; flex-direction: column;
+  padding: 0.3rem 0.4rem; border-radius: 4px;
+  text-decoration: none; color: var(--text);
+  font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+  border: 1px solid transparent;
+  transition: background 0.15s, border-color 0.15s;
+}
+.recent-list a:hover { background: var(--surface2); border-color: var(--border); }
+.recent-list .recent-label { font-weight: 500; }
+.recent-list .recent-sub {
+  color: var(--muted); font-size: 0.62rem; margin-top: 0.05rem;
+}
+
 .tool-main {
   padding: 1.5rem 2rem 5rem;
   min-width: 0;     /* lets tables overflow inside grid track */

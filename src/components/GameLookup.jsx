@@ -8,6 +8,7 @@ import { navigate, hrefFor } from '../lib/router.js';
 import { useStickyYear } from '../lib/useStickyYear.js';
 import { useKeyboardShortcuts } from '../lib/useKeyboardShortcuts.js';
 import { getUrlFilter, useSyncUrlFilter } from '../lib/urlFilters.js';
+import { useRecent } from '../lib/recentlyViewed.js';
 import TeamChip from './TeamChip.jsx';
 
 const YEARS = [2026, 2025, 2024, 2023, 2022];
@@ -32,6 +33,23 @@ export default function GameLookup({ route }) {
   const [report, setReport]         = useState(null);
   const [openKey, setOpenKey]       = useState(null);  // currently-open game key
   const searchRef                   = useRef(null);
+  const [recent, recordRecent]      = useRecent('games');
+
+  // Record opens into the recently-viewed list. Effect key: (openKey,
+  // yearData) — waits until we have the year's game index so we can
+  // look up the matchup label and date without extra queries.
+  useEffect(() => {
+    if (!openKey || !yearData) return;
+    const g = yearData.games.find(x => x.key === openKey);
+    if (!g) return;
+    recordRecent({
+      id:    `${year}|${g.key}`,
+      label: `${g.homeTeam} vs ${g.awayTeam}`,
+      sub:   g.date,
+      href:  hrefFor('games', year, g.key),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openKey, yearData]);
 
   // ── Load CSV when year changes ─────────────────────────────────────────────
   useEffect(() => {
@@ -239,6 +257,25 @@ export default function GameLookup({ route }) {
             disabled={loadingYear}
           />
         </div>
+        {recent.length > 0 && (
+          <div className="tool-sidebar-section">
+            <div className="tool-sidebar-label">Recent</div>
+            <ul className="recent-list">
+              {recent.map(r => (
+                <li key={r.id}>
+                  <a
+                    href={r.href}
+                    onClick={e => { e.preventDefault(); navigate(r.href); }}
+                    title={r.sub || ''}
+                  >
+                    <span className="recent-label">{r.label}</span>
+                    {r.sub && <span className="recent-sub">{r.sub}</span>}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </aside>
 
       {/* ── Main content ──────────────────────────────────────────────── */}

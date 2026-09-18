@@ -2,6 +2,7 @@ import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { useData } from '../lib/DataContext.jsx';
 import { loadPlayerIndex, isP4 } from '../lib/playerIndex.js';
 import { useKeyboardShortcuts } from '../lib/useKeyboardShortcuts.js';
+import { getUrlFilter, useSyncUrlFilter } from '../lib/urlFilters.js';
 
 // Small helper for the position-cell tooltip. season.conference is
 // already stored on the season record; we route through isP4() for
@@ -546,9 +547,13 @@ export default function PlayerLookup({ onGameDeepLink }) {
   const [index, setIndex]               = useState(null);
   const [indexErr, setIndexErr]         = useState(null);
   const [buildingIndex, setBuilding]    = useState(false);
-  const [search, setSearch]             = useState('');
-  const [posFilter, setPosFilter]       = useState('ALL');
-  const [sortBy, setSortBy]             = useState('gisPlus');
+  // Hydrate filter state from URL query params so shareable links work.
+  const [search, setSearch]             = useState(() => getUrlFilter('q')    ?? '');
+  const [posFilter, setPosFilter]       = useState(() => getUrlFilter('pos')  ?? 'ALL');
+  const [sortBy, setSortBy]             = useState(() => getUrlFilter('sort') ?? 'gisPlus');
+  useSyncUrlFilter('q',    search,    '');
+  useSyncUrlFilter('pos',  posFilter, 'ALL');
+  useSyncUrlFilter('sort', sortBy,    'gisPlus');
   const [expandedPlayer, setExpanded]   = useState(null);
   const [expandedSeason, setExpandedS]  = useState(null);
   const searchRef                       = useRef(null);

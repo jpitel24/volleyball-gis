@@ -4,6 +4,7 @@ import { loadPlayerIndex, isP4 } from '../lib/playerIndex.js';
 import { posColor, pgisLabel, posGroup, COL_TIPS } from '../lib/gis.js';
 import { useStickyYear } from '../lib/useStickyYear.js';
 import { useKeyboardShortcuts } from '../lib/useKeyboardShortcuts.js';
+import { getUrlFilter, useSyncUrlFilter } from '../lib/urlFilters.js';
 import TeamChip from './TeamChip.jsx';
 import { RecCell, ServeCell, SetCell, BlockCell } from './PlayerLookup.jsx';
 
@@ -287,8 +288,9 @@ export default function TeamLookup() {
   const [buildingIndex, setBuilding] = useState(false);
 
   const [year, setYear]       = useStickyYear(2026);
-  const [search, setSearch]   = useState('');
+  const [search, setSearch]   = useState(() => getUrlFilter('q') ?? '');
   const [expanded, setExpand] = useState(null);
+  useSyncUrlFilter('q', search, '');
   const searchRef             = useRef(null);
 
   useKeyboardShortcuts({

@@ -7,6 +7,7 @@ import { loadGisPlus, makeKey, seasonStrFromYear } from '../lib/gisPlus.js';
 import { navigate, hrefFor } from '../lib/router.js';
 import { useStickyYear } from '../lib/useStickyYear.js';
 import { useKeyboardShortcuts } from '../lib/useKeyboardShortcuts.js';
+import { getUrlFilter, useSyncUrlFilter } from '../lib/urlFilters.js';
 import TeamChip from './TeamChip.jsx';
 
 const YEARS = [2026, 2025, 2024, 2023, 2022];
@@ -26,7 +27,8 @@ export default function GameLookup({ route }) {
   }, []);
   const [yearData, setYearData]     = useState(null);
   const [loadingYear, setLoadingYear] = useState(false);
-  const [search, setSearch]         = useState('');
+  const [search, setSearch]         = useState(() => getUrlFilter('q') ?? '');
+  useSyncUrlFilter('q', search, '');
   const [report, setReport]         = useState(null);
   const [openKey, setOpenKey]       = useState(null);  // currently-open game key
   const searchRef                   = useRef(null);

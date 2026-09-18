@@ -3,6 +3,7 @@ import { useData } from '../lib/DataContext.jsx';
 import { loadPlayerIndex, isP4, P4_CONFERENCES } from '../lib/playerIndex.js';
 import { posColor, pgisLabel, posGroup, COL_TIPS } from '../lib/gis.js';
 import { useStickyYear } from '../lib/useStickyYear.js';
+import { getUrlFilter, useSyncUrlFilter } from '../lib/urlFilters.js';
 import TeamChip from './TeamChip.jsx';
 
 const MAX_RESULTS = 100;
@@ -170,7 +171,13 @@ export default function SeasonLookup() {
   // it on mount and write back when the user picks a specific year, but the
   // 'ALL' pick stays local.
   const [sharedYear, setSharedYear] = useStickyYear(2026);
-  const [year, setYearState]        = useState(String(sharedYear));
+  // Initial filter state prefers URL query params over defaults so that
+  // a copy-pasted /seasons?year=2024&pos=MB&conf=SEC link reproduces
+  // the exact view the sender saw. Each filter also gets a useSyncUrlFilter
+  // below so subsequent user changes are mirrored back to the URL.
+  const [year, setYearState] = useState(() =>
+    getUrlFilter('year') ?? String(sharedYear)
+  );
   const setYear = (next) => {
     setYearState(next);
     if (next !== 'ALL') {
@@ -178,15 +185,27 @@ export default function SeasonLookup() {
       if (Number.isFinite(n)) setSharedYear(n);
     }
   };
-  const [posFilter, setPosFilter] = useState('ALL');
-  const [minT50, setMinT50]       = useState(0);
-  const [sortBy, setSortBy]       = useState('gisPlus');
+  const [posFilter,  setPosFilter]  = useState(() => getUrlFilter('pos')  ?? 'ALL');
+  const [minT50,     setMinT50]     = useState(() => {
+    const v = parseInt(getUrlFilter('t50') ?? '0', 10);
+    return Number.isFinite(v) ? v : 0;
+  });
+  const [sortBy,     setSortBy]     = useState(() => getUrlFilter('sort') ?? 'gisPlus');
   // Conference filter: 'ALL' | 'P4' | 'NON_P4' | any specific conference label
-  const [confFilter, setConfFilter] = useState('ALL');
+  const [confFilter, setConfFilter] = useState(() => getUrlFilter('conf') ?? 'ALL');
   // Team filter: 'ALL' | any specific team name. Restricted to teams within
   // the current conference filter — picking a conference shrinks the team
   // dropdown to that conference's rosters.
-  const [teamFilter, setTeamFilter] = useState('ALL');
+  const [teamFilter, setTeamFilter] = useState(() => getUrlFilter('team') ?? 'ALL');
+
+  // Mirror filter state → URL query string (writeReplace so back/forward
+  // history isn't cluttered with every filter tweak).
+  useSyncUrlFilter('year', year,       String(sharedYear));
+  useSyncUrlFilter('pos',  posFilter,  'ALL');
+  useSyncUrlFilter('t50',  minT50,     0);
+  useSyncUrlFilter('sort', sortBy,     'gisPlus');
+  useSyncUrlFilter('conf', confFilter, 'ALL');
+  useSyncUrlFilter('team', teamFilter, 'ALL');
 
   useEffect(() => {
     if (loading || !pgisTables) return;

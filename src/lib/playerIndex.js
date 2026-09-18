@@ -198,6 +198,23 @@ function normalizeNameKey(name) {
   return (name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 
+// Last-name key for alias detection. Take the FINAL whitespace-separated
+// token from the name and aggressively normalize it. Handles trailing
+// suffixes (Jr/Sr/II/III) by stripping them before extraction. Used to
+// gate the alias-merge heuristic: two records with different first names
+// but matching last-name-key at the same team/position/jersey are very
+// likely the same person (marriage, preferred-name switch, etc.).
+const NAME_SUFFIXES = new Set(['jr', 'jr.', 'sr', 'sr.', 'ii', 'iii', 'iv', 'v']);
+function lastNameKey(name) {
+  if (!name) return '';
+  const tokens = name.trim().split(/\s+/).filter(Boolean);
+  while (tokens.length > 1 && NAME_SUFFIXES.has(tokens[tokens.length - 1].toLowerCase())) {
+    tokens.pop();
+  }
+  if (!tokens.length) return '';
+  return tokens[tokens.length - 1].toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
 // Power conferences for tier-based cohort grouping. Includes Pac-12 so
 // pre-2025 Pac-12 members (Stanford, Washington, Oregon, etc.) get
 // grouped with the other power programs during the years they were in
@@ -427,6 +444,8 @@ export function loadPlayerIndex(
               year,
               teamCounts: {},
               posCounts: {},
+              numberCounts: {},   // jersey # → count, modal picked at rollup
+                                  // (used downstream for name-alias detection)
               sets: 0, games: 0,
               totals: zeroTotals(),
               gisTotalSum: 0, gisPlusTotalSum: 0,
@@ -440,6 +459,8 @@ export function loadPlayerIndex(
           // at roll-up time.
           season.teamCounts[team] = (season.teamCounts[team] || 0) + 1;
           if (rowPos) season.posCounts[rowPos] = (season.posCounts[rowPos] || 0) + 1;
+          const rawNum = (r.Number != null ? String(r.Number) : '').trim();
+          if (rawNum) season.numberCounts[rawNum] = (season.numberCounts[rawNum] || 0) + 1;
 
           season.sets  += ns;
           season.games += 1;
@@ -563,6 +584,14 @@ export function loadPlayerIndex(
         let seasonTeam = null, seasonTeamN = 0;
         for (const [t, n] of Object.entries(s.teamCounts || {})) {
           if (n > seasonTeamN) { seasonTeam = t; seasonTeamN = n; }
+        }
+        // Modal jersey number for the season — used by the alias-detection
+        // pass to catch same-player-different-name cases (e.g. a preferred-
+        // name change mid-career keeps the same jersey #). Not surfaced
+        // in the UI; consumed only during the byPlayer merge.
+        let seasonNumber = null, seasonNumberN = 0;
+        for (const [num, n] of Object.entries(s.numberCounts || {})) {
+          if (n > seasonNumberN) { seasonNumber = num; seasonNumberN = n; }
         }
         // Display = sets-weighted per-set rate. Using /sets instead of
         // /games removes the bias against players whose teams sweep more
@@ -693,6 +722,7 @@ export function loadPlayerIndex(
           team:     seasonTeam || '',
           conference: seasonConference,
           position: seasonPos,
+          number:   seasonNumber,   // modal jersey # for alias-detection
           sets:     s.sets,
           games:    s.games,
           teamGames,
@@ -797,10 +827,70 @@ export function loadPlayerIndex(
     // seasons + teams, and has career/t50Career metrics recomputed from
     // the combined per-game pGIS values (using the same blendPGIS
     // aggregation as the initial per-player build).
+    // ── Alias detection pre-pass ──────────────────────────────────────
+    //
+    // Catches same-player-different-name cases that transfer collapse
+    // can't handle because it groups by normalized full name (Bekka and
+    // Rebekah Allick have different name-keys and stay separate). We
+    // look for pairs of records that share:
+    //   - team
+    //   - position group
+    //   - modal jersey number
+    //   - last-name key
+    // with disjoint year sets and different first names. Those get an
+    // aliasKey override that points at the earlier record's name-key,
+    // so the transfer-collapse pass groups + merges them naturally.
+    const aliasKeyOverride = new Map();  // player-record → override name-key
+    let aliasPairs = 0;
+    {
+      const bySlot = new Map();  // slot → Map<player, Set<year>>
+      for (const p of players) {
+        const lk = lastNameKey(p.name);
+        if (!lk || lk.length < 2) continue;
+        for (const s of p.seasons) {
+          if (!s.number) continue;
+          const team = (s.team || '').toLowerCase().trim();
+          const grp = posGroup(s.position);
+          if (!team || !grp) continue;
+          if ((s.games || 0) < 3) continue;  // skip cameo-tier records
+          const slot = `${team}|${grp}|${s.number}|${lk}`;
+          let inner = bySlot.get(slot);
+          if (!inner) { inner = new Map(); bySlot.set(slot, inner); }
+          let years = inner.get(p);
+          if (!years) { years = new Set(); inner.set(p, years); }
+          years.add(s.year);
+        }
+      }
+      for (const [, playerYears] of bySlot) {
+        const arr = [...playerYears.entries()];
+        if (arr.length < 2) continue;
+        arr.sort(([, ay], [, by]) => Math.min(...ay) - Math.min(...by));
+        const primary = arr[0][0];
+        const primaryYears = arr[0][1];
+        const primaryKey   = normalizeNameKey(primary.name);
+        for (let i = 1; i < arr.length; i++) {
+          const [cand, cYears] = arr[i];
+          if (normalizeNameKey(cand.name) === primaryKey) continue;
+          let disjoint = true;
+          for (const y of cYears) if (primaryYears.has(y)) { disjoint = false; break; }
+          if (!disjoint) continue;
+          if (aliasKeyOverride.has(cand)) continue;  // already claimed
+          aliasKeyOverride.set(cand, primaryKey);
+          aliasPairs++;
+          try {
+            console.log(`[playerIndex] Alias detected: "${cand.name}" (yrs ${[...cYears].sort().join(',')}) → "${primary.name}" (yrs ${[...primaryYears].sort().join(',')})`);
+          } catch (_) {}
+        }
+      }
+      if (aliasPairs > 0) {
+        try { console.log(`[playerIndex] Alias detection: flagged ${aliasPairs} pair(s) for merge`); } catch (_) {}
+      }
+    }
+
     {
       const nameGroups = new Map();
       for (const p of players) {
-        const nk = normalizeNameKey(p.name);
+        const nk = aliasKeyOverride.get(p) || normalizeNameKey(p.name);
         if (!nameGroups.has(nk)) nameGroups.set(nk, []);
         nameGroups.get(nk).push(p);
       }

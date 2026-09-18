@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import GameReport from './GameReport.jsx';
 import { useData } from '../lib/DataContext.jsx';
 import { loadYear, gameRowsToBoxscore, loadSetScores } from '../lib/csvGames.js';
@@ -6,6 +6,7 @@ import { computeGIS, computePGIS } from '../lib/gis.js';
 import { loadGisPlus, makeKey, seasonStrFromYear } from '../lib/gisPlus.js';
 import { navigate, hrefFor } from '../lib/router.js';
 import { useStickyYear } from '../lib/useStickyYear.js';
+import { useKeyboardShortcuts } from '../lib/useKeyboardShortcuts.js';
 import TeamChip from './TeamChip.jsx';
 
 const YEARS = [2026, 2025, 2024, 2023, 2022];
@@ -28,6 +29,7 @@ export default function GameLookup({ route }) {
   const [search, setSearch]         = useState('');
   const [report, setReport]         = useState(null);
   const [openKey, setOpenKey]       = useState(null);  // currently-open game key
+  const searchRef                   = useRef(null);
 
   // ── Load CSV when year changes ─────────────────────────────────────────────
   useEffect(() => {
@@ -87,6 +89,31 @@ export default function GameLookup({ route }) {
       g.awayTeam.toLowerCase().includes(q)
     );
   }, [yearData, search]);
+
+  // ── Keyboard shortcuts ────────────────────────────────────────────────────
+  //   /        focus the sidebar search input
+  //   Escape   close the currently-open game report (back to the list)
+  //   [ / ]    page back/forward through the currently-visible game list
+  //            (only fires when a report is open; wraps around the list)
+  const pageGame = useCallback((delta) => {
+    if (!openKey || !filteredGames.length) return;
+    const idx = filteredGames.findIndex(g => g.key === openKey);
+    if (idx < 0) return;
+    const n = filteredGames.length;
+    const next = filteredGames[((idx + delta) % n + n) % n];
+    if (next) navigate(hrefFor('games', year, next.key));
+  }, [openKey, filteredGames, year]);
+
+  useKeyboardShortcuts({
+    '/': (e) => {
+      e.preventDefault();
+      searchRef.current?.focus();
+      searchRef.current?.select();
+    },
+    'Escape': () => { if (report) navigate(hrefFor('games')); },
+    '[': (e) => { e.preventDefault(); pageGame(+1); }, // older (list is date-desc)
+    ']': (e) => { e.preventDefault(); pageGame(-1); }, // newer
+  });
 
   // ── Select a game → compute GIS → overlay Python GIS+ → show report ───────
   async function selectGame(game) {
@@ -202,8 +229,9 @@ export default function GameLookup({ route }) {
         <div className="tool-sidebar-section">
           <div className="tool-sidebar-label">Search</div>
           <input
+            ref={searchRef}
             className="pb-search"
-            placeholder="Filter by team name…"
+            placeholder="Filter by team name…  ( / )"
             value={search}
             onChange={e => { setSearch(e.target.value); setReport(null); }}
             disabled={loadingYear}

@@ -1,6 +1,7 @@
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { useData } from '../lib/DataContext.jsx';
 import { loadPlayerIndex, isP4 } from '../lib/playerIndex.js';
+import { useKeyboardShortcuts } from '../lib/useKeyboardShortcuts.js';
 
 // Small helper for the position-cell tooltip. season.conference is
 // already stored on the season record; we route through isP4() for
@@ -550,6 +551,21 @@ export default function PlayerLookup({ onGameDeepLink }) {
   const [sortBy, setSortBy]             = useState('gisPlus');
   const [expandedPlayer, setExpanded]   = useState(null);
   const [expandedSeason, setExpandedS]  = useState(null);
+  const searchRef                       = useRef(null);
+
+  useKeyboardShortcuts({
+    '/': (e) => {
+      e.preventDefault();
+      searchRef.current?.focus();
+      searchRef.current?.select();
+    },
+    'Escape': () => {
+      // Collapse expanded season first, then player card. Two-step so
+      // Esc feels like "back up one level" instead of nuking everything.
+      if (expandedSeason) setExpandedS(null);
+      else if (expandedPlayer) setExpanded(null);
+    },
+  });
 
   useEffect(() => {
     if (loading || !pgisTables) return;
@@ -611,8 +627,9 @@ export default function PlayerLookup({ onGameDeepLink }) {
         <div className="tool-sidebar-section">
           <div className="tool-sidebar-label">Search</div>
           <input
+            ref={searchRef}
             className="pb-search"
-            placeholder="Filter by player name…"
+            placeholder="Filter by player name…  ( / )"
             value={search}
             onChange={e => { setSearch(e.target.value); setExpanded(null); setExpandedS(null); }}
             disabled={buildingIndex || !index}

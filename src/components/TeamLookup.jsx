@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useData } from '../lib/DataContext.jsx';
 import { loadPlayerIndex, isP4 } from '../lib/playerIndex.js';
 import { posColor, pgisLabel, posGroup, COL_TIPS } from '../lib/gis.js';
 import { useStickyYear } from '../lib/useStickyYear.js';
+import { useKeyboardShortcuts } from '../lib/useKeyboardShortcuts.js';
 import TeamChip from './TeamChip.jsx';
 import { RecCell, ServeCell, SetCell, BlockCell } from './PlayerLookup.jsx';
 
@@ -288,6 +289,16 @@ export default function TeamLookup() {
   const [year, setYear]       = useStickyYear(2026);
   const [search, setSearch]   = useState('');
   const [expanded, setExpand] = useState(null);
+  const searchRef             = useRef(null);
+
+  useKeyboardShortcuts({
+    '/': (e) => {
+      e.preventDefault();
+      searchRef.current?.focus();
+      searchRef.current?.select();
+    },
+    'Escape': () => { if (expanded) setExpand(null); },
+  });
 
   useEffect(() => {
     if (loading || !pgisTables) return;
@@ -350,8 +361,9 @@ export default function TeamLookup() {
         <div className="tool-sidebar-section">
           <div className="tool-sidebar-label">Search</div>
           <input
+            ref={searchRef}
             className="pb-search"
-            placeholder="Filter by team name…"
+            placeholder="Filter by team name…  ( / )"
             value={search}
             onChange={e => { setSearch(e.target.value); setExpand(null); }}
             disabled={buildingIndex || !index}

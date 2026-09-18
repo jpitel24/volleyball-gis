@@ -1373,3 +1373,54 @@ body {
   .inspector-panel { width: 100vw; border-left: none; }
   .report-with-inspector { margin-right: 0; }
 }
+
+/* Screen-only print-button in the game-report header. Styled to match
+   the existing meta-chip aesthetic but with a clickable accent border. */
+.rpt-print-btn {
+  position: absolute; top: 0; right: 0;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+  padding: 0.35rem 0.7rem; border-radius: 4px;
+  background: var(--surface); color: var(--text);
+  border: 1px solid var(--border); cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.rpt-print-btn:hover { border-color: var(--accent); background: var(--surface2); }
+.rpt-header { position: relative; }
+
+/* ── Print styling ─────────────────────────────────────────────────────
+   `window.print()` (fired from the Print button in the game report)
+   should produce a clean printable / PDF-saveable version. Hide the
+   navigation chrome, the sidebar, the footer, and anything marked
+   `.no-print`. Keep the actual report content in full color so pGIS
+   tiers and school-color chips still communicate.
+
+   `color-adjust: exact` (+ webkit prefix) tells the browser to keep
+   background colors + tinted text during print rather than stripping
+   them for ink economy — necessary for the tier-colored cells and
+   category-bar visualisation to survive. */
+@media print {
+  @page { margin: 0.5in; }
+  html, body { background: #fff !important; color: #000 !important; }
+  *, *::before, *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  /* Chrome */
+  .app-header, .tool-sidebar, .site-footer, .sidebar-backdrop,
+  .rpt-print-btn, .no-print,
+  .inspector-panel, .report-with-inspector { display: none !important; }
+  .report-with-inspector { margin-right: 0 !important; }
+  .app-shell { display: block !important; grid-template-columns: 1fr !important; }
+  .tool-main { padding: 0 !important; }
+  .report { max-width: 100% !important; margin: 0 !important; }
+  /* Try to avoid mid-card breaks so a player line doesn't split across
+     two pages. Also avoid orphan team headers. */
+  .team-section { page-break-inside: avoid; break-inside: avoid; }
+  .pgrid { display: grid; grid-template-columns: repeat(2, 1fr) !important; gap: 0.4rem; }
+  .player-card { page-break-inside: avoid; break-inside: avoid; }
+  .team-hdr { page-break-after: avoid; break-after: avoid; }
+  /* Tug-of-war chart uses colored bars — keep them visible in print. */
+  .tug-bar { print-color-adjust: exact !important; }
+  /* Hide any Recent list that snuck into the sidebar (belt-and-suspenders). */
+  .recent-list { display: none !important; }
+}

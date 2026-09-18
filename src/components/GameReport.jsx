@@ -191,6 +191,16 @@ export default function GameReport({ gameId, mg, isMock, rpiByYear, categoryPgis
           {mg.gameDate && ` · ${mg.gameDate}`}
           {mg.gameLocation && ` · ${mg.gameLocation}`}
         </div>
+        {/* Print button — screen-only via .no-print. Fires the browser
+            print dialog; the @media print rules take over from there. */}
+        <button
+          type="button"
+          className="rpt-print-btn no-print"
+          onClick={() => window.print()}
+          title="Print or save this game report as PDF"
+        >
+          Print / PDF
+        </button>
         <div className="rpt-title">{mg.result}</div>
         <div className="meta-row">
           <span className="meta-chip">Sets <strong>{mg.nSets}</strong></span>

@@ -1127,6 +1127,112 @@ body {
   border-bottom: 1px solid var(--border);
 }
 
+/* ── Computer Player of the Year panel (Season Browser) ────────── */
+.poy-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem 1.4rem 1.2rem;
+  margin: 0 auto 1.5rem;
+  max-width: 1200px;
+  position: relative;
+  overflow: hidden;
+}
+.poy-panel::before {
+  /* Subtle accent ribbon on the left to distinguish from AA panel below */
+  content: '';
+  position: absolute; top: 0; bottom: 0; left: 0; width: 4px;
+  background: var(--accent);
+}
+.poy-header {
+  display: flex; flex-direction: column; gap: 0.35rem;
+  padding-bottom: 0.9rem; margin-bottom: 0.9rem;
+  border-bottom: 1px dashed var(--border);
+}
+.poy-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted);
+}
+.poy-name-row {
+  display: flex; align-items: baseline; gap: 0.8rem; flex-wrap: wrap;
+}
+.poy-slot {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem; font-weight: 700;
+  padding: 0.15rem 0.4rem; border: 1px solid; border-radius: 3px;
+}
+.poy-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800; font-size: 1.55rem;
+  letter-spacing: 0.01em;
+}
+.poy-team {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem; color: var(--muted);
+  display: inline-flex; align-items: center;
+}
+.poy-stats {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+}
+
+/* POY Watch list (ranks #2-#5) */
+.poy-watch { margin-top: 0.7rem; }
+.poy-watch-label, .poy-awards-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 0.45rem;
+}
+.poy-watch-list {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: 0.25rem;
+}
+.poy-watch-list li {
+  display: grid;
+  grid-template-columns: 32px 32px 1.4fr 1fr 1.2fr;
+  gap: 0.6rem;
+  align-items: center;
+  padding: 0.3rem 0.5rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+  background: var(--surface2); border-radius: 4px;
+}
+.poy-watch-rank { color: var(--muted); font-weight: 700; }
+.poy-watch-slot { font-weight: 700; }
+.poy-watch-name { font-weight: 600; }
+.poy-watch-team { color: var(--muted); display: inline-flex; align-items: center; }
+.poy-watch-score { color: var(--muted); text-align: right; }
+
+/* Position awards row (Best S / OH / MB / L) */
+.poy-awards { margin-top: 0.9rem; }
+.poy-awards-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem;
+}
+.poy-award-card {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-top-width: 3px; border-radius: 5px;
+  padding: 0.5rem 0.7rem 0.6rem;
+  display: flex; flex-direction: column; gap: 0.2rem;
+}
+.poy-award-slot {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase;
+  font-weight: 700;
+}
+.poy-award-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.02rem; }
+.poy-award-team { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--muted); display: inline-flex; align-items: center; }
+.poy-award-stats { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; }
+
+@media (max-width: 720px) {
+  .poy-awards-grid { grid-template-columns: repeat(2, 1fr); }
+  .poy-watch-list li {
+    grid-template-columns: 28px 32px 1fr;
+    row-gap: 0.15rem;
+  }
+  .poy-watch-team, .poy-watch-score { grid-column: 3 / 4; }
+}
+
 /* ── Computer All-American panel (Season Browser, year-specific) ── */
 .aa-panel {
   background: var(--surface);

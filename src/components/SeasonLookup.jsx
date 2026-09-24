@@ -352,7 +352,25 @@ export default function SeasonLookup() {
 
     const firstTeam  = teamFor({ OH: 0, MB: 0, S: 0, L: 0 });
     const secondTeam = teamFor({ OH: 2, MB: 2, S: 1, L: 1 });
-    return { firstTeam, secondTeam };
+
+    // ── Player of the Year picks ─────────────────────────────────────
+    // Same aaScore, computed across every position bucket. We take the
+    // single leader as the POY, the next 4 as the "watch list" (a hedge
+    // against small-margin picks — reader can see who else was in the
+    // conversation), and the position leaders of each bucket as class
+    // awards (AVCA-style Watson / Best Setter analog).
+    const allScored = [
+      ...byBucket.OH, ...byBucket.MB, ...byBucket.S, ...byBucket.L,
+    ].sort((a, b) => (b.aaScore || 0) - (a.aaScore || 0));
+    const poy       = allScored[0] || null;
+    const poyWatch  = allScored.slice(1, 5);
+    const positionAwards = [
+      { slot: 'S',  label: 'Setter',        pick: byBucket.S[0]  },
+      { slot: 'OH', label: 'Outside Hitter', pick: byBucket.OH[0] },
+      { slot: 'MB', label: 'Middle Blocker', pick: byBucket.MB[0] },
+      { slot: 'L',  label: 'Libero / DS',    pick: byBucket.L[0]  },
+    ].filter(a => a.pick);
+    return { firstTeam, secondTeam, poy, poyWatch, positionAwards };
   }, [index, allRows, year]);
 
   return (
@@ -506,6 +524,79 @@ export default function SeasonLookup() {
           </>
         )}
       </div>
+
+      {index && allAmericans && allAmericans.poy && (
+        <div className="poy-panel">
+          <div className="poy-header">
+            <div className="poy-eyebrow">{year} Computer Player of the Year</div>
+            <div className="poy-name-row">
+              <span className="poy-slot"
+                    style={{ color: posColor(allAmericans.poy.position),
+                             borderColor: posColor(allAmericans.poy.position) }}>
+                {posGroup(allAmericans.poy.position)}
+              </span>
+              <span className="poy-name">{allAmericans.poy.name}</span>
+              <span className="poy-team">
+                <TeamChip team={allAmericans.poy.team} />
+                {allAmericans.poy.team}
+              </span>
+            </div>
+            <div className="poy-stats">
+              <span style={{ color: 'var(--pgis)' }}>pGIS <strong>{allAmericans.poy.pGIS.toFixed(1)}</strong></span>
+              <span style={{ color: 'var(--gisplus)' }}><strong>{allAmericans.poy.gisPlus.toFixed(2)}</strong> GIS+/S</span>
+              <span style={{ color: 'var(--muted)' }}>
+                T50 pGIS <strong>{Number.isFinite(allAmericans.poy.t50?.pGIS) ? allAmericans.poy.t50.pGIS.toFixed(1) : '—'}</strong>
+                <span style={{ opacity: 0.65 }}> · {allAmericans.poy.t50?.games || 0}G</span>
+              </span>
+              <span style={{ color: 'var(--muted)' }}>
+                aaScore <strong>{allAmericans.poy.aaScore.toFixed(2)}</strong>
+              </span>
+            </div>
+          </div>
+
+          {allAmericans.poyWatch.length > 0 && (
+            <div className="poy-watch">
+              <div className="poy-watch-label">POY Watch</div>
+              <ol className="poy-watch-list">
+                {allAmericans.poyWatch.map((r, i) => (
+                  <li key={r.playerKey + '_' + r.year}>
+                    <span className="poy-watch-rank">#{i + 2}</span>
+                    <span className="poy-watch-slot" style={{ color: posColor(r.position) }}>{posGroup(r.position)}</span>
+                    <span className="poy-watch-name">{r.name}</span>
+                    <span className="poy-watch-team"><TeamChip team={r.team} />{r.team}</span>
+                    <span className="poy-watch-score">
+                      pGIS {r.pGIS.toFixed(1)} · aaScore {r.aaScore.toFixed(2)}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
+
+          {allAmericans.positionAwards.length > 0 && (
+            <div className="poy-awards">
+              <div className="poy-awards-label">Position Awards</div>
+              <div className="poy-awards-grid">
+                {allAmericans.positionAwards.map(a => {
+                  const r  = a.pick;
+                  const pc = posColor(r.position);
+                  return (
+                    <div key={a.slot} className="poy-award-card" style={{ borderTop: `3px solid ${pc}` }}>
+                      <div className="poy-award-slot" style={{ color: pc }}>Best {a.label}</div>
+                      <div className="poy-award-name">{r.name}</div>
+                      <div className="poy-award-team"><TeamChip team={r.team} />{r.team}</div>
+                      <div className="poy-award-stats">
+                        <span style={{ color: 'var(--pgis)' }}>pGIS {r.pGIS.toFixed(1)}</span>
+                        <span style={{ color: 'var(--muted)' }}> · aa {r.aaScore.toFixed(2)}</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {index && allAmericans && allAmericans.firstTeam.length === 6 && (
         <div className="aa-panel">

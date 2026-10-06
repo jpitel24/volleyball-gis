@@ -246,10 +246,44 @@ def main() -> None:
         html_files = html_files[: args.limit]
     print(f"[parse-box] {len(html_files):,} cached HTML files to parse")
 
+    # D1 team filter: anything whose team OR opponent isn't in that year's
+    # RPI nitty-gritties page is non-D1 (DII/DIII/NAIA). Early-season D1
+    # teams often schedule a handful of exhibition games against lower
+    # divisions; those bleed into the box-score cache and inflate the
+    # player index with non-D1 opponents. We filter the entire contest
+    # out so neither side's rows (nor downstream opponent-RPI/pGIS
+    # computations) see the match.
+    import json, re
+    rpi_path = Path("public/data/historical_rpi.json")
+    d1_team_slugs: set[str] | None = None
+    if rpi_path.exists():
+        try:
+            rpi_all = json.loads(rpi_path.read_text(encoding="utf-8"))
+            year_rpi = rpi_all.get(str(args.year), {})
+            d1_team_slugs = {
+                re.sub(r"[^a-z0-9]", "", k.lower()) for k in year_rpi.keys()
+            }
+            print(f"[parse-box] D1 filter: {len(d1_team_slugs)} teams in "
+                  f"{args.year} RPI")
+        except Exception as e:
+            print(f"[parse-box] WARN: couldn't load D1 filter: {e}",
+                  file=sys.stderr)
+    else:
+        print(f"[parse-box] WARN: {rpi_path} missing — no D1 filter applied",
+              file=sys.stderr)
+
+    def _is_d1(team: str) -> bool:
+        if not d1_team_slugs:
+            return True
+        if not team:
+            return False
+        return re.sub(r"[^a-z0-9]", "", team.lower()) in d1_team_slugs
+
     all_rows: list[dict] = []
     ok = 0
     empty = 0
     fail = 0
+    non_d1 = 0
     t0 = time.time()
 
     for i, path in enumerate(html_files, 1):
@@ -269,6 +303,11 @@ def main() -> None:
         if not rows:
             empty += 1
             continue
+        # Drop the whole contest if either team isn't D1 for this year.
+        teams_in_rows = {r.get("Team", "") for r in rows}
+        if not all(_is_d1(t) for t in teams_in_rows):
+            non_d1 += 1
+            continue
         all_rows.extend(rows)
         ok += 1
         if i % 500 == 0:
@@ -286,7 +325,8 @@ def main() -> None:
 
     elapsed = time.time() - t0
     print(f"\n[parse-box] done in {elapsed:.0f}s")
-    print(f"[parse-box] ok: {ok}  empty: {empty}  fail: {fail}")
+    print(f"[parse-box] ok: {ok}  empty: {empty}  fail: {fail}  "
+          f"non_d1_dropped: {non_d1}")
     print(f"[parse-box] rows written: {len(all_rows):,}")
     print(f"[parse-box] wrote {out_path}  "
           f"({out_path.stat().st_size / (1024 * 1024):.1f} MB)")

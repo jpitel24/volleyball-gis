@@ -56,7 +56,12 @@ CACHE_DIR = Path("scripts/.pbp-cache")
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 HEADLESS    = False
-USE_EDGE    = True       # flip to False to use Playwright's bundled Chromium
+# Browser engine: 'edge' uses installed Microsoft Edge (recommended when
+# Cloudflare WARP is providing the clean exit IP at the system level).
+# 'firefox' uses Playwright's bundled Firefox (only useful if a system-
+# wide VPN like Mozilla VPN is configured to allow that exact binary).
+# 'chromium' uses Playwright's bundled Chromium.
+BROWSER     = "edge"
 TIMEOUT_MS  = 60_000
 WAIT_AFTER  = 4_000
 DWELL_MS    = 2_500      # human-like pause between page transitions
@@ -70,6 +75,10 @@ UA_CHROME = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
     "Chrome/120.0.0.0 Safari/537.36"
+)
+UA_FIREFOX = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) "
+    "Gecko/20100101 Firefox/121.0"
 )
 
 AKAMAI_COOKIES = {"_abck", "bm_sz", "bm_sv", "ak_bmsc", "bm_mi"}
@@ -88,19 +97,29 @@ def probe(contest_id: int) -> None:
               "stealth patches. Install with: py -m pip install playwright-stealth")
 
     with sync_playwright() as p:
-        launch_kwargs = {
-            "headless": HEADLESS,
-            "args": ["--disable-blink-features=AutomationControlled"],
-        }
-        if USE_EDGE:
-            launch_kwargs["channel"] = "msedge"
+        if BROWSER == "firefox":
+            print(f"[probe] launching bundled Firefox at {p.firefox.executable_path}")
+            print("[probe] (this exact path is what Mozilla VPN's allowlist needs)")
+            browser = p.firefox.launch(headless=HEADLESS)
+            ua = UA_FIREFOX
+        elif BROWSER == "edge":
             print("[probe] launching Microsoft Edge (msedge channel)")
+            browser = p.chromium.launch(
+                headless=HEADLESS,
+                channel="msedge",
+                args=["--disable-blink-features=AutomationControlled"],
+            )
+            ua = UA_EDGE
         else:
             print("[probe] launching bundled Chromium")
+            browser = p.chromium.launch(
+                headless=HEADLESS,
+                args=["--disable-blink-features=AutomationControlled"],
+            )
+            ua = UA_CHROME
 
-        browser = p.chromium.launch(**launch_kwargs)
         context = browser.new_context(
-            user_agent=UA_EDGE if USE_EDGE else UA_CHROME,
+            user_agent=ua,
             viewport={"width": 1366, "height": 900},
             locale="en-US",
             timezone_id="America/Chicago",
@@ -111,8 +130,24 @@ def probe(contest_id: int) -> None:
 
         page = context.new_page()
         if HAVE_STEALTH:
-            _stealth_apply(page)
-            print("[probe] stealth patches applied")
+            try:
+                _stealth_apply(page)
+                print("[probe] stealth patches applied")
+            except Exception as e:
+                # playwright-stealth 2.x may not support Firefox; non-fatal.
+                print(f"[probe] stealth not applied for {BROWSER}: {e}")
+
+        # ── 0. IP CHECK — confirm exit before touching Akamai ─────────
+        print("[probe] IP check → https://ipinfo.io/json")
+        try:
+            page.goto("https://ipinfo.io/json", timeout=TIMEOUT_MS, wait_until="domcontentloaded")
+            page.wait_for_timeout(800)
+            body = page.evaluate("() => document.body.innerText")
+            print("[probe] ipinfo.io says:")
+            for line in (body or "").strip().splitlines()[:10]:
+                print(f"        {line.strip()}")
+        except PWTimeout:
+            print("[probe] ipinfo.io timeout — exit may be problematic")
         else:
             print("[probe] WARNING: stealth not loaded — install playwright-stealth")
 

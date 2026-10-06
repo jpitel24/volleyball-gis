@@ -8,11 +8,23 @@ public/data/unmatched_opponents.txt
 # Local scraper / probe caches — re-fetchable, often large, not for VCS
 scripts/.pbp-cache/
 scripts/.pbp-build/
+scripts/.boxscore-cache/
 scripts/.ncaa-api-cache/
 scripts/.playermatch-cache/
 scripts/.playermatch-cache-null-backup-2024/
 scripts/.gisplus-build.log
 scripts/__pycache__/
+
+# Claude Code session state (worktrees, settings, logs)
+.claude/
+
+# One-off scraper probe artifacts at repo root (ad-hoc testing)
+/crawlbase_test_*.html
+/_tree.json
+
+# Large local intermediates (1GB+ pickles, 100MB+ CSVs) not for VCS
+scripts/match_context.pkl
+scripts/gis_plus_observations_full_local.csv
 
 # JetBrains IDE
 .idea/

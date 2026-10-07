@@ -2776,6 +2776,30 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-10-02,6584629,Western Caro.,SoCon,Samford,SoCon,Neutral,2,Halley Tang,L,4,0,0,0,0.0,0,1,0,4,2,0,0,0,0,1.0,0,0.0,1.0,11.0,0
 2026-2027,2026-10-02,6584629,Western Caro.,SoCon,Samford,SoCon,Neutral,17,Evelyn Keefer,L,1,0,0,0,0.0,0,0,0,0,0,0,0,0,0,0.0,0,0.0,0.0,2.0,0
 2026-2027,2026-10-02,6584629,Western Caro.,SoCon,Samford,SoCon,Neutral,16,Sophia Marini,OH,1,2,0,6,0.333,0,0,0,0,0,0,0,0,0,2.0,0,,,,0
+2026-2027,2026-10-06,6584643,Western Caro.,SoCon,Wofford,SoCon,Neutral,18,Katie Boney,S,3,2,1,9,0.111,26,0,2,1,0,0,0,1,0,2.5,0,0.0,93.0,10.0,1
+2026-2027,2026-10-06,6584643,Western Caro.,SoCon,Wofford,SoCon,Neutral,1,Ashlyn Cobb,OH,3,5,3,19,0.105,1,3,3,12,25,1,0,0,0,8.0,0,0.0,3.0,14.0,0
+2026-2027,2026-10-06,6584643,Western Caro.,SoCon,Wofford,SoCon,Neutral,6,Elise Gurley,L,3,0,0,0,0.0,1,1,1,18,10,1,0,0,0,1.0,0,0.0,9.0,8.0,0
+2026-2027,2026-10-06,6584643,Western Caro.,SoCon,Wofford,SoCon,Neutral,15,Samantha Kranzler,OH,3,5,4,26,0.038,0,0,2,8,26,1,1,2,0,7.0,0,0.0,0.0,8.0,3
+2026-2027,2026-10-06,6584643,Western Caro.,SoCon,Wofford,SoCon,Neutral,12,Tatum Sharp,MB,3,5,1,19,0.211,0,0,1,1,0,0,1,1,0,6.5,0,0.0,1.0,4.0,2
+2026-2027,2026-10-06,6584643,Western Caro.,SoCon,Wofford,SoCon,Neutral,22,Zoe Zudans,OH,3,10,0,37,0.27,0,0,0,7,0,0,1,0,0,11.0,0,0.0,0.0,0.0,1
+2026-2027,2026-10-06,6584643,Western Caro.,SoCon,Wofford,SoCon,Neutral,11,JoJo Abeyta,MB,2,2,1,6,0.167,0,0,0,0,0,0,2,2,0,5.0,0,,,,4
+2026-2027,2026-10-06,6584643,Western Caro.,SoCon,Wofford,SoCon,Neutral,2,Halley Tang,L,2,0,0,0,0.0,0,0,0,0,2,0,0,0,0,0.0,0,0.0,0.0,2.0,0
+2026-2027,2026-10-06,6584643,Western Caro.,SoCon,Wofford,SoCon,Neutral,20,Eda Yalçinkaya,L,2,0,0,0,0.0,0,0,0,2,5,0,0,0,0,0.0,0,0.0,2.0,6.0,0
+2026-2027,2026-10-06,6584643,Western Caro.,SoCon,Wofford,SoCon,Neutral,7,Aiyana Harris,MB,1,1,1,2,0.0,0,0,0,0,0,0,0,0,0,1.0,0,,,,0
+2026-2027,2026-10-06,6584643,Western Caro.,SoCon,Wofford,SoCon,Neutral,17,Evelyn Keefer,L,1,0,0,1,0.0,0,0,0,0,1,0,0,0,0,0.0,0,0.0,1.0,2.0,0
+2026-2027,2026-10-06,6584643,Western Caro.,SoCon,Wofford,SoCon,Neutral,16,Sophia Marini,OH,1,0,0,0,0.0,0,0,0,0,0,0,0,0,0,0.0,0,,,,0
+2026-2027,2026-10-06,6584643,Western Caro.,SoCon,Wofford,SoCon,Neutral,9,Danielle Wheat,S,1,0,0,0,0.0,0,0,2,0,0,0,0,0,0,0.0,0,0.0,0.0,2.0,0
+2026-2027,2026-10-06,6584643,Wofford,SoCon,Western Caro.,SoCon,Neutral,15,Charlotte Bell,MB,3,2,4,11,-0.182,0,0,0,0,0,0,1,2,1,4.0,0,,,,3
+2026-2027,2026-10-06,6584643,Wofford,SoCon,Western Caro.,SoCon,Neutral,23,Bradley Brown,MB,3,9,3,18,0.333,0,0,0,1,1,0,2,0,0,11.0,0,0.0,0.0,0.0,2
+2026-2027,2026-10-06,6584643,Wofford,SoCon,Western Caro.,SoCon,Neutral,8,Ella Coleman,OH,3,2,0,5,0.4,0,1,3,10,7,0,0,1,0,3.5,0,0.0,2.0,13.0,1
+2026-2027,2026-10-06,6584643,Wofford,SoCon,Western Caro.,SoCon,Neutral,10,Maddy Frazier,S,3,1,0,2,0.5,16,1,0,12,0,0,0,0,0,2.0,0,0.0,42.0,14.0,0
+2026-2027,2026-10-06,6584643,Wofford,SoCon,Western Caro.,SoCon,Neutral,33,Laney Klika,L,3,0,0,1,0.0,7,0,0,21,5,0,0,0,0,0.0,0,0.0,20.0,0.0,0
+2026-2027,2026-10-06,6584643,Wofford,SoCon,Western Caro.,SoCon,Neutral,12,Taylor Mendez,OH,3,8,0,17,0.471,0,0,0,0,5,0,0,1,0,8.5,0,0.0,0.0,0.0,1
+2026-2027,2026-10-06,6584643,Wofford,SoCon,Western Caro.,SoCon,Neutral,2,Emily Normand,OH,3,2,3,8,-0.125,0,0,0,4,0,0,0,0,0,2.0,0,0.0,0.0,0.0,0
+2026-2027,2026-10-06,6584643,Wofford,SoCon,Western Caro.,SoCon,Neutral,16,Taylor Pecht,S,3,0,0,0,0.0,22,0,0,8,0,0,0,0,0,0.0,0,0.0,47.0,14.0,0
+2026-2027,2026-10-06,6584643,Wofford,SoCon,Western Caro.,SoCon,Neutral,5,Makaylee Ruiz,L,3,0,0,0,0.0,1,1,1,4,0,0,0,0,0,1.0,0,0.0,3.0,15.0,0
+2026-2027,2026-10-06,6584643,Wofford,SoCon,Western Caro.,SoCon,Neutral,21,Chloe Smith,OH,3,17,2,39,0.385,0,0,0,6,23,1,0,0,0,17.0,0,0.0,0.0,7.0,0
+2026-2027,2026-10-06,6584643,Wofford,SoCon,Western Caro.,SoCon,Neutral,18,Avery White,OH,3,9,3,22,0.273,0,0,1,4,2,1,0,2,0,10.0,0,0.0,4.0,11.0,2
 2026-2027,2026-08-28,6584783,Northwestern,Big Ten,George Mason,Atlantic 10,Neutral,22,Isabella Bullington,OH,4,13,6,35,0.2,1,2,4,11,34,4,0,0,0,15.0,0,0.0,4.0,19.0,0
 2026-2027,2026-08-28,6584783,Northwestern,Big Ten,George Mason,Atlantic 10,Neutral,7,Lauren Dignan,L,4,0,0,0,0.0,1,0,1,13,14,0,0,0,0,0.0,0,0.0,3.0,14.0,0
 2026-2027,2026-08-28,6584783,Northwestern,Big Ten,George Mason,Atlantic 10,Neutral,23,Gigi Navarrete,L,4,0,0,1,0.0,0,0,1,8,6,0,0,0,0,0.0,0,0.0,4.0,15.0,0
@@ -7185,6 +7209,26 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-10-03,6587198,Youngstown St.,Horizon,IU Indy,Horizon,Neutral,8,Juliana Rivera,DS,3,0,0,0,0.0,0,0,1,1,0,0,0,0,0,0.0,0,0.0,1.0,1.0,0
 2026-2027,2026-10-03,6587198,Youngstown St.,Horizon,IU Indy,Horizon,Neutral,15,Ava Stratton,OH,3,3,6,13,-0.231,0,0,0,2,0,0,0,1,0,3.5,0,0.0,1.0,0.0,1
 2026-2027,2026-10-03,6587198,Youngstown St.,Horizon,IU Indy,Horizon,Neutral,20,Hayden Rodriguez,S,2,0,0,1,0.0,11,0,1,2,0,0,0,0,0,0.0,0,0.0,26.0,2.0,0
+2026-2027,2026-10-06,6587203,Robert Morris,Horizon,Youngstown St.,Horizon,Neutral,10,Anahi Alvarado,L/DS,3,0,0,0,0.0,2,1,1,18,20,0,0,0,0,1.0,0,0.0,12.0,9.0,0
+2026-2027,2026-10-06,6587203,Robert Morris,Horizon,Youngstown St.,Horizon,Neutral,1,Kenlee Barnard,S,3,1,1,7,0.0,32,0,2,8,0,0,0,0,0,1.0,0,0.0,101.0,13.0,0
+2026-2027,2026-10-06,6587203,Robert Morris,Horizon,Youngstown St.,Horizon,Neutral,5,Addyson Butts,MB,3,4,2,10,0.2,0,0,0,0,1,0,1,1,2,5.5,0,0.0,0.0,0.0,2
+2026-2027,2026-10-06,6587203,Robert Morris,Horizon,Youngstown St.,Horizon,Neutral,13,Lauren Decker,OH,3,11,8,37,0.081,1,0,1,12,13,1,0,0,0,11.0,0,0.0,2.0,10.0,0
+2026-2027,2026-10-06,6587203,Robert Morris,Horizon,Youngstown St.,Horizon,Neutral,16,Addison Fowler,DS,3,0,0,0,0.0,0,0,0,2,0,0,0,0,0,0.0,0,0.0,0.0,9.0,0
+2026-2027,2026-10-06,6587203,Robert Morris,Horizon,Youngstown St.,Horizon,Neutral,15,Keira Hornung,MB,3,9,4,26,0.192,0,0,0,0,0,0,0,0,1,9.0,0,,,,0
+2026-2027,2026-10-06,6587203,Robert Morris,Horizon,Youngstown St.,Horizon,Neutral,3,Tia Schultz,OH,3,6,5,23,0.043,1,0,1,1,0,0,0,0,0,6.0,0,0.0,1.0,1.0,0
+2026-2027,2026-10-06,6587203,Robert Morris,Horizon,Youngstown St.,Horizon,Neutral,8,Maddie Siphakongviseth,L/DS,3,0,0,0,0.0,0,0,0,6,16,0,0,0,0,0.0,0,0.0,3.0,10.0,0
+2026-2027,2026-10-06,6587203,Robert Morris,Horizon,Youngstown St.,Horizon,Neutral,9,Layla Todd,OH,3,4,5,23,-0.043,0,0,0,11,11,0,0,1,0,4.5,0,0.0,1.0,5.0,1
+2026-2027,2026-10-06,6587203,Robert Morris,Horizon,Youngstown St.,Horizon,Neutral,14,Natalie Frost,OH,1,1,0,3,0.333,0,0,0,0,2,0,0,0,0,1.0,0,0.0,0.0,2.0,0
+2026-2027,2026-10-06,6587203,Youngstown St.,Horizon,Robert Morris,Horizon,Neutral,21,Korina Barber,OH,3,8,3,16,0.313,0,0,0,2,0,0,1,5,0,11.5,0,0.0,0.0,0.0,6
+2026-2027,2026-10-06,6587203,Youngstown St.,Horizon,Robert Morris,Horizon,Neutral,10,Kameron Blizniak,S,3,0,0,0,0.0,29,0,0,9,0,0,0,0,0,0.0,0,0.0,57.0,12.0,0
+2026-2027,2026-10-06,6587203,Youngstown St.,Horizon,Robert Morris,Horizon,Neutral,22,Layne Graffice,OH,3,9,1,31,0.258,0,0,2,8,19,0,0,0,0,9.0,0,0.0,1.0,15.0,0
+2026-2027,2026-10-06,6587203,Youngstown St.,Horizon,Robert Morris,Horizon,Neutral,1,Brie Habeeb,DS,3,0,0,0,0.0,0,0,0,0,0,0,0,0,0,0.0,0,,,,0
+2026-2027,2026-10-06,6587203,Youngstown St.,Horizon,Robert Morris,Horizon,Neutral,23,Abbie Householder,OH,3,5,1,21,0.19,0,1,2,9,23,1,0,3,0,7.5,0,0.0,0.0,15.0,3
+2026-2027,2026-10-06,6587203,Youngstown St.,Horizon,Robert Morris,Horizon,Neutral,9,Journey Nicola,DS,3,0,0,0,0.0,1,0,0,17,10,0,0,0,0,0.0,0,0.0,13.0,10.0,0
+2026-2027,2026-10-06,6587203,Youngstown St.,Horizon,Robert Morris,Horizon,Neutral,20,Hayden Rodriguez,S,3,1,0,1,1.0,13,0,0,11,0,0,0,0,0,1.0,0,0.0,38.0,0.0,0
+2026-2027,2026-10-06,6587203,Youngstown St.,Horizon,Robert Morris,Horizon,Neutral,15,Ava Stratton,OH,3,3,4,14,-0.071,0,0,0,2,0,0,0,4,0,5.0,0,0.0,0.0,0.0,4
+2026-2027,2026-10-06,6587203,Youngstown St.,Horizon,Robert Morris,Horizon,Neutral,16,Kylie Surratt,OH,3,12,0,18,0.667,0,0,3,4,1,0,0,0,0,12.0,0,0.0,1.0,9.0,0
+2026-2027,2026-10-06,6587203,Youngstown St.,Horizon,Robert Morris,Horizon,Neutral,14,Wrigley Takats,MB,3,6,1,14,0.357,0,0,3,2,1,0,0,2,0,7.0,0,0.0,2.0,12.0,2
 2026-2027,2026-10-02,6587208,Arkansas St.,Sun Belt,Louisiana,Sun Belt,Neutral,6,Calea Bush,RS,5,6,4,14,0.143,0,0,0,0,0,0,2,2,1,9.0,0,,,,4
 2026-2027,2026-10-02,6587208,Arkansas St.,Sun Belt,Louisiana,Sun Belt,Neutral,15,Addison Collum,RS,5,10,2,24,0.333,1,0,1,3,0,0,0,0,1,10.0,0,,,,0
 2026-2027,2026-10-02,6587208,Arkansas St.,Sun Belt,Louisiana,Sun Belt,Neutral,3,Libby Gee-Weiler,L/DS,5,0,0,0,0.0,0,0,3,8,0,2,0,0,0,0.0,0,,,,0
@@ -9415,6 +9459,31 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-10-02,6588988,N.C. A&T,CAA,Col. of Charleston,CAA,Neutral,2,Zariah Winton,OH,5,15,7,37,0.216,0,0,3,2,17,4,1,1,0,16.5,0,0.0,2.0,11.0,2
 2026-2027,2026-10-02,6588988,N.C. A&T,CAA,Col. of Charleston,CAA,Neutral,19,Agata Zwierzynska,OH,5,13,4,28,0.321,0,0,0,0,0,0,1,3,0,15.5,0,0.0,3.0,1.0,4
 2026-2027,2026-10-02,6588988,N.C. A&T,CAA,Col. of Charleston,CAA,Neutral,11,Daja Warren,MB,1,0,0,0,0.0,0,0,0,0,0,0,0,0,0,0.0,0,,,,0
+2026-2027,2026-10-06,6588992,High Point,Big South,Col. of Charleston,CAA,Neutral,9,Maya Bukovcan,MB,5,17,1,28,0.571,1,0,4,2,0,0,0,7,0,20.5,0,0.0,2.0,13.0,7
+2026-2027,2026-10-06,6588992,High Point,Big South,Col. of Charleston,CAA,Neutral,10,Remy Catojo,S,5,8,3,18,0.278,47,0,1,10,0,0,0,2,0,9.0,0,0.0,134.0,15.0,2
+2026-2027,2026-10-06,6588992,High Point,Big South,Col. of Charleston,CAA,Neutral,6,Addison Freeland,MB,5,1,4,9,-0.333,1,0,0,0,0,0,2,5,0,5.5,0,0.0,1.0,0.0,7
+2026-2027,2026-10-06,6588992,High Point,Big South,Col. of Charleston,CAA,Neutral,12,Gabby Hill,OH,5,12,9,40,0.075,0,0,0,3,6,0,0,5,0,14.5,0,0.0,1.0,0.0,5
+2026-2027,2026-10-06,6588992,High Point,Big South,Col. of Charleston,CAA,Neutral,7,Aisha Keric,OH,5,8,5,24,0.125,0,0,0,4,0,0,0,5,0,10.5,0,0.0,2.0,0.0,5
+2026-2027,2026-10-06,6588992,High Point,Big South,Col. of Charleston,CAA,Neutral,14,Grace Killion,DS,5,0,0,0,0.0,4,2,3,13,24,0,0,0,0,2.0,0,0.0,6.0,15.0,0
+2026-2027,2026-10-06,6588992,High Point,Big South,Col. of Charleston,CAA,Neutral,25,Élodie Lalonde,OH,5,17,10,54,0.13,1,0,3,9,22,1,0,3,0,18.5,0,0.0,3.0,20.0,3
+2026-2027,2026-10-06,6588992,High Point,Big South,Col. of Charleston,CAA,Neutral,13,Sydney McKay,L/DS,5,0,0,0,0.0,2,3,5,16,22,0,0,0,0,3.0,0,0.0,4.0,22.0,0
+2026-2027,2026-10-06,6588992,High Point,Big South,Col. of Charleston,CAA,Neutral,5,Kea Whillock,DS,5,0,0,0,0.0,4,1,4,25,17,1,0,0,0,1.0,0,0.0,19.0,20.0,0
+2026-2027,2026-10-06,6588992,High Point,Big South,Col. of Charleston,CAA,Neutral,8,Kinnady Boothe,OH,1,1,1,6,0.0,0,0,0,0,2,0,0,0,0,1.0,0,0.0,0.0,0.0,0
+2026-2027,2026-10-06,6588992,High Point,Big South,Col. of Charleston,CAA,Neutral,3,Morgan Duse-anthony,S,1,0,0,0,0.0,0,0,1,0,0,0,0,0,0,0.0,0,0.0,0.0,1.0,0
+2026-2027,2026-10-06,6588992,High Point,Big South,Col. of Charleston,CAA,Neutral,1,Havani Embry,DS,1,0,0,0,0.0,0,0,0,0,3,0,0,0,0,0.0,0,0.0,1.0,1.0,0
+2026-2027,2026-10-06,6588992,High Point,Big South,Col. of Charleston,CAA,Neutral,17,Jasmine Oduro,MB,1,1,0,2,0.5,0,0,0,0,0,0,0,1,0,1.5,0,,,,1
+2026-2027,2026-10-06,6588992,Col. of Charleston,CAA,High Point,Big South,Neutral,0,Cole Crews,DS,5,0,0,0,0.0,1,0,1,4,22,3,0,0,0,0.0,0,0.0,5.0,19.0,0
+2026-2027,2026-10-06,6588992,Col. of Charleston,CAA,High Point,Big South,Neutral,2,Jumana Martin,L/DS,5,0,0,0,0.0,3,0,0,25,16,1,0,0,0,0.0,0,0.0,16.0,17.0,0
+2026-2027,2026-10-06,6588992,Col. of Charleston,CAA,High Point,Big South,Neutral,12,Caroline Noonan,MB,5,9,3,35,0.171,0,0,3,4,1,0,0,1,0,9.5,0,0.0,0.0,21.0,1
+2026-2027,2026-10-06,6588992,Col. of Charleston,CAA,High Point,Big South,Neutral,7,Julie Nzambele,OH,5,10,5,26,0.192,0,0,0,3,4,0,1,1,0,11.5,0,0.0,0.0,0.0,2
+2026-2027,2026-10-06,6588992,Col. of Charleston,CAA,High Point,Big South,Neutral,11,Makena Parthen,MB,5,13,3,26,0.385,0,0,0,1,0,0,1,11,0,19.5,0,0.0,2.0,0.0,12
+2026-2027,2026-10-06,6588992,Col. of Charleston,CAA,High Point,Big South,Neutral,4,Violet Poole,DS,5,0,0,0,0.0,2,0,1,15,16,0,0,0,0,0.0,0,0.0,6.0,7.0,0
+2026-2027,2026-10-06,6588992,Col. of Charleston,CAA,High Point,Big South,Neutral,1,Gabby Tuiaana,OH,5,3,6,24,-0.125,1,0,0,1,0,0,0,1,0,3.5,0,0.0,1.0,0.0,1
+2026-2027,2026-10-06,6588992,Col. of Charleston,CAA,High Point,Big South,Neutral,10,Helena Vukovic,S,5,4,0,5,0.8,36,1,4,10,0,0,0,4,0,7.0,0,0.0,130.0,19.0,4
+2026-2027,2026-10-06,6588992,Col. of Charleston,CAA,High Point,Big South,Neutral,9,Emma Duffield,OH,3,4,2,21,0.095,3,0,1,3,21,2,0,1,0,4.5,0,0.0,3.0,10.0,1
+2026-2027,2026-10-06,6588992,Col. of Charleston,CAA,High Point,Big South,Neutral,19,Laura Sarajarvi,OH,3,3,1,18,0.111,0,1,1,4,0,0,0,3,0,5.5,0,0.0,0.0,7.0,3
+2026-2027,2026-10-06,6588992,Col. of Charleston,CAA,High Point,Big South,Neutral,3,Julia Gnida,OH,2,4,4,14,0.0,1,0,0,6,6,0,0,0,0,4.0,0,0.0,1.0,7.0,0
+2026-2027,2026-10-06,6588992,Col. of Charleston,CAA,High Point,Big South,Neutral,21,Lainee Mack,S,1,0,0,0,0.0,1,0,0,0,0,0,0,0,0,0.0,0,0.0,3.0,0.0,0
 2026-2027,2026-08-28,6589237,UNI,MVC,Georgia Tech,ACC,Neutral,6,Reese Booth,S,3,0,2,6,-0.333,23,0,1,8,0,0,1,0,0,1.0,0,0.0,76.0,12.0,1
 2026-2027,2026-08-28,6589237,UNI,MVC,Georgia Tech,ACC,Neutral,8,Sophie Buysse,DS,3,0,0,0,0.0,0,0,0,2,2,0,0,0,0,0.0,0,0.0,0.0,3.0,0
 2026-2027,2026-08-28,6589237,UNI,MVC,Georgia Tech,ACC,Neutral,15,Lily Dykstra,OH,3,13,7,37,0.162,0,0,1,0,13,1,0,1,0,13.5,0,0.0,0.0,8.0,1
@@ -9949,6 +10018,29 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-10-03,6589550,Fordham,Atlantic 10,Dayton,Atlantic 10,Neutral,13,Bridget Woodruff,OH,3,11,2,21,0.429,0,0,0,2,0,0,0,0,0,11.0,1,0.0,2.0,0.0,0
 2026-2027,2026-10-03,6589550,Fordham,Atlantic 10,Dayton,Atlantic 10,Neutral,23,Mila Micunovic,OH,1,0,2,3,-0.667,1,0,0,0,6,0,0,0,0,0.0,0,0.0,1.0,0.0,0
 2026-2027,2026-10-03,6589550,Fordham,Atlantic 10,Dayton,Atlantic 10,Neutral,14,Addison Newblatt,L,1,0,0,0,0.0,0,0,1,1,6,0,0,0,0,0.0,0,0.0,1.0,1.0,0
+2026-2027,2026-10-06,6589553,Duquesne,Atlantic 10,Dayton,Atlantic 10,Neutral,7,Mirabella Iriarte,MB,4,0,1,2,-0.5,0,0,0,0,0,0,1,0,0,1.0,0,,,,1
+2026-2027,2026-10-06,6589553,Duquesne,Atlantic 10,Dayton,Atlantic 10,Neutral,10,Delaney McIntosh,L/DS,4,0,0,0,0.0,2,1,2,11,35,0,0,0,0,1.0,0,0.0,11.0,14.0,0
+2026-2027,2026-10-06,6589553,Duquesne,Atlantic 10,Dayton,Atlantic 10,Neutral,14,Jordan Robertson,MB,4,2,2,5,0.0,0,0,1,1,0,0,0,1,0,2.5,0,0.0,1.0,14.0,1
+2026-2027,2026-10-06,6589553,Duquesne,Atlantic 10,Dayton,Atlantic 10,Neutral,11,Emersen Schrom,OH,4,18,12,53,0.113,2,1,0,7,32,2,0,0,0,19.0,0,0.0,7.0,12.0,0
+2026-2027,2026-10-06,6589553,Duquesne,Atlantic 10,Dayton,Atlantic 10,Neutral,9,Simone Searles,OH,4,21,7,36,0.389,1,1,3,13,0,0,1,1,0,23.5,0,0.0,4.0,15.0,2
+2026-2027,2026-10-06,6589553,Duquesne,Atlantic 10,Dayton,Atlantic 10,Neutral,8,Londyn Stone,OH,4,11,9,38,0.053,1,1,2,7,21,0,0,0,0,12.0,0,0.0,6.0,15.0,0
+2026-2027,2026-10-06,6589553,Duquesne,Atlantic 10,Dayton,Atlantic 10,Neutral,2,Chloe Wilmot,S,4,1,0,2,0.5,48,2,1,5,0,0,0,0,0,3.0,0,0.0,107.0,16.0,0
+2026-2027,2026-10-06,6589553,Duquesne,Atlantic 10,Dayton,Atlantic 10,Neutral,6,Charlotte Arrington,OH,1,0,0,0,0.0,0,0,1,0,0,0,0,0,0,0.0,0,0.0,0.0,1.0,0
+2026-2027,2026-10-06,6589553,Duquesne,Atlantic 10,Dayton,Atlantic 10,Neutral,4,Madeleine Bush,MB,1,1,0,2,0.5,0,0,0,0,1,0,0,0,0,1.0,0,0.0,0.0,0.0,0
+2026-2027,2026-10-06,6589553,Dayton,Atlantic 10,Duquesne,Atlantic 10,Neutral,8,Morgan Asleson,L/DS,4,0,0,0,0.0,1,0,3,12,0,0,0,0,0,0.0,0,0.0,3.0,15.0,0
+2026-2027,2026-10-06,6589553,Dayton,Atlantic 10,Duquesne,Atlantic 10,Neutral,31,Lily Barry,L/DS,4,0,0,0,0.0,3,0,0,7,10,0,0,0,0,0.0,0,0.0,8.0,0.0,0
+2026-2027,2026-10-06,6589553,Dayton,Atlantic 10,Duquesne,Atlantic 10,Neutral,3,Abigail Cresse,MB,4,9,1,13,0.615,0,0,0,2,2,0,2,10,0,16.0,0,0.0,0.0,9.0,12
+2026-2027,2026-10-06,6589553,Dayton,Atlantic 10,Duquesne,Atlantic 10,Neutral,9,Natalie Harrington,S,4,1,0,1,1.0,22,1,1,2,0,0,0,0,0,2.0,0,0.0,40.0,19.0,0
+2026-2027,2026-10-06,6589553,Dayton,Atlantic 10,Duquesne,Atlantic 10,Neutral,2,Kamryn Hunt,OH,4,16,2,34,0.412,0,0,1,8,22,0,0,1,1,16.5,0,0.0,3.0,17.0,1
+2026-2027,2026-10-06,6589553,Dayton,Atlantic 10,Duquesne,Atlantic 10,Neutral,16,Gabriela Machin Borges,OH,4,4,4,14,0.0,0,0,0,2,0,0,0,1,0,4.5,0,0.0,0.0,0.0,1
+2026-2027,2026-10-06,6589553,Dayton,Atlantic 10,Duquesne,Atlantic 10,Neutral,12,Rylee Sloss,S,4,1,0,2,0.5,23,1,2,4,0,0,0,0,0,2.0,0,0.0,61.0,12.0,0
+2026-2027,2026-10-06,6589553,Dayton,Atlantic 10,Duquesne,Atlantic 10,Neutral,19,Charlotte Vinson,OH,4,11,2,18,0.5,0,0,0,0,0,0,0,7,0,14.5,0,,,,7
+2026-2027,2026-10-06,6589553,Dayton,Atlantic 10,Duquesne,Atlantic 10,Neutral,20,Ava Liening,MB,3,1,1,4,0.0,0,0,0,1,1,0,0,1,0,1.5,0,0.0,1.0,0.0,1
+2026-2027,2026-10-06,6589553,Dayton,Atlantic 10,Duquesne,Atlantic 10,Neutral,1,Kaleigh Meritt,OH,3,6,5,24,0.042,0,0,1,4,22,0,0,2,0,7.0,0,0.0,1.0,15.0,2
+2026-2027,2026-10-06,6589553,Dayton,Atlantic 10,Duquesne,Atlantic 10,Neutral,22,Sidney Sprada,OH,3,6,2,11,0.364,0,0,0,3,15,1,0,0,0,6.0,0,0.0,0.0,4.0,0
+2026-2027,2026-10-06,6589553,Dayton,Atlantic 10,Duquesne,Atlantic 10,Neutral,13,Sydney Barrett,OH,2,0,0,0,0.0,0,1,0,0,0,0,0,0,0,1.0,0,0.0,1.0,7.0,0
+2026-2027,2026-10-06,6589553,Dayton,Atlantic 10,Duquesne,Atlantic 10,Neutral,5,Corrie Anderson,OH,1,0,0,1,0.0,0,0,0,0,0,0,0,0,0,0.0,0,,,,0
+2026-2027,2026-10-06,6589553,Dayton,Atlantic 10,Duquesne,Atlantic 10,Neutral,15,Isabel Simmons,MB,1,0,0,2,0.0,0,0,0,0,0,0,1,0,0,1.0,0,,,,1
 2026-2027,2026-09-13,6589566,Fla. Atlantic,American,Dayton,Atlantic 10,Neutral,25,Libby Ashline,MB,5,5,0,19,0.263,0,0,1,1,0,0,0,1,0,5.5,0,0.0,0.0,2.0,1
 2026-2027,2026-09-13,6589566,Fla. Atlantic,American,Dayton,Atlantic 10,Neutral,15,Olivia Hart,OH,5,12,5,44,0.159,0,1,1,15,26,2,1,0,0,14.0,0,0.0,2.0,13.0,1
 2026-2027,2026-09-13,6589566,Fla. Atlantic,American,Dayton,Atlantic 10,Neutral,6,Anna Hartman,OH,5,17,3,32,0.438,0,0,0,4,1,0,0,1,0,17.5,0,0.0,2.0,0.0,1
@@ -11888,6 +11980,27 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-09-25,6590781,Samford,SoCon,ETSU,SoCon,Neutral,8,Katelyn Stooksbury,L/DS,4,0,0,0,0.0,0,1,3,10,9,0,0,0,0,1.0,0,0.0,1.0,11.0,0
 2026-2027,2026-09-25,6590781,Samford,SoCon,ETSU,SoCon,Neutral,18,Maggie Kalisz,OH,3,1,6,14,-0.357,0,1,0,4,0,0,0,2,1,3.0,0,0.0,0.0,10.0,2
 2026-2027,2026-09-25,6590781,Samford,SoCon,ETSU,SoCon,Neutral,9,Haley Robinson,OPP,2,5,3,12,0.167,0,0,0,0,0,0,0,0,0,5.0,0,,,,0
+2026-2027,2026-10-06,6590782,Mercer,SoCon,Samford,SoCon,Neutral,8,Sammi Bergjans,S,4,6,0,15,0.4,42,1,2,7,0,0,0,0,0,7.0,0,0.0,125.0,10.0,0
+2026-2027,2026-10-06,6590782,Mercer,SoCon,Samford,SoCon,Neutral,21,Sarah Frager,L/DS,4,0,0,0,0.0,0,1,0,17,17,1,0,0,0,1.0,0,0.0,3.0,18.0,0
+2026-2027,2026-10-06,6590782,Mercer,SoCon,Samford,SoCon,Neutral,9,Aubri Martin,L/DS,4,0,0,1,0.0,6,0,2,22,24,2,0,0,0,0.0,0,0.0,14.0,16.0,0
+2026-2027,2026-10-06,6590782,Mercer,SoCon,Samford,SoCon,Neutral,11,Emily Matias,OH,4,0,0,0,0.0,0,0,0,3,0,0,0,0,0,0.0,0,0.0,0.0,11.0,0
+2026-2027,2026-10-06,6590782,Mercer,SoCon,Samford,SoCon,Neutral,20,Lara Matta,OH,4,12,7,38,0.132,1,0,0,5,30,5,0,1,1,12.5,1,0.0,7.0,12.0,1
+2026-2027,2026-10-06,6590782,Mercer,SoCon,Samford,SoCon,Neutral,12,Bella Pons,MB,4,10,3,23,0.304,1,0,0,2,1,0,0,1,0,10.5,0,0.0,1.0,0.0,1
+2026-2027,2026-10-06,6590782,Mercer,SoCon,Samford,SoCon,Neutral,3,Joselynn Sanjurjo,MB,4,13,7,31,0.194,0,0,0,0,0,0,0,1,1,13.5,0,0.0,1.0,0.0,1
+2026-2027,2026-10-06,6590782,Mercer,SoCon,Samford,SoCon,Neutral,19,Taylor Timko,OH,4,12,4,27,0.296,0,0,0,3,9,0,0,0,0,12.0,0,0.0,0.0,0.0,0
+2026-2027,2026-10-06,6590782,Mercer,SoCon,Samford,SoCon,Neutral,15,Brooklyn Palmer,OH,3,3,4,14,-0.071,1,1,1,5,4,0,0,0,0,4.0,0,0.0,2.0,10.0,0
+2026-2027,2026-10-06,6590782,Mercer,SoCon,Samford,SoCon,Neutral,14,Jasmine Calton,MB,2,1,3,12,-0.167,0,0,0,0,1,0,0,1,0,1.5,0,0.0,1.0,0.0,1
+2026-2027,2026-10-06,6590782,Mercer,SoCon,Samford,SoCon,Neutral,4,Tracey Hemelings,S,1,0,0,0,0.0,0,0,0,0,0,0,0,0,0,0.0,0,,,,0
+2026-2027,2026-10-06,6590782,Mercer,SoCon,Samford,SoCon,Neutral,6,Brooke Kaoui,L/DS,1,0,0,0,0.0,1,0,0,4,1,0,0,0,0,0.0,0,0.0,2.0,2.0,0
+2026-2027,2026-10-06,6590782,Samford,SoCon,Mercer,SoCon,Neutral,13,Ally Cordes,OH,4,14,2,29,0.414,1,1,2,19,19,1,2,1,0,17.5,0,0.0,5.0,15.0,3
+2026-2027,2026-10-06,6590782,Samford,SoCon,Mercer,SoCon,Neutral,7,Brooklyn Drumwright,OH,4,0,0,0,0.0,2,2,0,12,18,0,0,0,0,2.0,0,0.0,9.0,19.0,0
+2026-2027,2026-10-06,6590782,Samford,SoCon,Mercer,SoCon,Neutral,3,Brianna Hamilton,OH,4,7,3,38,0.105,0,0,0,11,18,0,2,5,0,11.5,0,0.0,7.0,14.0,7
+2026-2027,2026-10-06,6590782,Samford,SoCon,Mercer,SoCon,Neutral,18,Maggie Kalisz,OH,4,12,0,29,0.414,0,3,2,8,0,0,0,2,0,16.0,0,0.0,0.0,19.0,2
+2026-2027,2026-10-06,6590782,Samford,SoCon,Mercer,SoCon,Neutral,1,Carly Minatel,L/DS,4,0,0,0,0.0,0,0,0,3,0,0,0,0,0,0.0,0,0.0,0.0,15.0,0
+2026-2027,2026-10-06,6590782,Samford,SoCon,Mercer,SoCon,Neutral,10,Alison Ohlinger,S,4,0,0,2,0.0,45,2,2,8,1,0,0,2,0,3.0,0,0.0,120.0,11.0,2
+2026-2027,2026-10-06,6590782,Samford,SoCon,Mercer,SoCon,Neutral,4,Hazel Slusher,MB,4,12,3,27,0.333,0,0,1,1,0,0,1,6,1,16.0,0,0.0,3.0,1.0,7
+2026-2027,2026-10-06,6590782,Samford,SoCon,Mercer,SoCon,Neutral,16,Janie Stinchcomb,MB,4,6,3,14,0.214,0,0,0,0,0,0,0,4,1,8.0,0,0.0,1.0,0.0,4
+2026-2027,2026-10-06,6590782,Samford,SoCon,Mercer,SoCon,Neutral,8,Katelyn Stooksbury,L/DS,4,0,0,0,0.0,0,0,0,6,17,1,0,0,0,0.0,0,0.0,0.0,0.0,0
 2026-2027,2026-09-19,6590787,Lipscomb,ASUN,Belmont,MVC,Neutral,7,Anna Claire Brown,OH,4,4,6,22,-0.091,1,1,1,4,0,0,0,0,0,5.0,0,0.0,3.0,16.0,0
 2026-2027,2026-09-19,6590787,Lipscomb,ASUN,Belmont,MVC,Neutral,18,Ella Durham,OH,4,18,5,42,0.31,1,1,0,16,31,3,1,0,1,20.0,0,0.0,2.0,17.0,1
 2026-2027,2026-09-19,6590787,Lipscomb,ASUN,Belmont,MVC,Neutral,11,Brooklyn Fuchs,MB,4,7,2,15,0.333,0,0,0,0,0,0,2,1,0,9.5,0,0.0,1.0,0.0,3
@@ -14253,6 +14366,32 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-10-02,6592059,Furman,SoCon,Chattanooga,SoCon,Neutral,15,Amber Watson,OH,2,3,3,8,0.0,0,0,0,1,7,0,0,1,0,3.5,0,0.0,0.0,1.0,1
 2026-2027,2026-10-02,6592059,Furman,SoCon,Chattanooga,SoCon,Neutral,9,Campbell Woods,OPP,2,7,1,14,0.429,1,0,2,4,0,0,0,4,0,9.0,0,0.0,4.0,8.0,4
 2026-2027,2026-10-02,6592059,Furman,SoCon,Chattanooga,SoCon,Neutral,23,Lindsay Walch,OH,1,1,2,7,-0.143,0,0,0,0,1,0,0,1,0,1.5,0,0.0,0.0,2.0,1
+2026-2027,2026-10-06,6592074,Chattanooga,SoCon,Tennessee Tech,SoCon,Neutral,9,Caiti Barthel,L/DS,4,0,0,0,0.0,2,0,1,18,29,0,0,0,0,0.0,0,0.0,14.0,17.0,0
+2026-2027,2026-10-06,6592074,Chattanooga,SoCon,Tennessee Tech,SoCon,Neutral,5,Jordin Glass,MB,4,5,2,15,0.2,0,0,0,0,0,0,2,2,0,8.0,0,0.0,1.0,0.0,4
+2026-2027,2026-10-06,6592074,Chattanooga,SoCon,Tennessee Tech,SoCon,Neutral,11,Kynli Kirkendoll,MB,4,7,3,26,0.154,0,0,1,2,0,0,0,2,0,8.0,0,0.0,2.0,12.0,2
+2026-2027,2026-10-06,6592074,Chattanooga,SoCon,Tennessee Tech,SoCon,Neutral,4,Mallory Merz,S,4,0,0,0,0.0,12,0,2,2,0,0,0,0,0,0.0,0,0.0,34.0,12.0,0
+2026-2027,2026-10-06,6592074,Chattanooga,SoCon,Tennessee Tech,SoCon,Neutral,2,Ryan Oden,L/DS,4,0,0,0,0.0,0,0,1,6,26,1,0,0,0,0.0,0,0.0,2.0,10.0,0
+2026-2027,2026-10-06,6592074,Chattanooga,SoCon,Tennessee Tech,SoCon,Neutral,17,Caroline Peterson,L/DS,4,0,0,1,0.0,0,0,0,2,5,0,0,0,0,0.0,0,0.0,0.0,0.0,0
+2026-2027,2026-10-06,6592074,Chattanooga,SoCon,Tennessee Tech,SoCon,Neutral,16,Ashley Reynolds,S,4,0,0,1,0.0,24,0,2,10,0,0,0,0,0,0.0,0,0.0,82.0,17.0,0
+2026-2027,2026-10-06,6592074,Chattanooga,SoCon,Tennessee Tech,SoCon,Neutral,23,Gracie Rose,OH,4,11,5,35,0.171,0,0,0,3,6,1,0,1,0,11.5,0,0.0,2.0,0.0,1
+2026-2027,2026-10-06,6592074,Chattanooga,SoCon,Tennessee Tech,SoCon,Neutral,39,Elena Vukmanov,OH,4,4,3,23,0.043,0,1,0,12,15,2,0,0,0,5.0,0,0.0,3.0,14.0,0
+2026-2027,2026-10-06,6592074,Chattanooga,SoCon,Tennessee Tech,SoCon,Neutral,15,Destiny Wiggins,OH,4,3,1,8,0.25,0,0,0,1,0,0,0,1,0,3.5,0,0.0,0.0,0.0,1
+2026-2027,2026-10-06,6592074,Chattanooga,SoCon,Tennessee Tech,SoCon,Neutral,0,Bailey Burgess,MB,2,2,0,6,0.333,0,0,0,1,0,0,0,0,0,2.0,0,0.0,0.0,0.0,0
+2026-2027,2026-10-06,6592074,Chattanooga,SoCon,Tennessee Tech,SoCon,Neutral,12,Sophia Garrido,OH,2,0,0,1,0.0,0,0,0,0,0,0,0,0,0,0.0,0,,,,0
+2026-2027,2026-10-06,6592074,Chattanooga,SoCon,Tennessee Tech,SoCon,Neutral,1,Addison Walker,OH,2,2,2,12,0.0,0,0,0,0,0,0,0,2,0,3.0,0,,,,2
+2026-2027,2026-10-06,6592074,Chattanooga,SoCon,Tennessee Tech,SoCon,Neutral,6,Delaney Wingenbach,OH,1,4,0,8,0.5,0,0,2,0,3,1,0,0,0,4.0,0,0.0,0.0,3.0,0
+2026-2027,2026-10-06,6592074,Tennessee Tech,SoCon,Chattanooga,SoCon,Neutral,22,Shelby Hannah,L/DS,4,0,0,0,0.0,9,0,0,21,15,0,0,0,0,0.0,0,0.0,23.0,13.0,0
+2026-2027,2026-10-06,6592074,Tennessee Tech,SoCon,Chattanooga,SoCon,Neutral,12,Jordyn Milhouse,MB,4,3,4,13,-0.077,0,0,0,1,3,0,0,2,0,4.0,0,0.0,0.0,0.0,2
+2026-2027,2026-10-06,6592074,Tennessee Tech,SoCon,Chattanooga,SoCon,Neutral,11,Morgan Petelin,S,4,4,0,9,0.444,45,1,0,17,0,0,0,0,0,5.0,0,0.0,121.0,20.0,0
+2026-2027,2026-10-06,6592074,Tennessee Tech,SoCon,Chattanooga,SoCon,Neutral,24,Alayna Pierce,OH,4,20,8,50,0.24,3,0,2,11,12,0,0,1,0,20.5,0,0.0,5.0,12.0,1
+2026-2027,2026-10-06,6592074,Tennessee Tech,SoCon,Chattanooga,SoCon,Neutral,1,Ava Schubert,OH,4,13,3,24,0.417,1,3,2,1,0,0,0,1,0,16.5,0,0.0,2.0,7.0,1
+2026-2027,2026-10-06,6592074,Tennessee Tech,SoCon,Chattanooga,SoCon,Neutral,6,Ella Watford,L,4,0,0,0,0.0,2,0,2,11,21,0,0,0,0,0.0,0,0.0,3.0,8.0,0
+2026-2027,2026-10-06,6592074,Tennessee Tech,SoCon,Chattanooga,SoCon,Neutral,21,Tuva Falk,MB,3,3,1,9,0.222,0,1,0,0,0,0,0,0,0,4.0,0,0.0,1.0,5.0,0
+2026-2027,2026-10-06,6592074,Tennessee Tech,SoCon,Chattanooga,SoCon,Neutral,14,Ashlyn Gamble,OH,3,2,2,5,0.0,0,0,0,1,0,0,0,0,0,2.0,0,0.0,1.0,0.0,0
+2026-2027,2026-10-06,6592074,Tennessee Tech,SoCon,Chattanooga,SoCon,Neutral,8,Mallory Jenkins,MB,3,5,4,15,0.067,0,0,0,1,1,0,0,1,0,5.5,0,0.0,1.0,4.0,1
+2026-2027,2026-10-06,6592074,Tennessee Tech,SoCon,Chattanooga,SoCon,Neutral,4,Bella Potempa,OH,3,10,3,16,0.438,1,1,1,5,10,0,0,1,0,11.5,0,0.0,1.0,16.0,1
+2026-2027,2026-10-06,6592074,Tennessee Tech,SoCon,Chattanooga,SoCon,Neutral,7,Audrey Berkebile,OH,2,6,7,25,-0.04,1,0,3,1,14,1,0,0,0,6.0,0,0.0,2.0,4.0,0
+2026-2027,2026-10-06,6592074,Tennessee Tech,SoCon,Chattanooga,SoCon,Neutral,3,Brooklyn Rapp,L,2,0,0,0,0.0,0,0,2,2,0,0,0,0,0,0.0,0,0.0,0.0,8.0,0
 2026-2027,2026-09-25,6592088,Ohio St.,Big Ten,Iowa,Big Ten,Neutral,17,Emily Avshalomov,L,4,1,0,1,1.0,3,0,0,15,21,2,0,0,0,1.0,0,0.0,16.0,3.0,0
 2026-2027,2026-09-25,6592088,Ohio St.,Big Ten,Iowa,Big Ten,Neutral,7,Naomy Govou,OH,4,24,6,52,0.346,0,2,3,10,17,1,0,1,0,26.5,0,0.0,6.0,18.0,1
 2026-2027,2026-09-25,6592088,Ohio St.,Big Ten,Iowa,Big Ten,Neutral,1,Bella Humphrey,L/DS,4,0,0,0,0.0,0,1,2,2,0,0,0,0,0,1.0,0,0.0,1.0,16.0,0
@@ -15286,6 +15425,24 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-10-01,6592332,Eastern Ky.,UAC,Tarleton St.,UAC,Neutral,7,Emilee Hill,S,3,2,5,20,-0.15,27,3,0,8,0,0,0,1,0,5.5,0,0.0,48.0,18.0,1
 2026-2027,2026-10-01,6592332,Eastern Ky.,UAC,Tarleton St.,UAC,Neutral,11,Audrey Hudson,OH,3,10,4,32,0.188,0,1,1,10,25,1,0,1,0,11.5,0,0.0,0.0,15.0,1
 2026-2027,2026-10-01,6592332,Eastern Ky.,UAC,Tarleton St.,UAC,Neutral,6,Cassidy Trahan,DS,3,0,0,0,0.0,6,1,0,13,7,2,0,0,0,1.0,0,0.0,22.0,12.0,0
+2026-2027,2026-10-06,6592335,Austin Peay,UAC,Eastern Ky.,UAC,Neutral,4,Reagan Anderson,L/DS,3,0,0,0,0.0,4,2,1,10,21,0,0,0,0,2.0,0,0.0,14.0,14.0,0
+2026-2027,2026-10-06,6592335,Austin Peay,UAC,Eastern Ky.,UAC,Neutral,7,Malena Benz,MB,3,5,1,12,0.333,0,0,0,0,0,0,2,1,0,7.5,0,,,,3
+2026-2027,2026-10-06,6592335,Austin Peay,UAC,Eastern Ky.,UAC,Neutral,12,Sarah Butler,S,3,0,0,0,0.0,11,0,2,4,0,0,0,0,0,0.0,0,0.0,28.0,8.0,0
+2026-2027,2026-10-06,6592335,Austin Peay,UAC,Eastern Ky.,UAC,Neutral,15,Taly Cloyd,OPP,3,13,2,25,0.44,0,0,0,1,0,0,0,0,0,13.0,0,0.0,1.0,0.0,0
+2026-2027,2026-10-06,6592335,Austin Peay,UAC,Eastern Ky.,UAC,Neutral,17,Alison Coy,OPP,3,2,0,10,0.2,0,0,0,0,0,0,0,2,0,3.0,0,0.0,4.0,6.0,2
+2026-2027,2026-10-06,6592335,Austin Peay,UAC,Eastern Ky.,UAC,Neutral,2,Callie Gardner,L,3,0,0,0,0.0,1,0,0,2,13,3,0,0,0,0.0,0,0.0,1.0,0.0,0
+2026-2027,2026-10-06,6592335,Austin Peay,UAC,Eastern Ky.,UAC,Neutral,1,Cree Hollier,OH,3,7,6,25,0.04,0,0,1,3,18,2,0,1,0,7.5,0,0.0,1.0,9.0,1
+2026-2027,2026-10-06,6592335,Austin Peay,UAC,Eastern Ky.,UAC,Neutral,5,Brooklynn Merrell,L/DS,3,0,0,0,0.0,21,0,0,13,0,0,0,0,0,0.0,0,0.0,46.0,7.0,0
+2026-2027,2026-10-06,6592335,Austin Peay,UAC,Eastern Ky.,UAC,Neutral,11,Nicole Okojie,MB,3,6,1,9,0.556,0,0,0,1,0,0,0,2,1,7.0,0,0.0,1.0,0.0,2
+2026-2027,2026-10-06,6592335,Austin Peay,UAC,Eastern Ky.,UAC,Neutral,3,Lauren Wallace,OH,3,5,5,16,0.0,0,1,2,5,14,1,0,0,1,6.0,0,0.0,3.0,16.0,0
+2026-2027,2026-10-06,6592335,Eastern Ky.,UAC,Austin Peay,UAC,Neutral,10,Cooper Abney,S,3,0,0,0,0.0,20,0,1,4,0,0,0,0,0,0.0,0,0.0,34.0,12.0,0
+2026-2027,2026-10-06,6592335,Eastern Ky.,UAC,Austin Peay,UAC,Neutral,13,Alexis Bull,MB,3,6,1,12,0.417,1,2,0,0,0,0,1,4,0,11.0,0,0.0,1.0,7.0,5
+2026-2027,2026-10-06,6592335,Eastern Ky.,UAC,Austin Peay,UAC,Neutral,21,Addison Burke,OH,3,12,2,24,0.417,1,0,2,7,8,0,0,0,0,12.0,0,0.0,1.0,12.0,0
+2026-2027,2026-10-06,6592335,Eastern Ky.,UAC,Austin Peay,UAC,Neutral,22,Emma Closurdo,OH,3,8,4,26,0.154,0,0,0,0,0,0,0,3,0,9.5,0,,,,3
+2026-2027,2026-10-06,6592335,Eastern Ky.,UAC,Austin Peay,UAC,Neutral,12,Caitlyn Flees,MB,3,4,1,7,0.429,0,0,1,3,1,0,0,4,1,6.0,0,0.0,3.0,2.0,4
+2026-2027,2026-10-06,6592335,Eastern Ky.,UAC,Austin Peay,UAC,Neutral,7,Emilee Hill,S,3,9,1,17,0.471,19,2,2,12,0,0,0,5,0,13.5,0,0.0,47.0,14.0,5
+2026-2027,2026-10-06,6592335,Eastern Ky.,UAC,Austin Peay,UAC,Neutral,11,Audrey Hudson,OH,3,7,1,18,0.333,0,2,1,4,20,2,0,0,0,9.0,0,0.0,7.0,14.0,0
+2026-2027,2026-10-06,6592335,Eastern Ky.,UAC,Austin Peay,UAC,Neutral,6,Cassidy Trahan,DS,3,1,0,2,0.5,3,0,1,9,25,1,0,0,0,1.0,0,0.0,9.0,13.0,0
 2026-2027,2026-08-30,6592339,Morehead St.,OVC,Colgate,Patriot,Neutral,3,Tinsley Brown,DS,5,0,0,0,0.0,0,0,3,11,24,2,0,0,0,0.0,0,0.0,5.0,12.0,0
 2026-2027,2026-08-30,6592339,Morehead St.,OVC,Colgate,Patriot,Neutral,2,Haidyn Carter,MB,5,4,0,15,0.267,0,0,0,2,0,0,1,4,0,7.0,0,0.0,3.0,0.0,5
 2026-2027,2026-08-30,6592339,Morehead St.,OVC,Colgate,Patriot,Neutral,12,Josie Certa,S,5,0,0,1,0.0,20,0,4,10,1,0,0,0,0,0.0,0,0.0,68.0,13.0,0
@@ -22306,6 +22463,29 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-10-03,6597687,The Citadel,SoCon,Tennessee Tech,SoCon,Neutral,1,Allie Davison,S,2,0,0,0,0.0,6,0,1,1,0,0,0,0,0,0.0,0,0.0,22.0,3.0,0
 2026-2027,2026-10-03,6597687,The Citadel,SoCon,Tennessee Tech,SoCon,Neutral,22,Emerson Hill,L,2,0,0,0,0.0,0,1,0,2,2,0,0,0,0,1.0,0,0.0,2.0,3.0,0
 2026-2027,2026-10-03,6597687,The Citadel,SoCon,Tennessee Tech,SoCon,Neutral,18,Emma Pastusic,OH,1,0,3,4,-0.75,0,0,0,0,1,0,0,0,0,0.0,0,0.0,0.0,0.0,0
+2026-2027,2026-10-06,6597689,Furman,SoCon,The Citadel,SoCon,Neutral,4,Morgan Baldridge,S,4,2,0,3,0.667,20,0,0,12,0,0,0,1,0,2.5,0,0.0,79.0,1.0,1
+2026-2027,2026-10-06,6597689,Furman,SoCon,The Citadel,SoCon,Neutral,5,Izzy Castelloe,OH,4,16,7,45,0.2,1,1,2,2,0,0,0,2,0,18.0,0,0.0,1.0,13.0,2
+2026-2027,2026-10-06,6597689,Furman,SoCon,The Citadel,SoCon,Neutral,13,Ashtan Dodson,OH,4,3,2,22,0.045,0,1,0,13,11,2,0,1,0,4.5,1,0.0,4.0,13.0,1
+2026-2027,2026-10-06,6597689,Furman,SoCon,The Citadel,SoCon,Neutral,16,Lauren Haynes,OH,4,14,5,40,0.225,0,0,2,21,55,3,0,0,0,14.0,0,0.0,3.0,17.0,0
+2026-2027,2026-10-06,6597689,Furman,SoCon,The Citadel,SoCon,Neutral,1,Kacie Moore,MB,4,9,0,24,0.375,0,1,2,2,1,0,0,4,0,12.0,0,0.0,2.0,6.0,4
+2026-2027,2026-10-06,6597689,Furman,SoCon,The Citadel,SoCon,Neutral,7,Emily Navarro,S,4,2,0,3,0.667,22,0,0,10,0,0,0,1,0,2.5,0,0.0,57.0,0.0,1
+2026-2027,2026-10-06,6597689,Furman,SoCon,The Citadel,SoCon,Neutral,2,Kennedy Seekford,L/DS,4,0,0,2,0.0,10,1,0,24,13,1,0,0,1,1.0,0,0.0,24.0,17.0,0
+2026-2027,2026-10-06,6597689,Furman,SoCon,The Citadel,SoCon,Neutral,9,Campbell Woods,OPP,4,5,2,16,0.188,1,1,2,3,0,0,0,1,0,6.5,1,0.0,4.0,20.0,1
+2026-2027,2026-10-06,6597689,Furman,SoCon,The Citadel,SoCon,Neutral,14,Rebekah Buchholz,MB,2,2,0,7,0.286,0,0,2,0,0,0,0,0,0,2.0,0,0.0,1.0,6.0,0
+2026-2027,2026-10-06,6597689,Furman,SoCon,The Citadel,SoCon,Neutral,20,Tennyson Gorman,MB,2,3,2,10,0.1,1,0,0,0,0,0,0,2,0,4.0,0,0.0,1.0,0.0,2
+2026-2027,2026-10-06,6597689,Furman,SoCon,The Citadel,SoCon,Neutral,12,Ashley Stein,OH,2,4,2,7,0.286,0,0,0,1,3,0,0,0,0,4.0,0,0.0,0.0,0.0,0
+2026-2027,2026-10-06,6597689,Furman,SoCon,The Citadel,SoCon,Neutral,10,Tiffany Helmer,L/DS,1,0,0,0,0.0,0,0,0,0,0,0,0,0,0,0.0,0,0.0,0.0,1.0,0
+2026-2027,2026-10-06,6597689,The Citadel,SoCon,Furman,SoCon,Neutral,5,Gwen Berry,OH,4,1,0,5,0.2,1,1,1,14,13,0,0,0,0,2.0,0,0.0,4.0,14.0,0
+2026-2027,2026-10-06,6597689,The Citadel,SoCon,Furman,SoCon,Neutral,12,Luci Lippelgoos,MB,4,8,4,22,0.182,0,2,3,6,0,0,2,2,0,13.0,1,0.0,1.0,16.0,4
+2026-2027,2026-10-06,6597689,The Citadel,SoCon,Furman,SoCon,Neutral,10,Jess Martin,L,4,0,0,0,0.0,4,0,0,7,26,2,0,0,0,0.0,0,0.0,15.0,0.0,0
+2026-2027,2026-10-06,6597689,The Citadel,SoCon,Furman,SoCon,Neutral,23,Elizabeth Miller,MB,4,5,0,11,0.455,0,0,0,0,0,0,0,3,0,6.5,0,,,,3
+2026-2027,2026-10-06,6597689,The Citadel,SoCon,Furman,SoCon,Neutral,6,Greta Pleuss,S,4,0,0,4,0.0,38,0,0,10,0,0,0,3,0,1.5,0,0.0,126.0,11.0,3
+2026-2027,2026-10-06,6597689,The Citadel,SoCon,Furman,SoCon,Neutral,2,Cameron Reese,OH,4,15,6,52,0.173,1,1,0,10,27,1,0,1,0,16.5,0,0.0,3.0,15.0,1
+2026-2027,2026-10-06,6597689,The Citadel,SoCon,Furman,SoCon,Neutral,7,Rachel Reininger,OH,4,15,4,44,0.25,0,0,0,7,5,0,0,0,0,15.0,0,0.0,2.0,0.0,0
+2026-2027,2026-10-06,6597689,The Citadel,SoCon,Furman,SoCon,Neutral,17,Jordyn Sims,OH,4,7,2,27,0.185,0,0,0,6,0,0,0,1,0,7.5,0,0.0,2.0,0.0,1
+2026-2027,2026-10-06,6597689,The Citadel,SoCon,Furman,SoCon,Neutral,9,Megan Stone,L,4,0,0,0,0.0,0,3,2,18,1,0,0,0,0,3.0,0,0.0,6.0,20.0,0
+2026-2027,2026-10-06,6597689,The Citadel,SoCon,Furman,SoCon,Neutral,3,Mia Watson,L,4,0,0,0,0.0,0,1,2,4,10,0,0,0,0,1.0,0,0.0,2.0,17.0,0
+2026-2027,2026-10-06,6597689,The Citadel,SoCon,Furman,SoCon,Neutral,22,Emerson Hill,L,1,0,0,0,0.0,0,1,0,0,0,0,0,0,0,1.0,0,0.0,0.0,2.0,0
 2026-2027,2026-09-11,6597713,Stetson,ASUN,Furman,SoCon,Neutral,11,Andrea Diaz Dominguez,OH,3,9,3,23,0.261,0,0,2,8,10,1,0,0,0,9.0,0,0.0,6.0,11.0,0
 2026-2027,2026-09-11,6597713,Stetson,ASUN,Furman,SoCon,Neutral,17,Lelia Fitz,MB,3,7,4,17,0.176,0,0,0,0,0,0,1,2,0,9.0,0,0.0,1.0,0.0,3
 2026-2027,2026-09-11,6597713,Stetson,ASUN,Furman,SoCon,Neutral,2,Jannelize Perez,L/DS,3,1,0,1,1.0,1,0,1,13,24,1,0,0,0,1.0,0,0.0,12.0,10.0,0
@@ -24124,6 +24304,29 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-10-03,6598445,Lehigh,Patriot,Holy Cross,Patriot,Neutral,15,Mary Massias,OH,4,10,6,21,0.19,0,1,2,7,22,1,0,3,1,12.5,0,0.0,1.0,12.0,3
 2026-2027,2026-10-03,6598445,Lehigh,Patriot,Holy Cross,Patriot,Neutral,14,Ufuoma Omene,OH,4,16,6,34,0.294,0,0,0,2,7,0,0,7,0,19.5,0,0.0,0.0,0.0,7
 2026-2027,2026-10-03,6598445,Lehigh,Patriot,Holy Cross,Patriot,Neutral,9,Grace Slovensky,S,4,0,0,0,0.0,20,0,2,5,1,0,0,0,0,0.0,0,0.0,45.0,9.0,0
+2026-2027,2026-10-06,6598446,Bryant,America East,Holy Cross,Patriot,Neutral,12,Kalia Alvarado,OH,3,7,6,25,0.04,3,2,0,9,17,1,0,1,0,9.5,0,0.0,7.0,11.0,1
+2026-2027,2026-10-06,6598446,Bryant,America East,Holy Cross,Patriot,Neutral,1,Carrina Barron,L,3,0,0,0,0.0,1,0,1,17,7,0,0,0,0,0.0,0,0.0,6.0,9.0,0
+2026-2027,2026-10-06,6598446,Bryant,America East,Holy Cross,Patriot,Neutral,4,Claudia Camacho-Castro,L/DS,3,0,0,0,0.0,0,0,0,2,8,1,0,0,0,0.0,0,0.0,1.0,5.0,0
+2026-2027,2026-10-06,6598446,Bryant,America East,Holy Cross,Patriot,Neutral,18,Kaitlin Curran,OH,3,6,4,26,0.077,1,2,0,9,26,2,0,0,0,8.0,0,0.0,2.0,16.0,0
+2026-2027,2026-10-06,6598446,Bryant,America East,Holy Cross,Patriot,Neutral,13,Hannah Jackson,OH,3,6,4,18,0.111,0,0,0,1,1,1,0,0,0,6.0,0,0.0,0.0,0.0,0
+2026-2027,2026-10-06,6598446,Bryant,America East,Holy Cross,Patriot,Neutral,5,Madison Keem,S,3,1,0,3,0.333,10,2,1,7,1,0,0,0,0,3.0,0,0.0,52.0,8.0,0
+2026-2027,2026-10-06,6598446,Bryant,America East,Holy Cross,Patriot,Neutral,16,Layla Olatunde,MB,3,3,3,16,0.0,0,0,0,0,1,0,0,1,0,3.5,0,0.0,1.0,0.0,1
+2026-2027,2026-10-06,6598446,Bryant,America East,Holy Cross,Patriot,Neutral,7,Brookelyn Talmadge,MB,3,5,2,11,0.273,0,0,0,1,2,0,0,0,0,5.0,0,0.0,1.0,0.0,0
+2026-2027,2026-10-06,6598446,Bryant,America East,Holy Cross,Patriot,Neutral,2,Luiza Bergamaschi,L/DS,2,0,0,0,0.0,0,0,0,1,3,0,0,0,0,0.0,0,0.0,0.0,0.0,0
+2026-2027,2026-10-06,6598446,Bryant,America East,Holy Cross,Patriot,Neutral,11,Nina Gavin,OH,2,0,0,3,0.0,0,1,1,0,0,0,0,0,0,1.0,0,0.0,0.0,5.0,0
+2026-2027,2026-10-06,6598446,Bryant,America East,Holy Cross,Patriot,Neutral,3,Madison Koeller,S,2,1,0,2,0.5,12,0,1,4,0,0,0,0,0,1.0,1,0.0,38.0,9.0,0
+2026-2027,2026-10-06,6598446,Bryant,America East,Holy Cross,Patriot,Neutral,9,Ruth Ochelli,OH,2,1,2,5,-0.2,0,0,0,0,0,0,0,0,0,1.0,0,,,,0
+2026-2027,2026-10-06,6598446,Holy Cross,Patriot,Bryant,America East,Neutral,9,Savannah Baron,DS,3,0,0,0,0.0,0,0,0,6,2,0,0,0,0,0.0,0,0.0,4.0,0.0,0
+2026-2027,2026-10-06,6598446,Holy Cross,Patriot,Bryant,America East,Neutral,22,Drew Flanagan,S,3,2,0,3,0.667,30,0,2,7,1,0,0,0,1,2.0,0,0.0,92.0,11.0,0
+2026-2027,2026-10-06,6598446,Holy Cross,Patriot,Bryant,America East,Neutral,1,KK Green,OH,3,7,2,16,0.313,0,0,1,2,10,2,0,1,1,7.5,0,0.0,0.0,1.0,1
+2026-2027,2026-10-06,6598446,Holy Cross,Patriot,Bryant,America East,Neutral,15,Elizabeth Hall,DS,3,0,0,0,0.0,4,0,1,20,14,3,0,0,0,0.0,0,0.0,8.0,11.0,0
+2026-2027,2026-10-06,6598446,Holy Cross,Patriot,Bryant,America East,Neutral,19,Kyla Harris,MB,3,4,3,11,0.091,1,1,1,0,0,0,1,5,0,8.5,0,0.0,1.0,15.0,6
+2026-2027,2026-10-06,6598446,Holy Cross,Patriot,Bryant,America East,Neutral,8,Lacey Murphy,MB,3,7,2,17,0.294,0,0,0,0,1,0,0,4,1,9.0,0,0.0,0.0,0.0,4
+2026-2027,2026-10-06,6598446,Holy Cross,Patriot,Bryant,America East,Neutral,16,Georgia Murphy,OH,3,0,0,6,0.0,1,0,1,9,19,1,0,0,0,0.0,0,0.0,6.0,12.0,0
+2026-2027,2026-10-06,6598446,Holy Cross,Patriot,Bryant,America East,Neutral,10,Emma Sorensen,OH,3,11,6,42,0.119,1,4,0,7,11,0,0,1,0,15.5,0,0.0,3.0,17.0,1
+2026-2027,2026-10-06,6598446,Holy Cross,Patriot,Bryant,America East,Neutral,11,Kat Teepe,OH,3,10,4,22,0.273,0,1,1,1,0,0,1,7,1,15.5,0,0.0,1.0,7.0,8
+2026-2027,2026-10-06,6598446,Holy Cross,Patriot,Bryant,America East,Neutral,21,Alana Whitwell,L/DS,3,0,0,0,0.0,0,0,0,0,0,0,0,0,0,0.0,0,,,,0
+2026-2027,2026-10-06,6598446,Holy Cross,Patriot,Bryant,America East,Neutral,12,Gabby Wold,OH,1,0,0,1,0.0,0,0,0,0,0,0,0,0,0,0.0,0,,,,0
 2026-2027,2026-09-06,6598524,UNC Asheville,Big South,Jacksonville St.,CUSA,Neutral,7,Lily Bannister,OH,3,4,2,12,0.167,0,0,0,0,1,0,0,0,0,4.0,0,0.0,2.0,0.0,0
 2026-2027,2026-09-06,6598524,UNC Asheville,Big South,Jacksonville St.,CUSA,Neutral,5,Addie Brookbank,OH,3,11,5,31,0.194,1,0,3,4,15,0,0,2,0,12.0,0,0.0,4.0,8.0,2
 2026-2027,2026-09-06,6598524,UNC Asheville,Big South,Jacksonville St.,CUSA,Neutral,22,Olivia Callipo,S,3,1,0,1,1.0,15,0,1,4,0,0,0,0,0,1.0,0,0.0,45.0,11.0,0
@@ -36084,6 +36287,29 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-09-26,6605229,Evansville,MVC,Bradley,MVC,Neutral,21,McKenzie Laubach,MB,3,5,1,10,0.4,0,0,1,0,2,0,0,0,0,5.0,0,0.0,2.0,8.0,0
 2026-2027,2026-09-26,6605229,Evansville,MVC,Bradley,MVC,Neutral,18,Makenzie Miller,MB,2,2,0,6,0.333,0,0,0,0,0,0,0,2,0,3.0,0,0.0,0.0,7.0,2
 2026-2027,2026-09-26,6605229,Evansville,MVC,Bradley,MVC,Neutral,10,Aubry Dowling,L,1,0,0,0,0.0,0,0,0,0,2,0,0,0,0,0.0,0,0.0,0.0,0.0,0
+2026-2027,2026-10-06,6605233,Bradley,MVC,Illinois St.,MVC,Neutral,23,Cherlin Antonio,OH,3,3,3,20,0.0,0,0,0,2,2,2,0,3,1,4.5,0,0.0,2.0,0.0,3
+2026-2027,2026-10-06,6605233,Bradley,MVC,Illinois St.,MVC,Neutral,7,Eirini Bitsaktsi,L/DS,3,0,0,0,0.0,3,0,0,10,16,1,0,0,0,0.0,0,0.0,12.0,7.0,0
+2026-2027,2026-10-06,6605233,Bradley,MVC,Illinois St.,MVC,Neutral,1,Hayden Booth,S,2,0,0,0,0.0,0,0,0,2,0,0,0,0,0,0.0,0,0.0,4.0,3.0,0
+2026-2027,2026-10-06,6605233,Bradley,MVC,Illinois St.,MVC,Neutral,17,Trixie Carroll,OH,2,0,1,4,-0.25,0,0,0,4,0,0,0,0,0,0.0,0,0.0,0.0,0.0,0
+2026-2027,2026-10-06,6605233,Bradley,MVC,Illinois St.,MVC,Neutral,6,Megan DePoorter,L,3,0,0,0,0.0,0,0,1,3,4,0,0,0,0,0.0,0,0.0,3.0,10.0,0
+2026-2027,2026-10-06,6605233,Bradley,MVC,Illinois St.,MVC,Neutral,12,Maria Drapp,S,3,3,1,6,0.333,13,0,2,9,0,0,0,1,0,3.5,0,0.0,80.0,8.0,1
+2026-2027,2026-10-06,6605233,Bradley,MVC,Illinois St.,MVC,Neutral,2,Gracie Furlong,OH,3,10,6,36,0.111,1,1,1,9,26,1,0,1,0,11.5,0,0.0,2.0,11.0,1
+2026-2027,2026-10-06,6605233,Bradley,MVC,Illinois St.,MVC,Neutral,13,Adeline Goedheer,MB,3,3,0,8,0.375,0,0,0,0,0,0,0,3,1,4.5,0,,,,3
+2026-2027,2026-10-06,6605233,Bradley,MVC,Illinois St.,MVC,Neutral,4,Mairen Mannon,MB,2,0,0,7,0.0,0,0,0,1,0,0,0,2,0,1.0,0,0.0,1.0,0.0,2
+2026-2027,2026-10-06,6605233,Bradley,MVC,Illinois St.,MVC,Neutral,8,Maren Ouellette,OH,2,1,2,16,-0.063,0,0,0,0,3,1,0,0,0,1.0,0,0.0,1.0,0.0,0
+2026-2027,2026-10-06,6605233,Bradley,MVC,Illinois St.,MVC,Neutral,5,Chloe Parker,MB,2,2,1,7,0.143,1,0,2,1,0,0,0,0,0,2.0,0,0.0,1.0,4.0,0
+2026-2027,2026-10-06,6605233,Bradley,MVC,Illinois St.,MVC,Neutral,9,Ava Patchett,L,3,0,0,1,0.0,2,0,0,10,9,1,0,0,0,0.0,0,0.0,4.0,8.0,0
+2026-2027,2026-10-06,6605233,Illinois St.,MVC,Bradley,MVC,Neutral,5,Samantha Bunch,L/DS,3,0,0,0,0.0,4,0,2,20,20,0,0,0,0,0.0,0,0.0,16.0,12.0,0
+2026-2027,2026-10-06,6605233,Illinois St.,MVC,Bradley,MVC,Neutral,10,Oliwia Caputa,OH,3,13,4,30,0.3,0,2,3,6,6,0,1,1,0,16.5,0,0.0,4.0,12.0,2
+2026-2027,2026-10-06,6605233,Illinois St.,MVC,Bradley,MVC,Neutral,9,Ella Craggs,S,3,1,0,2,0.5,21,1,2,9,0,0,0,0,0,2.0,0,0.0,44.0,10.0,0
+2026-2027,2026-10-06,6605233,Illinois St.,MVC,Bradley,MVC,Neutral,14,Jillian Ferrill,OH,3,5,1,20,0.2,1,0,0,1,0,0,0,1,0,5.5,0,0.0,2.0,0.0,1
+2026-2027,2026-10-06,6605233,Illinois St.,MVC,Bradley,MVC,Neutral,11,Jillian Gregory,OH,3,9,2,22,0.318,0,1,3,6,3,0,0,0,0,10.0,0,0.0,0.0,20.0,0
+2026-2027,2026-10-06,6605233,Illinois St.,MVC,Bradley,MVC,Neutral,18,Ayla Klingenberg,MB,3,7,1,12,0.5,0,0,0,0,0,0,0,3,0,8.5,0,,,,3
+2026-2027,2026-10-06,6605233,Illinois St.,MVC,Bradley,MVC,Neutral,3,Ella Kohnen,S,3,0,0,0,0.0,11,2,2,9,0,0,0,0,0,2.0,0,0.0,46.0,12.0,0
+2026-2027,2026-10-06,6605233,Illinois St.,MVC,Bradley,MVC,Neutral,16,Abby Reck,OH,3,6,2,17,0.235,0,0,1,1,0,0,0,0,0,6.0,0,0.0,1.0,3.0,0
+2026-2027,2026-10-06,6605233,Illinois St.,MVC,Bradley,MVC,Neutral,4,Madison Smith,L,2,0,0,0,0.0,0,1,0,1,0,0,0,0,0,1.0,0,0.0,0.0,5.0,0
+2026-2027,2026-10-06,6605233,Illinois St.,MVC,Bradley,MVC,Neutral,17,Peyton Turner,DS,3,0,0,0,0.0,0,0,0,4,16,1,0,0,0,0.0,0,0.0,2.0,0.0,0
+2026-2027,2026-10-06,6605233,Illinois St.,MVC,Bradley,MVC,Neutral,1,Ruth Ziegler,OPP,3,3,4,14,-0.071,1,0,0,1,0,0,0,1,0,3.5,0,0.0,1.0,0.0,1
 2026-2027,2026-08-29,6605234,Manhattan,Metro,Fordham,Atlantic 10,Neutral,10,Ori Briger,S,5,0,0,2,0.0,14,4,3,5,0,0,0,0,1,4.0,0,0.0,38.0,20.0,0
 2026-2027,2026-08-29,6605234,Manhattan,Metro,Fordham,Atlantic 10,Neutral,16,Mikalah Curran,OH,5,10,5,28,0.179,1,1,2,7,20,1,0,0,1,11.0,0,0.0,5.0,11.0,0
 2026-2027,2026-08-29,6605234,Manhattan,Metro,Fordham,Atlantic 10,Neutral,15,Anna Duncan,DS,5,0,0,1,0.0,3,0,1,9,23,5,0,0,0,0.0,0,0.0,13.0,10.0,0
@@ -42372,6 +42598,26 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-09-13,6608428,Wake Forest,ACC,ETSU,SoCon,Neutral,23,Sanaa Williams,MB,5,7,1,14,0.429,0,2,1,1,2,0,0,7,0,12.5,0,0.0,3.0,15.0,7
 2026-2027,2026-09-13,6608428,Wake Forest,ACC,ETSU,SoCon,Neutral,10,Catherine Burke,MB,1,0,0,2,0.0,0,0,1,0,0,0,0,0,0,0.0,0,0.0,0.0,2.0,0
 2026-2027,2026-09-13,6608428,Wake Forest,ACC,ETSU,SoCon,Neutral,13,Mattea Saunders,L,1,0,0,0,0.0,0,0,0,0,3,0,0,0,0,0.0,0,0.0,0.0,2.0,0
+2026-2027,2026-10-06,6608444,UNC Greensboro,SoCon,ETSU,SoCon,Neutral,5,Ella Burd,L,5,0,0,0,0.0,0,0,0,9,6,0,0,0,0,0.0,0,0.0,2.0,0.0,0
+2026-2027,2026-10-06,6608444,UNC Greensboro,SoCon,ETSU,SoCon,Neutral,17,Hailey Clifton,OH,5,19,4,36,0.417,0,0,0,0,0,0,0,1,0,19.5,0,0.0,1.0,0.0,1
+2026-2027,2026-10-06,6608444,UNC Greensboro,SoCon,ETSU,SoCon,Neutral,3,Izora Gragg,S,5,0,0,2,0.0,51,1,1,11,0,0,0,1,0,1.5,0,0.0,143.0,16.0,1
+2026-2027,2026-10-06,6608444,UNC Greensboro,SoCon,ETSU,SoCon,Neutral,21,Akila Hardie,MB,5,1,0,5,0.2,0,0,0,0,0,0,0,0,0,1.0,0,,,,0
+2026-2027,2026-10-06,6608444,UNC Greensboro,SoCon,ETSU,SoCon,Neutral,18,Kendall Lanclos,OH,5,9,8,47,0.021,1,1,2,5,9,0,0,0,0,10.0,0,0.0,3.0,17.0,0
+2026-2027,2026-10-06,6608444,UNC Greensboro,SoCon,ETSU,SoCon,Neutral,9,Mia Nicklas,DS,5,0,0,0,0.0,0,3,0,13,21,0,0,0,0,3.0,0,0.0,3.0,17.0,0
+2026-2027,2026-10-06,6608444,UNC Greensboro,SoCon,ETSU,SoCon,Neutral,10,Chloe Nussbaum,L/DS,5,0,0,0,0.0,8,2,0,24,10,0,0,0,0,2.0,0,0.0,25.0,24.0,0
+2026-2027,2026-10-06,6608444,UNC Greensboro,SoCon,ETSU,SoCon,Neutral,44,Connore' Siler-Nixon,MB,5,6,4,20,0.1,0,0,2,3,1,0,2,4,0,10.0,0,0.0,2.0,10.0,6
+2026-2027,2026-10-06,6608444,UNC Greensboro,SoCon,ETSU,SoCon,Neutral,8,Allie Sweet,OH,5,26,11,67,0.224,0,1,2,15,45,0,0,2,0,28.0,0,0.0,3.0,18.0,2
+2026-2027,2026-10-06,6608444,ETSU,SoCon,UNC Greensboro,SoCon,Neutral,20,Elizabeth Aylward,OH,5,7,3,26,0.154,0,0,0,3,0,0,0,3,1,8.5,0,0.0,3.0,0.0,3
+2026-2027,2026-10-06,6608444,ETSU,SoCon,UNC Greensboro,SoCon,Neutral,14,Makayla Bays,OH,5,19,9,57,0.175,2,0,2,14,36,6,0,1,0,19.5,1,0.0,7.0,16.0,1
+2026-2027,2026-10-06,6608444,ETSU,SoCon,UNC Greensboro,SoCon,Neutral,1,Gianna Blair,MB,5,5,3,15,0.133,0,0,0,0,0,0,2,6,0,10.0,0,0.0,1.0,0.0,8
+2026-2027,2026-10-06,6608444,ETSU,SoCon,UNC Greensboro,SoCon,Neutral,15,Karis Chatfield,OH,5,22,4,45,0.4,0,1,2,11,22,0,0,0,0,23.0,0,0.0,2.0,19.0,0
+2026-2027,2026-10-06,6608444,ETSU,SoCon,UNC Greensboro,SoCon,Neutral,2,Sophia Davis,OH,5,7,3,24,0.167,0,0,0,3,0,0,0,5,0,9.5,0,0.0,0.0,0.0,5
+2026-2027,2026-10-06,6608444,ETSU,SoCon,UNC Greensboro,SoCon,Neutral,17,Bailey Gohlke,S,5,1,0,2,0.5,31,1,0,10,0,0,0,0,0,2.0,0,0.0,73.0,27.0,0
+2026-2027,2026-10-06,6608444,ETSU,SoCon,UNC Greensboro,SoCon,Neutral,4,Ryan Jomo,L/DS,5,0,0,0,0.0,1,0,1,3,0,0,0,0,0,0.0,0,0.0,2.0,12.0,0
+2026-2027,2026-10-06,6608444,ETSU,SoCon,UNC Greensboro,SoCon,Neutral,12,Alex Kreutzmann,S,5,0,0,0,0.0,22,1,0,6,0,0,0,0,0,1.0,0,0.0,75.0,14.0,0
+2026-2027,2026-10-06,6608444,ETSU,SoCon,UNC Greensboro,SoCon,Neutral,11,Melanie Morris,DS,5,0,0,1,0.0,4,0,1,21,37,2,0,0,0,0.0,0,0.0,14.0,13.0,0
+2026-2027,2026-10-06,6608444,ETSU,SoCon,UNC Greensboro,SoCon,Neutral,7,Phoenix Fogel,MB,3,3,2,7,0.143,0,0,0,0,0,0,0,2,0,4.0,0,,,,2
+2026-2027,2026-10-06,6608444,ETSU,SoCon,UNC Greensboro,SoCon,Neutral,18,Emma MacFerran,MB,2,0,1,6,-0.167,0,0,0,0,0,0,0,1,0,0.5,0,,,,1
 2026-2027,2026-08-28,6608542,UC Davis,Mountain West,Colorado St.,Pac-12,Neutral,7,Gianna Bogan,OH,3,7,2,16,0.313,0,1,0,0,5,2,0,0,0,8.0,0,0.0,1.0,4.0,0
 2026-2027,2026-08-28,6608542,UC Davis,Mountain West,Colorado St.,Pac-12,Neutral,13,Ally Chandler,MB,3,8,1,14,0.5,0,0,2,1,0,0,0,1,0,8.5,0,0.0,1.0,5.0,1
 2026-2027,2026-08-28,6608542,UC Davis,Mountain West,Colorado St.,Pac-12,Neutral,14,Ximena Cordero Barr,L,3,0,0,0,0.0,1,0,1,15,20,1,0,0,0,0.0,0,0.0,5.0,14.0,0
@@ -49094,6 +49340,28 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-09-27,6613042,Idaho,Big Sky,Weber St.,Big Sky,Neutral,3,Lucy Ryan,OH,2,3,3,8,0.0,0,0,0,0,0,0,0,2,0,4.0,0,,,,2
 2026-2027,2026-09-27,6613042,Idaho,Big Sky,Weber St.,Big Sky,Neutral,12,Kyriah Trefren,L,2,0,0,0,0.0,0,0,2,7,14,1,0,0,0,0.0,0,0.0,0.0,8.0,0
 2026-2027,2026-09-27,6613042,Idaho,Big Sky,Weber St.,Big Sky,Neutral,1,Kailee Wakatake,DS,2,0,0,0,0.0,1,1,0,1,11,1,0,0,0,1.0,0,0.0,2.0,7.0,0
+2026-2027,2026-10-07,6613045,Idaho,Big Sky,Eastern Wash.,Big Sky,Neutral,2,Alaina Armstrong,OH,4,18,4,44,0.318,0,0,0,15,24,1,0,1,1,18.5,0,0.0,3.0,0.0,1
+2026-2027,2026-10-07,6613045,Idaho,Big Sky,Eastern Wash.,Big Sky,Neutral,9,Kiana Greer,OH,4,21,9,50,0.24,0,1,3,7,40,1,0,0,0,22.0,0,0.0,5.0,8.0,0
+2026-2027,2026-10-07,6613045,Idaho,Big Sky,Eastern Wash.,Big Sky,Neutral,7,Keira Kleidon,L,4,0,0,0,0.0,5,0,4,21,8,0,0,0,0,0.0,0,0.0,11.0,19.0,0
+2026-2027,2026-10-07,6613045,Idaho,Big Sky,Eastern Wash.,Big Sky,Neutral,21,Csenge Krakoczki,S,4,0,0,5,0.0,46,4,3,12,1,0,0,0,1,4.0,0,0.0,127.0,16.0,0
+2026-2027,2026-10-07,6613045,Idaho,Big Sky,Eastern Wash.,Big Sky,Neutral,11,Koen Makaula,MB,4,6,5,22,0.045,2,0,1,3,0,0,1,1,0,7.5,0,0.0,7.0,9.0,2
+2026-2027,2026-10-07,6613045,Idaho,Big Sky,Eastern Wash.,Big Sky,Neutral,6,Gabrielle Smith,MB,4,3,0,11,0.273,1,0,0,1,0,0,1,1,1,4.5,0,0.0,6.0,0.0,2
+2026-2027,2026-10-07,6613045,Idaho,Big Sky,Eastern Wash.,Big Sky,Neutral,5,Sarah Sullivan,OH,4,6,2,20,0.2,1,2,4,11,2,0,0,1,0,8.5,0,0.0,6.0,30.0,1
+2026-2027,2026-10-07,6613045,Idaho,Big Sky,Eastern Wash.,Big Sky,Neutral,1,Kailee Wakatake,DS,4,0,0,0,0.0,0,0,1,2,1,0,0,0,0,0.0,0,0.0,0.0,13.0,0
+2026-2027,2026-10-07,6613045,Idaho,Big Sky,Eastern Wash.,Big Sky,Neutral,8,Sophie Danielson,OPP,3,4,5,12,-0.083,0,0,0,1,0,0,0,0,0,4.0,0,0.0,1.0,0.0,0
+2026-2027,2026-10-07,6613045,Idaho,Big Sky,Eastern Wash.,Big Sky,Neutral,12,Kyriah Trefren,L,2,0,0,0,0.0,0,0,0,2,7,0,0,0,0,0.0,0,0.0,1.0,3.0,0
+2026-2027,2026-10-07,6613045,Eastern Wash.,Big Sky,Idaho,Big Sky,Neutral,4,Reese Betschart,OH,4,1,2,9,-0.111,0,1,1,7,2,0,0,0,0,2.0,0,0.0,3.0,21.0,0
+2026-2027,2026-10-07,6613045,Eastern Wash.,Big Sky,Idaho,Big Sky,Neutral,11,Judith Bolomboy,MB,4,4,2,9,0.222,0,0,1,0,1,0,2,2,0,7.0,0,0.0,0.0,7.0,4
+2026-2027,2026-10-07,6613045,Eastern Wash.,Big Sky,Idaho,Big Sky,Neutral,14,Elle Bruegman,DS,4,0,0,0,0.0,6,0,0,22,38,1,0,0,0,0.0,0,0.0,19.0,12.0,0
+2026-2027,2026-10-07,6613045,Eastern Wash.,Big Sky,Idaho,Big Sky,Neutral,12,Bria Carlisle,MB,4,7,6,22,0.045,0,0,0,0,0,0,0,0,0,7.0,0,,,,0
+2026-2027,2026-10-07,6613045,Eastern Wash.,Big Sky,Idaho,Big Sky,Neutral,6,Jailyn Davenport,S,4,1,2,10,-0.1,32,1,0,16,0,0,0,1,0,2.5,0,0.0,111.0,16.0,1
+2026-2027,2026-10-07,6613045,Eastern Wash.,Big Sky,Idaho,Big Sky,Neutral,8,Sidney Gray,MB,4,3,3,19,0.0,0,0,0,0,0,0,3,0,0,6.0,0,0.0,1.0,0.0,3
+2026-2027,2026-10-07,6613045,Eastern Wash.,Big Sky,Idaho,Big Sky,Neutral,9,Kalista Lukovich,OH,4,20,8,62,0.194,1,0,1,11,16,1,1,0,0,21.0,0,0.0,7.0,14.0,1
+2026-2027,2026-10-07,6613045,Eastern Wash.,Big Sky,Idaho,Big Sky,Neutral,3,Carlyn Rapozo-Kamoku,OH,4,0,0,0,0.0,1,0,1,7,20,2,0,0,0,0.0,0,0.0,4.0,12.0,0
+2026-2027,2026-10-07,6613045,Eastern Wash.,Big Sky,Idaho,Big Sky,Neutral,18,Aspyn Reed,OH,4,7,4,21,0.143,1,0,0,2,2,0,0,1,1,7.5,0,0.0,2.0,0.0,1
+2026-2027,2026-10-07,6613045,Eastern Wash.,Big Sky,Idaho,Big Sky,Neutral,10,Makena Gamby,S,3,0,0,0,0.0,0,3,1,0,0,0,0,0,0,3.0,0,0.0,0.0,7.0,0
+2026-2027,2026-10-07,6613045,Eastern Wash.,Big Sky,Idaho,Big Sky,Neutral,1,Stephanie Groswirt,S,1,0,0,0,0.0,0,0,0,3,0,0,0,0,0,0.0,0,0.0,6.0,2.0,0
+2026-2027,2026-10-07,6613045,Eastern Wash.,Big Sky,Idaho,Big Sky,Neutral,16,Ziah Sneva,MB,1,0,0,0,0.0,0,0,0,0,0,0,1,0,0,1.0,0,,,,1
 2026-2027,2026-08-29,6613065,VCU,Atlantic 10,Florida St.,ACC,Neutral,19,Jordan Baksh,L,4,0,0,0,0.0,1,0,0,2,16,1,0,0,0,0.0,0,0.0,3.0,0.0,0
 2026-2027,2026-08-29,6613065,VCU,Atlantic 10,Florida St.,ACC,Neutral,16,Nina Boledovicova,MB,4,7,1,21,0.286,1,1,3,3,1,0,0,5,0,10.5,0,0.0,1.0,15.0,5
 2026-2027,2026-08-29,6613065,VCU,Atlantic 10,Florida St.,ACC,Neutral,7,Sarah Dibbs-Frantz,MB,4,2,2,10,0.0,0,0,0,0,0,0,1,3,0,4.5,0,,,,4
@@ -53378,6 +53646,27 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-09-17,6618665,Ball St.,MAC,Northwestern,Big Ten,Neutral,10,Leah Pike,MB,2,4,0,6,0.667,0,0,0,0,1,0,1,3,2,6.5,0,0.0,0.0,0.0,4
 2026-2027,2026-09-17,6618665,Ball St.,MAC,Northwestern,Big Ten,Neutral,17,Camryn Wise,MB,2,3,0,7,0.429,0,0,0,0,0,0,0,0,0,3.0,0,0.0,1.0,0.0,0
 2026-2027,2026-09-17,6618665,Ball St.,MAC,Northwestern,Big Ten,Neutral,1,Audrey Geer,OH,1,1,2,7,-0.143,0,0,0,3,10,0,0,0,0,1.0,0,0.0,1.0,2.0,0
+2026-2027,2026-10-06,6618666,Miami (OH),MAC,Ball St.,MAC,Neutral,17,Lauren Coyne,OPP,4,6,8,22,-0.091,0,0,0,3,0,0,0,4,0,8.0,0,0.0,1.0,0.0,4
+2026-2027,2026-10-06,6618666,Miami (OH),MAC,Ball St.,MAC,Neutral,6,Molly Creech,OH,4,20,2,46,0.391,1,0,0,13,31,0,0,2,0,21.0,0,0.0,1.0,16.0,2
+2026-2027,2026-10-06,6618666,Miami (OH),MAC,Ball St.,MAC,Neutral,13,Grace Kreutz,OH,4,8,4,36,0.111,1,2,0,13,20,2,0,2,0,11.0,0,0.0,3.0,18.0,2
+2026-2027,2026-10-06,6618666,Miami (OH),MAC,Ball St.,MAC,Neutral,1,Raegan Lantz,OH,4,4,0,9,0.444,2,0,0,4,0,0,0,2,0,5.0,0,0.0,2.0,10.0,2
+2026-2027,2026-10-06,6618666,Miami (OH),MAC,Ball St.,MAC,Neutral,15,Lydia Michelin,MB,4,2,1,8,0.125,0,0,0,1,1,0,0,9,0,6.5,0,0.0,0.0,0.0,9
+2026-2027,2026-10-06,6618666,Miami (OH),MAC,Ball St.,MAC,Neutral,9,Rachel Morgan,L/DS,4,0,0,0,0.0,9,1,2,20,18,1,0,0,0,1.0,0,0.0,18.0,19.0,0
+2026-2027,2026-10-06,6618666,Miami (OH),MAC,Ball St.,MAC,Neutral,14,Kamryn Utley,S,4,0,0,0,0.0,21,1,2,5,0,0,0,0,0,1.0,0,0.0,53.0,11.0,0
+2026-2027,2026-10-06,6618666,Miami (OH),MAC,Ball St.,MAC,Neutral,18,Holland Van Deusen,S,4,2,0,4,0.5,20,3,0,10,0,0,0,0,0,5.0,0,0.0,69.0,19.0,0
+2026-2027,2026-10-06,6618666,Miami (OH),MAC,Ball St.,MAC,Neutral,7,Chelsea Williams,OH,4,14,2,27,0.444,0,0,0,1,0,0,0,3,0,15.5,0,0.0,0.0,0.0,3
+2026-2027,2026-10-06,6618666,Ball St.,MAC,Miami (OH),MAC,Neutral,2,Reese Axness,S,4,0,0,0,0.0,24,0,1,4,0,0,0,0,0,0.0,0,0.0,51.0,11.0,0
+2026-2027,2026-10-06,6618666,Ball St.,MAC,Miami (OH),MAC,Neutral,21,Madison Buckley,OPP,4,6,2,12,0.333,0,0,0,1,0,0,0,1,0,6.5,0,0.0,1.0,0.0,1
+2026-2027,2026-10-06,6618666,Ball St.,MAC,Miami (OH),MAC,Neutral,13,Gwen Crull,MB,4,3,2,13,0.077,0,0,2,1,0,0,0,4,0,5.0,0,0.0,0.0,2.0,4
+2026-2027,2026-10-06,6618666,Ball St.,MAC,Miami (OH),MAC,Neutral,4,Kendall Eden,L/DS,4,0,0,0,0.0,0,0,1,1,0,0,0,0,0,0.0,0,0.0,0.0,9.0,0
+2026-2027,2026-10-06,6618666,Ball St.,MAC,Miami (OH),MAC,Neutral,1,Audrey Geer,OH,4,11,7,40,0.1,0,1,1,5,31,4,0,5,0,14.5,0,0.0,2.0,9.0,5
+2026-2027,2026-10-06,6618666,Ball St.,MAC,Miami (OH),MAC,Neutral,8,Lindsey Green,S,4,0,0,0,0.0,22,1,2,10,0,0,0,0,0,1.0,0,0.0,70.0,13.0,0
+2026-2027,2026-10-06,6618666,Ball St.,MAC,Miami (OH),MAC,Neutral,12,Sophie Ledbetter,DS,4,0,0,0,0.0,2,0,0,29,24,1,0,0,0,0.0,0,0.0,14.0,0.0,0
+2026-2027,2026-10-06,6618666,Ball St.,MAC,Miami (OH),MAC,Neutral,14,Ava Smith,OH,4,11,7,40,0.1,0,1,0,2,9,0,0,0,0,12.0,0,0.0,1.0,6.0,0
+2026-2027,2026-10-06,6618666,Ball St.,MAC,Miami (OH),MAC,Neutral,11,Tiffany Snook,MB,4,11,3,23,0.348,0,0,0,8,0,0,1,1,0,12.5,0,0.0,0.0,1.0,2
+2026-2027,2026-10-06,6618666,Ball St.,MAC,Miami (OH),MAC,Neutral,3,Elizabeth Tabeling,DS,4,1,0,1,1.0,6,0,2,3,19,1,0,0,0,1.0,0,0.0,9.0,16.0,0
+2026-2027,2026-10-06,6618666,Ball St.,MAC,Miami (OH),MAC,Neutral,17,Camryn Wise,MB,4,11,0,20,0.55,0,0,1,2,0,0,1,3,1,13.5,0,0.0,1.0,10.0,4
+2026-2027,2026-10-06,6618666,Ball St.,MAC,Miami (OH),MAC,Neutral,9,Mallory Pike,OH,2,1,0,4,0.25,0,0,0,1,6,1,0,0,0,1.0,0,0.0,1.0,3.0,0
 2026-2027,2026-09-02,6618706,Southern California,Big Ten,Texas,SEC,Neutral,6,Taylor Deckert,L/DS,3,0,0,0,0.0,1,0,1,7,21,0,0,0,0,0.0,0,0.0,9.0,8.0,0
 2026-2027,2026-09-02,6618706,Southern California,Big Ten,Texas,SEC,Neutral,16,Lilli Etter,S,3,0,2,3,-0.667,28,1,1,6,1,0,0,2,1,2.0,0,0.0,78.0,10.0,2
 2026-2027,2026-09-02,6618706,Southern California,Big Ten,Texas,SEC,Neutral,7,Leah Ford,MB,3,5,2,12,0.25,0,0,1,3,1,0,0,5,0,7.5,0,0.0,1.0,14.0,5
@@ -55510,6 +55799,28 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2026-2027,2026-09-19,6621284,Davidson,Atlantic 10,Charlotte,American,Neutral,4,Ylame Dsamou,S,2,0,0,2,0.0,3,0,0,4,0,0,0,0,0,0.0,0,0.0,14.0,6.0,0
 2026-2027,2026-09-19,6621284,Davidson,Atlantic 10,Charlotte,American,Neutral,12,Ellie Ocampo,OH,2,1,2,3,-0.333,0,0,0,0,4,0,1,0,0,2.0,0,0.0,0.0,2.0,1
 2026-2027,2026-09-19,6621284,Davidson,Atlantic 10,Charlotte,American,Neutral,9,Cayla Weisner,MB,2,2,1,6,0.167,0,0,0,0,0,0,0,0,0,2.0,0,,,,0
+2026-2027,2026-10-06,6621285,VCU,Atlantic 10,Davidson,Atlantic 10,Neutral,19,Jordan Baksh,L,5,0,0,0,0.0,4,1,2,8,20,3,0,0,0,1.0,0,0.0,17.0,18.0,0
+2026-2027,2026-10-06,6621285,VCU,Atlantic 10,Davidson,Atlantic 10,Neutral,16,Nina Boledovicova,MB,5,12,1,20,0.55,0,0,0,1,1,0,0,2,0,13.0,0,0.0,1.0,19.0,2
+2026-2027,2026-10-06,6621285,VCU,Atlantic 10,Davidson,Atlantic 10,Neutral,12,Lara Del Core,OPP,5,14,4,25,0.4,0,0,2,1,4,2,1,3,0,16.5,0,0.0,2.0,5.0,4
+2026-2027,2026-10-06,6621285,VCU,Atlantic 10,Davidson,Atlantic 10,Neutral,7,Sarah Dibbs-Frantz,MB,5,8,4,26,0.154,0,0,0,2,0,0,0,6,0,11.0,0,0.0,1.0,0.0,6
+2026-2027,2026-10-06,6621285,VCU,Atlantic 10,Davidson,Atlantic 10,Neutral,10,Kayla Foley,DS,5,1,0,1,1.0,0,1,1,9,14,1,0,0,0,2.0,0,0.0,1.0,10.0,0
+2026-2027,2026-10-06,6621285,VCU,Atlantic 10,Davidson,Atlantic 10,Neutral,1,Letizia Galli,MB,5,11,2,22,0.409,0,0,0,0,2,0,3,8,1,18.0,0,0.0,0.0,0.0,11
+2026-2027,2026-10-06,6621285,VCU,Atlantic 10,Davidson,Atlantic 10,Neutral,6,Dominika Kasinska,OH,5,7,7,40,0.0,0,1,3,8,22,1,0,1,0,8.5,0,0.0,1.0,23.0,1
+2026-2027,2026-10-06,6621285,VCU,Atlantic 10,Davidson,Atlantic 10,Neutral,20,Dunja Martic,OH,5,0,0,0,0.0,1,0,0,10,22,2,0,0,0,0.0,0,0.0,2.0,3.0,0
+2026-2027,2026-10-06,6621285,VCU,Atlantic 10,Davidson,Atlantic 10,Neutral,24,Cansin Sendir,S,5,1,0,2,0.5,40,0,0,13,0,0,0,0,0,1.0,0,0.0,102.0,17.0,0
+2026-2027,2026-10-06,6621285,VCU,Atlantic 10,Davidson,Atlantic 10,Neutral,3,Meghan Touhey,L,5,0,0,0,0.0,0,0,0,0,0,0,0,0,0,0.0,0,,,,0
+2026-2027,2026-10-06,6621285,VCU,Atlantic 10,Davidson,Atlantic 10,Neutral,11,Maddalena Fiolo,S,2,0,0,0,0.0,4,0,0,0,0,0,0,0,0,0.0,0,0.0,12.0,3.0,0
+2026-2027,2026-10-06,6621285,Davidson,Atlantic 10,VCU,Atlantic 10,Neutral,13,Brooke Briscoe,DS,5,0,0,0,0.0,4,1,1,10,20,1,0,0,0,1.0,0,0.0,13.0,15.0,0
+2026-2027,2026-10-06,6621285,Davidson,Atlantic 10,VCU,Atlantic 10,Neutral,14,Mia Compas,MB,5,8,3,15,0.333,0,0,0,2,0,0,2,3,0,11.5,0,0.0,0.0,0.0,5
+2026-2027,2026-10-06,6621285,Davidson,Atlantic 10,VCU,Atlantic 10,Neutral,19,Elena Garcia-Guerrios,OH,5,18,7,44,0.25,0,5,1,11,31,0,0,1,0,23.5,0,0.0,4.0,17.0,1
+2026-2027,2026-10-06,6621285,Davidson,Atlantic 10,VCU,Atlantic 10,Neutral,10,Ariyana Johnson,OH,5,14,9,42,0.119,0,0,1,3,0,0,0,3,0,15.5,0,0.0,2.0,7.0,3
+2026-2027,2026-10-06,6621285,Davidson,Atlantic 10,VCU,Atlantic 10,Neutral,3,Kinsey Smith,S,5,0,0,0,0.0,48,1,1,9,0,0,0,1,0,1.5,0,0.0,133.0,13.0,1
+2026-2027,2026-10-06,6621285,Davidson,Atlantic 10,VCU,Atlantic 10,Neutral,20,Melanie Tilles,MB,5,5,4,13,0.077,0,0,1,2,0,0,0,1,2,5.5,0,0.0,1.0,2.0,1
+2026-2027,2026-10-06,6621285,Davidson,Atlantic 10,VCU,Atlantic 10,Neutral,8,Kate Whiteley,S,5,0,1,1,-1.0,0,1,0,2,0,0,0,0,0,1.0,0,0.0,0.0,15.0,0
+2026-2027,2026-10-06,6621285,Davidson,Atlantic 10,VCU,Atlantic 10,Neutral,1,Adlee Grissett,L/DS,4,0,0,0,0.0,1,2,0,4,8,1,0,0,0,2.0,0,0.0,1.0,12.0,0
+2026-2027,2026-10-06,6621285,Davidson,Atlantic 10,VCU,Atlantic 10,Neutral,12,Ellie Ocampo,OH,4,8,6,23,0.087,0,0,1,10,15,0,0,0,0,8.0,0,0.0,2.0,8.0,0
+2026-2027,2026-10-06,6621285,Davidson,Atlantic 10,VCU,Atlantic 10,Neutral,15,Meile Songaila,OH,2,2,3,13,-0.077,0,0,1,2,16,1,0,0,0,2.0,0,0.0,0.0,4.0,0
+2026-2027,2026-10-06,6621285,Davidson,Atlantic 10,VCU,Atlantic 10,Neutral,16,Myla Young,MB,1,0,0,0,0.0,0,0,0,0,0,0,0,1,0,0.5,0,,,,1
 2026-2027,2026-09-05,6621290,LIU,NEC,Washington St.,Pac-12,Neutral,13,Bella Correia,OH,3,3,8,23,-0.217,2,1,0,7,17,1,0,0,0,4.0,0,0.0,6.0,10.0,0
 2026-2027,2026-09-05,6621290,LIU,NEC,Washington St.,Pac-12,Neutral,7,Dilara Elmacioglu,S,3,1,1,5,0.0,16,1,2,16,0,0,0,0,0,2.0,0,0.0,78.0,8.0,0
 2026-2027,2026-09-05,6621290,LIU,NEC,Washington St.,Pac-12,Neutral,24,Sara Garcia,MB,3,2,3,7,-0.143,0,0,0,3,0,0,0,0,0,2.0,0,0.0,4.0,8.0,0

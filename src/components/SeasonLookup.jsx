@@ -599,7 +599,7 @@ export default function SeasonLookup() {
         </div>
       )}
 
-      {index && allAmericans && allAmericans.firstTeam.length === 6 && (
+      {index && allAmericans && allAmericans.firstTeam.length === 7 && (
         <div className="aa-panel">
           <div className="aa-panel-title">
             {year} Computer All-American Teams

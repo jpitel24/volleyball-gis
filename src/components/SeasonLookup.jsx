@@ -603,13 +603,13 @@ export default function SeasonLookup() {
         <div className="aa-panel">
           <div className="aa-panel-title">
             {year} Computer All-American Teams
-            <span className="aa-panel-sub">≥75% team games · 0.6 × pGIS + 0.4 × trust(T50) × T50 pGIS + 0.05 × T50 games · 2 OH · 2 MB · 1 S · 1 L</span>
+            <span className="aa-panel-sub">≥75% team games · 0.6 × pGIS + 0.4 × trust(T50) × T50 pGIS + 0.05 × T50 games · 3 OH · 2 MB · 1 S · 1 L</span>
           </div>
 
           {[
             { label: 'First Team',  team: allAmericans.firstTeam,  rank: 1 },
             { label: 'Second Team', team: allAmericans.secondTeam, rank: 2 },
-          ].filter(t => t.team.length === 6).map(({ label, team, rank }) => (
+          ].filter(t => t.team.length === 7).map(({ label, team, rank }) => (
             <div key={rank} className={`aa-team-block aa-team-${rank}`}>
               <div className="aa-team-label">{label}</div>
               <div className="aa-grid">

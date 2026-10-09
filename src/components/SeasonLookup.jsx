@@ -297,7 +297,7 @@ export default function SeasonLookup() {
   const totalHits = filtered.length;
 
   // Computer All-American team picks. AVCA-style position mix
-  // (2 OH, 2 MB, 1 S, 1 L) chosen by:
+  // (3 OH, 2 MB, 1 S, 1 L — 7 total) chosen by:
   //   1. Eligibility — must have at least AA_MIN_T50_GAMES games vs.
   //      RPI Top-50 opponents that season (the "showed up against good
   //      teams" filter — pure pGIS without this lets cupcake-schedule
@@ -340,10 +340,11 @@ export default function SeasonLookup() {
       byBucket[k].sort((a, b) => (b.aaScore || 0) - (a.aaScore || 0));
     }
     // Slot template — reused for both teams. Index into each bucket
-    // shifts by 6 between teams (2 OH, 2 MB, 1 S, 1 L).
+    // shifts by 7 between teams (3 OH, 2 MB, 1 S, 1 L).
     const teamFor = (offsets) => [
       { slot: 'OH', pick: byBucket.OH[offsets.OH    ] },
       { slot: 'OH', pick: byBucket.OH[offsets.OH + 1] },
+      { slot: 'OH', pick: byBucket.OH[offsets.OH + 2] },
       { slot: 'MB', pick: byBucket.MB[offsets.MB    ] },
       { slot: 'MB', pick: byBucket.MB[offsets.MB + 1] },
       { slot: 'S',  pick: byBucket.S [offsets.S     ] },
@@ -351,7 +352,7 @@ export default function SeasonLookup() {
     ].filter(s => s.pick);
 
     const firstTeam  = teamFor({ OH: 0, MB: 0, S: 0, L: 0 });
-    const secondTeam = teamFor({ OH: 2, MB: 2, S: 1, L: 1 });
+    const secondTeam = teamFor({ OH: 3, MB: 2, S: 1, L: 1 });
 
     // ── Player of the Year picks ─────────────────────────────────────
     // Same aaScore, computed across every position bucket. We take the

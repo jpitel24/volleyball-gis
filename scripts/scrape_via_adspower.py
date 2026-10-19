@@ -147,6 +147,21 @@ def _probe_port(port: int) -> str:
     browser = data.get("Browser", "")
     ws = data.get("webSocketDebuggerUrl")
     if "Chrome" in browser and ws:
+        # Prefer modern Chrome builds (AdsPower uses Chrome 150+) and skip
+        # older debug ports that happen to be running — a port 9222 relic
+        # from an older Chrome has been observed stealing the discovery and
+        # then failing on connect_over_cdp with "Browser context management
+        # is not supported". Pass --port explicitly to override.
+        try:
+            # "Chrome/153.0.8010.27" → major = 153
+            major = int(browser.split("/")[1].split(".")[0])
+            if major < 140:
+                raise RuntimeError(
+                    f"port {port} runs Chrome {major}, not AdsPower's modern "
+                    f"build — skipping (pass --port {port} to force)"
+                )
+        except (IndexError, ValueError):
+            pass
         return ws
     raise RuntimeError(f"port {port} is listening but not Chrome DevTools")
 

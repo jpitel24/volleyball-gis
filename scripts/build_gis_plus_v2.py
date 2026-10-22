@@ -485,10 +485,14 @@ def main() -> None:
     for y in years:
         build_year(y, rpi, bl)
 
-    # Single-year runs don't clobber the combined files; only --year all
-    # writes the canonical observations artifacts.
-    if args.year == "all":
-        concat_to_observations(years)
+    # concat_to_observations unions whatever per-year CSVs exist on disk —
+    # so single-year runs still refresh the shipped observations file by
+    # mixing the newly-built year's CSV with the frozen historical ones.
+    # Historical seasons (2022-2025) only need to be rebuilt on explicit
+    # --year all runs (offseason or when a formula changes); daily refreshes
+    # just concat the frozen CSVs plus the fresh 2026 output.
+    all_years = [2022, 2023, 2024, 2025, 2026]
+    concat_to_observations(all_years)
 
 
 if __name__ == "__main__":

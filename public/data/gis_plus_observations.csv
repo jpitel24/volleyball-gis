@@ -668335,11 +668335,11 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-06,Indiana,Ella Boersema,-2.0,-3.3638
 2026-2027,2026-09-06,Indiana,Keondreya Granberry,2.25,2.7605
 2026-2027,2026-09-06,Indiana,Victoria Gray,4.25,4.7367
-2026-2027,2026-09-06,Indiana,Audrey Jackson,2.0,1.8311
+2026-2027,2026-09-06,Indiana,Audrey Jackson,2.0,1.52
 2026-2027,2026-09-06,Indiana,Jaidyn Jager,11.5,12.9915
-2026-2027,2026-09-06,Indiana,Teodora Kričković,15.0,17.2142
-2026-2027,2026-09-06,Indiana,Hannah Leftridge,6.0,7.2391
-2026-2027,2026-09-06,Indiana,Sara Snowbarger,7.5,7.5716
+2026-2027,2026-09-06,Indiana,Teodora Kričković,15.0,17.1727
+2026-2027,2026-09-06,Indiana,Hannah Leftridge,6.0,6.6989
+2026-2027,2026-09-06,Indiana,Sara Snowbarger,7.5,7.9691
 2026-2027,2026-09-06,Indiana,Emma Segal,-1.0,-0.8809
 2026-2027,2026-09-06,Indiana,Avery Freeman,-0.75,-0.6486
 2026-2027,2026-09-06,Indiana,Sade Ilawole,-1.0,-0.8809
@@ -668372,11 +668372,11 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-07,Southern Ind.,Aysa Thomas,19.25,22.0994
 2026-2027,2026-09-07,Southern Ind.,Ashby Willis,15.0,17.7517
 2026-2027,2026-09-07,Southern Ind.,Carley Wright,6.0,4.6946
-2026-2027,2026-09-10,Cal Poly,Kendall Beshear,2.75,-0.6744
-2026-2027,2026-09-10,Cal Poly,Emma Fredrick,3.5,3.4863
-2026-2027,2026-09-10,Cal Poly,Alexis Haury,14.5,20.5808
-2026-2027,2026-09-10,Cal Poly,Elif Hurriyet,9.75,10.7155
-2026-2027,2026-09-10,Cal Poly,Charlotte Kelly,2.25,2.4846
+2026-2027,2026-09-10,Cal Poly,Kendall Beshear,2.75,-1.3562
+2026-2027,2026-09-10,Cal Poly,Emma Fredrick,3.5,3.6289
+2026-2027,2026-09-10,Cal Poly,Alexis Haury,14.5,21.0547
+2026-2027,2026-09-10,Cal Poly,Elif Hurriyet,9.75,10.0924
+2026-2027,2026-09-10,Cal Poly,Charlotte Kelly,2.25,2.5077
 2026-2027,2026-09-10,Cal Poly,Kayla Murdoch,7.0,8.3307
 2026-2027,2026-09-10,Cal Poly,Maren O'Farrell,-0.75,-0.7713
 2026-2027,2026-09-10,Cal Poly,Breklyn Pulling,1.0,1.1992
@@ -668643,6 +668643,27 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,Ohio St.,Kelly McAuley,-1.25,-1.2442
 2026-2027,2026-10-23,Ohio St.,Jojo Miller,2.0,2.6053
 2026-2027,2026-10-23,Ohio St.,Aneta Valentova,-2.5,-2.1796
+2026-2027,2026-10-25,Penn St.,Haley Burgdorf,5.75,8.051
+2026-2027,2026-10-25,Penn St.,Ava Falduto,9.75,16.2211
+2026-2027,2026-10-25,Penn St.,Lexi Gin,2.75,3.3673
+2026-2027,2026-10-25,Penn St.,Whitney Lauenstein,13.25,15.0163
+2026-2027,2026-10-25,Penn St.,Kennedy Martin,20.75,33.323
+2026-2027,2026-10-25,Penn St.,Gabrielle Nichols,8.25,12.011
+2026-2027,2026-10-25,Penn St.,Kendall Northern,5.5,6.0857
+2026-2027,2026-10-25,Penn St.,Emmi Sellman,5.0,5.4128
+2026-2027,2026-10-25,Penn St.,Alexis Stucky,27.5,48.5716
+2026-2027,2026-10-25,Penn St.,Jocelyn Nathan,2.25,2.4073
+2026-2027,2026-10-25,Penn St.,Ava Jurevicius,-1.0,-0.8814
+2026-2027,2026-10-25,Indiana,Ella Boersema,3.0,3.1207
+2026-2027,2026-10-25,Indiana,Isabel Clark,6.75,6.4576
+2026-2027,2026-10-25,Indiana,Victoria Gray,7.0,9.5412
+2026-2027,2026-10-25,Indiana,Audrey Jackson,8.0,9.5389
+2026-2027,2026-10-25,Indiana,Jaidyn Jager,10.25,12.1659
+2026-2027,2026-10-25,Indiana,Teodora Kričković,19.75,33.0027
+2026-2027,2026-10-25,Indiana,Hannah Leftridge,4.75,5.1468
+2026-2027,2026-10-25,Indiana,Emma Segal,0.5,0.5522
+2026-2027,2026-10-25,Indiana,Avry Tatum,10.75,13.8802
+2026-2027,2026-10-25,Indiana,Keondreya Granberry,-0.75,-0.8494
 2026-2027,2026-08-28,Western Caro.,Katie Boney,27.75,29.1147
 2026-2027,2026-08-28,Western Caro.,Ashlyn Cobb,16.75,19.3413
 2026-2027,2026-08-28,Western Caro.,Elise Gurley,8.75,8.2423
@@ -668690,15 +668711,15 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-08-29,Charleston So.,Jenna Kitchens,-2.0,-3.0771
 2026-2027,2026-08-29,Charleston So.,Cara McLean,4.5,3.7511
 2026-2027,2026-08-29,Charleston So.,Grace Smith,0.25,0.0805
-2026-2027,2026-08-30,Western Caro.,Katie Boney,24.75,25.0156
-2026-2027,2026-08-30,Western Caro.,Ashlyn Cobb,12.5,8.8837
-2026-2027,2026-08-30,Western Caro.,Elise Gurley,7.5,7.0581
+2026-2027,2026-08-30,Western Caro.,Katie Boney,24.75,24.8027
+2026-2027,2026-08-30,Western Caro.,Ashlyn Cobb,12.5,9.4467
+2026-2027,2026-08-30,Western Caro.,Elise Gurley,7.5,7.1771
 2026-2027,2026-08-30,Western Caro.,Aiyana Harris,4.25,3.9153
-2026-2027,2026-08-30,Western Caro.,Evelyn Keefer,-1.25,-1.1475
+2026-2027,2026-08-30,Western Caro.,Evelyn Keefer,-1.25,-1.0961
 2026-2027,2026-08-30,Western Caro.,Tatum Sharp,3.75,2.5191
 2026-2027,2026-08-30,Western Caro.,Halley Tang,1.25,1.5294
-2026-2027,2026-08-30,Western Caro.,Zoe Zudans,7.0,6.6357
-2026-2027,2026-08-30,Western Caro.,Samantha Kranzler,3.25,3.1773
+2026-2027,2026-08-30,Western Caro.,Zoe Zudans,7.0,6.6855
+2026-2027,2026-08-30,Western Caro.,Samantha Kranzler,3.25,3.3476
 2026-2027,2026-08-30,Western Caro.,Peri Subat,1.0,0.736
 2026-2027,2026-08-30,Western Caro.,Taylor Baggett,0.5,0.5191
 2026-2027,2026-08-30,Western Caro.,Sophia Marini,-2.0,-2.0308
@@ -670521,6 +670542,28 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-22,Northwestern,Hayley Schaaf,1.5,1.7623
 2026-2027,2026-10-22,Northwestern,Gabrielle Gerry,-0.5,-0.4323
 2026-2027,2026-10-22,Northwestern,Clara Schramm,1.5,1.7101
+2026-2027,2026-10-25,Michigan,Morgan Burke,12.0,20.242
+2026-2027,2026-10-25,Michigan,Ella Demetrician,23.0,33.9662
+2026-2027,2026-10-25,Michigan,Camille Edwards,7.0,12.1048
+2026-2027,2026-10-25,Michigan,Cymarah Gordon,5.0,6.1031
+2026-2027,2026-10-25,Michigan,Jenna Hanes,4.5,6.578
+2026-2027,2026-10-25,Michigan,Lydia Johnson,3.25,4.2345
+2026-2027,2026-10-25,Michigan,Meredith Martin,9.5,12.2278
+2026-2027,2026-10-25,Michigan,Sydney Schnichels,11.25,14.3287
+2026-2027,2026-10-25,Michigan,Ece Senyapici,6.25,7.5791
+2026-2027,2026-10-25,Michigan,Hannah Brady,0.0,0.0
+2026-2027,2026-10-25,Michigan,Trixie McMillin,0.0,0.0
+2026-2027,2026-10-25,Wisconsin,Jaela Auguste,9.25,12.5127
+2026-2027,2026-10-25,Wisconsin,Anna Bardaro,8.0,11.5273
+2026-2027,2026-10-25,Wisconsin,Decelise Champion,16.0,21.2029
+2026-2027,2026-10-25,Wisconsin,Audrey Flanagan,18.5,23.6391
+2026-2027,2026-10-25,Wisconsin,Charlie Fuerbringer,25.25,46.5381
+2026-2027,2026-10-25,Wisconsin,Kristen Simon,8.0,10.5969
+2026-2027,2026-10-25,Wisconsin,Lynney Tarnow,9.5,12.4824
+2026-2027,2026-10-25,Wisconsin,Eva Travis,10.75,15.2691
+2026-2027,2026-10-25,Wisconsin,Natalie Wardlow,-2.0,-2.0776
+2026-2027,2026-10-25,Wisconsin,Grace Egan,0.75,0.8501
+2026-2027,2026-10-25,Wisconsin,Kymora Scott,0.0,0.0
 2026-2027,2026-08-28,Middle Tenn.,Addison Burks,8.0,7.6947
 2026-2027,2026-08-28,Middle Tenn.,Logan Carr,3.0,2.3821
 2026-2027,2026-08-28,Middle Tenn.,Gabrielle Clinkscale,5.0,1.066
@@ -671030,6 +671073,30 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,Rutgers,Karis Willow,9.5,12.4406
 2026-2027,2026-10-23,Rutgers,Addison Wiemann,-3.0,-3.1491
 2026-2027,2026-10-23,Rutgers,Avery Jesewitz,3.0,3.2616
+2026-2027,2026-10-25,Michigan St.,Madi Andrews,12.25,13.3797
+2026-2027,2026-10-25,Michigan St.,Ky Clayton,2.5,3.5101
+2026-2027,2026-10-25,Michigan St.,Zora Hardison,6.0,7.1058
+2026-2027,2026-10-25,Michigan St.,Malayah Long,20.25,31.3441
+2026-2027,2026-10-25,Michigan St.,Bianca Mumcular,2.75,2.5268
+2026-2027,2026-10-25,Michigan St.,Hayley Ogden,8.0,9.4325
+2026-2027,2026-10-25,Michigan St.,Lia Schneider,6.0,7.0817
+2026-2027,2026-10-25,Michigan St.,Karolina Staniszewska,12.0,14.1091
+2026-2027,2026-10-25,Michigan St.,Carmen Waye,11.0,14.2932
+2026-2027,2026-10-25,Michigan St.,Alanna Bankston,1.5,0.8655
+2026-2027,2026-10-25,Michigan St.,Sarah Vellucci,0.5,0.5982
+2026-2027,2026-10-25,Maryland,Brooklynne Brass,11.5,14.3437
+2026-2027,2026-10-25,Maryland,Ava Brown,4.0,3.476
+2026-2027,2026-10-25,Maryland,Sydney Bryant,-1.75,-3.8586
+2026-2027,2026-10-25,Maryland,Raina Chwialkowski,6.5,8.3288
+2026-2027,2026-10-25,Maryland,Elayna Davidson,3.75,4.251
+2026-2027,2026-10-25,Maryland,Ioanna Dimitriou,3.5,4.2625
+2026-2027,2026-10-25,Maryland,Haley Melby,0.5,-0.0628
+2026-2027,2026-10-25,Maryland,Eva Rohrbach,7.75,9.3653
+2026-2027,2026-10-25,Maryland,Sara Toth,13.25,16.5035
+2026-2027,2026-10-25,Maryland,Addie Canady,0.0,0.5314
+2026-2027,2026-10-25,Maryland,Duru Gökçen,-1.0,-0.893
+2026-2027,2026-10-25,Maryland,Alex McGillivray,0.75,0.8669
+2026-2027,2026-10-25,Maryland,Marlee Sivak,1.0,1.2012
 2026-2027,2026-08-30,Syracuse,Charis Burge,12.25,15.2676
 2026-2027,2026-08-30,Syracuse,Emma Faerber,1.5,1.6672
 2026-2027,2026-08-30,Syracuse,Marie Laurio,11.25,11.9593
@@ -671531,14 +671598,14 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-04,Portland St.,Ashley Repetti,-2.75,-2.559
 2026-2027,2026-09-04,Portland St.,Jordyn Romano,1.25,1.4197
 2026-2027,2026-09-04,Lindenwood,Autumn Bax,7.25,7.464
-2026-2027,2026-09-04,Lindenwood,Susanna Beretti,15.75,17.3255
+2026-2027,2026-09-04,Lindenwood,Susanna Beretti,15.75,16.9821
 2026-2027,2026-09-04,Lindenwood,Ashley Geluck,11.75,15.6895
-2026-2027,2026-09-04,Lindenwood,Dana Grib,8.25,8.696
-2026-2027,2026-09-04,Lindenwood,Kaci Johnson,18.25,26.3704
-2026-2027,2026-09-04,Lindenwood,Mandy Lawson,4.0,4.2238
-2026-2027,2026-09-04,Lindenwood,Lauren Ortwerth,7.75,8.1308
-2026-2027,2026-09-04,Lindenwood,Kylee Richey,2.25,1.96
-2026-2027,2026-09-04,Lindenwood,Alayna Rudebeck,3.0,2.8762
+2026-2027,2026-09-04,Lindenwood,Dana Grib,8.25,8.1673
+2026-2027,2026-09-04,Lindenwood,Kaci Johnson,18.25,26.4346
+2026-2027,2026-09-04,Lindenwood,Mandy Lawson,4.0,4.5953
+2026-2027,2026-09-04,Lindenwood,Lauren Ortwerth,7.75,7.8439
+2026-2027,2026-09-04,Lindenwood,Kylee Richey,2.25,1.9862
+2026-2027,2026-09-04,Lindenwood,Alayna Rudebeck,3.0,2.935
 2026-2027,2026-09-04,Lindenwood,Anna Kraemer,0.0,-0.1383
 2026-2027,2026-09-04,Lindenwood,Greta Shadewald,1.0,1.5719
 2026-2027,2026-09-05,Murray St.,Lily Burnett,4.25,4.1331
@@ -671837,10 +671904,10 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-09,Lindenwood,Susanna Beretti,10.0,10.6789
 2026-2027,2026-10-09,Lindenwood,Ashley Geluck,12.0,18.1696
 2026-2027,2026-10-09,Lindenwood,Dana Grib,8.5,8.9819
-2026-2027,2026-10-09,Lindenwood,Kaci Johnson,26.75,37.0794
+2026-2027,2026-10-09,Lindenwood,Kaci Johnson,26.75,36.8879
 2026-2027,2026-10-09,Lindenwood,Mandy Lawson,10.0,10.0488
-2026-2027,2026-10-09,Lindenwood,Lauren Ortwerth,10.25,11.4719
-2026-2027,2026-10-09,Lindenwood,Alayna Rudebeck,6.5,4.9397
+2026-2027,2026-10-09,Lindenwood,Lauren Ortwerth,10.25,11.2544
+2026-2027,2026-10-09,Lindenwood,Alayna Rudebeck,6.5,5.6688
 2026-2027,2026-10-09,Lindenwood,Kylee Richey,-3.5,-4.5164
 2026-2027,2026-10-09,Lindenwood,Jade Roth,6.0,7.6856
 2026-2027,2026-10-09,Lindenwood,Shannon Monahan,0.0,0.0
@@ -672546,18 +672613,18 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-16,VCU,Cansin Sendir,25.25,38.4488
 2026-2027,2026-10-16,VCU,Meghan Touhey,0.0,0.0
 2026-2027,2026-10-16,VCU,Maddalena Fiolo,0.0,0.0
-2026-2027,2026-10-16,George Mason,Avery Booker,3.0,2.8821
+2026-2027,2026-10-16,George Mason,Avery Booker,3.0,2.9837
 2026-2027,2026-10-16,George Mason,Meredith Brown,4.75,5.1613
-2026-2027,2026-10-16,George Mason,Ava Cheney,17.25,19.5139
-2026-2027,2026-10-16,George Mason,Kiera Hamilton,19.0,16.0882
-2026-2027,2026-10-16,George Mason,Autumn Martinez-Robinson,15.75,17.8809
-2026-2027,2026-10-16,George Mason,Nia Thompson,7.75,4.509
-2026-2027,2026-10-16,George Mason,Mia Hazelett,1.5,0.8435
+2026-2027,2026-10-16,George Mason,Ava Cheney,17.25,19.2282
+2026-2027,2026-10-16,George Mason,Kiera Hamilton,19.0,15.8006
+2026-2027,2026-10-16,George Mason,Autumn Martinez-Robinson,15.75,18.7113
+2026-2027,2026-10-16,George Mason,Nia Thompson,7.75,5.402
+2026-2027,2026-10-16,George Mason,Mia Hazelett,1.5,0.794
 2026-2027,2026-10-16,George Mason,Rylee Kinnell,-1.75,-2.5087
 2026-2027,2026-10-16,George Mason,Gabriella Gelfound,0.5,0.2421
 2026-2027,2026-10-16,George Mason,Jenna Hunt,0.0,-0.1823
 2026-2027,2026-10-16,George Mason,Jordan Lucas,0.0,0.0
-2026-2027,2026-10-16,George Mason,Camryn Weldon,1.75,1.6477
+2026-2027,2026-10-16,George Mason,Camryn Weldon,1.75,1.6271
 2026-2027,2026-10-17,VCU,Jordan Baksh,14.25,14.8151
 2026-2027,2026-10-17,VCU,Nina Boledovicova,14.25,17.418
 2026-2027,2026-10-17,VCU,Lara Del Core,10.5,12.2666
@@ -672950,7 +673017,7 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-05,St. John's (NY),Kya Harris,3.5,3.8801
 2026-2027,2026-09-05,St. John's (NY),Angelica Rodriguez,1.75,0.8354
 2026-2027,2026-09-05,St. John's (NY),Brooke Boyles,1.0,0.8327
-2026-2027,2026-09-18,Penn,Jenna Garner,12.0,10.7491
+2026-2027,2026-09-18,Penn,Jenna Garner,12.0,9.8117
 2026-2027,2026-09-18,Penn,Jenna Garner,12.0,10.9666
 2026-2027,2026-09-18,Penn,Haley Kerstetter,8.5,10.1137
 2026-2027,2026-09-18,Penn,Haley Kerstetter,8.5,10.2988
@@ -672958,12 +673025,12 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-18,Penn,Emery Moore,11.5,18.8146
 2026-2027,2026-09-18,Penn,Adell Murray,8.5,9.9389
 2026-2027,2026-09-18,Penn,Adell Murray,8.5,9.9389
-2026-2027,2026-09-18,Penn,Addison Pollock,13.75,10.8333
+2026-2027,2026-09-18,Penn,Addison Pollock,13.75,13.5271
 2026-2027,2026-09-18,Penn,Addison Pollock,13.75,16.9405
-2026-2027,2026-09-18,Penn,Zada Sanger,14.25,15.8081
+2026-2027,2026-09-18,Penn,Zada Sanger,14.25,15.0532
 2026-2027,2026-09-18,Penn,Zada Sanger,14.25,15.8427
-2026-2027,2026-09-18,Penn,Elsa McDermott,2.75,3.8532
-2026-2027,2026-09-18,Penn,Ellie Siskin,0.25,-0.7381
+2026-2027,2026-09-18,Penn,Elsa McDermott,2.75,2.7891
+2026-2027,2026-09-18,Penn,Ellie Siskin,0.25,-0.8633
 2026-2027,2026-09-18,Penn,Ellie Siskin,0.25,-0.8773
 2026-2027,2026-09-18,Penn,Reese Stringer,5.5,5.1249
 2026-2027,2026-09-18,Penn,Skylar Greene,-1.75,-1.7313
@@ -672972,7 +673039,7 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-18,Penn,Taylor Roloff,0.0,0.0
 2026-2027,2026-09-18,Penn,Nathalie Tsai,4.75,6.374
 2026-2027,2026-09-18,Penn,Nathalie Tsai,4.75,4.619
-2026-2027,2026-09-18,Penn,Lauren Van Wie,-1.5,-1.873
+2026-2027,2026-09-18,Penn,Lauren Van Wie,-1.5,-1.5234
 2026-2027,2026-09-18,Penn,Bella Rittenberg,0.0,0.0
 2026-2027,2026-09-18,St. John's (NY),Chloe' Bell,7.0,7.6708
 2026-2027,2026-09-18,St. John's (NY),Chloe' Bell,7.0,8.1619
@@ -674557,14 +674624,14 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-08-29,Nevada,Lara Pacheco,1.25,0.9256
 2026-2027,2026-08-29,Nevada,Summer Suppik,3.25,3.6222
 2026-2027,2026-08-29,Nevada,Malia Pilimai,0.25,0.2063
-2026-2027,2026-08-29,Portland,Kalaweloilehua Chock,15.0,16.4335
+2026-2027,2026-08-29,Portland,Kalaweloilehua Chock,15.0,16.0157
 2026-2027,2026-08-29,Portland,Eliot Diehl Palmer,9.0,9.3802
-2026-2027,2026-08-29,Portland,Jeryn Hildenbrand,2.0,1.5683
-2026-2027,2026-08-29,Portland,Havannah Hoeft,23.75,29.4841
+2026-2027,2026-08-29,Portland,Jeryn Hildenbrand,2.0,1.6325
+2026-2027,2026-08-29,Portland,Havannah Hoeft,23.75,29.1396
 2026-2027,2026-08-29,Portland,Taina Kaauwai,5.75,6.9203
-2026-2027,2026-08-29,Portland,Lillian Lansing,9.5,6.8503
+2026-2027,2026-08-29,Portland,Lillian Lansing,9.5,7.1979
 2026-2027,2026-08-29,Portland,Tinoa Woodward-Hart,3.5,3.5146
-2026-2027,2026-08-29,Portland,Amiyah Eason,-0.75,-0.8396
+2026-2027,2026-08-29,Portland,Amiyah Eason,-0.75,-0.8094
 2026-2027,2026-08-29,Portland,Callie Pieper,-0.5,-0.2797
 2026-2027,2026-08-29,Portland,Alana Villela,3.75,4.013
 2026-2027,2026-08-29,Portland,Lila Krall,1.0,1.0168
@@ -674625,15 +674692,15 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-17,CSU Bakersfield,Reese Jackson,2.0,2.4327
 2026-2027,2026-09-17,CSU Bakersfield,Ella Pallagi,3.5,4.2658
 2026-2027,2026-09-17,Portland,Kalaweloilehua Chock,14.75,14.3622
-2026-2027,2026-09-17,Portland,Eliot Diehl Palmer,8.75,9.891
+2026-2027,2026-09-17,Portland,Eliot Diehl Palmer,8.75,9.8223
 2026-2027,2026-09-17,Portland,Amiyah Eason,-0.75,-0.763
-2026-2027,2026-09-17,Portland,Jeryn Hildenbrand,1.75,2.2746
-2026-2027,2026-09-17,Portland,Havannah Hoeft,20.25,27.5838
+2026-2027,2026-09-17,Portland,Jeryn Hildenbrand,1.75,2.743
+2026-2027,2026-09-17,Portland,Havannah Hoeft,20.25,27.3893
 2026-2027,2026-09-17,Portland,Taina Kaauwai,12.5,17.4236
-2026-2027,2026-09-17,Portland,Maui Robins,18.25,21.2459
+2026-2027,2026-09-17,Portland,Maui Robins,18.25,21.612
 2026-2027,2026-09-17,Portland,Shaylee Stephen,1.5,0.8959
-2026-2027,2026-09-17,Portland,Tinoa Woodward-Hart,1.5,1.54
-2026-2027,2026-09-17,Portland,Nevaeh Bray,3.0,2.9946
+2026-2027,2026-09-17,Portland,Tinoa Woodward-Hart,1.5,1.4754
+2026-2027,2026-09-17,Portland,Nevaeh Bray,3.0,2.947
 2026-2027,2026-09-17,Portland,Callie Pieper,0.0,0.0
 2026-2027,2026-09-18,Portland,Kalaweloilehua Chock,4.25,1.804
 2026-2027,2026-09-18,Portland,Eliot Diehl Palmer,6.75,7.1901
@@ -677327,6 +677394,30 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,Coppin St.,Aya Rawlins,1.25,1.423
 2026-2027,2026-10-23,Coppin St.,Eva Rovello,20.75,22.1627
 2026-2027,2026-10-23,Coppin St.,Deviana Walker,0.5,-1.8898
+2026-2027,2026-10-25,Morgan St.,Isabelle Brown,27.25,31.6956
+2026-2027,2026-10-25,Morgan St.,Nathalia Morais,5.5,5.2482
+2026-2027,2026-10-25,Morgan St.,Hanna Nemeth,21.5,22.5909
+2026-2027,2026-10-25,Morgan St.,Michaela Panekova,14.75,13.0259
+2026-2027,2026-10-25,Morgan St.,Bailey Swinton,3.75,4.7524
+2026-2027,2026-10-25,Morgan St.,Zayda Thomas,4.25,2.5286
+2026-2027,2026-10-25,Morgan St.,Tameary Wardlaw,8.75,7.2676
+2026-2027,2026-10-25,Morgan St.,Jada Williams,18.25,18.4073
+2026-2027,2026-10-25,Morgan St.,Aubrey Wilson,7.5,7.3602
+2026-2027,2026-10-25,Morgan St.,Kira Devrieze,-0.75,-0.85
+2026-2027,2026-10-25,Howard,Addison Buckner,15.25,13.7242
+2026-2027,2026-10-25,Howard,Alexys James,22.75,23.0214
+2026-2027,2026-10-25,Howard,Zenai Jethroe,12.25,13.5708
+2026-2027,2026-10-25,Howard,Sydnei Jones,14.0,18.7823
+2026-2027,2026-10-25,Howard,Camryn Shelton,16.25,12.6311
+2026-2027,2026-10-25,Howard,Lauryn Wiley,11.75,14.9492
+2026-2027,2026-10-25,Howard,Gabby Allen,-0.25,-0.3973
+2026-2027,2026-10-25,Howard,Easnadh Nobel Toolo,6.5,6.3198
+2026-2027,2026-10-25,Howard,Briana Pagan,1.0,-1.4841
+2026-2027,2026-10-25,Howard,Haarachi Umenwaliri,2.0,1.6906
+2026-2027,2026-10-25,Howard,Estrella Vazquez,0.0,0.0
+2026-2027,2026-10-25,Howard,Corinne Howard,1.0,0.6184
+2026-2027,2026-10-25,Howard,Dayion Johnson,0.0,-0.4081
+2026-2027,2026-10-25,Howard,Tiana Stubbs,1.25,0.85
 2026-2027,2026-08-29,South Dakota,Morgan Bode,5.0,5.7506
 2026-2027,2026-08-29,South Dakota,Cora Hokenstad,5.75,6.6451
 2026-2027,2026-08-29,South Dakota,Amanda Loschen,7.0,7.6071
@@ -679412,16 +679503,16 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-13,Minnesota,Madi Kraft,-1.0,-1.0045
 2026-2027,2026-09-13,Minnesota,Olivia Swenson,0.0,0.0
 2026-2027,2026-09-13,Minnesota,Carly Gilk,1.75,1.4909
-2026-2027,2026-09-19,Minnesota,McKenna Garr,7.0,9.2881
+2026-2027,2026-09-19,Minnesota,McKenna Garr,7.0,9.1581
 2026-2027,2026-09-19,Minnesota,Carly Gilk,7.25,8.6489
 2026-2027,2026-09-19,Minnesota,Elena Hoecke,6.75,8.5503
 2026-2027,2026-09-19,Minnesota,Madi Kraft,-1.0,-0.9414
-2026-2027,2026-09-19,Minnesota,Zeynep Palabiyik,8.5,10.8919
-2026-2027,2026-09-19,Minnesota,Stella Swenson,29.75,51.2953
-2026-2027,2026-09-19,Minnesota,Kate Thibault,2.75,3.1889
+2026-2027,2026-09-19,Minnesota,Zeynep Palabiyik,8.5,10.2977
+2026-2027,2026-09-19,Minnesota,Stella Swenson,29.75,51.1169
+2026-2027,2026-09-19,Minnesota,Kate Thibault,2.75,3.5584
 2026-2027,2026-09-19,Minnesota,Mckenna Wucherer,19.25,28.1972
 2026-2027,2026-09-19,Minnesota,Lucie Blazkova,2.75,2.5856
-2026-2027,2026-09-19,Minnesota,Makenna Crosson,5.5,6.1462
+2026-2027,2026-09-19,Minnesota,Makenna Crosson,5.5,6.7928
 2026-2027,2026-09-19,Minnesota,Kelly Kinney,1.0,0.5704
 2026-2027,2026-09-19,Minnesota,Olivia Swenson,0.0,0.0
 2026-2027,2026-09-19,Minnesota,Jordan Taylor,3.0,3.6654
@@ -679849,6 +679940,28 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-11,Akron,Lyndi Wolf,8.75,8.2018
 2026-2027,2026-09-11,Akron,Jordyn Aeschliman,1.0,0.9397
 2026-2027,2026-09-11,Akron,Payton Evans,3.25,3.0359
+2026-2027,2026-10-25,Washington,Andrea Fabikovicova,17.75,23.5482
+2026-2027,2026-10-25,Washington,Maija Howse,5.5,5.3307
+2026-2027,2026-10-25,Washington,Julia Hunt,2.75,2.6449
+2026-2027,2026-10-25,Washington,Kylie Kleckner,1.5,-0.0472
+2026-2027,2026-10-25,Washington,Simona Mateska,12.75,15.1974
+2026-2027,2026-10-25,Washington,Kaitlyn Nguyen,4.5,3.8346
+2026-2027,2026-10-25,Washington,Katy Wessels,9.25,13.0144
+2026-2027,2026-10-25,Washington,Addy Azavedo,0.5,0.5431
+2026-2027,2026-10-25,Washington,Lily Mae Buerkle,0.5,0.6435
+2026-2027,2026-10-25,Washington,Samantha Destler,0.25,0.2129
+2026-2027,2026-10-25,Washington,Addie Kanouff,1.0,1.2085
+2026-2027,2026-10-25,Minnesota,Lucie Blazkova,8.0,10.593
+2026-2027,2026-10-25,Minnesota,Makenna Crosson,12.25,16.8374
+2026-2027,2026-10-25,Minnesota,McKenna Garr,3.25,4.149
+2026-2027,2026-10-25,Minnesota,Elena Hoecke,3.5,4.0712
+2026-2027,2026-10-25,Minnesota,Kelly Kinney,10.0,11.0884
+2026-2027,2026-10-25,Minnesota,Georgia Lee,0.75,0.8104
+2026-2027,2026-10-25,Minnesota,Zeynep Palabiyik,10.5,15.0703
+2026-2027,2026-10-25,Minnesota,Olivia Swenson,0.25,0.2984
+2026-2027,2026-10-25,Minnesota,Stella Swenson,19.5,33.2875
+2026-2027,2026-10-25,Minnesota,Kate Thibault,3.25,4.8529
+2026-2027,2026-10-25,Minnesota,Mckenna Wucherer,13.25,15.5147
 2026-2027,2026-09-12,Coppin St.,Cherisse Atilano,15.5,15.6167
 2026-2027,2026-09-12,Coppin St.,Andrea Cintron,-1.5,-1.911
 2026-2027,2026-09-12,Coppin St.,Nia Curry,6.75,6.6143
@@ -680801,7 +680914,7 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-24,Jacksonville St.,Selin Sakiroglu,1.0,0.7416
 2026-2027,2026-08-28,Buffalo,Eve Adams,-0.5,-0.4651
 2026-2027,2026-08-28,Buffalo,Eve Adams,-0.5,-0.3783
-2026-2027,2026-08-28,Buffalo,Abisola Adebayo,5.25,5.6423
+2026-2027,2026-08-28,Buffalo,Abisola Adebayo,5.25,5.7308
 2026-2027,2026-08-28,Buffalo,Sydney Bell,10.25,10.6494
 2026-2027,2026-08-28,Buffalo,Sydney Bell,10.25,10.4617
 2026-2027,2026-08-28,Buffalo,Chloe Brown,5.75,4.7926
@@ -680810,13 +680923,13 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-08-28,Buffalo,Anaya Cole,1.5,0.8241
 2026-2027,2026-08-28,Buffalo,Sadie Gladhill,3.25,3.7575
 2026-2027,2026-08-28,Buffalo,Sadie Gladhill,3.25,3.1653
-2026-2027,2026-08-28,Buffalo,Ava Kanj,6.25,6.0635
+2026-2027,2026-08-28,Buffalo,Ava Kanj,6.25,5.9987
 2026-2027,2026-08-28,Buffalo,Ava Kanj,6.25,6.0959
-2026-2027,2026-08-28,Buffalo,Maddie Mitchell,30.25,36.8216
+2026-2027,2026-08-28,Buffalo,Maddie Mitchell,30.25,36.7481
 2026-2027,2026-08-28,Buffalo,Maddie Mitchell,30.25,32.5341
-2026-2027,2026-08-28,Buffalo,Angelina Siepierski,14.0,15.7739
+2026-2027,2026-08-28,Buffalo,Angelina Siepierski,14.0,16.1815
 2026-2027,2026-08-28,Buffalo,Angelina Siepierski,14.0,16.383
-2026-2027,2026-08-28,Buffalo,Manoela Forlin,7.75,4.5156
+2026-2027,2026-08-28,Buffalo,Manoela Forlin,7.75,4.4243
 2026-2027,2026-08-28,Buffalo,Manoela Forlin,7.75,4.6279
 2026-2027,2026-08-28,Buffalo,Hailey Campagna,9.75,10.617
 2026-2027,2026-08-28,Buffalo,Hailey Campagna,9.75,8.8443
@@ -680859,13 +680972,13 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-08-28,Buffalo,Anaya Cole,8.0,4.5753
 2026-2027,2026-08-28,Buffalo,Ava Kanj,1.0,1.044
 2026-2027,2026-08-28,Buffalo,Ava Kanj,1.0,1.044
-2026-2027,2026-08-28,Buffalo,Maddie Mitchell,17.75,23.9757
+2026-2027,2026-08-28,Buffalo,Maddie Mitchell,17.75,23.9455
 2026-2027,2026-08-28,Buffalo,Maddie Mitchell,17.75,20.3662
-2026-2027,2026-08-28,Buffalo,Manoela Forlin,6.5,5.1191
+2026-2027,2026-08-28,Buffalo,Manoela Forlin,6.5,4.9238
 2026-2027,2026-08-28,Buffalo,Manoela Forlin,6.5,5.6031
 2026-2027,2026-08-28,Buffalo,Sadie Gladhill,1.25,1.4151
 2026-2027,2026-08-28,Buffalo,Sadie Gladhill,1.25,1.3089
-2026-2027,2026-08-28,Buffalo,Angelina Siepierski,1.25,-0.6429
+2026-2027,2026-08-28,Buffalo,Angelina Siepierski,1.25,-0.493
 2026-2027,2026-08-28,Buffalo,Angelina Siepierski,1.25,1.0878
 2026-2027,2026-08-28,Buffalo,Abisola Adebayo,1.5,1.593
 2026-2027,2026-08-28,Buffalo,Tehya Shaw,2.5,2.8224
@@ -682675,13 +682788,13 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-22,Drake,Emily Lisi,1.0,1.1963
 2026-2027,2026-09-26,Murray St.,Lily Burnett,-0.75,-2.0799
 2026-2027,2026-09-26,Murray St.,Anne Makowski,4.5,3.3051
-2026-2027,2026-09-26,Murray St.,Samantha Nelson,2.75,2.0352
-2026-2027,2026-09-26,Murray St.,Mija Sagadin Pristovnik,1.5,-1.3496
+2026-2027,2026-09-26,Murray St.,Samantha Nelson,2.75,1.7941
+2026-2027,2026-09-26,Murray St.,Mija Sagadin Pristovnik,1.5,-1.3177
 2026-2027,2026-09-26,Murray St.,Maezi Snyder,0.5,-0.0165
-2026-2027,2026-09-26,Murray St.,Ada Tamturk,3.75,3.3889
-2026-2027,2026-09-26,Murray St.,Alexa Watts,3.75,3.2374
+2026-2027,2026-09-26,Murray St.,Ada Tamturk,3.75,3.0759
+2026-2027,2026-09-26,Murray St.,Alexa Watts,3.75,2.9379
 2026-2027,2026-09-26,Murray St.,Paige Brock,1.25,1.2047
-2026-2027,2026-09-26,Murray St.,Ceren Durak,2.25,1.4367
+2026-2027,2026-09-26,Murray St.,Ceren Durak,2.25,2.1199
 2026-2027,2026-09-26,Murray St.,Kathryn Titus,3.5,3.788
 2026-2027,2026-09-26,Murray St.,Melis Aydin,1.5,1.1902
 2026-2027,2026-09-26,UNI,Maryn Bixby,8.0,7.443
@@ -684152,15 +684265,15 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-24,Denver,Lily Van Hal,12.75,13.0257
 2026-2027,2026-09-24,Denver,Madison Winkler,8.75,8.2868
 2026-2027,2026-09-24,Denver,Emersen Werger,1.0,1.0466
-2026-2027,2026-09-26,Pacific,Alessia Couchond,10.75,14.0446
-2026-2027,2026-09-26,Pacific,Ella Gridley,1.25,1.3758
-2026-2027,2026-09-26,Pacific,Isabella Gutierrez,5.25,4.9914
+2026-2027,2026-09-26,Pacific,Alessia Couchond,10.75,14.3514
+2026-2027,2026-09-26,Pacific,Ella Gridley,1.25,-0.2163
+2026-2027,2026-09-26,Pacific,Isabella Gutierrez,5.25,4.5236
 2026-2027,2026-09-26,Pacific,Julia Porath,2.75,2.8329
 2026-2027,2026-09-26,Pacific,Adeline Sirbu,5.0,7.2904
 2026-2027,2026-09-26,Pacific,Hanna Vorhies,-4.25,-4.8748
-2026-2027,2026-09-26,Pacific,Nicole Zake,4.5,4.5554
-2026-2027,2026-09-26,Pacific,Vanessa Zussino,5.75,5.6242
-2026-2027,2026-09-26,Pacific,Gwendolyn Hansen,0.0,-0.1542
+2026-2027,2026-09-26,Pacific,Nicole Zake,4.5,4.5948
+2026-2027,2026-09-26,Pacific,Vanessa Zussino,5.75,5.717
+2026-2027,2026-09-26,Pacific,Gwendolyn Hansen,0.0,0.0
 2026-2027,2026-09-26,Pacific,Ellie Prindl,1.25,1.3036
 2026-2027,2026-09-26,Pacific,Gracie Armato,0.0,0.0
 2026-2027,2026-09-26,Pacific,Olga Gergacz,0.25,0.1971
@@ -685182,6 +685295,34 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,Grambling,Bailey Hollis,1.0,0.9592
 2026-2027,2026-10-23,Grambling,Nile Johnson,-1.0,-1.0913
 2026-2027,2026-10-23,Grambling,Avri Solik-Fifarek,1.25,1.0177
+2026-2027,2026-10-25,Alabama A&M,Scholar Bates,5.5,3.5082
+2026-2027,2026-10-25,Alabama A&M,Molly Chappell,8.0,6.0429
+2026-2027,2026-10-25,Alabama A&M,Rayishon Jackman,17.75,12.6632
+2026-2027,2026-10-25,Alabama A&M,Amya Jennings,1.25,0.702
+2026-2027,2026-10-25,Alabama A&M,Ivy Maxwell,6.0,3.925
+2026-2027,2026-10-25,Alabama A&M,Carys Sanabria,8.5,6.4006
+2026-2027,2026-10-25,Alabama A&M,Briana Smith,10.75,9.7416
+2026-2027,2026-10-25,Alabama A&M,Gerren Tomlin,16.5,12.2926
+2026-2027,2026-10-25,Alabama A&M,Kinslee Carter,3.0,1.9745
+2026-2027,2026-10-25,Alabama A&M,Rhyan Holloway,-1.0,-1.4099
+2026-2027,2026-10-25,Alabama A&M,Kennedy Moss,0.0,0.0
+2026-2027,2026-10-25,Alabama A&M,Cherrish Robinson,0.5,0.2934
+2026-2027,2026-10-25,Alabama A&M,Jourdin Brooks,1.0,0.6661
+2026-2027,2026-10-25,Alabama A&M,McKenzie Charles,-0.75,-1.3901
+2026-2027,2026-10-25,Alabama A&M,Shaylee Howard,0.0,0.0
+2026-2027,2026-10-25,Ark.-Pine Bluff,Kennedy Adams,2.25,2.6224
+2026-2027,2026-10-25,Ark.-Pine Bluff,Marlina Anderson,0.0,-0.4718
+2026-2027,2026-10-25,Ark.-Pine Bluff,Jnireah Henry,4.25,3.0582
+2026-2027,2026-10-25,Ark.-Pine Bluff,Kinsley Hooper,7.25,6.5384
+2026-2027,2026-10-25,Ark.-Pine Bluff,London King,9.5,11.2356
+2026-2027,2026-10-25,Ark.-Pine Bluff,Martyna Lubowicz,10.0,11.5269
+2026-2027,2026-10-25,Ark.-Pine Bluff,Ngozi Nwosu,4.0,2.1109
+2026-2027,2026-10-25,Ark.-Pine Bluff,J'nyah Odom,4.25,4.7812
+2026-2027,2026-10-25,Ark.-Pine Bluff,Haley Reeves,10.25,11.5704
+2026-2027,2026-10-25,Ark.-Pine Bluff,Zuzanna Zietek,1.25,0.8825
+2026-2027,2026-10-25,Ark.-Pine Bluff,Karli Glover,8.25,7.2463
+2026-2027,2026-10-25,Ark.-Pine Bluff,Ashanti Butler,2.0,1.9443
+2026-2027,2026-10-25,Ark.-Pine Bluff,Desiree Kepler,0.5,0.4316
 2026-2027,2026-09-04,Penn,Jenna Garner,20.5,24.6577
 2026-2027,2026-09-04,Penn,Haley Kerstetter,9.0,10.8499
 2026-2027,2026-09-04,Penn,Elsa McDermott,4.75,3.7597
@@ -685438,7 +685579,7 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-18,Rutgers,Avery Jesewitz,2.0,2.5902
 2026-2027,2026-09-18,Rutgers,Kaila Kalama-Bajet,0.0,-0.3445
 2026-2027,2026-09-18,Rutgers,Kaila Kalama-Bajet,0.0,0.0212
-2026-2027,2026-09-18,Penn,Jenna Garner,16.75,17.2779
+2026-2027,2026-09-18,Penn,Jenna Garner,16.75,16.6249
 2026-2027,2026-09-18,Penn,Jenna Garner,16.75,17.9444
 2026-2027,2026-09-18,Penn,Hailey Hilsabeck,2.25,2.4436
 2026-2027,2026-09-18,Penn,Haley Kerstetter,3.25,3.5012
@@ -685447,11 +685588,11 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-18,Penn,Emery Moore,25.5,40.7763
 2026-2027,2026-09-18,Penn,Adell Murray,15.75,22.9778
 2026-2027,2026-09-18,Penn,Adell Murray,15.75,22.9634
-2026-2027,2026-09-18,Penn,Addison Pollock,13.0,9.581
+2026-2027,2026-09-18,Penn,Addison Pollock,13.0,12.5641
 2026-2027,2026-09-18,Penn,Addison Pollock,13.0,17.7787
-2026-2027,2026-09-18,Penn,Zada Sanger,3.75,2.9748
+2026-2027,2026-09-18,Penn,Zada Sanger,3.75,2.8189
 2026-2027,2026-09-18,Penn,Zada Sanger,3.75,3.0073
-2026-2027,2026-09-18,Penn,Ellie Siskin,10.0,9.7048
+2026-2027,2026-09-18,Penn,Ellie Siskin,10.0,9.1702
 2026-2027,2026-09-18,Penn,Ellie Siskin,10.0,9.877
 2026-2027,2026-09-18,Penn,Nathalie Tsai,-0.75,-0.7459
 2026-2027,2026-09-18,Penn,Nathalie Tsai,-0.75,-0.7269
@@ -686672,14 +686813,14 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-12,Tennessee,Mackenzie Plante,-0.75,-0.7928
 2026-2027,2026-09-12,Tennessee,Anni Tang,0.5,0.5256
 2026-2027,2026-09-15,Tennessee,Raegan Burns,4.0,3.8903
-2026-2027,2026-09-15,Tennessee,Maggie Dostic,15.0,16.9985
+2026-2027,2026-09-15,Tennessee,Maggie Dostic,15.0,17.3316
 2026-2027,2026-09-15,Tennessee,Emma Frietch,0.5,0.4104
 2026-2027,2026-09-15,Tennessee,Sydney Jaynes,5.25,6.1339
-2026-2027,2026-09-15,Tennessee,Caroline Kerr,20.75,28.2404
+2026-2027,2026-09-15,Tennessee,Caroline Kerr,20.75,28.0673
 2026-2027,2026-09-15,Tennessee,Jolene Oddo,6.75,8.3656
-2026-2027,2026-09-15,Tennessee,Jalyn Stout,16.25,18.3844
+2026-2027,2026-09-15,Tennessee,Jalyn Stout,16.25,18.6864
 2026-2027,2026-09-15,Tennessee,Morgan Williams,6.75,6.2298
-2026-2027,2026-09-15,Tennessee,Nia Hall,0.25,-0.4446
+2026-2027,2026-09-15,Tennessee,Nia Hall,0.25,-0.4147
 2026-2027,2026-09-15,Tennessee,Anni Tang,5.0,4.4728
 2026-2027,2026-09-15,Tennessee,Alaina Jarrett,1.5,1.4685
 2026-2027,2026-09-15,Tennessee,Camille Perry,-1.0,-1.0892
@@ -686878,6 +687019,31 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-22,Belmont,Emily Warmenhoven,9.5,8.1527
 2026-2027,2026-10-22,Belmont,Connie Kofoed,-1.25,-1.6075
 2026-2027,2026-10-22,Belmont,Mialee Dabbelt,-1.0,-1.1865
+2026-2027,2026-10-25,Belmont,Mya Bolton,5.5,6.5765
+2026-2027,2026-10-25,Belmont,Jordan Czajkowski,12.5,21.0965
+2026-2027,2026-10-25,Belmont,Lauren Evans,1.0,0.8622
+2026-2027,2026-10-25,Belmont,Brenna Kauffeld,15.25,20.964
+2026-2027,2026-10-25,Belmont,Lucy Kay,9.75,14.0762
+2026-2027,2026-10-25,Belmont,Alivia Keegan,8.75,11.3599
+2026-2027,2026-10-25,Belmont,Madison Lansdown,2.25,2.9742
+2026-2027,2026-10-25,Belmont,Erin McMullen,9.0,10.6676
+2026-2027,2026-10-25,Belmont,Sydnee Nelson,9.5,10.8697
+2026-2027,2026-10-25,Belmont,Emily Warmenhoven,8.0,8.2325
+2026-2027,2026-10-25,Belmont,Teagan Brandsma,-1.0,-0.9913
+2026-2027,2026-10-25,Illinois St.,Samantha Bunch,7.0,5.2883
+2026-2027,2026-10-25,Illinois St.,Oliwia Caputa,4.25,2.4934
+2026-2027,2026-10-25,Illinois St.,Ella Craggs,9.0,8.6938
+2026-2027,2026-10-25,Illinois St.,Jillian Ferrill,3.25,3.141
+2026-2027,2026-10-25,Illinois St.,Jillian Gregory,5.0,4.0023
+2026-2027,2026-10-25,Illinois St.,Ayla Klingenberg,3.5,3.9505
+2026-2027,2026-10-25,Illinois St.,Ella Kohnen,6.5,6.9833
+2026-2027,2026-10-25,Illinois St.,Abby Reck,3.0,3.7381
+2026-2027,2026-10-25,Illinois St.,Peyton Turner,3.5,4.3077
+2026-2027,2026-10-25,Illinois St.,Ruth Ziegler,3.0,1.8225
+2026-2027,2026-10-25,Illinois St.,Emilija Arsic,0.0,-0.0656
+2026-2027,2026-10-25,Illinois St.,Ellie Burr,-1.0,-0.9928
+2026-2027,2026-10-25,Illinois St.,Audrey Clark,0.75,0.7198
+2026-2027,2026-10-25,Illinois St.,Madison Smith,1.5,1.5862
 2026-2027,2026-08-28,Morehead St.,Tinsley Brown,7.25,6.8071
 2026-2027,2026-08-28,Morehead St.,Haidyn Carter,9.75,11.4977
 2026-2027,2026-08-28,Morehead St.,Josie Certa,10.5,14.2888
@@ -687426,6 +687592,27 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-04,Nevada,Malia Pilimai,0.0,0.3531
 2026-2027,2026-09-04,Nevada,Kamryn Tifft,-1.0,-1.2083
 2026-2027,2026-09-04,Nevada,Jess Walkenhorst,0.75,0.4429
+2026-2027,2026-10-25,Vanderbilt,Reese Animashaun,13.5,15.1544
+2026-2027,2026-10-25,Vanderbilt,Kayla Dunlap,3.75,3.7165
+2026-2027,2026-10-25,Vanderbilt,Carly Hendrickson,-1.75,-1.5356
+2026-2027,2026-10-25,Vanderbilt,Elli Kinney,4.25,4.9659
+2026-2027,2026-10-25,Vanderbilt,Hailee Mack,15.0,20.2184
+2026-2027,2026-10-25,Vanderbilt,Rachel Ogunleye,3.0,3.047
+2026-2027,2026-10-25,Vanderbilt,Avery Scoggins,21.25,31.8975
+2026-2027,2026-10-25,Vanderbilt,Maya Witherspoon,13.5,14.3442
+2026-2027,2026-10-25,Vanderbilt,Samantha Wunsch,8.0,8.3136
+2026-2027,2026-10-25,Vanderbilt,Kati Berezowitz,-1.0,-0.8809
+2026-2027,2026-10-25,Tennessee,Raegan Burns,9.25,10.1183
+2026-2027,2026-10-25,Tennessee,Maggie Dostic,12.5,12.8752
+2026-2027,2026-10-25,Tennessee,Emma Frietch,2.5,3.2944
+2026-2027,2026-10-25,Tennessee,Sydney Jaynes,-0.75,-0.6547
+2026-2027,2026-10-25,Tennessee,Caroline Kerr,31.0,50.314
+2026-2027,2026-10-25,Tennessee,Kennedi Rogers,16.75,20.3406
+2026-2027,2026-10-25,Tennessee,Jalyn Stout,17.5,21.2811
+2026-2027,2026-10-25,Tennessee,Chelsea Sutton,5.75,6.1837
+2026-2027,2026-10-25,Tennessee,Anni Tang,4.0,5.0756
+2026-2027,2026-10-25,Tennessee,Nia Hall,1.0,1.24
+2026-2027,2026-10-25,Tennessee,Camille Perry,2.5,3.1536
 2026-2027,2026-09-05,Saint Mary's (CA),Layne Dent,10.25,11.1571
 2026-2027,2026-09-05,Saint Mary's (CA),Caroline Formankova,13.0,11.031
 2026-2027,2026-09-05,Saint Mary's (CA),Makenzie Jackson,5.25,3.7159
@@ -687999,12 +688186,12 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-17,Portland St.,Maryn Hall,0.75,0.6396
 2026-2027,2026-09-17,Portland St.,Xanthe Ocampo,0.25,0.2735
 2026-2027,2026-09-17,Portland St.,Alyssandra Ordona,0.25,0.7024
-2026-2027,2026-09-17,Oregon,Alanah Clemente,6.0,5.8537
-2026-2027,2026-09-17,Oregon,Marina Crownover,18.75,23.9871
-2026-2027,2026-09-17,Oregon,Sjakkie Donkers,15.25,15.3894
+2026-2027,2026-09-17,Oregon,Alanah Clemente,6.0,5.889
+2026-2027,2026-09-17,Oregon,Marina Crownover,18.75,24.0183
+2026-2027,2026-09-17,Oregon,Sjakkie Donkers,15.25,14.9213
 2026-2027,2026-09-17,Oregon,Maila Ribeiro,3.5,3.9238
 2026-2027,2026-09-17,Oregon,Reese Sheppard,6.25,6.7251
-2026-2027,2026-09-17,Oregon,Iva Sucurovic,7.25,8.1337
+2026-2027,2026-09-17,Oregon,Iva Sucurovic,7.25,8.1075
 2026-2027,2026-09-17,Oregon,Valentina Vaulet,5.0,2.5958
 2026-2027,2026-09-17,Oregon,Dalia Vîrlan,3.25,3.1088
 2026-2027,2026-09-17,Oregon,Marlee Arrington,0.0,0.0
@@ -688213,6 +688400,29 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-15,Northwestern,Maya Stillwell,4.75,5.1304
 2026-2027,2026-10-15,Northwestern,Lily Wagner,2.25,2.1811
 2026-2027,2026-10-15,Northwestern,Drew Wright,2.0,2.1508
+2026-2027,2026-10-25,Northwestern,Isabella Bullington,14.75,17.3256
+2026-2027,2026-10-25,Northwestern,Gabrielle Gerry,4.0,5.6187
+2026-2027,2026-10-25,Northwestern,Campbell Paris,7.75,11.1083
+2026-2027,2026-10-25,Northwestern,Cate Schnell,1.5,1.452
+2026-2027,2026-10-25,Northwestern,Ellie Stiernagle,20.5,31.0744
+2026-2027,2026-10-25,Northwestern,Mara Stiglic,0.75,-0.5631
+2026-2027,2026-10-25,Northwestern,Maya Stillwell,0.0,-0.288
+2026-2027,2026-10-25,Northwestern,Lily Wagner,-1.5,-1.5059
+2026-2027,2026-10-25,Northwestern,Drew Wright,4.0,4.9712
+2026-2027,2026-10-25,Northwestern,Ava Pratt,1.0,0.9492
+2026-2027,2026-10-25,Purdue,Taylor Anderson,18.25,34.3545
+2026-2027,2026-10-25,Purdue,Dior Charles,4.5,5.1116
+2026-2027,2026-10-25,Purdue,Kate Hansen,10.75,15.362
+2026-2027,2026-10-25,Purdue,Grace Heaney,11.75,13.5465
+2026-2027,2026-10-25,Purdue,Lameen Mambu,4.0,4.198
+2026-2027,2026-10-25,Purdue,Ryan McAleer,7.75,8.4754
+2026-2027,2026-10-25,Purdue,Elle Schara,3.25,3.8203
+2026-2027,2026-10-25,Purdue,MaryKate Scheumann,3.25,4.334
+2026-2027,2026-10-25,Purdue,Addy Tindall,8.25,9.4855
+2026-2027,2026-10-25,Purdue,Isabelle Bardin,2.0,2.3911
+2026-2027,2026-10-25,Purdue,Lily Bosworth,2.0,2.5666
+2026-2027,2026-10-25,Purdue,Bianka Lulic,1.5,1.6692
+2026-2027,2026-10-25,Purdue,Sydni Vice,2.0,2.3525
 2026-2027,2026-10-23,Oregon,Alanah Clemente,3.5,1.2076
 2026-2027,2026-10-23,Oregon,Marina Crownover,21.25,28.6265
 2026-2027,2026-10-23,Oregon,Sjakkie Donkers,19.25,20.485
@@ -688773,14 +688983,14 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,Stonehill,Gabi Polishuk,4.25,1.099
 2026-2027,2026-10-23,Stonehill,Casey McDermott,4.0,4.7422
 2026-2027,2026-10-23,Stonehill,Rosa Smith,2.5,1.7535
-2026-2027,2026-10-23,New Haven,Marley Alefaio,14.75,12.4323
+2026-2027,2026-10-23,New Haven,Marley Alefaio,14.75,12.2492
 2026-2027,2026-10-23,New Haven,Josie Foster,6.75,5.5456
-2026-2027,2026-10-23,New Haven,Camryn Harris,6.5,5.3317
-2026-2027,2026-10-23,New Haven,Zaira Kearns,27.0,29.8732
+2026-2027,2026-10-23,New Haven,Camryn Harris,6.5,5.7016
+2026-2027,2026-10-23,New Haven,Zaira Kearns,27.0,30.0128
 2026-2027,2026-10-23,New Haven,Kira Lynch,2.75,1.9841
 2026-2027,2026-10-23,New Haven,Lauren MacKellar,13.25,10.5384
-2026-2027,2026-10-23,New Haven,Payton Malinoski,6.5,4.1572
-2026-2027,2026-10-23,New Haven,Alejandra Mejia,6.0,4.8237
+2026-2027,2026-10-23,New Haven,Payton Malinoski,6.5,3.9844
+2026-2027,2026-10-23,New Haven,Alejandra Mejia,6.0,4.7306
 2026-2027,2026-10-23,New Haven,Quinn Yenshaw,3.75,1.8889
 2026-2027,2026-10-23,New Haven,Caroline Johnston,0.0,0.0
 2026-2027,2026-10-24,Stonehill,Jess Barrett,3.25,6.2496
@@ -689303,14 +689513,14 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,James Madison,Grace Wenrich,12.25,15.2279
 2026-2027,2026-10-23,James Madison,Anna Wilson,0.0,-0.4438
 2026-2027,2026-10-23,Ga. Southern,Gabby Babinski,-1.0,-0.9406
-2026-2027,2026-10-23,Ga. Southern,Reagan Barth,12.5,12.8583
-2026-2027,2026-10-23,Ga. Southern,Sam Bowron,10.0,9.9814
+2026-2027,2026-10-23,Ga. Southern,Reagan Barth,12.5,12.6875
+2026-2027,2026-10-23,Ga. Southern,Sam Bowron,10.0,10.6968
 2026-2027,2026-10-23,Ga. Southern,Mayte Camacho,5.25,5.8562
-2026-2027,2026-10-23,Ga. Southern,Maddie Cugino,5.25,3.653
-2026-2027,2026-10-23,Ga. Southern,Lexi Duffy,16.25,19.5241
+2026-2027,2026-10-23,Ga. Southern,Maddie Cugino,5.25,4.2372
+2026-2027,2026-10-23,Ga. Southern,Lexi Duffy,16.25,19.3346
 2026-2027,2026-10-23,Ga. Southern,Kayla Knowles,2.0,2.1725
 2026-2027,2026-10-23,Ga. Southern,Alex Myers,10.0,14.3051
-2026-2027,2026-10-23,Ga. Southern,Beka Pfefferkorn,8.25,9.8147
+2026-2027,2026-10-23,Ga. Southern,Beka Pfefferkorn,8.25,9.7611
 2026-2027,2026-10-24,James Madison,Shelby Davis,4.0,5.0201
 2026-2027,2026-10-24,James Madison,Melisa Ilter,7.0,8.221
 2026-2027,2026-10-24,James Madison,Lindsey Large,8.25,7.2693
@@ -689332,12 +689542,12 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-24,Ga. Southern,Anna Powell,2.5,1.0582
 2026-2027,2026-10-24,Ga. Southern,Sam Bowron,0.0,-0.7231
 2026-2027,2026-08-28,Tennessee St.,Italya Carter,0.0,-0.3038
-2026-2027,2026-08-28,Tennessee St.,Jordan Imperial,5.25,2.6631
+2026-2027,2026-08-28,Tennessee St.,Jordan Imperial,5.25,2.4588
 2026-2027,2026-08-28,Tennessee St.,Triniti Jackson,13.25,12.5192
 2026-2027,2026-08-28,Tennessee St.,Wiktoria Jakubik,9.75,11.0374
 2026-2027,2026-08-28,Tennessee St.,Melae Lacy,5.0,3.7276
-2026-2027,2026-08-28,Tennessee St.,Sydni Poston,7.0,6.2063
-2026-2027,2026-08-28,Tennessee St.,Sydney Robinson,5.25,2.0939
+2026-2027,2026-08-28,Tennessee St.,Sydni Poston,7.0,5.8069
+2026-2027,2026-08-28,Tennessee St.,Sydney Robinson,5.25,2.4007
 2026-2027,2026-08-28,Tennessee St.,Carsyn Stansberry,-0.25,-1.9237
 2026-2027,2026-08-28,Tennessee St.,Gabriella Blevins,-1.0,-1.4741
 2026-2027,2026-08-28,Tennessee St.,Mimi Harris,1.25,0.918
@@ -690101,14 +690311,14 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-12,Missouri St.,Halle Rillie,18.5,28.0869
 2026-2027,2026-09-12,Missouri St.,Jenna Walters,6.5,8.5102
 2026-2027,2026-09-12,Missouri St.,Lexi Weinberg,7.5,8.1191
-2026-2027,2026-09-12,Iowa,Marichka Hoshylyk,7.0,6.0925
-2026-2027,2026-09-12,Iowa,Jaimie Marquardt,5.75,7.0937
-2026-2027,2026-09-12,Iowa,Jenna Meitzler,26.0,41.3661
-2026-2027,2026-09-12,Iowa,Liv Mogridge,11.5,13.4275
-2026-2027,2026-09-12,Iowa,Henlee Moszkowicz,7.0,7.39
+2026-2027,2026-09-12,Iowa,Marichka Hoshylyk,7.0,5.942
+2026-2027,2026-09-12,Iowa,Jaimie Marquardt,5.75,6.0984
+2026-2027,2026-09-12,Iowa,Jenna Meitzler,26.0,41.4986
+2026-2027,2026-09-12,Iowa,Liv Mogridge,11.5,13.5295
+2026-2027,2026-09-12,Iowa,Henlee Moszkowicz,7.0,7.8367
 2026-2027,2026-09-12,Iowa,Ksenija Tomic,17.25,25.0573
 2026-2027,2026-09-12,Iowa,Carmel Vares,-0.25,-2.5571
-2026-2027,2026-09-12,Iowa,Hallie Steponaitis,2.5,1.8168
+2026-2027,2026-09-12,Iowa,Hallie Steponaitis,2.5,1.8698
 2026-2027,2026-09-12,Iowa,Hannah Whittingstall,7.75,9.524
 2026-2027,2026-09-12,Iowa,Allison Berent,0.0,0.0
 2026-2027,2026-09-12,Iowa,Rosa Vesty,2.0,2.397
@@ -690381,15 +690591,15 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-03,James Madison,Anna Wilson,9.5,13.5315
 2026-2027,2026-09-03,North Carolina,Zoe Behrendt,19.25,34.6854
 2026-2027,2026-09-03,North Carolina,Julia Bohlinger,-0.5,-0.475
-2026-2027,2026-09-03,North Carolina,Safi Hampton,11.5,10.7103
-2026-2027,2026-09-03,North Carolina,Bridget Malone,12.75,11.8146
-2026-2027,2026-09-03,North Carolina,Carly Markham,4.25,3.9461
+2026-2027,2026-09-03,North Carolina,Safi Hampton,11.5,11.1284
+2026-2027,2026-09-03,North Carolina,Bridget Malone,12.75,11.9721
+2026-2027,2026-09-03,North Carolina,Carly Markham,4.25,3.8396
 2026-2027,2026-09-03,North Carolina,Lauren Schutter,6.0,7.287
 2026-2027,2026-09-03,North Carolina,Laynie Smith,10.0,13.3365
 2026-2027,2026-09-03,North Carolina,Jackie Taylor,11.25,17.7706
 2026-2027,2026-09-03,North Carolina,Chelsea Thorpe,13.75,18.5581
-2026-2027,2026-09-03,North Carolina,Sienna Cozza,7.0,10.1062
-2026-2027,2026-09-03,North Carolina,Emily Bobbitt,3.75,4.2552
+2026-2027,2026-09-03,North Carolina,Sienna Cozza,7.0,10.2184
+2026-2027,2026-09-03,North Carolina,Emily Bobbitt,3.75,4.1838
 2026-2027,2026-09-05,James Madison,Shelby Davis,6.0,7.0086
 2026-2027,2026-09-05,James Madison,Ella Grace Holloway,10.5,13.4057
 2026-2027,2026-09-05,James Madison,Lindsey Large,13.5,19.2734
@@ -690847,18 +691057,18 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-05,LSU New Orleans,Alana Pierce,0.25,0.2753
 2026-2027,2026-09-05,LSU New Orleans,Karina Barzanova,-0.5,-0.6191
 2026-2027,2026-09-06,LSU New Orleans,Olivia Bartrina,1.5,-2.5872
-2026-2027,2026-09-06,LSU New Orleans,Defne Eciroglu,5.5,5.676
+2026-2027,2026-09-06,LSU New Orleans,Defne Eciroglu,5.5,5.3966
 2026-2027,2026-09-06,LSU New Orleans,Armie Hall,2.0,0.7083
-2026-2027,2026-09-06,LSU New Orleans,Rylie Hallman,2.25,2.5585
-2026-2027,2026-09-06,LSU New Orleans,Mia Lopez,3.75,2.645
+2026-2027,2026-09-06,LSU New Orleans,Rylie Hallman,2.25,2.4264
+2026-2027,2026-09-06,LSU New Orleans,Mia Lopez,3.75,3.7722
 2026-2027,2026-09-06,LSU New Orleans,Alana Pierce,1.0,0.996
-2026-2027,2026-09-06,LSU New Orleans,Laura Piva,8.25,9.6524
-2026-2027,2026-09-06,LSU New Orleans,Elani Ratchkovska,1.5,1.4687
-2026-2027,2026-09-06,LSU New Orleans,Vladana Ristic,1.0,0.3302
+2026-2027,2026-09-06,LSU New Orleans,Laura Piva,8.25,9.9089
+2026-2027,2026-09-06,LSU New Orleans,Elani Ratchkovska,1.5,1.5171
+2026-2027,2026-09-06,LSU New Orleans,Vladana Ristic,1.0,1.3008
 2026-2027,2026-09-06,LSU New Orleans,Ania Anderson,0.0,-0.1729
 2026-2027,2026-09-06,LSU New Orleans,Nyakuak Lual,-3.75,-4.3566
-2026-2027,2026-09-06,LSU New Orleans,Derin Nur Aydin,2.75,3.1721
-2026-2027,2026-09-06,LSU New Orleans,Mariana Franco,3.25,4.2802
+2026-2027,2026-09-06,LSU New Orleans,Derin Nur Aydin,2.75,3.1358
+2026-2027,2026-09-06,LSU New Orleans,Mariana Franco,3.25,4.2533
 2026-2027,2026-09-06,San Jose St.,Orian Drore,4.75,3.7165
 2026-2027,2026-09-06,San Jose St.,Morgan Graves,7.5,5.6437
 2026-2027,2026-09-06,San Jose St.,Fatimah Hall,18.5,20.4776
@@ -691940,19 +692150,19 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-17,Colgate,Morgan Reese,-3.75,-4.3849
 2026-2027,2026-10-17,Colgate,Aubrey Anders,3.0,3.4161
 2026-2027,2026-10-17,Colgate,Gabrielle Emch,-1.0,-0.9281
-2026-2027,2026-10-23,Colgate,Aubrey Anders,15.25,14.6211
+2026-2027,2026-10-23,Colgate,Aubrey Anders,15.25,15.2715
 2026-2027,2026-10-23,Colgate,Gabrielle Emch,1.25,1.3284
-2026-2027,2026-10-23,Colgate,Stella Labrecque,0.75,0.3432
-2026-2027,2026-10-23,Colgate,Hannah Langton,7.25,6.5074
-2026-2027,2026-10-23,Colgate,Tiana Owens,18.25,18.0638
+2026-2027,2026-10-23,Colgate,Stella Labrecque,0.75,0.3235
+2026-2027,2026-10-23,Colgate,Hannah Langton,7.25,6.8233
+2026-2027,2026-10-23,Colgate,Tiana Owens,18.25,21.0829
 2026-2027,2026-10-23,Colgate,Morgan Reese,11.0,12.1027
-2026-2027,2026-10-23,Colgate,Ava Schabes,23.5,27.5485
+2026-2027,2026-10-23,Colgate,Ava Schabes,23.5,26.6818
 2026-2027,2026-10-23,Colgate,Julia Oster,1.75,1.6949
 2026-2027,2026-10-23,Colgate,Nina Gannon,0.5,0.1908
 2026-2027,2026-10-23,Colgate,Julia Headley,2.5,2.2419
-2026-2027,2026-10-23,Colgate,Reagan Knipling,5.25,6.4265
-2026-2027,2026-10-23,Colgate,Jordyn Moore,5.5,6.0768
-2026-2027,2026-10-23,Colgate,Sydney Raszewski,1.75,1.9103
+2026-2027,2026-10-23,Colgate,Reagan Knipling,5.25,6.1987
+2026-2027,2026-10-23,Colgate,Jordyn Moore,5.5,6.1123
+2026-2027,2026-10-23,Colgate,Sydney Raszewski,1.75,1.8313
 2026-2027,2026-10-23,Loyola Maryland,Elsie Afful,8.75,9.7208
 2026-2027,2026-10-23,Loyola Maryland,Elise Bocanegra,-1.0,-0.9927
 2026-2027,2026-10-23,Loyola Maryland,Morgan Crawford,13.0,15.2957
@@ -692014,22 +692224,22 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-08-28,Army West Point,Liliana Fox,2.25,2.049
 2026-2027,2026-08-28,Army West Point,Hannah Hankerson,-1.5,-1.39
 2026-2027,2026-08-29,Sacred Heart,Addy Franz,23.5,26.5378
-2026-2027,2026-08-29,Sacred Heart,Addy Franz,23.5,36.3757
+2026-2027,2026-08-29,Sacred Heart,Addy Franz,23.5,36.1791
 2026-2027,2026-08-29,Sacred Heart,Abbie Hagedorn,10.25,6.5007
 2026-2027,2026-08-29,Sacred Heart,Abbie Hagedorn,10.25,8.5452
 2026-2027,2026-08-29,Sacred Heart,Sofia Hechavarria,1.5,0.9439
-2026-2027,2026-08-29,Sacred Heart,Sofia Hechavarria,1.5,0.5718
+2026-2027,2026-08-29,Sacred Heart,Sofia Hechavarria,1.5,0.6622
 2026-2027,2026-08-29,Sacred Heart,Lauren Hubert,15.75,17.8712
-2026-2027,2026-08-29,Sacred Heart,Lauren Hubert,15.75,17.9083
+2026-2027,2026-08-29,Sacred Heart,Lauren Hubert,15.75,17.9981
 2026-2027,2026-08-29,Sacred Heart,Ryleigh Short,4.0,1.8202
 2026-2027,2026-08-29,Sacred Heart,Ryleigh Short,4.0,3.8558
 2026-2027,2026-08-29,Sacred Heart,Miliani Villarreal,9.25,10.7432
-2026-2027,2026-08-29,Sacred Heart,Miliani Villarreal,9.25,8.6414
+2026-2027,2026-08-29,Sacred Heart,Miliani Villarreal,9.25,9.0778
 2026-2027,2026-08-29,Sacred Heart,Raissa Antonio,4.5,5.1746
 2026-2027,2026-08-29,Sacred Heart,Raissa Antonio,4.5,4.996
 2026-2027,2026-08-29,Sacred Heart,Kayla Jones,3.0,3.1671
 2026-2027,2026-08-29,Sacred Heart,Renata Montini,0.0,-0.4923
-2026-2027,2026-08-29,Sacred Heart,Renata Montini,0.0,0.0167
+2026-2027,2026-08-29,Sacred Heart,Renata Montini,0.0,-0.7143
 2026-2027,2026-08-29,Sacred Heart,Molly Newton,0.0,-0.5733
 2026-2027,2026-08-29,Sacred Heart,Molly Newton,0.0,-0.5726
 2026-2027,2026-08-29,Sacred Heart,Samantha Alberghini,0.0,0.0
@@ -693370,6 +693580,28 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,Fla. Atlantic,Sara Gamboa,19.0,27.1375
 2026-2027,2026-10-23,Fla. Atlantic,Luye Marquez-Moreno,1.75,1.8416
 2026-2027,2026-10-23,Fla. Atlantic,Natalie Depaula,0.75,0.4383
+2026-2027,2026-10-25,Memphis,Amanda Hardt,10.5,11.4692
+2026-2027,2026-10-25,Memphis,Victoria Hill,6.25,7.0084
+2026-2027,2026-10-25,Memphis,Caitlyn Little,7.0,4.9995
+2026-2027,2026-10-25,Memphis,Sydney Marshall,14.0,15.0033
+2026-2027,2026-10-25,Memphis,Arianna Mongare,5.5,5.3455
+2026-2027,2026-10-25,Memphis,Dawn Moore,5.0,5.226
+2026-2027,2026-10-25,Memphis,Kaylee Parker,3.0,3.1138
+2026-2027,2026-10-25,Memphis,Abigail Schlueter,6.75,6.6265
+2026-2027,2026-10-25,Memphis,Taylor Hampton,1.0,0.8241
+2026-2027,2026-10-25,Memphis,Jordan Turner,5.0,5.7292
+2026-2027,2026-10-25,Memphis,Zaniah Hoskins,0.0,-0.2279
+2026-2027,2026-10-25,Memphis,Paige Mock,1.5,1.4335
+2026-2027,2026-10-25,Memphis,Lillian Hamilton,-1.5,-1.4452
+2026-2027,2026-10-25,South Fla.,Addy Brus,14.5,19.0002
+2026-2027,2026-10-25,South Fla.,Iyanna Garvin,7.0,7.975
+2026-2027,2026-10-25,South Fla.,Laila Ivey,9.75,11.2662
+2026-2027,2026-10-25,South Fla.,Nina Jioshvili-Ravva,27.25,39.5953
+2026-2027,2026-10-25,South Fla.,Riley McCaughey,0.5,1.2161
+2026-2027,2026-10-25,South Fla.,Ryelle Rondo,7.0,5.4297
+2026-2027,2026-10-25,South Fla.,Miya Thomas,6.0,6.7207
+2026-2027,2026-10-25,South Fla.,Paula Tomasa,8.0,6.3908
+2026-2027,2026-10-25,South Fla.,Amelia Wass de Czege,6.5,7.2236
 2026-2027,2026-08-28,Southern U.,Paulina Agudelo Marin,3.0,3.0321
 2026-2027,2026-08-28,Southern U.,Paulina Agudelo Marin,3.0,3.0539
 2026-2027,2026-08-28,Southern U.,Najah Harris,5.5,4.3499
@@ -693486,17 +693718,17 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-05,Central Ark.,Fiona VanDyke,-0.75,-1.3482
 2026-2027,2026-09-05,Central Ark.,Tatelyn Brandsma,9.75,10.6353
 2026-2027,2026-09-05,Southern Miss.,Allie Hazelwood,29.5,37.1188
-2026-2027,2026-09-05,Southern Miss.,Allie Hazelwood,29.5,32.3849
+2026-2027,2026-09-05,Southern Miss.,Allie Hazelwood,29.5,32.3415
 2026-2027,2026-09-05,Southern Miss.,Lillie Johnson,3.75,3.8363
 2026-2027,2026-09-05,Southern Miss.,Lillie Johnson,3.75,3.8694
 2026-2027,2026-09-05,Southern Miss.,Aubrey Judd,6.25,6.2198
 2026-2027,2026-09-05,Southern Miss.,Aubrey Judd,6.25,6.0995
 2026-2027,2026-09-05,Southern Miss.,Kaylee Lowther,3.5,3.7379
-2026-2027,2026-09-05,Southern Miss.,Kaylee Lowther,3.5,2.7044
+2026-2027,2026-09-05,Southern Miss.,Kaylee Lowther,3.5,2.507
 2026-2027,2026-09-05,Southern Miss.,Sadie McAda,17.75,18.4381
-2026-2027,2026-09-05,Southern Miss.,Sadie McAda,17.75,19.452
+2026-2027,2026-09-05,Southern Miss.,Sadie McAda,17.75,20.268
 2026-2027,2026-09-05,Southern Miss.,Sunni Sheppard,12.25,14.5975
-2026-2027,2026-09-05,Southern Miss.,Sunni Sheppard,12.25,12.0651
+2026-2027,2026-09-05,Southern Miss.,Sunni Sheppard,12.25,11.5745
 2026-2027,2026-09-05,Southern Miss.,Lindsey Smith,1.75,1.6795
 2026-2027,2026-09-05,Southern Miss.,Lindsey Smith,1.75,1.7391
 2026-2027,2026-09-05,Southern Miss.,Elly Stewart,6.5,7.119
@@ -693504,17 +693736,17 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-05,Southern Miss.,Diana Wells,4.5,3.0811
 2026-2027,2026-09-05,Southern Miss.,Diana Wells,4.5,2.3163
 2026-2027,2026-09-05,Southern Miss.,Allie Hazelwood,19.5,28.0592
-2026-2027,2026-09-05,Southern Miss.,Allie Hazelwood,19.5,23.9547
+2026-2027,2026-09-05,Southern Miss.,Allie Hazelwood,19.5,23.9268
 2026-2027,2026-09-05,Southern Miss.,Lillie Johnson,3.75,3.8421
 2026-2027,2026-09-05,Southern Miss.,Lillie Johnson,3.75,3.8233
 2026-2027,2026-09-05,Southern Miss.,Aubrey Judd,6.0,6.5359
 2026-2027,2026-09-05,Southern Miss.,Aubrey Judd,6.0,6.5907
 2026-2027,2026-09-05,Southern Miss.,Kaylee Lowther,7.25,8.1077
-2026-2027,2026-09-05,Southern Miss.,Kaylee Lowther,7.25,6.1093
+2026-2027,2026-09-05,Southern Miss.,Kaylee Lowther,7.25,5.7044
 2026-2027,2026-09-05,Southern Miss.,Sadie McAda,9.0,5.3757
-2026-2027,2026-09-05,Southern Miss.,Sadie McAda,9.0,5.7293
+2026-2027,2026-09-05,Southern Miss.,Sadie McAda,9.0,6.2213
 2026-2027,2026-09-05,Southern Miss.,Sunni Sheppard,10.0,15.7994
-2026-2027,2026-09-05,Southern Miss.,Sunni Sheppard,10.0,12.548
+2026-2027,2026-09-05,Southern Miss.,Sunni Sheppard,10.0,11.5611
 2026-2027,2026-09-05,Southern Miss.,Lindsey Smith,4.5,4.668
 2026-2027,2026-09-05,Southern Miss.,Lindsey Smith,4.5,4.8607
 2026-2027,2026-09-05,Southern Miss.,Elly Stewart,3.25,3.5192
@@ -694926,6 +695158,27 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,Florida,Alec Rothe,8.25,10.6266
 2026-2027,2026-10-23,Florida,Brooklyn Briscoe,4.0,4.4616
 2026-2027,2026-10-23,Florida,Amaya Thomas,1.5,1.691
+2026-2027,2026-10-25,LSU,Kiley Brooks,12.75,16.7269
+2026-2027,2026-10-25,LSU,Jessica Jones,13.5,19.2918
+2026-2027,2026-10-25,LSU,Angelina Lee,11.25,15.0551
+2026-2027,2026-10-25,LSU,Emilee Prochaska,4.75,4.1758
+2026-2027,2026-10-25,LSU,Lainee Pyles,10.75,14.0493
+2026-2027,2026-10-25,LSU,Jurnee Robinson,17.0,19.2289
+2026-2027,2026-10-25,LSU,Tireh Smith,9.0,9.7355
+2026-2027,2026-10-25,LSU,Martina Villani,30.5,56.1971
+2026-2027,2026-10-25,LSU,Ella Hemmings,3.5,3.3876
+2026-2027,2026-10-25,LSU,Katie Raymer,4.0,4.55
+2026-2027,2026-10-25,Auburn,Lauren Dreves,17.0,19.2667
+2026-2027,2026-10-25,Auburn,Carson Eickenloff,11.5,15.7942
+2026-2027,2026-10-25,Auburn,Grace Havlicek,8.25,10.6821
+2026-2027,2026-10-25,Auburn,Anastasija Ivkovic,6.25,6.2972
+2026-2027,2026-10-25,Auburn,Emily Keiran,8.0,8.9843
+2026-2027,2026-10-25,Auburn,Kate Mansfield,4.25,4.1689
+2026-2027,2026-10-25,Auburn,Emma Moore,9.5,14.0637
+2026-2027,2026-10-25,Auburn,Belle Patrick,16.25,17.9001
+2026-2027,2026-10-25,Auburn,Shanelle Puetz,15.75,22.602
+2026-2027,2026-10-25,Auburn,Symone Sims,1.75,2.1953
+2026-2027,2026-10-25,Auburn,Reese Shugart,-0.25,-0.2451
 2026-2027,2026-08-28,UNC Greensboro,Ella Burd,1.5,1.6415
 2026-2027,2026-08-28,UNC Greensboro,Hailey Clifton,3.5,3.3088
 2026-2027,2026-08-28,UNC Greensboro,Izora Gragg,12.75,12.568
@@ -694992,16 +695245,16 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-08,South Carolina,Ella Grivna,-1.0,-1.0035
 2026-2027,2026-09-08,South Carolina,Kaia Pixler,1.75,1.5685
 2026-2027,2026-09-08,South Carolina,Sydney Floyd,2.0,2.709
-2026-2027,2026-09-11,South Carolina,Olivia Borgman,15.5,10.0909
+2026-2027,2026-09-11,South Carolina,Olivia Borgman,15.5,12.8199
 2026-2027,2026-09-11,South Carolina,Sydney Davis,6.75,6.9531
-2026-2027,2026-09-11,South Carolina,Kiana Dinn,22.5,30.4944
-2026-2027,2026-09-11,South Carolina,Lilly Gillespie,14.5,14.4307
+2026-2027,2026-09-11,South Carolina,Kiana Dinn,22.5,29.6834
+2026-2027,2026-09-11,South Carolina,Lilly Gillespie,14.5,15.1749
 2026-2027,2026-09-11,South Carolina,Ava Leahy,15.25,19.9948
-2026-2027,2026-09-11,South Carolina,Elise Marchal,14.5,14.0978
-2026-2027,2026-09-11,South Carolina,Elizabeth McElveen,2.5,2.9014
-2026-2027,2026-09-11,South Carolina,Ceci Vance,8.5,7.5966
+2026-2027,2026-09-11,South Carolina,Elise Marchal,14.5,13.5912
+2026-2027,2026-09-11,South Carolina,Elizabeth McElveen,2.5,3.0057
+2026-2027,2026-09-11,South Carolina,Ceci Vance,8.5,7.6464
 2026-2027,2026-09-11,South Carolina,Maggie Penn,-1.0,-1.0154
-2026-2027,2026-09-11,South Carolina,Jillian Bohannon,4.75,5.2643
+2026-2027,2026-09-11,South Carolina,Jillian Bohannon,4.75,5.1648
 2026-2027,2026-09-11,South Carolina,Ally Cavanaugh,1.0,0.9626
 2026-2027,2026-09-11,South Carolina,Madisyn Crnjac,1.25,1.0905
 2026-2027,2026-09-11,Clemson,Maddie Anspaugh,5.75,3.8419
@@ -695264,6 +695517,28 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,South Carolina,Madisyn Crnjac,4.5,5.7147
 2026-2027,2026-10-23,South Carolina,Maggie Penn,0.0,0.0
 2026-2027,2026-10-23,South Carolina,Ceci Vance,-2.0,-2.5627
+2026-2027,2026-10-25,Texas,Henley Anderson,10.5,10.9651
+2026-2027,2026-10-25,Texas,Rella Binney,17.25,27.4672
+2026-2027,2026-10-25,Texas,Nya Bunton,8.25,10.621
+2026-2027,2026-10-25,Texas,Addy Gaido,1.25,0.7969
+2026-2027,2026-10-25,Texas,Ramsey Gary,7.5,8.4241
+2026-2027,2026-10-25,Texas,Genevieve Harris,8.75,13.0515
+2026-2027,2026-10-25,Texas,Taylor Harvey,2.25,2.4737
+2026-2027,2026-10-25,Texas,Cari Spears,5.75,5.922
+2026-2027,2026-10-25,Texas,Torrey Stafford,14.5,22.005
+2026-2027,2026-10-25,Texas,Callie Krueger,0.0,0.0
+2026-2027,2026-10-25,South Carolina,Olivia Borgman,11.0,13.3914
+2026-2027,2026-10-25,South Carolina,Ally Cavanaugh,1.75,1.0212
+2026-2027,2026-10-25,South Carolina,Madisyn Crnjac,6.5,8.7422
+2026-2027,2026-10-25,South Carolina,Kiana Dinn,4.0,3.6241
+2026-2027,2026-10-25,South Carolina,Sydney Floyd,3.75,5.0181
+2026-2027,2026-10-25,South Carolina,Lilly Gillespie,4.0,3.4398
+2026-2027,2026-10-25,South Carolina,Ella Grivna,0.0,-0.2756
+2026-2027,2026-10-25,South Carolina,Ava Leahy,3.75,4.4105
+2026-2027,2026-10-25,South Carolina,Elise Marchal,6.75,7.7484
+2026-2027,2026-10-25,South Carolina,Elizabeth McElveen,1.75,1.582
+2026-2027,2026-10-25,South Carolina,Maggie Penn,-1.0,-0.8665
+2026-2027,2026-10-25,South Carolina,Norunn Westersjo,0.5,0.5977
 2026-2027,2026-09-04,Villanova,Lola Buck-Taylor,6.5,5.3444
 2026-2027,2026-09-04,Villanova,Ava Harris,5.5,6.8139
 2026-2027,2026-09-04,Villanova,Chloe Kelly,19.5,17.7837
@@ -695874,6 +696149,31 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-11,Southern U.,Norielle Battle,0.0,0.0
 2026-2027,2026-10-11,Southern U.,Ayana Johnson,0.0,0.0
 2026-2027,2026-10-11,Southern U.,Alayah Wilson,0.0,0.0
+2026-2027,2026-10-25,Southern U.,Paulina Agudelo Marin,1.75,0.7415
+2026-2027,2026-10-25,Southern U.,Norielle Battle,2.75,2.0242
+2026-2027,2026-10-25,Southern U.,Maleah Faust,14.75,15.2358
+2026-2027,2026-10-25,Southern U.,Najah Harris,12.0,9.0232
+2026-2027,2026-10-25,Southern U.,Sereniti Johnson,14.75,11.7032
+2026-2027,2026-10-25,Southern U.,Mariah Mott,12.25,11.6959
+2026-2027,2026-10-25,Southern U.,Zaria Nelson,-1.0,-2.1425
+2026-2027,2026-10-25,Southern U.,Braelynn Reese,-0.25,-0.615
+2026-2027,2026-10-25,Southern U.,Reagan Robinson,10.75,5.4607
+2026-2027,2026-10-25,Southern U.,Penina Vito,12.25,10.5071
+2026-2027,2026-10-25,Southern U.,Ayana Johnson,1.0,0.9366
+2026-2027,2026-10-25,Southern U.,Alayah Wilson,-2.0,-2.8439
+2026-2027,2026-10-25,Southern U.,Alyssa Williams,-1.25,-2.0662
+2026-2027,2026-10-25,Bethune-Cookman,Taylor Ellis,4.0,2.5943
+2026-2027,2026-10-25,Bethune-Cookman,Talibah Hamlett,9.5,7.3023
+2026-2027,2026-10-25,Bethune-Cookman,Nola Hemphill,17.0,14.3325
+2026-2027,2026-10-25,Bethune-Cookman,Moriah Johnson,14.0,8.8837
+2026-2027,2026-10-25,Bethune-Cookman,Kaycee Pennie,2.5,1.3011
+2026-2027,2026-10-25,Bethune-Cookman,Alaya Rhodes,28.75,23.8949
+2026-2027,2026-10-25,Bethune-Cookman,Aaniya Thornton,2.75,2.1051
+2026-2027,2026-10-25,Bethune-Cookman,Kylynn White,10.5,7.0452
+2026-2027,2026-10-25,Bethune-Cookman,Kaleigh Williams,8.25,6.1873
+2026-2027,2026-10-25,Bethune-Cookman,Leila Hargrove,2.75,1.8759
+2026-2027,2026-10-25,Bethune-Cookman,Laura Lino dos Santos,-0.25,-0.3509
+2026-2027,2026-10-25,Bethune-Cookman,Sydnee Rodriguez,-2.0,-2.6172
 2026-2027,2026-08-28,USC Upstate,Emma DeSensi,4.75,4.3809
 2026-2027,2026-08-28,USC Upstate,Emma DeSensi,4.75,3.8921
 2026-2027,2026-08-28,USC Upstate,Kensley Haneline,14.0,15.6279
@@ -697007,6 +697307,27 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,TCU,Addy Horner,3.0,3.9391
 2026-2027,2026-10-23,TCU,Reese Robins,1.5,1.576
 2026-2027,2026-10-23,TCU,Reese Wilburn,2.5,2.8836
+2026-2027,2026-10-25,Kansas,Aisha Aiono,9.75,12.7008
+2026-2027,2026-10-25,Kansas,Logan Bell,5.5,7.4059
+2026-2027,2026-10-25,Kansas,Kenzie Dean,10.0,12.1298
+2026-2027,2026-10-25,Kansas,Heidi Devers,0.0,0.0
+2026-2027,2026-10-25,Kansas,Olivia Hasbrook,3.25,4.7499
+2026-2027,2026-10-25,Kansas,Reese Messer,30.5,50.5041
+2026-2027,2026-10-25,Kansas,Grace Nelson,25.0,33.5447
+2026-2027,2026-10-25,Kansas,Reese Ptacek,15.0,20.907
+2026-2027,2026-10-25,Kansas,Taylor Stanley,8.5,9.4001
+2026-2027,2026-10-25,Baylor,Grace Carroll,6.5,10.0393
+2026-2027,2026-10-25,Baylor,Taylor Crain,3.0,3.4955
+2026-2027,2026-10-25,Baylor,Victoria Davis,8.25,11.7285
+2026-2027,2026-10-25,Baylor,Isabela Haggard,19.25,33.1003
+2026-2027,2026-10-25,Baylor,Mya Hemmer,3.0,3.7338
+2026-2027,2026-10-25,Baylor,Nadiya Johnson,-2.5,-4.2483
+2026-2027,2026-10-25,Baylor,Morgan Madison,10.25,13.0989
+2026-2027,2026-10-25,Baylor,MJ McCurdy,3.75,5.8969
+2026-2027,2026-10-25,Baylor,Ksenia Rakhmanchik,21.25,23.9013
+2026-2027,2026-10-25,Baylor,Lacy Tinnell,2.0,2.2334
+2026-2027,2026-10-25,Baylor,Tehani Ulufatu,5.75,6.5703
+2026-2027,2026-10-25,Baylor,Bailey Warren,20.5,24.3798
 2026-2027,2026-08-28,Iona,Sanem Bas,0.0,0.0
 2026-2027,2026-08-28,Iona,Grace Daniels,4.25,4.6493
 2026-2027,2026-08-28,Iona,Katherine Ferng,2.25,1.8468
@@ -697809,16 +698130,16 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-24,LMU (CA),Zaria Thornton,5.75,6.1298
 2026-2027,2026-09-24,LMU (CA),Kyla Firestone,1.75,1.69
 2026-2027,2026-09-24,LMU (CA),Ayanna Henry,-2.0,-2.062
-2026-2027,2026-09-24,San Francisco,Laura Amaro,10.25,6.5086
+2026-2027,2026-09-24,San Francisco,Laura Amaro,10.25,9.0444
 2026-2027,2026-09-24,San Francisco,Maeve Bailey,6.25,7.5022
-2026-2027,2026-09-24,San Francisco,Petra Fritz,7.25,1.3004
-2026-2027,2026-09-24,San Francisco,Katariina Korhonen,21.75,17.4069
+2026-2027,2026-09-24,San Francisco,Petra Fritz,7.25,0.5603
+2026-2027,2026-09-24,San Francisco,Katariina Korhonen,21.75,18.7874
 2026-2027,2026-09-24,San Francisco,Emma Neukirchen,5.0,5.2252
 2026-2027,2026-09-24,San Francisco,Hokulani Perez,3.75,4.2838
-2026-2027,2026-09-24,San Francisco,Jordan Smart,19.0,27.5974
-2026-2027,2026-09-24,San Francisco,Andjela Sojic,5.0,4.2642
-2026-2027,2026-09-24,San Francisco,True Takemoto,4.0,1.0091
-2026-2027,2026-09-24,San Francisco,Adelynn Legates,7.0,8.9119
+2026-2027,2026-09-24,San Francisco,Jordan Smart,19.0,27.0734
+2026-2027,2026-09-24,San Francisco,Andjela Sojic,5.0,4.3047
+2026-2027,2026-09-24,San Francisco,True Takemoto,4.0,3.6451
+2026-2027,2026-09-24,San Francisco,Adelynn Legates,7.0,8.575
 2026-2027,2026-09-24,San Francisco,Piper Justiss,2.75,2.5951
 2026-2027,2026-09-24,San Francisco,Anica Bobic,0.0,-0.0832
 2026-2027,2026-09-26,LMU (CA),Gabriella Cascione,13.0,13.4137
@@ -699990,6 +700311,27 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,Miami (FL),Ariana Rodriguez,30.5,47.9603
 2026-2027,2026-10-23,Miami (FL),Logan Wiley,12.0,17.55
 2026-2027,2026-10-23,Miami (FL),Stalena Van Deusen,0.0,0.0
+2026-2027,2026-10-25,Louisville,Kalyssa Blackshear,11.25,14.401
+2026-2027,2026-10-25,Louisville,Brooke Bultema,9.5,14.0843
+2026-2027,2026-10-25,Louisville,Nayelis Cabello,26.5,41.4378
+2026-2027,2026-10-25,Louisville,Chloe Chicoine,15.0,19.0935
+2026-2027,2026-10-25,Louisville,Hannah Kenny,4.0,5.1886
+2026-2027,2026-10-25,Louisville,Chloe Meester,12.5,16.0922
+2026-2027,2026-10-25,Louisville,Payton Petersen,9.0,11.0325
+2026-2027,2026-10-25,Louisville,Kamden Schrand,-0.5,0.4647
+2026-2027,2026-10-25,Louisville,Hannah Sherman,1.0,0.5902
+2026-2027,2026-10-25,Louisville,Addison Makun,-0.75,-0.614
+2026-2027,2026-10-25,Miami (FL),Denitsa Angelova,4.75,5.7316
+2026-2027,2026-10-25,Miami (FL),Gaby Arroyo,3.75,3.1205
+2026-2027,2026-10-25,Miami (FL),Sonja Danilovic,6.0,3.3112
+2026-2027,2026-10-25,Miami (FL),Asia Harvey,3.5,1.0864
+2026-2027,2026-10-25,Miami (FL),Ruth Martinez,8.0,6.4197
+2026-2027,2026-10-25,Miami (FL),Ariana Rodriguez,22.0,31.6831
+2026-2027,2026-10-25,Miami (FL),Logan Wiley,8.5,14.0043
+2026-2027,2026-10-25,Miami (FL),Stalena Van Deusen,2.0,2.4967
+2026-2027,2026-10-25,Miami (FL),Olivia Durst,0.5,0.6632
+2026-2027,2026-10-25,Miami (FL),Adrianna Bridges,0.5,0.5216
+2026-2027,2026-10-25,Miami (FL),Ella Thompson,0.0,0.0467
 2026-2027,2026-08-28,Western Ky.,Camila Adams,0.25,0.2686
 2026-2027,2026-08-28,Western Ky.,Camila Adams,0.25,0.2167
 2026-2027,2026-08-28,Western Ky.,Tayler Baron,2.25,1.9237
@@ -701980,14 +702322,14 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-19,The Citadel,Emma Pastusic,-0.5,-2.4076
 2026-2027,2026-09-19,The Citadel,Rachel Reininger,-1.75,-3.231
 2026-2027,2026-09-25,The Citadel,Gwen Berry,8.25,8.3177
-2026-2027,2026-09-25,The Citadel,Luci Lippelgoos,7.5,8.3373
-2026-2027,2026-09-25,The Citadel,Jess Martin,1.0,1.643
-2026-2027,2026-09-25,The Citadel,Elizabeth Miller,1.5,0.3433
-2026-2027,2026-09-25,The Citadel,Greta Pleuss,20.75,25.2024
+2026-2027,2026-09-25,The Citadel,Luci Lippelgoos,7.5,8.289
+2026-2027,2026-09-25,The Citadel,Jess Martin,1.0,1.5424
+2026-2027,2026-09-25,The Citadel,Elizabeth Miller,1.5,0.3232
+2026-2027,2026-09-25,The Citadel,Greta Pleuss,20.75,25.2359
 2026-2027,2026-09-25,The Citadel,Cameron Reese,3.75,1.4636
 2026-2027,2026-09-25,The Citadel,Rachel Reininger,5.0,3.9523
 2026-2027,2026-09-25,The Citadel,Jordyn Sims,3.0,2.2337
-2026-2027,2026-09-25,The Citadel,Mia Watson,5.25,2.9576
+2026-2027,2026-09-25,The Citadel,Mia Watson,5.25,3.4201
 2026-2027,2026-09-25,The Citadel,Emerson Hill,1.25,1.3172
 2026-2027,2026-09-25,The Citadel,Emma Pastusic,-2.0,-2.4336
 2026-2027,2026-09-25,The Citadel,Megan Stone,0.0,0.0
@@ -703197,6 +703539,33 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,Tulane,Riley Tucker,16.0,23.2171
 2026-2027,2026-10-23,Tulane,Kailey Leonard,-1.0,-0.9197
 2026-2027,2026-10-23,Tulane,Zoe Rachow,1.0,1.0707
+2026-2027,2026-10-25,Tulsa,Brittany Bacorn,18.25,26.4854
+2026-2027,2026-10-25,Tulsa,Meg Goodwin,17.25,25.8422
+2026-2027,2026-10-25,Tulsa,Campbell Hague,4.0,3.8149
+2026-2027,2026-10-25,Tulsa,Jill Hanson,10.25,12.9646
+2026-2027,2026-10-25,Tulsa,Lauren Patterson,13.0,14.4876
+2026-2027,2026-10-25,Tulsa,Ava Steffe,8.25,9.8313
+2026-2027,2026-10-25,Tulsa,Olivia Vance,29.75,38.1385
+2026-2027,2026-10-25,Tulsa,Kat Cooper,3.0,1.7025
+2026-2027,2026-10-25,Tulsa,Mikey Freeman,6.5,6.974
+2026-2027,2026-10-25,Tulsa,Maegan Mills,3.25,4.6463
+2026-2027,2026-10-25,Tulsa,Emma Blaine,5.5,7.5743
+2026-2027,2026-10-25,Tulsa,Milee Jackson,0.25,0.2924
+2026-2027,2026-10-25,Tulsa,Lexi Dahl,-1.0,-0.943
+2026-2027,2026-10-25,Tulsa,Isabella Ocampo,0.0,-0.0986
+2026-2027,2026-10-25,Rice,Mari Furoyama,7.25,9.6308
+2026-2027,2026-10-25,Rice,Stephanie Gutierrez,11.25,13.118
+2026-2027,2026-10-25,Rice,Jordan Hummel,9.5,11.4662
+2026-2027,2026-10-25,Rice,Sydnee Peterson,22.5,24.3099
+2026-2027,2026-10-25,Rice,Ashlyn Seay,7.5,7.1141
+2026-2027,2026-10-25,Rice,Amalia Simmons,11.0,13.5627
+2026-2027,2026-10-25,Rice,Savannah Skopal,21.0,29.568
+2026-2027,2026-10-25,Rice,Zora Bello,3.25,4.7212
+2026-2027,2026-10-25,Rice,Maggie Croft,8.5,11.4571
+2026-2027,2026-10-25,Rice,Declan Eastman,1.75,1.326
+2026-2027,2026-10-25,Rice,Ellie Schneider,0.5,0.3708
+2026-2027,2026-10-25,Rice,Campbell Love,-0.5,-0.525
+2026-2027,2026-10-25,Rice,Aaliyah Smith,0.25,-0.2892
 2026-2027,2026-08-28,Jacksonville,Kathryn Adler,4.75,4.7425
 2026-2027,2026-08-28,Jacksonville,Jade Cuya Cobos,5.25,5.525
 2026-2027,2026-08-28,Jacksonville,Jade Cuya Cobos,5.25,6.7085
@@ -703376,14 +703745,14 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-25,Jacksonville St.,D'Yanna Spicer,0.0,0.0
 2026-2027,2026-09-25,Delaware,Morgan Campbell,7.25,6.1612
 2026-2027,2026-09-25,Delaware,Anna Logan Gillens,12.0,10.564
-2026-2027,2026-09-25,Delaware,Jayda Gray,3.5,2.6132
+2026-2027,2026-09-25,Delaware,Jayda Gray,3.5,3.1608
 2026-2027,2026-09-25,Delaware,Taylor Holly,7.0,6.3136
-2026-2027,2026-09-25,Delaware,Kennedi Inman,30.5,37.7371
-2026-2027,2026-09-25,Delaware,Kristyn Membreno,1.25,0.9427
+2026-2027,2026-09-25,Delaware,Kennedi Inman,30.5,37.6683
+2026-2027,2026-09-25,Delaware,Kristyn Membreno,1.25,0.9987
 2026-2027,2026-09-25,Delaware,Asia Murray,7.5,6.5642
 2026-2027,2026-09-25,Delaware,Jayda Redd,15.75,13.392
 2026-2027,2026-09-25,Delaware,Thalia Yancey,17.75,17.3213
-2026-2027,2026-09-25,Delaware,Emily Zgonc,5.75,5.7537
+2026-2027,2026-09-25,Delaware,Emily Zgonc,5.75,5.6189
 2026-2027,2026-09-25,Delaware,Carolina Sayeg Blak,0.0,0.0
 2026-2027,2026-09-26,Jacksonville St.,Lauren Buchanan,0.75,-0.6091
 2026-2027,2026-09-26,Jacksonville St.,Claire Evans,5.5,6.1235
@@ -704464,6 +704833,29 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,Duke,Taylor Williams,13.5,17.6729
 2026-2027,2026-10-23,Duke,Ashby Zubchevich,24.5,32.7492
 2026-2027,2026-10-23,Duke,Charlotte Glass,0.25,0.2826
+2026-2027,2026-10-25,California,Anna Flores,17.0,20.2244
+2026-2027,2026-10-25,California,Sophia Johnson,10.5,11.6378
+2026-2027,2026-10-25,California,Elise Lau,0.5,0.5177
+2026-2027,2026-10-25,California,Ashley Li,-0.25,-1.6806
+2026-2027,2026-10-25,California,Siena MacCudden,2.0,1.9416
+2026-2027,2026-10-25,California,Francesca Popescu,2.5,2.4437
+2026-2027,2026-10-25,California,Sawyer Thomsen,14.0,23.3233
+2026-2027,2026-10-25,California,Abby Zimmerman,9.75,9.0863
+2026-2027,2026-10-25,California,Grace Agolli,1.0,0.3545
+2026-2027,2026-10-25,California,Cari Bohm,0.0,-0.7917
+2026-2027,2026-10-25,California,Dominique Phills,-0.75,-1.6469
+2026-2027,2026-10-25,California,Ashleigh Woodruff,1.0,0.8658
+2026-2027,2026-10-25,California,Annemarie O'Gara,0.25,0.2508
+2026-2027,2026-10-25,California,Maria Stirbu,0.0,0.0
+2026-2027,2026-10-25,Duke,Mailinh Godschall,7.0,7.7309
+2026-2027,2026-10-25,Duke,Breonna Goss,3.0,2.8709
+2026-2027,2026-10-25,Duke,Avery Hamlin,4.0,5.4829
+2026-2027,2026-10-25,Duke,Nataly Moravec,23.75,29.5282
+2026-2027,2026-10-25,Duke,Nikki Quinn,19.0,31.247
+2026-2027,2026-10-25,Duke,Grace Thrower,0.5,0.5403
+2026-2027,2026-10-25,Duke,Olivia Wayne,7.25,9.2718
+2026-2027,2026-10-25,Duke,Taylor Williams,5.25,5.7929
+2026-2027,2026-10-25,Duke,Ashby Zubchevich,8.0,8.5794
 2026-2027,2026-09-06,UNC Greensboro,Ella Burd,3.75,4.3518
 2026-2027,2026-09-06,UNC Greensboro,Hailey Clifton,5.0,3.5739
 2026-2027,2026-09-06,UNC Greensboro,Izora Gragg,33.25,50.2976
@@ -704744,6 +705136,27 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-05,Harvard,Kayla Nwabueze,6.75,8.2435
 2026-2027,2026-09-05,Harvard,Riley Resmer,-0.25,-0.3234
 2026-2027,2026-09-05,Harvard,Bennett Trubey,-1.0,-1.005
+2026-2027,2026-10-25,East Carolina,Angeles Alderete,14.75,15.3004
+2026-2027,2026-10-25,East Carolina,Ekwe Anwah,2.5,2.6649
+2026-2027,2026-10-25,East Carolina,Kai Bailey,10.0,12.5774
+2026-2027,2026-10-25,East Carolina,Allison Butrum,2.25,2.3215
+2026-2027,2026-10-25,East Carolina,​Taryn Gilreath,19.5,24.4016
+2026-2027,2026-10-25,East Carolina,Aulie Huff,13.25,15.2739
+2026-2027,2026-10-25,East Carolina,Emma Ortiz,-1.0,-0.958
+2026-2027,2026-10-25,East Carolina,Ellie Pate,15.0,12.6116
+2026-2027,2026-10-25,East Carolina,Jaci Hall,-0.75,-0.8932
+2026-2027,2026-10-25,East Carolina,Naala Kasunga,-1.0,-0.9395
+2026-2027,2026-10-25,Tulane,Avery Burks,11.75,12.4416
+2026-2027,2026-10-25,Tulane,Kailey Leonard,1.5,1.9948
+2026-2027,2026-10-25,Tulane,Makena Lim,12.5,14.6363
+2026-2027,2026-10-25,Tulane,Chloe List,7.0,5.893
+2026-2027,2026-10-25,Tulane,Lauryn Mack,9.25,8.7366
+2026-2027,2026-10-25,Tulane,Madison McLin,12.75,15.5508
+2026-2027,2026-10-25,Tulane,Dayla Ortiz,1.75,2.0805
+2026-2027,2026-10-25,Tulane,Charlee Solomon,30.5,45.0325
+2026-2027,2026-10-25,Tulane,Riley Tucker,5.5,5.9642
+2026-2027,2026-10-25,Tulane,Zoe Rachow,-1.0,-0.9734
+2026-2027,2026-10-25,Tulane,Anna Fish,-1.0,-0.9734
 2026-2027,2026-09-08,Marist,Sarah Bumstead,5.25,4.8164
 2026-2027,2026-09-08,Marist,Sara Dasic,9.5,7.6718
 2026-2027,2026-09-08,Marist,Caelyn Dumas,20.0,12.3988
@@ -705341,10 +705754,10 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-04,Fresno St.,Alivia Schneider,2.0,1.3855
 2026-2027,2026-09-05,UC Irvine,Jessica Bates,4.5,2.9159
 2026-2027,2026-09-05,UC Irvine,Taylor Boice,8.0,8.8134
-2026-2027,2026-09-05,UC Irvine,Brianna Brewer,11.75,11.1896
+2026-2027,2026-09-05,UC Irvine,Brianna Brewer,11.75,11.6268
 2026-2027,2026-09-05,UC Irvine,Kaia Ciszewski,-1.25,-1.4885
-2026-2027,2026-09-05,UC Irvine,Angelina Dellutri,25.5,33.3008
-2026-2027,2026-09-05,UC Irvine,Isabella Romero,-1.0,-0.257
+2026-2027,2026-09-05,UC Irvine,Angelina Dellutri,25.5,32.6862
+2026-2027,2026-09-05,UC Irvine,Isabella Romero,-1.0,0.1346
 2026-2027,2026-09-05,UC Irvine,Vani Tatoulian,6.75,6.3043
 2026-2027,2026-09-05,UC Irvine,Madison Triplett,11.75,10.1529
 2026-2027,2026-09-05,UC Irvine,Tatawan Vongfak,2.5,2.4803
@@ -706251,6 +706664,27 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,Creighton,Ashlyn Paymal,11.25,14.7186
 2026-2027,2026-10-23,Creighton,Trinity Shadd-Ceres,16.75,20.5134
 2026-2027,2026-10-23,Creighton,Nora Wurtz,-1.0,-1.0656
+2026-2027,2026-10-25,UConn,Hazuna Akishige,10.75,11.3801
+2026-2027,2026-10-25,UConn,Sydney Borowy,12.75,15.175
+2026-2027,2026-10-25,UConn,Maggie Carley,1.0,1.6864
+2026-2027,2026-10-25,UConn,Maja Daca,14.0,12.723
+2026-2027,2026-10-25,UConn,Helena Einarsdottir,3.25,0.9331
+2026-2027,2026-10-25,UConn,Courtney Grayson,6.0,6.0412
+2026-2027,2026-10-25,UConn,Jordyn Hughes,7.25,7.3978
+2026-2027,2026-10-25,UConn,Audrey Jensen,12.5,13.4988
+2026-2027,2026-10-25,UConn,Grace Maria,4.5,4.656
+2026-2027,2026-10-25,UConn,Isabella Sohl,11.25,12.6577
+2026-2027,2026-10-25,UConn,Hailey Maes,5.25,6.1401
+2026-2027,2026-10-25,Providence,Sophia Adkins,7.75,7.6042
+2026-2027,2026-10-25,Providence,Lyric Berry,8.5,8.5806
+2026-2027,2026-10-25,Providence,Shea Dupuis,3.25,2.0918
+2026-2027,2026-10-25,Providence,Ava Dyer,7.25,7.9852
+2026-2027,2026-10-25,Providence,Aubrey Easterwood,14.75,20.8066
+2026-2027,2026-10-25,Providence,Miller McDonald,10.25,14.5947
+2026-2027,2026-10-25,Providence,Sarah Musial,5.25,7.9662
+2026-2027,2026-10-25,Providence,Tori Otter,11.5,14.1073
+2026-2027,2026-10-25,Providence,Macy Taylor,16.5,18.5727
+2026-2027,2026-10-25,Providence,Fielding Mayhugh,0.25,0.4467
 2026-2027,2026-08-28,Saint Peter's,Drew Leonardis,4.0,0.4775
 2026-2027,2026-08-28,Saint Peter's,Valeria Pagan Munoz,6.25,5.9453
 2026-2027,2026-08-28,Saint Peter's,Karolina T. Rodriguez Mendez,4.75,5.1962
@@ -706820,15 +707254,40 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,SMU,Bojana Ambulija,3.0,3.0297
 2026-2027,2026-10-23,SMU,Levariya Pinder,2.0,2.101
 2026-2027,2026-10-23,SMU,Gabi Placide,-0.75,-0.6869
-2026-2027,2026-10-23,Clemson,McKenna Gildon,1.5,0.1519
-2026-2027,2026-10-23,Clemson,Anika Groom,7.75,7.97
+2026-2027,2026-10-23,Clemson,McKenna Gildon,1.5,0.2473
+2026-2027,2026-10-23,Clemson,Anika Groom,7.75,8.3315
 2026-2027,2026-10-23,Clemson,Claire Luoma,1.25,2.1227
 2026-2027,2026-10-23,Clemson,Lina Merz,2.0,2.1371
 2026-2027,2026-10-23,Clemson,Talea Mitchell,-1.25,-1.4842
-2026-2027,2026-10-23,Clemson,Addi Rains,7.75,8.9005
-2026-2027,2026-10-23,Clemson,Katherine Sandt,11.75,14.691
-2026-2027,2026-10-23,Clemson,Kennedy Wagner,-2.5,-3.9895
+2026-2027,2026-10-23,Clemson,Addi Rains,7.75,8.6224
+2026-2027,2026-10-23,Clemson,Katherine Sandt,11.75,14.7495
+2026-2027,2026-10-23,Clemson,Kennedy Wagner,-2.5,-3.9469
 2026-2027,2026-10-23,Clemson,Brianna Washington,0.0,-0.5243
+2026-2027,2026-10-25,SMU,Favor Anyanwu,10.0,13.332
+2026-2027,2026-10-25,SMU,Hannah Beauford,28.5,47.1443
+2026-2027,2026-10-25,SMU,Suli Davis,16.75,19.0362
+2026-2027,2026-10-25,SMU,Sarah Frazee,3.0,3.2035
+2026-2027,2026-10-25,SMU,Victoria Harris,7.0,9.1072
+2026-2027,2026-10-25,SMU,Jadyn Livings,1.75,1.0813
+2026-2027,2026-10-25,SMU,Elle Vandeweghe,6.0,7.3676
+2026-2027,2026-10-25,SMU,Christa Wilburn,-0.75,-1.338
+2026-2027,2026-10-25,SMU,Bojana Ambulija,0.5,0.0888
+2026-2027,2026-10-25,SMU,Gabi Placide,9.0,15.7803
+2026-2027,2026-10-25,SMU,Mia Silva,1.0,1.2385
+2026-2027,2026-10-25,SMU,Levariya Pinder,0.0,0.0
+2026-2027,2026-10-25,Georgia Tech,Vitoria Belfort,0.75,0.8973
+2026-2027,2026-10-25,Georgia Tech,Alida Bennour,11.5,14.6234
+2026-2027,2026-10-25,Georgia Tech,Bianca Garibaldi,0.75,0.0285
+2026-2027,2026-10-25,Georgia Tech,Zoe Humphrey,3.25,4.4531
+2026-2027,2026-10-25,Georgia Tech,Mana Kaneko,6.5,7.9321
+2026-2027,2026-10-25,Georgia Tech,Magda Kobaidze,1.25,0.7379
+2026-2027,2026-10-25,Georgia Tech,Laura Perugini Bieleski,15.0,16.4138
+2026-2027,2026-10-25,Georgia Tech,Heloise Soares,13.25,13.5529
+2026-2027,2026-10-25,Georgia Tech,Sasha Godey,1.0,1.2813
+2026-2027,2026-10-25,Georgia Tech,Simone Heard,7.0,9.0263
+2026-2027,2026-10-25,Georgia Tech,Anna Fiedorowicz,1.0,1.3067
+2026-2027,2026-10-25,Georgia Tech,Larissa Mendes,1.0,1.3067
+2026-2027,2026-10-25,Georgia Tech,Gabriela Robinska,0.0,0.0
 2026-2027,2026-08-29,Marquette,Allie Beers,6.25,7.8056
 2026-2027,2026-08-29,Marquette,Avery Helms,3.0,3.0322
 2026-2027,2026-08-29,Marquette,Tani Juric,9.25,11.442
@@ -707087,6 +707546,30 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-24,Marquette,Carson Tyler,20.25,28.4422
 2026-2027,2026-10-24,Marquette,Molly Welge,6.0,6.7782
 2026-2027,2026-10-24,Marquette,Annika Kowalski,0.0,0.0
+2026-2027,2026-10-25,Xavier,Jenna Barhorst,4.5,5.3534
+2026-2027,2026-10-25,Xavier,McKinley Boehm,8.5,10.6239
+2026-2027,2026-10-25,Xavier,Catherine Flaharty,7.25,7.6084
+2026-2027,2026-10-25,Xavier,Macy Hatkevich,30.0,42.4278
+2026-2027,2026-10-25,Xavier,Margo Kemp,19.5,27.4769
+2026-2027,2026-10-25,Xavier,Charlotte Moriarty,12.25,12.4851
+2026-2027,2026-10-25,Xavier,Kelsey Niesen,16.5,20.041
+2026-2027,2026-10-25,Xavier,Kasey Quenichet,2.0,0.9289
+2026-2027,2026-10-25,Xavier,Quinci Thomas,8.75,6.9459
+2026-2027,2026-10-25,Xavier,Jamison Gordon,0.5,0.528
+2026-2027,2026-10-25,Xavier,Gabrielle Semona,1.0,1.0702
+2026-2027,2026-10-25,Marquette,Allie Beers,5.5,7.6205
+2026-2027,2026-10-25,Marquette,Avery Helms,5.25,6.5348
+2026-2027,2026-10-25,Marquette,Tani Juric,7.0,6.5251
+2026-2027,2026-10-25,Marquette,Emi Juric,11.75,13.154
+2026-2027,2026-10-25,Marquette,Luanna Markus,24.25,39.294
+2026-2027,2026-10-25,Marquette,Emma Parks,8.0,8.161
+2026-2027,2026-10-25,Marquette,Julia Stanev,4.25,5.0615
+2026-2027,2026-10-25,Marquette,Carson Tyler,25.25,28.572
+2026-2027,2026-10-25,Marquette,Molly Welge,4.5,3.7549
+2026-2027,2026-10-25,Marquette,Annika Kowalski,0.25,0.2721
+2026-2027,2026-10-25,Marquette,Keira Schmidt,-1.0,-0.9406
+2026-2027,2026-10-25,Marquette,Caydence Doolan,-0.75,-0.9814
+2026-2027,2026-10-25,Marquette,Lauren Young,0.0,0.0
 2026-2027,2026-08-28,Central Ark.,Tatelyn Brandsma,10.25,13.5274
 2026-2027,2026-08-28,Central Ark.,Sarah Carnathan,6.0,3.7915
 2026-2027,2026-08-28,Central Ark.,Ella Chaney,5.25,2.0404
@@ -707804,6 +708287,29 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-16,Notre Dame,Angie Desamours,2.75,2.3661
 2026-2027,2026-10-16,Notre Dame,Mae Kordas,-6.0,-6.344
 2026-2027,2026-10-16,Notre Dame,Mia Radeff,-0.25,-0.4974
+2026-2027,2026-10-25,Notre Dame,Maya Baker,14.5,22.2303
+2026-2027,2026-10-25,Notre Dame,Anna Bjork,6.25,8.3451
+2026-2027,2026-10-25,Notre Dame,Maya Evens,11.0,13.0275
+2026-2027,2026-10-25,Notre Dame,Sydney Helmers,4.25,3.5085
+2026-2027,2026-10-25,Notre Dame,Chloe Hooker,3.0,2.4565
+2026-2027,2026-10-25,Notre Dame,Mae Kordas,5.0,1.2851
+2026-2027,2026-10-25,Notre Dame,Chichi Nnaji,3.25,1.8175
+2026-2027,2026-10-25,Notre Dame,Portia Zeidler,2.25,2.3404
+2026-2027,2026-10-25,Notre Dame,Angie Desamours,0.0,0.0
+2026-2027,2026-10-25,Notre Dame,Kailyn Greene- Gordon,-1.0,-0.9229
+2026-2027,2026-10-25,Notre Dame,Hailie Vaughn,0.25,0.1131
+2026-2027,2026-10-25,Florida St.,Maile Chan,3.5,3.5638
+2026-2027,2026-10-25,Florida St.,Victoria David,3.5,3.987
+2026-2027,2026-10-25,Florida St.,Delaney Ewing,5.0,5.9632
+2026-2027,2026-10-25,Florida St.,Kyleene Filimaua,15.75,19.4904
+2026-2027,2026-10-25,Florida St.,Bailey Higgins,4.25,3.3252
+2026-2027,2026-10-25,Florida St.,Nenu Kpea,2.25,1.925
+2026-2027,2026-10-25,Florida St.,Emma Lilo,18.75,22.2705
+2026-2027,2026-10-25,Florida St.,Payton Whalen,12.75,15.4461
+2026-2027,2026-10-25,Florida St.,Bennett Raterman,1.5,1.6131
+2026-2027,2026-10-25,Florida St.,Caylan Russ,1.25,1.1271
+2026-2027,2026-10-25,Florida St.,Callie Kieffer,1.5,1.6213
+2026-2027,2026-10-25,Florida St.,Johanna Sova,1.0,1.1111
 2026-2027,2026-08-30,High Point,Maya Bukovcan,13.5,16.9853
 2026-2027,2026-08-30,High Point,Remy Catojo,21.75,31.8714
 2026-2027,2026-08-30,High Point,Havani Embry,0.25,0.1139
@@ -707897,15 +708403,15 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-12,High Point,Kea Whillock,10.5,11.0523
 2026-2027,2026-09-12,High Point,Talia Lardner,-3.0,-2.4
 2026-2027,2026-09-12,Pittsburgh,Olivia Babcock,19.0,27.6069
-2026-2027,2026-09-12,Pittsburgh,Blaire Bayless,15.0,22.3638
+2026-2027,2026-09-12,Pittsburgh,Blaire Bayless,15.0,22.5918
 2026-2027,2026-09-12,Pittsburgh,Jordyn Dailey,13.5,22.512
-2026-2027,2026-09-12,Pittsburgh,Sophia Gregoire,0.5,0.5319
+2026-2027,2026-09-12,Pittsburgh,Sophia Gregoire,0.5,0.5096
 2026-2027,2026-09-12,Pittsburgh,Maaike Heilig,3.25,3.8906
 2026-2027,2026-09-12,Pittsburgh,Izzy Masten,2.5,3.1528
-2026-2027,2026-09-12,Pittsburgh,Mallorie Meyer,6.25,8.7508
-2026-2027,2026-09-12,Pittsburgh,Izzy Starck,21.75,44.7607
+2026-2027,2026-09-12,Pittsburgh,Mallorie Meyer,6.25,9.9269
+2026-2027,2026-09-12,Pittsburgh,Izzy Starck,21.75,44.2922
 2026-2027,2026-09-12,Pittsburgh,Trinity Thompson,2.5,2.8949
-2026-2027,2026-09-12,Pittsburgh,Marina Pezelj,0.5,0.5556
+2026-2027,2026-09-12,Pittsburgh,Marina Pezelj,0.5,0.5854
 2026-2027,2026-09-12,Pittsburgh,Haiti Tautua'a,3.0,4.3669
 2026-2027,2026-09-13,Jacksonville,Alija Heins,6.5,7.5006
 2026-2027,2026-09-13,Jacksonville,Elle Kennedy,6.75,3.7387
@@ -708430,19 +708936,19 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-15,Penn St.,Emmi Sellman,5.0,5.4135
 2026-2027,2026-09-15,Penn St.,Caroline Jurevicius,1.75,2.0434
 2026-2027,2026-09-15,Penn St.,Kendall Northern,1.0,1.0991
-2026-2027,2026-09-25,Villanova,Mina Diggs,4.0,2.41
-2026-2027,2026-09-25,Villanova,Abby Harrell,1.25,-2.0419
+2026-2027,2026-09-25,Villanova,Mina Diggs,4.0,2.2987
+2026-2027,2026-09-25,Villanova,Abby Harrell,1.25,-1.1635
 2026-2027,2026-09-25,Villanova,Taylor Lewis,6.0,6.7143
-2026-2027,2026-09-25,Villanova,Reagan McGivern,2.0,1.964
-2026-2027,2026-09-25,Villanova,Campbell McKinnon,11.5,14.4411
+2026-2027,2026-09-25,Villanova,Reagan McGivern,2.0,2.0146
+2026-2027,2026-09-25,Villanova,Campbell McKinnon,11.5,14.4204
 2026-2027,2026-09-25,Villanova,Alyssa Nelson,8.25,7.4549
-2026-2027,2026-09-25,Villanova,Marikate Ritterbusch,3.25,2.0817
+2026-2027,2026-09-25,Villanova,Marikate Ritterbusch,3.25,2.2705
 2026-2027,2026-09-25,Villanova,Loren Winn,3.5,3.7894
 2026-2027,2026-09-25,Villanova,Selah O'Connor,1.25,2.8559
-2026-2027,2026-09-25,Villanova,Cat Young,4.5,2.9142
+2026-2027,2026-09-25,Villanova,Cat Young,4.5,4.0946
 2026-2027,2026-09-25,Villanova,Michelle Eburuoh,0.0,-0.0908
 2026-2027,2026-09-25,Villanova,Ava Harris,3.25,3.1359
-2026-2027,2026-09-25,Villanova,Chloe Kelly,-1.0,-1.5058
+2026-2027,2026-09-25,Villanova,Chloe Kelly,-1.0,-1.7149
 2026-2027,2026-09-25,Butler,Raegan Durbin,15.75,19.3952
 2026-2027,2026-09-25,Butler,Ava Hunter,9.25,14.7744
 2026-2027,2026-09-25,Butler,Sarah Kempf,8.75,10.1542
@@ -711014,17 +711520,17 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-11,SFA,Brinkley Reeves,-1.0,-0.9739
 2026-2027,2026-09-11,SFA,Molly Cravens,2.25,2.4995
 2026-2027,2026-09-11,SFA,Izzy Orton,-1.0,-0.9739
-2026-2027,2026-09-12,UT Arlington,Hana Aiana,5.25,6.3288
-2026-2027,2026-09-12,UT Arlington,Samantha Glenn,9.75,9.0151
-2026-2027,2026-09-12,UT Arlington,Lily Hopkins,6.25,6.1476
+2026-2027,2026-09-12,UT Arlington,Hana Aiana,5.25,6.4452
+2026-2027,2026-09-12,UT Arlington,Samantha Glenn,9.75,9.8212
+2026-2027,2026-09-12,UT Arlington,Lily Hopkins,6.25,6.055
 2026-2027,2026-09-12,UT Arlington,Sophia Krichev,8.5,9.536
-2026-2027,2026-09-12,UT Arlington,Camryn McMinn,5.25,4.5351
-2026-2027,2026-09-12,UT Arlington,Mazi Smith,5.75,5.7801
-2026-2027,2026-09-12,UT Arlington,Evyn Snook,3.75,2.8834
+2026-2027,2026-09-12,UT Arlington,Camryn McMinn,5.25,4.8839
+2026-2027,2026-09-12,UT Arlington,Mazi Smith,5.75,5.7596
+2026-2027,2026-09-12,UT Arlington,Evyn Snook,3.75,3.2107
 2026-2027,2026-09-12,UT Arlington,Morgan Stitzer,0.25,0.2362
-2026-2027,2026-09-12,UT Arlington,Lucy Tricco,21.5,29.1113
+2026-2027,2026-09-12,UT Arlington,Lucy Tricco,21.5,28.9055
 2026-2027,2026-09-12,UT Arlington,Emilee Sikora,0.25,-0.4191
-2026-2027,2026-09-12,UT Arlington,Erica Dellesky,1.75,1.8265
+2026-2027,2026-09-12,UT Arlington,Erica Dellesky,1.75,1.8059
 2026-2027,2026-09-12,UT Arlington,Karisa Martin,0.25,0.2362
 2026-2027,2026-09-12,SFA,Aniston Collins,13.25,19.3077
 2026-2027,2026-09-12,SFA,Molly Cravens,8.0,9.0946
@@ -712522,6 +713028,30 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-24,Northeastern,Gabby Reeves,0.25,0.2314
 2026-2027,2026-10-24,Northeastern,Emma Rowell,10.75,13.4432
 2026-2027,2026-10-24,Northeastern,Arina Sosinovica,15.25,17.082
+2026-2027,2026-10-25,Stony Brook,Quinn Anderson,3.75,3.2527
+2026-2027,2026-10-25,Stony Brook,Carey-Jean Block,7.0,5.0583
+2026-2027,2026-10-25,Stony Brook,Zayda Fuertez,10.25,9.9283
+2026-2027,2026-10-25,Stony Brook,Ayanna Pierre Louis,8.25,8.3194
+2026-2027,2026-10-25,Stony Brook,Mercedes Motton,7.25,6.4764
+2026-2027,2026-10-25,Stony Brook,Damisi Osibodu,0.5,-1.5605
+2026-2027,2026-10-25,Stony Brook,Ella Sanders,26.0,25.4892
+2026-2027,2026-10-25,Stony Brook,Taryn Su,8.75,9.0912
+2026-2027,2026-10-25,Stony Brook,Rayanne Wheat,11.25,12.1565
+2026-2027,2026-10-25,Stony Brook,Leimaile Lasike,-1.25,-2.6131
+2026-2027,2026-10-25,Stony Brook,Avari Amstutz,1.75,0.9829
+2026-2027,2026-10-25,Stony Brook,Ellery Singleton,3.75,3.6726
+2026-2027,2026-10-25,Northeastern,Cayenne Ceman,6.0,-1.0022
+2026-2027,2026-10-25,Northeastern,Aven Crosby,2.5,0.2752
+2026-2027,2026-10-25,Northeastern,Kaylin Daniels,5.5,5.5898
+2026-2027,2026-10-25,Northeastern,Beatrice Gennari,12.5,15.4158
+2026-2027,2026-10-25,Northeastern,Elle Lucas,6.5,6.5789
+2026-2027,2026-10-25,Northeastern,Valentina Meirelles,10.0,8.9954
+2026-2027,2026-10-25,Northeastern,Gabby Reeves,12.5,14.0323
+2026-2027,2026-10-25,Northeastern,Emma Rowell,9.0,9.73
+2026-2027,2026-10-25,Northeastern,Abbie Callaway,3.25,2.9166
+2026-2027,2026-10-25,Northeastern,Sofia King,4.5,5.0415
+2026-2027,2026-10-25,Northeastern,Sophie LaSala,1.0,1.2535
+2026-2027,2026-10-25,Northeastern,Arina Sosinovica,2.25,2.8522
 2026-2027,2026-08-28,Green Bay,Kayla Birmingham,5.25,3.7094
 2026-2027,2026-08-28,Green Bay,Alexa Hernandez,20.75,27.5684
 2026-2027,2026-08-28,Green Bay,Macy Kline,5.25,4.0022
@@ -713104,25 +713634,25 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-11,Virginia Tech,Frances Torres,2.25,2.0889
 2026-2027,2026-09-11,Virginia Tech,Destiny Walker,6.0,2.5942
 2026-2027,2026-09-11,Virginia Tech,Sara Letizia Gasparini,0.75,0.7934
-2026-2027,2026-09-11,Northwestern,Isabella Bullington,3.5,4.0432
+2026-2027,2026-09-11,Northwestern,Isabella Bullington,3.5,4.4261
 2026-2027,2026-09-11,Northwestern,Lauren Dignan,7.0,7.2046
 2026-2027,2026-09-11,Northwestern,Gigi Navarrete,6.5,7.2152
 2026-2027,2026-09-11,Northwestern,Campbell Paris,8.75,9.7126
 2026-2027,2026-09-11,Northwestern,Hayley Schaaf,4.0,4.6764
-2026-2027,2026-09-11,Northwestern,Ellie Stiernagle,17.5,24.551
-2026-2027,2026-09-11,Northwestern,Mara Stiglic,4.75,3.437
+2026-2027,2026-09-11,Northwestern,Ellie Stiernagle,17.5,24.78
+2026-2027,2026-09-11,Northwestern,Mara Stiglic,4.75,3.2865
 2026-2027,2026-09-11,Northwestern,Maya Stillwell,2.5,2.3454
 2026-2027,2026-09-11,Northwestern,Drew Wright,3.5,4.0218
 2026-2027,2026-09-11,Northwestern,Lily Wagner,1.25,1.255
 2026-2027,2026-09-11,Northwestern,Kaitlyn Bodnar,0.0,0.0
 2026-2027,2026-09-11,Northwestern,Gabrielle Gerry,1.5,1.5781
 2026-2027,2026-09-11,Northwestern,Kayla Kauffman,-0.5,-0.495
-2026-2027,2026-09-03,Northwestern,Isabella Bullington,18.25,22.6518
-2026-2027,2026-09-03,Northwestern,Lauren Dignan,5.0,5.0989
-2026-2027,2026-09-03,Northwestern,Gigi Navarrete,3.5,4.3415
+2026-2027,2026-09-03,Northwestern,Isabella Bullington,18.25,22.8872
+2026-2027,2026-09-03,Northwestern,Lauren Dignan,5.0,5.7385
+2026-2027,2026-09-03,Northwestern,Gigi Navarrete,3.5,4.4232
 2026-2027,2026-09-03,Northwestern,Campbell Paris,8.5,9.5842
 2026-2027,2026-09-03,Northwestern,Hayley Schaaf,10.0,13.1086
-2026-2027,2026-09-03,Northwestern,Ellie Stiernagle,26.75,37.9035
+2026-2027,2026-09-03,Northwestern,Ellie Stiernagle,26.75,37.5987
 2026-2027,2026-09-03,Northwestern,Mara Stiglic,11.75,11.7698
 2026-2027,2026-09-03,Northwestern,Maya Stillwell,6.5,7.1634
 2026-2027,2026-09-03,Northwestern,Drew Wright,8.75,7.586
@@ -716852,6 +717382,27 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-18,Arkansas,Laci Bohannan,2.5,4.0073
 2026-2027,2026-10-18,Arkansas,Lakin Laurendine,-0.25,-0.3378
 2026-2027,2026-10-18,Arkansas,Paisley Pavliska,2.5,3.2404
+2026-2027,2026-10-25,Texas A&M,Addi Applegate,5.75,8.4792
+2026-2027,2026-10-25,Texas A&M,Kaia Castle,7.5,11.0183
+2026-2027,2026-10-25,Texas A&M,Megan Fitch,0.0,0.2779
+2026-2027,2026-10-25,Texas A&M,Brooke Lacewell,0.0,0.0
+2026-2027,2026-10-25,Texas A&M,Margot Manning,20.25,36.4321
+2026-2027,2026-10-25,Texas A&M,Taryn Morris,2.0,1.625
+2026-2027,2026-10-25,Texas A&M,Natalie Ring,6.75,7.8264
+2026-2027,2026-10-25,Texas A&M,Gabi Rodriguez,5.75,7.1734
+2026-2027,2026-10-25,Texas A&M,Eliza Sharp,8.25,10.4651
+2026-2027,2026-10-25,Texas A&M,Kyndal Stowers,14.75,20.4857
+2026-2027,2026-10-25,Kentucky,Lizzie Carr,9.0,11.7705
+2026-2027,2026-10-25,Kentucky,Brynn Covell,0.0,0.0
+2026-2027,2026-10-25,Kentucky,Brooklyn DeLeye,16.25,20.1398
+2026-2027,2026-10-25,Kentucky,Morgan Gaerte,11.0,12.6003
+2026-2027,2026-10-25,Kentucky,Kassie O'Brien,14.0,19.0698
+2026-2027,2026-10-25,Kentucky,Asia Thigpen,0.5,-0.0921
+2026-2027,2026-10-25,Kentucky,Molly Tuozzo,6.5,6.0948
+2026-2027,2026-10-25,Kentucky,Trinity Ward,2.25,4.3409
+2026-2027,2026-10-25,Kentucky,Kennedy Washington,6.0,7.3158
+2026-2027,2026-10-25,Kentucky,Molly Berezowitz,0.25,0.2882
+2026-2027,2026-10-25,Kentucky,Georgia Watson,-5.25,-4.6165
 2026-2027,2026-09-18,Jackson St.,Giannelle Asomani,4.0,3.9007
 2026-2027,2026-09-18,Jackson St.,Hope Briggs,1.75,0.2724
 2026-2027,2026-09-18,Jackson St.,Jayla David,5.75,6.3651
@@ -717659,6 +718210,25 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,Syracuse,Keila Gabriel,8.25,8.9031
 2026-2027,2026-10-23,Syracuse,Bella Rodriguez,4.25,3.7043
 2026-2027,2026-10-23,Syracuse,Emma Williams,-0.25,-0.7503
+2026-2027,2026-10-25,Virginia Tech,Camilla Brandalise,26.75,37.446
+2026-2027,2026-10-25,Virginia Tech,Ivy Cooper,6.0,6.6363
+2026-2027,2026-10-25,Virginia Tech,Sara Letizia Gasparini,0.0,-0.2477
+2026-2027,2026-10-25,Virginia Tech,Reese Hazelton,19.25,17.1569
+2026-2027,2026-10-25,Virginia Tech,Adeline Hundl,9.75,9.7367
+2026-2027,2026-10-25,Virginia Tech,Isabella Mishler,7.0,7.1658
+2026-2027,2026-10-25,Virginia Tech,Frances Torres,0.5,0.2665
+2026-2027,2026-10-25,Virginia Tech,Georgia Trexler,6.0,6.44
+2026-2027,2026-10-25,Virginia Tech,Destiny Walker,14.0,12.1719
+2026-2027,2026-10-25,Virginia Tech,Paloma Zubiri,-0.75,-0.7727
+2026-2027,2026-10-25,Syracuse,Charis Burge,33.5,36.7923
+2026-2027,2026-10-25,Syracuse,Marie Laurio,10.5,8.7095
+2026-2027,2026-10-25,Syracuse,Abby Nicholson,17.0,19.9772
+2026-2027,2026-10-25,Syracuse,Bo Nijenhuis,3.75,3.5591
+2026-2027,2026-10-25,Syracuse,Bella Rodriguez,4.5,2.7341
+2026-2027,2026-10-25,Syracuse,Kiernan Stamey,1.75,-2.2341
+2026-2027,2026-10-25,Syracuse,Yuka Urano,6.25,6.6553
+2026-2027,2026-10-25,Syracuse,Keila Gabriel,0.25,-2.0395
+2026-2027,2026-10-25,Syracuse,Emma Williams,1.75,0.9282
 2026-2027,2026-08-28,BYU,Alex Bower,8.5,13.1745
 2026-2027,2026-08-28,BYU,Kelli Jo Burgess,8.0,10.2781
 2026-2027,2026-08-28,BYU,Sophia Callahan,8.75,11.0169
@@ -718152,18 +718722,18 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-19,UT Martin,Reagan Hamm,9.5,6.6645
 2026-2027,2026-09-19,UT Martin,Reagan Hamm,9.5,6.9378
 2026-2027,2026-09-25,UT Martin,Sophie Diouf,4.0,1.6312
-2026-2027,2026-09-25,UT Martin,Abby Freund,7.0,7.8692
+2026-2027,2026-09-25,UT Martin,Abby Freund,7.0,8.1582
 2026-2027,2026-09-25,UT Martin,Maddy Gladson,8.5,7.4051
 2026-2027,2026-09-25,UT Martin,Rylee Key,10.5,11.7585
-2026-2027,2026-09-25,UT Martin,Penny Kirkham,-0.5,-0.1336
-2026-2027,2026-09-25,UT Martin,Lauren Mariscal,7.5,4.2952
-2026-2027,2026-09-25,UT Martin,Chyler Martin,1.75,0.647
+2026-2027,2026-09-25,UT Martin,Penny Kirkham,-0.5,-0.3233
+2026-2027,2026-09-25,UT Martin,Lauren Mariscal,7.5,5.527
+2026-2027,2026-09-25,UT Martin,Chyler Martin,1.75,0.8151
 2026-2027,2026-09-25,UT Martin,Carly Mueller,4.5,3.6351
-2026-2027,2026-09-25,UT Martin,Dylan Sulcer,17.75,17.0987
+2026-2027,2026-09-25,UT Martin,Dylan Sulcer,17.75,16.7074
 2026-2027,2026-09-25,UT Martin,Mari Haas,-1.0,-1.2016
 2026-2027,2026-09-25,UT Martin,Luli Arcucci,0.5,0.3479
-2026-2027,2026-09-25,UT Martin,Reagan Hamm,2.25,1.9316
-2026-2027,2026-09-25,UT Martin,Riley Rushing,0.75,0.4829
+2026-2027,2026-09-25,UT Martin,Reagan Hamm,2.25,1.9152
+2026-2027,2026-09-25,UT Martin,Riley Rushing,0.75,0.523
 2026-2027,2026-09-25,UT Martin,Mia Saenz,0.0,0.0
 2026-2027,2026-09-25,SIUE,Paige Bernstein,7.0,5.4888
 2026-2027,2026-09-25,SIUE,Georgia Bresnahan,8.0,5.5618
@@ -719113,6 +719683,27 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-09,Creighton,Trinity Shadd-Ceres,1.0,1.188
 2026-2027,2026-10-09,Creighton,Nora Wurtz,4.0,4.5568
 2026-2027,2026-10-09,Creighton,Peyton Carlson,0.0,0.0
+2026-2027,2026-10-25,Butler,Raegan Durbin,13.0,9.7705
+2026-2027,2026-10-25,Butler,Kaylee Finnegan,7.25,10.4072
+2026-2027,2026-10-25,Butler,Sarah Kempf,6.75,7.0105
+2026-2027,2026-10-25,Butler,Chase Lemming,5.5,5.2602
+2026-2027,2026-10-25,Butler,Jersey Loyer,5.5,5.5507
+2026-2027,2026-10-25,Butler,Zoe McDonald,9.25,12.8406
+2026-2027,2026-10-25,Butler,Ellery Rees,3.5,3.5755
+2026-2027,2026-10-25,Butler,Marin Thaxton,5.0,5.0999
+2026-2027,2026-10-25,Butler,Elise Ward,3.25,3.1845
+2026-2027,2026-10-25,Butler,Carly Slusser,1.0,0.6132
+2026-2027,2026-10-25,Butler,Karen Dutro,-1.0,-0.9224
+2026-2027,2026-10-25,Butler,Ava Hunter,0.75,0.786
+2026-2027,2026-10-25,DePaul,Abby Cahill,7.0,7.2574
+2026-2027,2026-10-25,DePaul,Martina Diana,5.25,4.1808
+2026-2027,2026-10-25,DePaul,Jade Epps,15.0,22.1891
+2026-2027,2026-10-25,DePaul,Eva Hurrle,4.25,5.4363
+2026-2027,2026-10-25,DePaul,Jocelyn Paige,5.5,6.4383
+2026-2027,2026-10-25,DePaul,Leonor Polezzi,19.5,31.6986
+2026-2027,2026-10-25,DePaul,Isabela Tavares-Salomon,8.5,9.873
+2026-2027,2026-10-25,DePaul,Kendall Timme,7.5,7.5019
+2026-2027,2026-10-25,DePaul,Nora Mannion,0.0,0.0
 2026-2027,2026-08-29,Elon,Caroline Berlekamp,8.0,7.5605
 2026-2027,2026-08-29,Elon,Caroline Berlekamp,8.0,7.5417
 2026-2027,2026-08-29,Elon,Casey Brower,3.75,4.2293
@@ -720675,6 +721266,29 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,Florida St.,Bennett Raterman,0.0,0.0
 2026-2027,2026-10-23,Florida St.,Callie Kieffer,0.5,0.4629
 2026-2027,2026-10-23,Florida St.,Johanna Sova,-1.5,-1.223
+2026-2027,2026-10-25,Wichita St.,Olivia Cohee,17.5,16.0143
+2026-2027,2026-10-25,Wichita St.,Jenna Cubbage,8.5,8.3794
+2026-2027,2026-10-25,Wichita St.,Jordan Heatherly,17.5,15.0337
+2026-2027,2026-10-25,Wichita St.,Grace Hett,5.5,6.6899
+2026-2027,2026-10-25,Wichita St.,McKenzie Jones,3.5,0.14
+2026-2027,2026-10-25,Wichita St.,Eva Krakowski,5.5,5.6665
+2026-2027,2026-10-25,Wichita St.,Gabi Maas,13.25,12.6054
+2026-2027,2026-10-25,Wichita St.,Addie Oeth,12.0,16.8247
+2026-2027,2026-10-25,Wichita St.,Janaya Weitkemper,8.25,7.2409
+2026-2027,2026-10-25,Wichita St.,Maddie Wilson,12.5,12.8608
+2026-2027,2026-10-25,Charlotte,Jovana Antic,10.0,10.8973
+2026-2027,2026-10-25,Charlotte,Clara Briley,16.0,17.4137
+2026-2027,2026-10-25,Charlotte,Harper Hall,14.5,12.3817
+2026-2027,2026-10-25,Charlotte,Elena Kovacevic,2.5,1.1622
+2026-2027,2026-10-25,Charlotte,Sofia Locadia,5.0,4.7256
+2026-2027,2026-10-25,Charlotte,Milena Lopez,10.0,11.575
+2026-2027,2026-10-25,Charlotte,Sara Marinkovic,15.0,14.2583
+2026-2027,2026-10-25,Charlotte,Chloe Maughan,11.25,10.1765
+2026-2027,2026-10-25,Charlotte,Mariam Mushkudiani,4.25,2.5919
+2026-2027,2026-10-25,Charlotte,Milan Cannon,3.5,3.8903
+2026-2027,2026-10-25,Charlotte,Cassidy Flakes,0.0,0.0
+2026-2027,2026-10-25,Charlotte,Erin Lehman,-1.0,-0.9929
+2026-2027,2026-10-25,Charlotte,Gia McGrew,0.0,0.0
 2026-2027,2026-09-12,A&M-Corpus Christi,Kaitlyn Aleshire,6.75,7.3275
 2026-2027,2026-09-12,A&M-Corpus Christi,Kenna Buchanan,17.5,18.921
 2026-2027,2026-09-12,A&M-Corpus Christi,Hadley Burger,2.75,2.7414
@@ -722146,14 +722760,14 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-04,Delaware,Morgan Campbell,4.5,5.4154
 2026-2027,2026-09-04,Delaware,Anna Logan Gillens,3.75,0.8104
 2026-2027,2026-09-04,Delaware,Jayda Gray,6.5,5.431
-2026-2027,2026-09-04,Delaware,Taylor Holly,2.0,2.5516
-2026-2027,2026-09-04,Delaware,Kennedi Inman,23.5,24.7116
+2026-2027,2026-09-04,Delaware,Taylor Holly,2.0,2.6185
+2026-2027,2026-09-04,Delaware,Kennedi Inman,23.5,24.7786
 2026-2027,2026-09-04,Delaware,Asia Murray,9.75,11.2346
-2026-2027,2026-09-04,Delaware,Thalia Yancey,15.5,12.4343
+2026-2027,2026-09-04,Delaware,Thalia Yancey,15.5,12.0362
 2026-2027,2026-09-04,Delaware,Emily Zgonc,4.25,4.0656
-2026-2027,2026-09-04,Delaware,Carolina Sayeg Blak,-2.5,-3.0597
+2026-2027,2026-09-04,Delaware,Carolina Sayeg Blak,-2.5,-3.1122
 2026-2027,2026-09-04,Delaware,Kristyn Membreno,0.0,0.0
-2026-2027,2026-09-04,Delaware,Jayda Redd,4.25,4.0043
+2026-2027,2026-09-04,Delaware,Jayda Redd,4.25,4.3502
 2026-2027,2026-10-17,Bradley,Cherlin Antonio,10.0,9.7268
 2026-2027,2026-10-17,Bradley,Eirini Bitsaktsi,10.75,12.1986
 2026-2027,2026-10-17,Bradley,Megan DePoorter,1.5,1.3293
@@ -722337,22 +722951,22 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-10,Northern Colo.,Summer Snead,8.0,10.3623
 2026-2027,2026-10-10,Northern Colo.,Addison Roark,2.5,2.5547
 2026-2027,2026-09-02,Portland St.,Reese Biesemeyer,0.75,0.7673
-2026-2027,2026-09-02,Portland St.,Ava Blascziek,10.25,12.1038
-2026-2027,2026-09-02,Portland St.,Alivia Eikenberg,2.75,-1.9438
-2026-2027,2026-09-02,Portland St.,Magdalena Ranitovic,7.25,8.2941
-2026-2027,2026-09-02,Portland St.,Paige Stepaniuk,5.75,4.943
+2026-2027,2026-09-02,Portland St.,Ava Blascziek,10.25,12.3035
+2026-2027,2026-09-02,Portland St.,Alivia Eikenberg,2.75,-4.3866
+2026-2027,2026-09-02,Portland St.,Magdalena Ranitovic,7.25,7.372
+2026-2027,2026-09-02,Portland St.,Paige Stepaniuk,5.75,4.7118
 2026-2027,2026-09-02,Portland St.,Willow Watson,6.0,6.8878
 2026-2027,2026-09-02,Portland St.,Brenna Coffman,-2.0,-1.7979
-2026-2027,2026-09-02,Portland St.,Maryn Hall,1.5,0.7299
+2026-2027,2026-09-02,Portland St.,Maryn Hall,1.5,0.9284
 2026-2027,2026-09-02,Portland St.,Katarina Kosic,0.75,0.6469
-2026-2027,2026-09-02,Portland St.,Elisabeth Levick,4.5,4.1229
+2026-2027,2026-09-02,Portland St.,Elisabeth Levick,4.5,4.4225
 2026-2027,2026-09-02,Portland St.,Jordyn Romano,0.5,0.3923
-2026-2027,2026-09-02,Portland St.,Jessica Truong,4.0,2.8238
-2026-2027,2026-09-02,Portland St.,Asya Akbulut,3.75,4.2993
+2026-2027,2026-09-02,Portland St.,Jessica Truong,4.0,2.9296
+2026-2027,2026-09-02,Portland St.,Asya Akbulut,3.75,4.3538
 2026-2027,2026-09-02,Portland St.,Katie Brewer,2.25,2.6622
 2026-2027,2026-09-02,Portland St.,Katelyn Davey,0.75,0.6685
 2026-2027,2026-09-02,Portland St.,Xanthe Ocampo,0.5,0.5569
-2026-2027,2026-09-02,Portland St.,Ashley Repetti,7.25,6.5991
+2026-2027,2026-09-02,Portland St.,Ashley Repetti,7.25,6.8812
 2026-2027,2026-09-02,DePaul,Abby Cahill,4.25,4.7594
 2026-2027,2026-09-02,DePaul,Martina Diana,11.0,10.3695
 2026-2027,2026-09-02,DePaul,Jade Epps,13.25,17.7765
@@ -723428,17 +724042,17 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-04,Georgia,Alex Richter,2.5,3.0203
 2026-2027,2026-10-04,Georgia,Keira Steininger,3.75,6.5452
 2026-2027,2026-10-04,Georgia,Gigi Artiles,-2.75,-2.8056
-2026-2027,2026-10-09,Georgia,Ana Julia Bleeker,6.5,7.185
-2026-2027,2026-10-09,Georgia,Chloe Elarton,17.25,24.5952
+2026-2027,2026-10-09,Georgia,Ana Julia Bleeker,6.5,7.5459
+2026-2027,2026-10-09,Georgia,Chloe Elarton,17.25,23.3548
 2026-2027,2026-10-09,Georgia,Tori Harper,1.25,1.2275
 2026-2027,2026-10-09,Georgia,Kendal Kemp,4.0,4.653
-2026-2027,2026-10-09,Georgia,Rylan Miller,2.25,2.4447
-2026-2027,2026-10-09,Georgia,Bianna Muoneke,27.75,34.9475
+2026-2027,2026-10-09,Georgia,Rylan Miller,2.25,2.3529
+2026-2027,2026-10-09,Georgia,Bianna Muoneke,27.75,36.1066
 2026-2027,2026-10-09,Georgia,Alex Richter,-0.25,-0.1888
-2026-2027,2026-10-09,Georgia,Kaiya Tyson,2.0,1.7945
-2026-2027,2026-10-09,Georgia,Alyssa Worden,13.0,15.5248
+2026-2027,2026-10-09,Georgia,Kaiya Tyson,2.0,1.7408
+2026-2027,2026-10-09,Georgia,Alyssa Worden,13.0,15.0967
 2026-2027,2026-10-09,Georgia,Emma Bryson,0.5,0.5493
-2026-2027,2026-10-09,Georgia,Keira Steininger,0.75,0.832
+2026-2027,2026-10-09,Georgia,Keira Steininger,0.75,0.8857
 2026-2027,2026-10-09,Mississippi St.,Bernardita Aguilar,8.5,12.7493
 2026-2027,2026-10-09,Mississippi St.,Ava Anderson,4.5,5.8499
 2026-2027,2026-10-09,Mississippi St.,Cayley Hanson,13.25,25.5706
@@ -723564,6 +724178,32 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-09,Purdue,Sydni Vice,0.5,0.5141
 2026-2027,2026-09-09,Purdue,Rachel Raye Williams,0.0,0.0
 2026-2027,2026-09-09,Purdue,Morgan Williams,1.5,1.6219
+2026-2027,2026-10-25,Missouri,Maizy Agnello,1.25,1.5096
+2026-2027,2026-10-25,Missouri,Ainoah Cruz,6.25,8.2327
+2026-2027,2026-10-25,Missouri,Sierra Dudley,9.25,11.232
+2026-2027,2026-10-25,Missouri,Paige Felder,16.0,20.2189
+2026-2027,2026-10-25,Missouri,Kimani Johnson,7.0,6.8158
+2026-2027,2026-10-25,Missouri,Ceylin Kuyan,4.75,5.6969
+2026-2027,2026-10-25,Missouri,Lauren Larkin,5.25,6.0478
+2026-2027,2026-10-25,Missouri,Nina Mandovic,19.75,30.4053
+2026-2027,2026-10-25,Missouri,Zoey Matias,9.5,10.8028
+2026-2027,2026-10-25,Missouri,Claire Morrissey,-1.0,-0.9003
+2026-2027,2026-10-25,Missouri,Grace O'Reilly,9.0,11.6369
+2026-2027,2026-10-25,Missouri,Eva Smith,4.0,4.8522
+2026-2027,2026-10-25,Missouri,Lydia Stahley,3.5,4.2553
+2026-2027,2026-10-25,Georgia,Gigi Artiles,6.25,6.8295
+2026-2027,2026-10-25,Georgia,Ana Julia Bleeker,7.25,9.4891
+2026-2027,2026-10-25,Georgia,Marin Collins,-2.25,-2.1998
+2026-2027,2026-10-25,Georgia,Chloe Elarton,24.5,39.5494
+2026-2027,2026-10-25,Georgia,Ceci Gooch,0.0,0.0
+2026-2027,2026-10-25,Georgia,Tori Harper,-2.75,-3.0906
+2026-2027,2026-10-25,Georgia,Kendal Kemp,9.0,11.4826
+2026-2027,2026-10-25,Georgia,Rylan Miller,0.25,0.2809
+2026-2027,2026-10-25,Georgia,Bianna Muoneke,20.75,24.6064
+2026-2027,2026-10-25,Georgia,Keira Steininger,-1.0,-0.9066
+2026-2027,2026-10-25,Georgia,Kaiya Tyson,0.0,0.0
+2026-2027,2026-10-25,Georgia,Alyssa Worden,12.25,10.9555
+2026-2027,2026-10-25,Georgia,Kate Yoshimoto,2.5,3.3485
 2026-2027,2026-09-12,Houston,Lily Barron,4.25,5.9224
 2026-2027,2026-09-12,Houston,Mattie Casale,8.75,10.3805
 2026-2027,2026-09-12,Houston,Noemi Despaigne,6.5,6.8564
@@ -726636,6 +727276,27 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-08,Southeastern La.,Ainsley Driska,2.75,2.9142
 2026-2027,2026-10-08,Southeastern La.,Gracie Mann,-0.75,-0.8689
 2026-2027,2026-10-08,Southeastern La.,Lauren Ossmann,3.25,3.3615
+2026-2027,2026-10-25,San Jose St.,Hanna Darvas,11.5,17.2606
+2026-2027,2026-10-25,San Jose St.,Orian Drore,15.75,18.3699
+2026-2027,2026-10-25,San Jose St.,Lolo Fonua,8.75,10.1692
+2026-2027,2026-10-25,San Jose St.,Naima Foster,17.25,19.8541
+2026-2027,2026-10-25,San Jose St.,Morgan Graves,6.0,5.3153
+2026-2027,2026-10-25,San Jose St.,Fatimah Hall,13.0,16.0235
+2026-2027,2026-10-25,San Jose St.,Ava Hewitt,8.0,10.0085
+2026-2027,2026-10-25,San Jose St.,Zuzana Kosikova,10.25,12.177
+2026-2027,2026-10-25,San Jose St.,Learden Lee,4.5,6.893
+2026-2027,2026-10-25,San Jose St.,Kylee Sells,-2.0,-1.9708
+2026-2027,2026-10-25,San Jose St.,Eva Vostracka,0.25,0.2606
+2026-2027,2026-10-25,San Jose St.,Mariana Buchanan,0.0,0.0
+2026-2027,2026-10-25,New Mexico,Seenane Brewer,8.0,7.8132
+2026-2027,2026-10-25,New Mexico,Camila Canedo,8.0,7.6866
+2026-2027,2026-10-25,New Mexico,Addison France,13.0,14.7139
+2026-2027,2026-10-25,New Mexico,Campbell Hollister,8.75,12.5712
+2026-2027,2026-10-25,New Mexico,Ella Joesting,3.5,3.6703
+2026-2027,2026-10-25,New Mexico,Reagan Miller,11.0,14.4749
+2026-2027,2026-10-25,New Mexico,Madeleine Miller,33.25,50.4671
+2026-2027,2026-10-25,New Mexico,Mina Stanojevic,21.25,26.129
+2026-2027,2026-10-25,New Mexico,Zoe Leonard,0.5,0.3625
 2026-2027,2026-10-15,East Texas A&M,Ariana Brown,30.0,29.0731
 2026-2027,2026-10-15,East Texas A&M,Gracie Campbell,18.5,18.3656
 2026-2027,2026-10-15,East Texas A&M,Samantha Mosley,7.0,6.0449
@@ -727845,6 +728506,31 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-09,North Texas,Ryann Vik,7.0,8.429
 2026-2027,2026-10-09,North Texas,Alexa Hayes,-2.0,-1.9626
 2026-2027,2026-10-09,North Texas,Alyssa Young,-1.0,-0.9813
+2026-2027,2026-10-25,NC State,Talia Francom,10.25,11.3186
+2026-2027,2026-10-25,NC State,Kate Kilpatrick,5.75,4.9564
+2026-2027,2026-10-25,NC State,Eva Long,27.75,38.8036
+2026-2027,2026-10-25,NC State,Zuzanna Maciejewicz,8.0,8.8351
+2026-2027,2026-10-25,NC State,Britni Silver,11.0,9.2041
+2026-2027,2026-10-25,NC State,Elaisa Villar,-1.0,-0.8455
+2026-2027,2026-10-25,NC State,Clara Vondran,13.5,14.39
+2026-2027,2026-10-25,NC State,Norah Busch,1.0,0.7544
+2026-2027,2026-10-25,NC State,Sophia Groom,4.0,5.3496
+2026-2027,2026-10-25,NC State,Makenna Kowren,-0.5,-1.3687
+2026-2027,2026-10-25,NC State,Rebecca Ring,1.25,1.0878
+2026-2027,2026-10-25,NC State,Jordan Smith,3.5,3.9321
+2026-2027,2026-10-25,NC State,Laurna Kerr,0.0,0.0
+2026-2027,2026-10-25,Wake Forest,Becca Bellows,12.0,13.3496
+2026-2027,2026-10-25,Wake Forest,Catherine Burke,5.0,4.5513
+2026-2027,2026-10-25,Wake Forest,Emma Keeping,12.0,16.1721
+2026-2027,2026-10-25,Wake Forest,Dhru Lalaji,1.75,2.0754
+2026-2027,2026-10-25,Wake Forest,Amina Ndiaye,6.0,4.9515
+2026-2027,2026-10-25,Wake Forest,Sadie Poeck,7.25,7.8976
+2026-2027,2026-10-25,Wake Forest,Andrea Roman,8.0,6.6293
+2026-2027,2026-10-25,Wake Forest,Mattea Saunders,3.0,4.7015
+2026-2027,2026-10-25,Wake Forest,Lyla Stewart,12.75,12.9609
+2026-2027,2026-10-25,Wake Forest,Ryleigh Whitekettle,10.0,11.1706
+2026-2027,2026-10-25,Wake Forest,Sanaa Williams,3.25,3.2364
+2026-2027,2026-10-25,Wake Forest,Laiya Ebo,-2.0,-1.9043
 2026-2027,2026-10-11,South Fla.,Addy Brus,23.0,25.2607
 2026-2027,2026-10-11,South Fla.,Iyanna Garvin,7.0,7.1471
 2026-2027,2026-10-11,South Fla.,Laila Ivey,9.0,7.4471
@@ -728202,6 +728888,33 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-16,UMES,Karielys Melendez,9.5,8.0511
 2026-2027,2026-10-16,UMES,Malaysia Shaw,11.0,12.3332
 2026-2027,2026-10-16,UMES,Arianna Warner Torres,14.0,14.0275
+2026-2027,2026-10-25,Delaware St.,Paige Ahakuelo,11.75,9.4946
+2026-2027,2026-10-25,Delaware St.,Jalia Dublin,7.0,4.8181
+2026-2027,2026-10-25,Delaware St.,Duura Kpea,3.25,2.8563
+2026-2027,2026-10-25,Delaware St.,Aaliyah Mitchell,8.25,4.5685
+2026-2027,2026-10-25,Delaware St.,Ailena Mykins,2.25,1.4842
+2026-2027,2026-10-25,Delaware St.,Courtney Nix,13.0,10.9211
+2026-2027,2026-10-25,Delaware St.,Emma Patmon,1.5,0.6463
+2026-2027,2026-10-25,Delaware St.,Autumn Richardson,0.25,0.1229
+2026-2027,2026-10-25,Delaware St.,Hannah Sanders,3.25,1.8257
+2026-2027,2026-10-25,Delaware St.,Amanda Santos Juliao,2.25,0.9544
+2026-2027,2026-10-25,Delaware St.,Maria Fernanda Cisneros Salas,0.75,0.4979
+2026-2027,2026-10-25,Delaware St.,Maria Cocco-Lambia,-1.0,-1.3589
+2026-2027,2026-10-25,Delaware St.,Myracle Davis,2.25,1.7497
+2026-2027,2026-10-25,Delaware St.,Mikayla Moore,0.0,0.0
+2026-2027,2026-10-25,South Carolina St.,Jordan Dalland,5.25,2.814
+2026-2027,2026-10-25,South Carolina St.,Kenna Harris,-0.75,-2.5524
+2026-2027,2026-10-25,South Carolina St.,Arianna James,4.0,1.2934
+2026-2027,2026-10-25,South Carolina St.,Hedia Lewis,0.0,-0.8396
+2026-2027,2026-10-25,South Carolina St.,Jessika Martinez,-2.75,-6.161
+2026-2027,2026-10-25,South Carolina St.,Macey McCoy,5.5,4.0571
+2026-2027,2026-10-25,South Carolina St.,De'Oni McPhearson,1.0,0.9264
+2026-2027,2026-10-25,South Carolina St.,Jade Robinson,1.25,0.5675
+2026-2027,2026-10-25,South Carolina St.,Ki'ra Wright,7.75,5.212
+2026-2027,2026-10-25,South Carolina St.,Jayden Mathis,2.0,1.6483
+2026-2027,2026-10-25,South Carolina St.,Chloe Neal,-1.25,-1.5976
+2026-2027,2026-10-25,South Carolina St.,Carra Pierre-Louis,3.0,2.5741
+2026-2027,2026-10-25,South Carolina St.,Amani Hawkins,-2.5,-2.8663
 2026-2027,2026-09-04,West Florida,Emily Breazeale,8.75,7.9548
 2026-2027,2026-09-04,West Florida,Camryn Brooks,5.25,4.8558
 2026-2027,2026-09-04,West Florida,Aniston Cochran,5.25,5.3964
@@ -729139,9 +729852,9 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-24,Wyoming,Peyton Carruth,4.5,5.4635
 2026-2027,2026-10-24,Wyoming,Rya Fingerlin,2.5,2.751
 2026-2027,2026-10-24,Wyoming,Ruby Jensen,9.0,9.5267
-2026-2027,2026-10-24,Wyoming,Paige Lauterwasser,34.25,35.98
+2026-2027,2026-10-24,Wyoming,Paige Lauterwasser,34.25,37.0025
 2026-2027,2026-10-24,Wyoming,Anna Melgren,9.25,11.6577
-2026-2027,2026-10-24,Wyoming,Sara Quigley,35.75,53.3
+2026-2027,2026-10-24,Wyoming,Sara Quigley,35.75,53.1211
 2026-2027,2026-10-24,Wyoming,Addy Thorington,14.75,14.8362
 2026-2027,2026-10-24,Wyoming,Anna Williams,6.0,6.3394
 2026-2027,2026-10-24,Wyoming,Emma Winter,11.25,11.0922
@@ -729778,6 +730491,30 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-22,Cincinnati,Sydney Nolan,16.0,21.498
 2026-2027,2026-10-22,Cincinnati,Nina Scrucca,6.75,8.7032
 2026-2027,2026-10-22,Cincinnati,Ligia Williams,5.75,7.587
+2026-2027,2026-10-25,Texas Tech,Taylor Bahnub,1.5,1.2856
+2026-2027,2026-10-25,Texas Tech,Katelyn Cochran,9.5,10.8432
+2026-2027,2026-10-25,Texas Tech,Emily Contreras,11.0,11.9581
+2026-2027,2026-10-25,Texas Tech,Taylor Cook,7.25,5.9828
+2026-2027,2026-10-25,Texas Tech,Elia Dinsmore,16.0,16.5986
+2026-2027,2026-10-25,Texas Tech,Tatum Johnson,3.75,3.9111
+2026-2027,2026-10-25,Texas Tech,Faith Jordan,1.25,0.9816
+2026-2027,2026-10-25,Texas Tech,Aviya Russo,16.5,18.9944
+2026-2027,2026-10-25,Texas Tech,Gretchen Sigman,5.5,5.2145
+2026-2027,2026-10-25,Texas Tech,Ava Johnson,0.0,0.0
+2026-2027,2026-10-25,Texas Tech,Shelby Ignash,-2.0,-1.8776
+2026-2027,2026-10-25,Texas Tech,Kenna McKenzie,0.0,-0.1063
+2026-2027,2026-10-25,Texas Tech,Madeleine Smotherman,0.0,0.0
+2026-2027,2026-10-25,Kansas St.,Skylar Brady,14.75,17.6597
+2026-2027,2026-10-25,Kansas St.,Chandler Carter,0.25,0.2644
+2026-2027,2026-10-25,Kansas St.,Ellah Derrer,2.0,2.0032
+2026-2027,2026-10-25,Kansas St.,Cadence Lundgren,3.0,2.6939
+2026-2027,2026-10-25,Kansas St.,Addison Massey,22.75,30.4363
+2026-2027,2026-10-25,Kansas St.,Caleigh Ponn,6.0,7.5051
+2026-2027,2026-10-25,Kansas St.,Fuka Sekita,8.5,9.6868
+2026-2027,2026-10-25,Kansas St.,Camdyn Stucky,6.25,5.6818
+2026-2027,2026-10-25,Kansas St.,Emerson Van Lannen,21.25,28.4996
+2026-2027,2026-10-25,Kansas St.,Sydney Maue,3.75,3.9881
+2026-2027,2026-10-25,Kansas St.,Reagan Fox,-0.75,-0.7413
 2026-2027,2026-08-22,Texas,Henley Anderson,-2.5,-3.6296
 2026-2027,2026-08-22,Texas,Rella Binney,10.0,12.9766
 2026-2027,2026-08-22,Texas,Nya Bunton,11.0,15.184
@@ -730732,6 +731469,31 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-06,Grand Canyon,Gentry Oblad,5.25,5.5113
 2026-2027,2026-09-06,Grand Canyon,Katie Schulz,8.5,7.0029
 2026-2027,2026-09-06,Grand Canyon,Starr Williams,13.5,13.7817
+2026-2027,2026-10-25,Alcorn,Courtney Carter,3.5,1.2026
+2026-2027,2026-10-25,Alcorn,Brayla Doss,-2.5,-3.3476
+2026-2027,2026-10-25,Alcorn,Tomoni Giddings,5.25,4.8585
+2026-2027,2026-10-25,Alcorn,Juliana Henao,2.75,2.447
+2026-2027,2026-10-25,Alcorn,Rylan Jones,10.75,9.0147
+2026-2027,2026-10-25,Alcorn,Daylin Saiki,6.0,5.0096
+2026-2027,2026-10-25,Alcorn,Bailey Upshaw,0.0,0.0586
+2026-2027,2026-10-25,Alcorn,Kasey Watkins,2.0,1.5342
+2026-2027,2026-10-25,Alcorn,Cristin Webb,2.0,1.9121
+2026-2027,2026-10-25,Alcorn,Kelsey Burks,-1.5,-1.6836
+2026-2027,2026-10-25,Alcorn,Alexis Burton,-0.5,-0.808
+2026-2027,2026-10-25,Alcorn,Ma'kayla Coats,2.25,2.1647
+2026-2027,2026-10-25,Alcorn,Ki’ara Knight-Thompson,1.25,1.1718
+2026-2027,2026-10-25,Alcorn,Jaylynn McNeill,1.0,0.8669
+2026-2027,2026-10-25,Florida A&M,Brandi Boston,3.5,2.4219
+2026-2027,2026-10-25,Florida A&M,Tamia Coleman,5.0,4.0913
+2026-2027,2026-10-25,Florida A&M,Farah Farooq,2.75,2.0586
+2026-2027,2026-10-25,Florida A&M,Bengisu Kazazlar,14.25,16.0022
+2026-2027,2026-10-25,Florida A&M,Iyonnie Sanford,8.5,6.934
+2026-2027,2026-10-25,Florida A&M,Victoria Santana,7.5,5.8502
+2026-2027,2026-10-25,Florida A&M,Makenzie Taylor,9.25,9.688
+2026-2027,2026-10-25,Florida A&M,LaDonna Trantham,14.0,11.5066
+2026-2027,2026-10-25,Florida A&M,Kelly Kelsick,5.0,4.437
+2026-2027,2026-10-25,Florida A&M,Aniyah Lewis,1.5,0.9208
+2026-2027,2026-10-25,Florida A&M,Sydney Whitfield,12.25,11.421
 2026-2027,2026-09-10,UC Riverside,Maya Barron,10.0,11.621
 2026-2027,2026-09-10,UC Riverside,Zeynep Belgutay,5.0,6.663
 2026-2027,2026-09-10,UC Riverside,Juliette D'Eliseo,13.25,15.2449
@@ -733038,19 +733800,19 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-13,Canisius,Alli Farmer,3.5,3.8865
 2026-2027,2026-09-13,Canisius,Julia Lenik,-0.5,-0.4305
 2026-2027,2026-09-13,Canisius,Cali Tierney,-1.5,-1.7746
-2026-2027,2026-09-18,Le Moyne,Katie Barbour,11.75,9.2091
-2026-2027,2026-09-18,Le Moyne,Haley Buescher,11.0,7.0031
+2026-2027,2026-09-18,Le Moyne,Katie Barbour,11.75,8.6505
+2026-2027,2026-09-18,Le Moyne,Haley Buescher,11.0,8.3137
 2026-2027,2026-09-18,Le Moyne,Alise Evans,-1.0,-1.3123
 2026-2027,2026-09-18,Le Moyne,Aubrey Kimball,0.25,0.6765
-2026-2027,2026-09-18,Le Moyne,Branwyn Lupton,6.0,4.2741
-2026-2027,2026-09-18,Le Moyne,Jazmin Rodriguez,1.25,0.0236
-2026-2027,2026-09-18,Le Moyne,Nina Salas,2.75,1.0806
+2026-2027,2026-09-18,Le Moyne,Branwyn Lupton,6.0,4.2389
+2026-2027,2026-09-18,Le Moyne,Jazmin Rodriguez,1.25,0.2711
+2026-2027,2026-09-18,Le Moyne,Nina Salas,2.75,1.2866
 2026-2027,2026-09-18,Le Moyne,Eiley Schneider,3.0,1.8937
-2026-2027,2026-09-18,Le Moyne,Payton Horan,4.75,3.297
-2026-2027,2026-09-18,Le Moyne,Cami Zajac,2.5,1.8064
-2026-2027,2026-09-18,Le Moyne,Skylar Jehlen,3.0,2.3273
+2026-2027,2026-09-18,Le Moyne,Payton Horan,4.75,3.2775
+2026-2027,2026-09-18,Le Moyne,Cami Zajac,2.5,1.7704
+2026-2027,2026-09-18,Le Moyne,Skylar Jehlen,3.0,2.2658
 2026-2027,2026-09-18,Le Moyne,Gabriella Schemidt,1.0,0.7737
-2026-2027,2026-09-18,Le Moyne,Avery Stromberg,-0.5,-1.6905
+2026-2027,2026-09-18,Le Moyne,Avery Stromberg,-0.5,-1.349
 2026-2027,2026-09-18,Le Moyne,Grace Turrell,-1.0,-1.2884
 2026-2027,2026-09-18,Canisius,McKenna Corcoran,4.75,3.036
 2026-2027,2026-09-18,Canisius,Madison Cowan,1.75,1.4432
@@ -733584,6 +734346,29 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-18,Grambling,Amaris Marks,2.5,1.389
 2026-2027,2026-10-18,Grambling,Nile Johnson,0.0,0.0
 2026-2027,2026-10-18,Grambling,Jocelyn Pargas,0.0,0.0972
+2026-2027,2026-10-25,Alabama St.,Kamrynn Clay,24.25,25.9113
+2026-2027,2026-10-25,Alabama St.,Lyric Edwards,0.0,-1.0498
+2026-2027,2026-10-25,Alabama St.,Emani Green,7.25,6.007
+2026-2027,2026-10-25,Alabama St.,Kaylen Hines,13.25,11.012
+2026-2027,2026-10-25,Alabama St.,Ava O'Hare,-1.5,-2.0414
+2026-2027,2026-10-25,Alabama St.,Mirra Riddle,7.25,6.4483
+2026-2027,2026-10-25,Alabama St.,Alexis Williams,10.0,8.1121
+2026-2027,2026-10-25,Alabama St.,Taylor Williams,2.5,0.4137
+2026-2027,2026-10-25,Alabama St.,Mikalah Davis,2.25,1.2661
+2026-2027,2026-10-25,Alabama St.,Amaya Robinson,3.75,3.3351
+2026-2027,2026-10-25,Alabama St.,Makeda Edwards,-0.75,-1.5876
+2026-2027,2026-10-25,Alabama St.,Julia Slaughter,0.0,0.0
+2026-2027,2026-10-25,Grambling,Rihianna Brown,8.0,7.4853
+2026-2027,2026-10-25,Grambling,Reece Cook,11.0,10.038
+2026-2027,2026-10-25,Grambling,Lainy Evans,9.0,8.0861
+2026-2027,2026-10-25,Grambling,Alayna Howard,12.5,13.5161
+2026-2027,2026-10-25,Grambling,Lyric Jordan,17.0,17.4744
+2026-2027,2026-10-25,Grambling,Kenya Lucas,7.5,5.444
+2026-2027,2026-10-25,Grambling,Amaris Marks,8.0,6.614
+2026-2027,2026-10-25,Grambling,Piper Nelson,4.75,4.7685
+2026-2027,2026-10-25,Grambling,Angelique Pena,9.75,8.5267
+2026-2027,2026-10-25,Grambling,Asialin Powell,20.0,21.0933
+2026-2027,2026-10-25,Grambling,Avri Solik-Fifarek,-2.25,-2.8156
 2026-2027,2026-08-29,Presbyterian,Amaris Alvarez,5.75,3.9458
 2026-2027,2026-08-29,Presbyterian,Amaris Alvarez,5.75,4.594
 2026-2027,2026-08-29,Presbyterian,Brittney Daphnis,5.75,4.9493
@@ -733699,16 +734484,16 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-08-29,Seattle U,Teagan Melton,10.5,10.8023
 2026-2027,2026-08-29,Seattle U,Linnaea Moore,6.25,6.2088
 2026-2027,2026-08-30,North Dakota,Bilge Balla,0.5,0.9219
-2026-2027,2026-08-30,North Dakota,Skylar Darr,2.25,1.567
+2026-2027,2026-08-30,North Dakota,Skylar Darr,2.25,1.6259
 2026-2027,2026-08-30,North Dakota,Olivia Edlund,7.75,6.4346
 2026-2027,2026-08-30,North Dakota,Reagan McIntosh,17.75,19.7038
-2026-2027,2026-08-30,North Dakota,Haley Patton,4.25,3.6801
-2026-2027,2026-08-30,North Dakota,Ellee McIntosh,8.75,7.2189
+2026-2027,2026-08-30,North Dakota,Haley Patton,4.25,3.4636
+2026-2027,2026-08-30,North Dakota,Ellee McIntosh,8.75,7.044
 2026-2027,2026-08-30,North Dakota,Lilliana Montes,4.5,3.5655
 2026-2027,2026-08-30,North Dakota,Lauren Perugini,5.5,4.5156
 2026-2027,2026-08-30,North Dakota,Marianna Rivera,1.0,0.7004
 2026-2027,2026-08-30,North Dakota,Elena Stefanov,3.5,3.3426
-2026-2027,2026-08-30,North Dakota,Andrea Zaric,1.25,0.7119
+2026-2027,2026-08-30,North Dakota,Andrea Zaric,1.25,0.6327
 2026-2027,2026-08-30,North Dakota,Mackenzie Dufner,1.0,0.7461
 2026-2027,2026-08-30,North Dakota,An de Hamer,5.0,3.9129
 2026-2027,2026-08-30,North Dakota,Tessa Jacobson,1.0,0.5153
@@ -734639,16 +735424,16 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-08-30,American,Prinzez Zeck,12.25,15.9487
 2026-2027,2026-08-30,Virginia,Lauryn Bowie,9.75,10.9337
 2026-2027,2026-08-30,Virginia,Emily Fowler,8.5,11.4098
-2026-2027,2026-08-30,Virginia,Caroline Lang,3.75,3.8553
-2026-2027,2026-08-30,Virginia,Ruby McDermott,6.75,6.9843
-2026-2027,2026-08-30,Virginia,Meredith Reeg,9.0,9.3687
-2026-2027,2026-08-30,Virginia,Hannah Scott,14.0,18.4671
-2026-2027,2026-08-30,Virginia,Olivia Siskin,10.0,13.9815
-2026-2027,2026-08-30,Virginia,Reese Wuebker,21.0,23.9044
-2026-2027,2026-08-30,Virginia,Ella Brodner,2.0,1.8922
+2026-2027,2026-08-30,Virginia,Caroline Lang,3.75,3.9817
+2026-2027,2026-08-30,Virginia,Ruby McDermott,6.75,8.0762
+2026-2027,2026-08-30,Virginia,Meredith Reeg,9.0,4.9226
+2026-2027,2026-08-30,Virginia,Hannah Scott,14.0,18.835
+2026-2027,2026-08-30,Virginia,Olivia Siskin,10.0,14.2243
+2026-2027,2026-08-30,Virginia,Reese Wuebker,21.0,21.6655
+2026-2027,2026-08-30,Virginia,Ella Brodner,2.0,2.0897
 2026-2027,2026-08-30,Virginia,Katie Barrier,1.5,1.6415
-2026-2027,2026-08-30,Virginia,Zoey Dood,0.5,0.5765
-2026-2027,2026-08-30,Virginia,Reagan Ennist,-1.75,-2.1731
+2026-2027,2026-08-30,Virginia,Zoey Dood,0.5,0.6162
+2026-2027,2026-08-30,Virginia,Reagan Ennist,-1.75,-2.1476
 2026-2027,2026-08-30,Virginia,Becca Wight,2.5,2.9601
 2026-2027,2026-08-30,Virginia,MaryGrace Gonyeau,0.0,-0.2499
 2026-2027,2026-10-22,Montana St.,Keely Culler,-2.0,-2.2033
@@ -735339,31 +736124,31 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-12,Austin Peay,Taylor Sass,0.0,0.0
 2026-2027,2026-09-12,Austin Peay,Kaelynn Ashley,0.75,0.8187
 2026-2027,2026-09-12,Austin Peay,Kaelynn Ashley,0.75,0.8307
-2026-2027,2026-09-12,Xavier,Macy Hatkevich,18.5,24.0959
+2026-2027,2026-09-12,Xavier,Macy Hatkevich,18.5,23.9154
 2026-2027,2026-09-12,Xavier,Macy Hatkevich,18.5,21.9116
-2026-2027,2026-09-12,Xavier,Charlotte Moriarty,13.5,16.3185
+2026-2027,2026-09-12,Xavier,Charlotte Moriarty,13.5,16.6004
 2026-2027,2026-09-12,Xavier,Charlotte Moriarty,13.5,16.0152
-2026-2027,2026-09-12,Xavier,Kelsey Niesen,12.25,11.6161
+2026-2027,2026-09-12,Xavier,Kelsey Niesen,12.25,13.2975
 2026-2027,2026-09-12,Xavier,Kelsey Niesen,12.25,12.2101
-2026-2027,2026-09-12,Xavier,Kasey Quenichet,2.75,2.8925
+2026-2027,2026-09-12,Xavier,Kasey Quenichet,2.75,2.5526
 2026-2027,2026-09-12,Xavier,Kasey Quenichet,2.75,2.6165
 2026-2027,2026-09-12,Xavier,Gabrielle Semona,8.0,9.4153
 2026-2027,2026-09-12,Xavier,Gabrielle Semona,8.0,9.0029
 2026-2027,2026-09-12,Xavier,Quinci Thomas,4.25,4.104
 2026-2027,2026-09-12,Xavier,Quinci Thomas,4.25,4.0876
-2026-2027,2026-09-12,Xavier,Ava Tilden,2.75,0.9393
+2026-2027,2026-09-12,Xavier,Ava Tilden,2.75,1.1428
 2026-2027,2026-09-12,Xavier,Ava Tilden,2.75,0.8193
 2026-2027,2026-09-12,Xavier,Elouise Czajkowski,4.5,4.9236
 2026-2027,2026-09-12,Xavier,Elouise Czajkowski,4.5,4.0099
 2026-2027,2026-09-12,Xavier,Cameron Sher,2.75,2.8246
-2026-2027,2026-09-12,Xavier,Jenna Barhorst,2.75,3.7453
+2026-2027,2026-09-12,Xavier,Jenna Barhorst,2.75,3.5648
 2026-2027,2026-09-12,Xavier,Jenna Barhorst,2.75,3.6387
 2026-2027,2026-09-12,Xavier,Iyanna Battle,0.5,0.5136
 2026-2027,2026-09-12,Xavier,McKinley Boehm,5.25,7.0171
 2026-2027,2026-09-12,Xavier,McKinley Boehm,5.25,5.405
-2026-2027,2026-09-12,Xavier,Catherine Flaharty,4.25,5.1531
+2026-2027,2026-09-12,Xavier,Catherine Flaharty,4.25,5.1798
 2026-2027,2026-09-12,Xavier,Catherine Flaharty,4.25,5.1731
-2026-2027,2026-09-12,Xavier,Margo Kemp,2.25,2.3642
+2026-2027,2026-09-12,Xavier,Margo Kemp,2.25,2.2989
 2026-2027,2026-09-12,Xavier,Margo Kemp,2.25,2.3382
 2026-2027,2026-09-11,Utah,OMONIGHO PRINCESS ATAMAH,4.75,6.4349
 2026-2027,2026-09-11,Utah,Levani Falatea,5.75,5.2644
@@ -736053,18 +736838,43 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-11,New Hampshire,Katie Smith,0.0,0.0
 2026-2027,2026-10-11,New Hampshire,Miray Su Keskin,3.0,2.4573
 2026-2027,2026-10-11,New Hampshire,Varvara Zvereva,1.0,0.7121
+2026-2027,2026-10-25,New Hampshire,Evelyn Brenton,5.5,5.6359
+2026-2027,2026-10-25,New Hampshire,Lucy Chertock,21.25,20.8381
+2026-2027,2026-10-25,New Hampshire,Rachel Grier,18.25,22.83
+2026-2027,2026-10-25,New Hampshire,Dylan Hunt,4.5,4.337
+2026-2027,2026-10-25,New Hampshire,Hady Pickard,10.5,10.9814
+2026-2027,2026-10-25,New Hampshire,Jessica Shattles,35.5,55.7535
+2026-2027,2026-10-25,New Hampshire,Emma Converse,3.0,1.5313
+2026-2027,2026-10-25,New Hampshire,Evelyn Jurden,6.75,6.4489
+2026-2027,2026-10-25,New Hampshire,Julianne Lee,7.0,6.2107
+2026-2027,2026-10-25,New Hampshire,Miray Su Keskin,6.5,6.5511
+2026-2027,2026-10-25,New Hampshire,Olivia Maulding,0.25,-0.0924
+2026-2027,2026-10-25,New Hampshire,Cecilia Anderson,0.75,0.9517
+2026-2027,2026-10-25,New Hampshire,Reilly Garrity,0.5,0.4325
+2026-2027,2026-10-25,New Hampshire,Caitlin Leddy,-0.25,-0.3445
+2026-2027,2026-10-25,New Hampshire,Katie Smith,1.25,0.8713
+2026-2027,2026-10-25,New Hampshire,Varvara Zvereva,0.0,-0.0677
+2026-2027,2026-10-25,Binghamton,Briana Binagi,5.25,6.3339
+2026-2027,2026-10-25,Binghamton,Maya Coblentz-Brown,13.0,13.5304
+2026-2027,2026-10-25,Binghamton,Marta Gintere,3.0,1.1293
+2026-2027,2026-10-25,Binghamton,Regan Kadel,30.5,38.5097
+2026-2027,2026-10-25,Binghamton,Magi Milicevic,24.0,25.0007
+2026-2027,2026-10-25,Binghamton,Celeste Ocampo,14.25,15.4803
+2026-2027,2026-10-25,Binghamton,Hannah Olmstead,15.25,17.9979
+2026-2027,2026-10-25,Binghamton,Francesca Pierdonati,14.0,17.6843
+2026-2027,2026-10-25,Binghamton,Eve Roman,8.5,9.4674
 2026-2027,2026-09-10,Weber St.,Ashlyn Aaron,1.5,1.4189
 2026-2027,2026-09-10,Weber St.,Katelynn Albano,0.75,0.8758
 2026-2027,2026-09-10,Weber St.,Stacia Barker,4.5,4.7279
-2026-2027,2026-09-10,Weber St.,Lexie Carlson,4.5,3.9023
-2026-2027,2026-09-10,Weber St.,Addison Eastwood,15.75,21.7247
-2026-2027,2026-09-10,Weber St.,Tennille Gonder,13.75,17.534
-2026-2027,2026-09-10,Weber St.,Rose Moore,10.5,10.9449
+2026-2027,2026-09-10,Weber St.,Lexie Carlson,4.5,4.2002
+2026-2027,2026-09-10,Weber St.,Addison Eastwood,15.75,21.4892
+2026-2027,2026-09-10,Weber St.,Tennille Gonder,13.75,17.5006
+2026-2027,2026-09-10,Weber St.,Rose Moore,10.5,10.7918
 2026-2027,2026-09-10,Weber St.,Ziya Munyer,9.0,11.3685
-2026-2027,2026-09-10,Weber St.,Marly Pratt,8.25,8.9235
-2026-2027,2026-09-10,Weber St.,Morgan Pratt,3.0,3.7512
-2026-2027,2026-09-10,Weber St.,Maggie Larsen,3.0,2.0541
-2026-2027,2026-09-10,Weber St.,Reagan Williams,0.75,0.399
+2026-2027,2026-09-10,Weber St.,Marly Pratt,8.25,9.4047
+2026-2027,2026-09-10,Weber St.,Morgan Pratt,3.0,3.7067
+2026-2027,2026-09-10,Weber St.,Maggie Larsen,3.0,2.8651
+2026-2027,2026-09-10,Weber St.,Reagan Williams,0.75,0.7053
 2026-2027,2026-09-10,Weber St.,Sophia Sparrow,1.0,1.0168
 2026-2027,2026-09-10,Nevada,Karly Bonaventure,4.5,5.1129
 2026-2027,2026-09-10,Nevada,Adriana Dorn,19.0,25.5502
@@ -736411,19 +737221,19 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-24,San Diego St.,Tessa Schouten,8.25,9.6431
 2026-2027,2026-10-24,San Diego St.,Zara Stewart,10.5,10.9386
 2026-2027,2026-10-24,San Diego St.,Lauranta Iyalekhue,0.0,0.0
-2026-2027,2026-10-24,Gonzaga,Nikita Clausen,2.25,1.2546
-2026-2027,2026-10-24,Gonzaga,Daniele Clewis,17.75,23.5148
-2026-2027,2026-10-24,Gonzaga,Raechelle Dykstra,6.25,6.5741
+2026-2027,2026-10-24,Gonzaga,Nikita Clausen,2.25,1.2023
+2026-2027,2026-10-24,Gonzaga,Daniele Clewis,17.75,23.8614
+2026-2027,2026-10-24,Gonzaga,Raechelle Dykstra,6.25,6.4251
 2026-2027,2026-10-24,Gonzaga,Brianna Martin,3.25,2.594
-2026-2027,2026-10-24,Gonzaga,Maggie Rickert,3.25,2.7947
+2026-2027,2026-10-24,Gonzaga,Maggie Rickert,3.25,1.3261
 2026-2027,2026-10-24,Gonzaga,Lucy Slavik,6.75,7.5113
-2026-2027,2026-10-24,Gonzaga,Veronica Kjaer Sorensen,16.75,22.0662
+2026-2027,2026-10-24,Gonzaga,Veronica Kjaer Sorensen,16.75,21.1428
 2026-2027,2026-10-24,Gonzaga,Claire Wagstaff,3.75,3.0082
 2026-2027,2026-10-24,Gonzaga,Taylor Walsh,4.5,3.7041
 2026-2027,2026-10-24,Gonzaga,Nia Damuni,2.5,3.4501
 2026-2027,2026-10-24,Gonzaga,Aurie Duncan,2.0,2.9443
 2026-2027,2026-10-24,Gonzaga,Lydia Fisher,4.75,5.9034
-2026-2027,2026-10-24,Gonzaga,Carina Zaldivar,1.0,0.8848
+2026-2027,2026-10-24,Gonzaga,Carina Zaldivar,1.0,1.0391
 2026-2027,2026-09-05,Eastern Wash.,Reese Betschart,9.75,9.4072
 2026-2027,2026-09-05,Eastern Wash.,Judith Bolomboy,5.0,3.9543
 2026-2027,2026-09-05,Eastern Wash.,Elle Bruegman,16.5,14.5241
@@ -739706,6 +740516,31 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-24,Bucknell,Klea Tarja,9.5,7.743
 2026-2027,2026-10-24,Bucknell,Sarah Williams,3.75,4.2279
 2026-2027,2026-10-24,Bucknell,Lily Lufkin,-1.0,-0.9568
+2026-2027,2026-10-25,Lafayette,Jada Aksu,1.5,0.2439
+2026-2027,2026-10-25,Lafayette,Paige Chmura,5.5,5.9909
+2026-2027,2026-10-25,Lafayette,Johanna Groger,4.25,3.5197
+2026-2027,2026-10-25,Lafayette,LK LaMonica,9.5,7.6505
+2026-2027,2026-10-25,Lafayette,Auma Mbeche-Odhiambo,5.75,3.0801
+2026-2027,2026-10-25,Lafayette,Destiny McKenzie,0.5,0.1144
+2026-2027,2026-10-25,Lafayette,Justine Puig,14.75,10.8617
+2026-2027,2026-10-25,Lafayette,Mackenzie Calhoun,1.75,1.624
+2026-2027,2026-10-25,Lafayette,Alyssa Chu,7.25,4.7802
+2026-2027,2026-10-25,Lafayette,Grace Jamison,5.0,4.961
+2026-2027,2026-10-25,Lafayette,Sophia Wilson,3.75,2.4829
+2026-2027,2026-10-25,Lafayette,Brynn Ressler,0.0,0.0
+2026-2027,2026-10-25,Bucknell,Emerson Boyd,0.75,0.671
+2026-2027,2026-10-25,Bucknell,Isabella Charlton,6.5,6.9638
+2026-2027,2026-10-25,Bucknell,Marion Haskell,7.75,7.0885
+2026-2027,2026-10-25,Bucknell,Cameron Lloyd,10.25,9.2331
+2026-2027,2026-10-25,Bucknell,Peyton McGee,23.75,26.2681
+2026-2027,2026-10-25,Bucknell,Katie O'Sullivan,10.75,9.7654
+2026-2027,2026-10-25,Bucknell,Sidney Shaffer,6.75,6.9579
+2026-2027,2026-10-25,Bucknell,Klea Tarja,15.5,14.3726
+2026-2027,2026-10-25,Bucknell,Sarah Williams,3.5,3.2584
+2026-2027,2026-10-25,Bucknell,Stephanie Eroh,0.0,0.0
+2026-2027,2026-10-25,Bucknell,Sarah Hilliard,0.0,0.0
+2026-2027,2026-10-25,Bucknell,Emily Kearney,0.0,0.0
+2026-2027,2026-10-25,Bucknell,Emerson Springs,0.0,0.0
 2026-2027,2026-09-04,Binghamton,Briana Binagi,1.5,0.983
 2026-2027,2026-09-04,Binghamton,Maya Coblentz-Brown,9.0,7.3641
 2026-2027,2026-09-04,Binghamton,Viktoria Dimitrova,12.5,8.241
@@ -739718,15 +740553,15 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-04,Binghamton,Francesca Pierdonati,3.25,1.9657
 2026-2027,2026-09-04,Binghamton,Selestine Liu Asomua,-1.0,-0.7886
 2026-2027,2026-09-04,Binghamton,Hannah Olmstead,-0.5,-0.9446
-2026-2027,2026-09-04,Central Conn. St.,Meg Berkland,4.0,3.3367
-2026-2027,2026-09-04,Central Conn. St.,Gabriella Burdier,5.75,6.0895
+2026-2027,2026-09-04,Central Conn. St.,Meg Berkland,4.0,3.0545
+2026-2027,2026-09-04,Central Conn. St.,Gabriella Burdier,5.75,6.6638
 2026-2027,2026-09-04,Central Conn. St.,Danielle Caligiuri,-1.5,-1.7918
-2026-2027,2026-09-04,Central Conn. St.,Annabelle Denomme,4.5,5.4094
+2026-2027,2026-09-04,Central Conn. St.,Annabelle Denomme,4.5,6.0286
 2026-2027,2026-09-04,Central Conn. St.,Madison Fulgencio,3.0,1.199
 2026-2027,2026-09-04,Central Conn. St.,Breanna Ginley,-2.0,-2.8615
-2026-2027,2026-09-04,Central Conn. St.,Olivia Keckler,19.75,17.9979
-2026-2027,2026-09-04,Central Conn. St.,Anja Milosevic,16.5,19.8948
-2026-2027,2026-09-04,Central Conn. St.,Hanley Schmidt,6.0,4.5691
+2026-2027,2026-09-04,Central Conn. St.,Olivia Keckler,19.75,17.1898
+2026-2027,2026-09-04,Central Conn. St.,Anja Milosevic,16.5,19.5592
+2026-2027,2026-09-04,Central Conn. St.,Hanley Schmidt,6.0,4.5034
 2026-2027,2026-09-04,Central Conn. St.,Cullen Winter,6.25,7.0184
 2026-2027,2026-09-04,Central Conn. St.,Isabella Aviles,1.0,1.556
 2026-2027,2026-09-25,Toledo,Avery Adamski,6.5,6.0257
@@ -740362,6 +741197,30 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,Boston College,Laney Blevins,2.0,2.1837
 2026-2027,2026-10-23,Boston College,Isabelle Poehlein,1.0,0.8592
 2026-2027,2026-10-23,Boston College,Ava Castro,0.25,0.2946
+2026-2027,2026-10-25,Virginia,Katie Barrier,6.75,8.8661
+2026-2027,2026-10-25,Virginia,Lauryn Bowie,5.0,4.0619
+2026-2027,2026-10-25,Virginia,Ella Brodner,7.0,6.2294
+2026-2027,2026-10-25,Virginia,Emily Fowler,5.25,5.6668
+2026-2027,2026-10-25,Virginia,Caroline Lang,9.0,9.6331
+2026-2027,2026-10-25,Virginia,Ruby McDermott,5.5,5.091
+2026-2027,2026-10-25,Virginia,Hannah Scott,12.0,14.8989
+2026-2027,2026-10-25,Virginia,Olivia Siskin,4.75,4.7549
+2026-2027,2026-10-25,Virginia,Becca Wight,0.0,-0.5003
+2026-2027,2026-10-25,Virginia,Reese Wuebker,16.75,17.7912
+2026-2027,2026-10-25,Virginia,Meredith Reeg,1.5,0.0731
+2026-2027,2026-10-25,Virginia,Sarah Brodner,0.5,0.1219
+2026-2027,2026-10-25,Virginia,Teagan Hogan,2.0,1.8725
+2026-2027,2026-10-25,Boston College,Reese Dunkle,10.5,13.5984
+2026-2027,2026-10-25,Boston College,Sam Hoppes,11.5,14.3185
+2026-2027,2026-10-25,Boston College,Sofija Marjanovic,5.25,3.9663
+2026-2027,2026-10-25,Boston College,Lucy Mott,14.0,19.2194
+2026-2027,2026-10-25,Boston College,Isabelle Poehlein,8.25,8.8281
+2026-2027,2026-10-25,Boston College,Audrey Ross,22.0,25.5025
+2026-2027,2026-10-25,Boston College,Tiani Shaw,2.75,3.321
+2026-2027,2026-10-25,Boston College,Lucie Vesela,11.0,14.5943
+2026-2027,2026-10-25,Boston College,Naomi Watson,2.25,1.5788
+2026-2027,2026-10-25,Boston College,Brooklyn Yelland,14.75,17.4904
+2026-2027,2026-10-25,Boston College,Chloe Allcroft,1.0,1.0524
 2026-2027,2026-08-29,Utah,Katelynn Field,2.75,1.7338
 2026-2027,2026-08-29,Utah,Kamryn Gibadlo,18.0,22.7188
 2026-2027,2026-08-29,Utah,Sierra Grizzle,4.0,6.2226
@@ -742376,18 +743235,18 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-22,Southeastern La.,Carissa Young,0.75,0.2972
 2026-2027,2026-10-22,Southeastern La.,Kaelyn Sharp,-1.0,-0.9958
 2026-2027,2026-10-22,Southeastern La.,Lauren Ossmann,0.0,0.0
-2026-2027,2026-09-11,Texas Southern,Lauren Battle,5.75,3.724
+2026-2027,2026-09-11,Texas Southern,Lauren Battle,5.75,3.3867
 2026-2027,2026-09-11,Texas Southern,Aaliyah Brown,2.5,1.5115
 2026-2027,2026-09-11,Texas Southern,Ava Houston,1.5,0.5157
 2026-2027,2026-09-11,Texas Southern,Lacey Kusnier,-0.5,-1.3692
 2026-2027,2026-09-11,Texas Southern,Gracie Lee,2.75,2.3354
 2026-2027,2026-09-11,Texas Southern,Morgynne McQueen,0.25,0.1542
-2026-2027,2026-09-11,Texas Southern,Selana Morales,0.25,0.1019
-2026-2027,2026-09-11,Texas Southern,Ava Ray,7.0,6.755
-2026-2027,2026-09-11,Texas Southern,Keagan St. Junious,4.5,3.1683
-2026-2027,2026-09-11,Texas Southern,Kadence Davison,1.75,1.4678
-2026-2027,2026-09-11,Texas Southern,Lauanna Pino,2.5,1.2284
-2026-2027,2026-09-11,Texas Southern,Kaiulani Sherrow,1.0,0.542
+2026-2027,2026-09-11,Texas Southern,Selana Morales,0.25,0.0559
+2026-2027,2026-09-11,Texas Southern,Ava Ray,7.0,6.9244
+2026-2027,2026-09-11,Texas Southern,Keagan St. Junious,4.5,1.3406
+2026-2027,2026-09-11,Texas Southern,Kadence Davison,1.75,1.5295
+2026-2027,2026-09-11,Texas Southern,Lauanna Pino,2.5,0.9634
+2026-2027,2026-09-11,Texas Southern,Kaiulani Sherrow,1.0,0.6342
 2026-2027,2026-09-11,Texas Southern,Aliyah Spencer,-1.75,-1.9415
 2026-2027,2026-09-11,Texas Southern,Keldri Young,-1.5,-1.787
 2026-2027,2026-09-11,Texas Southern,Emory Harper,0.0,0.0
@@ -742628,6 +743487,28 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-15,Iowa St.,Macie Lupkes,1.5,1.7172
 2026-2027,2026-10-15,Iowa St.,Ava Martin,2.0,2.5897
 2026-2027,2026-10-15,Iowa St.,Taylor Johnson,0.0,-0.2036
+2026-2027,2026-10-25,Colorado,Avery Bolles,0.75,1.0471
+2026-2027,2026-10-25,Colorado,Ana Burilovic,10.5,8.7777
+2026-2027,2026-10-25,Colorado,Lily Dwinell,9.5,11.3704
+2026-2027,2026-10-25,Colorado,Ines Losada,8.75,10.2161
+2026-2027,2026-10-25,Colorado,Tinons Munar Galmes,11.0,9.6611
+2026-2027,2026-10-25,Colorado,Peyton Neal,3.25,3.9424
+2026-2027,2026-10-25,Colorado,Cayla Payne,6.5,7.8884
+2026-2027,2026-10-25,Colorado,Maria Splawska,7.25,9.7681
+2026-2027,2026-10-25,Colorado,Jenna Ylivainio,21.25,32.396
+2026-2027,2026-10-25,Colorado,Sydney Jordan,-1.0,-0.9011
+2026-2027,2026-10-25,Utah,OMONIGHO PRINCESS ATAMAH,8.0,10.2555
+2026-2027,2026-10-25,Utah,Katelynn Field,3.0,2.7531
+2026-2027,2026-10-25,Utah,Kamryn Gibadlo,18.25,20.4306
+2026-2027,2026-10-25,Utah,Sierra Grizzle,7.25,7.7253
+2026-2027,2026-10-25,Utah,Isabelle Marco,9.0,13.3112
+2026-2027,2026-10-25,Utah,Izzy Mogridge,8.0,9.8426
+2026-2027,2026-10-25,Utah,Ashley West,5.25,5.9579
+2026-2027,2026-10-25,Utah,Devyn Wiest,5.75,3.7725
+2026-2027,2026-10-25,Utah,Loryn Helgesen,2.25,1.5017
+2026-2027,2026-10-25,Utah,Langley Griffin,0.0,0.0
+2026-2027,2026-10-25,Utah,Lana Mijacic,0.25,-0.5026
+2026-2027,2026-10-25,Utah,McKenna Payne,0.0,0.0
 2026-2027,2026-09-12,Colorado,Avery Bolles,3.5,3.8394
 2026-2027,2026-09-12,Colorado,Ana Burilovic,12.25,11.6019
 2026-2027,2026-09-12,Colorado,Lily Dwinell,10.5,13.0139
@@ -743021,6 +743902,52 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-16,Stanford,Spencer Etzler,5.75,7.0156
 2026-2027,2026-10-16,Stanford,Jordyn Harvey,5.25,5.9252
 2026-2027,2026-10-16,Stanford,Logan Parks,21.25,33.964
+2026-2027,2026-10-25,Stanford,Lizzy Andrew,18.5,26.6674
+2026-2027,2026-10-25,Stanford,Ella Andrews,8.75,11.196
+2026-2027,2026-10-25,Stanford,Julia Blyashov,21.0,20.5174
+2026-2027,2026-10-25,Stanford,Malyssa Cawa,8.5,5.1252
+2026-2027,2026-10-25,Stanford,Spencer Etzler,5.75,5.6911
+2026-2027,2026-10-25,Stanford,Jordyn Harvey,5.5,5.7578
+2026-2027,2026-10-25,Stanford,Ipar Kurt,13.0,10.1388
+2026-2027,2026-10-25,Stanford,Logan Parks,24.25,20.8002
+2026-2027,2026-10-25,Stanford,Simone Roslon,3.25,3.4954
+2026-2027,2026-10-25,Stanford,Sarah Hickman,0.0,0.0
+2026-2027,2026-10-25,North Carolina,Zoe Behrendt,14.5,10.4962
+2026-2027,2026-10-25,North Carolina,Julia Bohlinger,10.75,11.8932
+2026-2027,2026-10-25,North Carolina,Sienna Cozza,11.5,8.8494
+2026-2027,2026-10-25,North Carolina,Safi Hampton,14.5,8.6168
+2026-2027,2026-10-25,North Carolina,Lauren Schutter,3.5,3.9753
+2026-2027,2026-10-25,North Carolina,Laynie Smith,1.75,0.2545
+2026-2027,2026-10-25,North Carolina,Jackie Taylor,21.0,28.3452
+2026-2027,2026-10-25,North Carolina,Chelsea Thorpe,7.5,7.0259
+2026-2027,2026-10-25,North Carolina,Addison West,14.0,13.51
+2026-2027,2026-10-25,North Carolina,Carly Markham,3.25,3.4578
+2026-2027,2026-10-25,Arizona,Carlie Cisneros,18.25,20.1479
+2026-2027,2026-10-25,Arizona,Brenna Ginder,7.75,9.0379
+2026-2027,2026-10-25,Arizona,Destiny Ndam-Simpson,25.5,26.4295
+2026-2027,2026-10-25,Arizona,Harmony Sample,29.5,33.8138
+2026-2027,2026-10-25,Arizona,Journey Tucker,10.0,11.1911
+2026-2027,2026-10-25,Arizona,Gigi Whann,8.0,9.214
+2026-2027,2026-10-25,Arizona,Kristen Dear,2.75,2.1576
+2026-2027,2026-10-25,Arizona,Renee Jones,6.0,6.7682
+2026-2027,2026-10-25,Arizona,Maria Olga Siapani,-1.0,-0.9566
+2026-2027,2026-10-25,Arizona,Brookelyn Hatton,0.0,0.0
+2026-2027,2026-10-25,Arizona,Kennedy Osunsanmi,2.5,2.7273
+2026-2027,2026-10-25,Arizona,Marina Vosloo,0.25,0.1296
+2026-2027,2026-10-25,Arizona,Maya Flemister,1.0,1.1892
+2026-2027,2026-10-25,Arizona,Hayden Reeder,1.75,1.8507
+2026-2027,2026-10-25,Cincinnati,Lilian Entenmann,-0.25,-0.3784
+2026-2027,2026-10-25,Cincinnati,Kayla Hostetler,6.0,6.8989
+2026-2027,2026-10-25,Cincinnati,Ava Ledebuhr,10.5,11.6165
+2026-2027,2026-10-25,Cincinnati,Kate Lijic,23.0,35.1383
+2026-2027,2026-10-25,Cincinnati,Viktoria Ninova,15.0,17.8503
+2026-2027,2026-10-25,Cincinnati,Sydney Nolan,22.0,23.6674
+2026-2027,2026-10-25,Cincinnati,Andrea Simovski,33.25,34.0107
+2026-2027,2026-10-25,Cincinnati,Ligia Williams,9.75,11.6621
+2026-2027,2026-10-25,Cincinnati,Nina Scrucca,-5.0,-6.6841
+2026-2027,2026-10-25,Cincinnati,Kayla Edginton,-0.75,-0.7464
+2026-2027,2026-10-25,Cincinnati,Julia Horan,3.0,3.2351
+2026-2027,2026-10-25,Cincinnati,Andi Spies,7.0,7.8196
 2026-2027,2026-08-28,N.C. Central,Aniah Bass,4.0,2.4994
 2026-2027,2026-08-28,N.C. Central,Aniah Bass,4.0,2.7146
 2026-2027,2026-08-28,N.C. Central,Shalyn Bell,11.25,6.8617
@@ -743231,6 +744158,30 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,N.C. Central,Tabitha Newlin,1.5,1.3797
 2026-2027,2026-10-23,N.C. Central,Allyson Rouse,7.0,7.6277
 2026-2027,2026-10-23,N.C. Central,Mya Smith,7.0,7.5362
+2026-2027,2026-10-25,UMES,Kyra Bradford,2.5,1.9529
+2026-2027,2026-10-25,UMES,Shayla Henry,3.25,4.1055
+2026-2027,2026-10-25,UMES,Jayda Hutchins,9.0,3.4211
+2026-2027,2026-10-25,UMES,Karielys Melendez,6.0,3.4684
+2026-2027,2026-10-25,UMES,Malaysia Shaw,0.25,-0.3038
+2026-2027,2026-10-25,UMES,Jocelyn Torres,2.5,1.9738
+2026-2027,2026-10-25,UMES,Arianna Warner Torres,6.25,5.14
+2026-2027,2026-10-25,UMES,Dynasty Andrews,2.25,1.9539
+2026-2027,2026-10-25,UMES,Rayah Howell,0.5,0.1025
+2026-2027,2026-10-25,UMES,Alivia Proctor,0.75,-0.4042
+2026-2027,2026-10-25,UMES,Lila Bryant,-1.75,-1.9372
+2026-2027,2026-10-25,UMES,Jaslyn Dawkins,0.5,0.4448
+2026-2027,2026-10-25,UMES,Kate - Linh Eden,2.0,2.0842
+2026-2027,2026-10-25,UMES,Gabrielle McCoy,0.25,0.086
+2026-2027,2026-10-25,N.C. Central,Aniah Bass,7.5,5.3727
+2026-2027,2026-10-25,N.C. Central,Shalyn Bell,13.25,11.1362
+2026-2027,2026-10-25,N.C. Central,Lusiana Damuni,8.75,7.8342
+2026-2027,2026-10-25,N.C. Central,Jayla Egerton,-0.75,-0.973
+2026-2027,2026-10-25,N.C. Central,Talia Emmen,10.25,9.2106
+2026-2027,2026-10-25,N.C. Central,Breylan Fairley,16.5,15.9224
+2026-2027,2026-10-25,N.C. Central,Hailey Gibbons,3.25,2.5044
+2026-2027,2026-10-25,N.C. Central,Kayla Riley,3.5,2.5971
+2026-2027,2026-10-25,N.C. Central,Allyson Rouse,9.25,9.1248
+2026-2027,2026-10-25,N.C. Central,Morgan Wingo,5.0,3.7329
 2026-2027,2026-08-28,Little Rock,Alyssa Boyte,12.0,10.6171
 2026-2027,2026-08-28,Little Rock,Bella Cherry,2.25,0.1196
 2026-2027,2026-08-28,Little Rock,Morgan Creer,14.75,12.7347
@@ -744130,13 +745081,13 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-08-30,Pittsburgh,Haiti Tautua'a,0.0,0.0
 2026-2027,2026-08-30,Pittsburgh,Trinity Thompson,1.5,1.977
 2026-2027,2026-08-30,Pittsburgh,Ayanna Watson,8.25,10.192
-2026-2027,2026-09-05,UNLV,Arrie Brown,9.5,10.7731
+2026-2027,2026-09-05,UNLV,Arrie Brown,9.5,10.5912
 2026-2027,2026-09-05,UNLV,Rheanna Deen-Jackson,1.25,0.6159
-2026-2027,2026-09-05,UNLV,Jaida Harris,17.25,16.5482
+2026-2027,2026-09-05,UNLV,Jaida Harris,17.25,17.6061
 2026-2027,2026-09-05,UNLV,Jada Ingram,9.0,9.7417
-2026-2027,2026-09-05,UNLV,Basia Latos,18.5,17.0317
-2026-2027,2026-09-05,UNLV,Kamryn Scroggins,19.0,21.2861
-2026-2027,2026-09-05,UNLV,Julie Beckham,3.5,0.6595
+2026-2027,2026-09-05,UNLV,Basia Latos,18.5,17.3976
+2026-2027,2026-09-05,UNLV,Kamryn Scroggins,19.0,20.3315
+2026-2027,2026-09-05,UNLV,Julie Beckham,3.5,1.039
 2026-2027,2026-09-05,UNLV,Sloan Cleveland,0.0,0.0
 2026-2027,2026-09-05,UNLV,Tia Traudt,-0.25,-0.2622
 2026-2027,2026-09-05,UNLV,Alexa Ankerstar,1.0,0.9831
@@ -744412,6 +745363,35 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,Georgia Tech,Sasha Godey,0.0,0.0
 2026-2027,2026-10-23,Georgia Tech,Mia Hood,0.0,0.0
 2026-2027,2026-10-23,Georgia Tech,Larissa Mendes,-2.0,-1.6
+2026-2027,2026-10-25,Pittsburgh,Olivia Babcock,8.5,9.7508
+2026-2027,2026-10-25,Pittsburgh,Blaire Bayless,9.0,9.6485
+2026-2027,2026-10-25,Pittsburgh,Jordyn Dailey,5.5,6.0222
+2026-2027,2026-10-25,Pittsburgh,Sophia Gregoire,7.5,10.3843
+2026-2027,2026-10-25,Pittsburgh,Izzy Masten,2.0,2.0919
+2026-2027,2026-10-25,Pittsburgh,Izzy Starck,10.5,14.3182
+2026-2027,2026-10-25,Pittsburgh,Haiti Tautua'a,2.0,2.6226
+2026-2027,2026-10-25,Pittsburgh,Trinity Thompson,3.75,4.6199
+2026-2027,2026-10-25,Pittsburgh,Ayanna Watson,13.75,18.1607
+2026-2027,2026-10-25,Pittsburgh,Maaike Heilig,4.0,5.1499
+2026-2027,2026-10-25,Pittsburgh,Mallorie Meyer,1.0,0.9982
+2026-2027,2026-10-25,Pittsburgh,Abbey Emch,2.5,2.7063
+2026-2027,2026-10-25,Pittsburgh,Marina Pezelj,-0.25,-0.2203
+2026-2027,2026-10-25,Pittsburgh,Lola Sageer,1.0,1.1115
+2026-2027,2026-10-25,Clemson,McKenna Gildon,3.75,4.2956
+2026-2027,2026-10-25,Clemson,Anika Groom,5.0,1.6454
+2026-2027,2026-10-25,Clemson,Addi Rains,6.5,4.703
+2026-2027,2026-10-25,Clemson,Katherine Sandt,7.75,9.2308
+2026-2027,2026-10-25,Clemson,Brianna Washington,-3.0,-3.9562
+2026-2027,2026-10-25,Clemson,Claire Luoma,1.75,1.2956
+2026-2027,2026-10-25,Clemson,Talea Mitchell,-2.0,-1.6
+2026-2027,2026-10-25,Clemson,Lauren Schneider,0.0,-0.4982
+2026-2027,2026-10-25,Clemson,Kennedy Wagner,1.0,0.4317
+2026-2027,2026-10-25,Clemson,Maddie Anspaugh,1.75,1.7108
+2026-2027,2026-10-25,Clemson,Audrey Armbruster,1.5,2.0115
+2026-2027,2026-10-25,Clemson,Khaya Gordon,0.0,0.0
+2026-2027,2026-10-25,Clemson,Alyssa Irwin,1.0,1.1732
+2026-2027,2026-10-25,Clemson,Lucy Maloney,0.25,0.0026
+2026-2027,2026-10-25,Clemson,Lina Merz,-1.5,-1.4681
 2026-2027,2026-09-19,Iowa St.,Abbi Brenizer,2.25,2.2061
 2026-2027,2026-09-19,Iowa St.,Nayeli Gonzalez,11.25,11.5291
 2026-2027,2026-09-19,Iowa St.,Macie Lupkes,5.0,5.5691
@@ -744483,6 +745463,30 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-17,Iowa St.,Nayeli Gonzalez,3.0,1.7254
 2026-2027,2026-10-17,Iowa St.,Alea Goolsby,6.75,6.1355
 2026-2027,2026-10-17,Iowa St.,Macie Lupkes,3.0,3.5221
+2026-2027,2026-10-25,Iowa St.,Mesaiya Bettis,19.25,27.9046
+2026-2027,2026-10-25,Iowa St.,Abbi Brenizer,-0.5,-0.4568
+2026-2027,2026-10-25,Iowa St.,Ella Florez,15.75,25.3433
+2026-2027,2026-10-25,Iowa St.,Alea Goolsby,12.5,12.4713
+2026-2027,2026-10-25,Iowa St.,Reagan Hanfelt,-1.0,-0.9662
+2026-2027,2026-10-25,Iowa St.,Taylor Johnson,-1.5,-1.7843
+2026-2027,2026-10-25,Iowa St.,Daaliyah Kemp,6.0,7.5087
+2026-2027,2026-10-25,Iowa St.,Macie Lupkes,-2.0,-1.9325
+2026-2027,2026-10-25,Iowa St.,Ava Martin,6.0,6.4343
+2026-2027,2026-10-25,Iowa St.,Pam McCune,3.0,2.6574
+2026-2027,2026-10-25,Iowa St.,Reese Naeve,0.5,0.4593
+2026-2027,2026-10-25,Iowa St.,Nayeli Ti'a,7.25,8.6214
+2026-2027,2026-10-25,Iowa St.,Rachel Van Gorp,15.75,17.6824
+2026-2027,2026-10-25,Houston,Lily Barron,3.25,4.3997
+2026-2027,2026-10-25,Houston,Mattie Casale,2.75,3.1336
+2026-2027,2026-10-25,Houston,Noemi Despaigne,10.5,13.3391
+2026-2027,2026-10-25,Houston,Shannon Dworaczyk,23.25,36.0193
+2026-2027,2026-10-25,Houston,Kaitlyn Evans,8.25,10.9771
+2026-2027,2026-10-25,Houston,Kamille Gibson,19.0,25.4231
+2026-2027,2026-10-25,Houston,Tara Greenberry,8.5,12.2668
+2026-2027,2026-10-25,Houston,Sydney Jones,11.0,14.1044
+2026-2027,2026-10-25,Houston,Gillian Pitts,8.75,12.7582
+2026-2027,2026-10-25,Houston,Cali Reece,0.25,0.2847
+2026-2027,2026-10-25,Houston,Alexis Roberson,3.5,4.1562
 2026-2027,2026-10-02,UAlbany,Kasia Barletta,11.5,9.2358
 2026-2027,2026-10-02,UAlbany,Mina Benucci,9.5,8.2731
 2026-2027,2026-10-02,UAlbany,Addy Bianchini,27.5,28.1506
@@ -745633,18 +746637,18 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-16,Western Ky.,Izzie Delacher,1.0,1.4538
 2026-2027,2026-10-16,Western Ky.,Sonja Laaksonen,-2.0,-1.9
 2026-2027,2026-10-16,Western Ky.,Kendall Meller,0.0,0.0
-2026-2027,2026-09-13,North Florida,Sofia Dawson,21.75,28.4575
-2026-2027,2026-09-13,North Florida,Kaili Doctor,14.75,12.6976
-2026-2027,2026-09-13,North Florida,Yarimar Francis Garay,9.75,11.4677
-2026-2027,2026-09-13,North Florida,Leah McDonald,18.25,17.9126
-2026-2027,2026-09-13,North Florida,Emma Pohlmann,4.25,3.7308
+2026-2027,2026-09-13,North Florida,Sofia Dawson,21.75,28.4117
+2026-2027,2026-09-13,North Florida,Kaili Doctor,14.75,13.3572
+2026-2027,2026-09-13,North Florida,Yarimar Francis Garay,9.75,11.4341
+2026-2027,2026-09-13,North Florida,Leah McDonald,18.25,17.5553
+2026-2027,2026-09-13,North Florida,Emma Pohlmann,4.25,4.3777
 2026-2027,2026-09-13,North Florida,Dakota Spurrier,12.25,11.1389
 2026-2027,2026-09-13,North Florida,Brooklyn Stringfellow,0.5,0.4491
 2026-2027,2026-09-13,North Florida,Haleina Bowers,-1.0,-1.3816
 2026-2027,2026-09-13,North Florida,Julianna Santiago,1.25,1.1566
 2026-2027,2026-09-13,North Florida,Sasha Bespaly,0.5,0.4773
 2026-2027,2026-09-13,North Florida,Katelyn Bowman,0.0,0.0
-2026-2027,2026-09-13,North Florida,Haydin Froehlich,1.0,0.985
+2026-2027,2026-09-13,North Florida,Haydin Froehlich,1.0,0.9403
 2026-2027,2026-09-13,William & Mary,Katherine Arnason,20.0,22.5263
 2026-2027,2026-09-13,William & Mary,Audrey Brcka,20.25,28.9562
 2026-2027,2026-09-13,William & Mary,Ava Crabtree,-1.5,-3.3086
@@ -746111,13 +747115,13 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-25,Virginia Tech,Avery Webb,0.0,0.0
 2026-2027,2026-09-25,Virginia Tech,Sara Letizia Gasparini,-0.75,-1.1856
 2026-2027,2026-09-25,Virginia Tech,Adeline Hundl,0.0,-0.2966
-2026-2027,2026-09-25,Georgia Tech,Alida Bennour,10.0,10.7758
+2026-2027,2026-09-25,Georgia Tech,Alida Bennour,10.0,10.9066
 2026-2027,2026-09-25,Georgia Tech,Bianca Garibaldi,5.75,6.1124
-2026-2027,2026-09-25,Georgia Tech,Zoe Humphrey,13.75,19.0888
+2026-2027,2026-09-25,Georgia Tech,Zoe Humphrey,13.75,19.0692
 2026-2027,2026-09-25,Georgia Tech,Mana Kaneko,2.75,2.8599
 2026-2027,2026-09-25,Georgia Tech,Magda Kobaidze,14.0,14.1599
-2026-2027,2026-09-25,Georgia Tech,Laura Perugini Bieleski,16.0,22.0448
-2026-2027,2026-09-25,Georgia Tech,Heloise Soares,19.75,35.8372
+2026-2027,2026-09-25,Georgia Tech,Laura Perugini Bieleski,16.0,21.3255
+2026-2027,2026-09-25,Georgia Tech,Heloise Soares,19.75,35.9504
 2026-2027,2026-09-25,Georgia Tech,Vitoria Belfort,0.0,0.0
 2026-2027,2026-10-03,Virginia Tech,Camilla Brandalise,18.25,20.2218
 2026-2027,2026-10-03,Virginia Tech,Ivy Cooper,7.75,8.4293
@@ -746404,6 +747408,29 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,Mississippi St.,Paloma Routaboul,6.75,7.0043
 2026-2027,2026-10-23,Mississippi St.,Gha'Naye Whitfield-Moss,6.0,8.0311
 2026-2027,2026-10-23,Mississippi St.,McKenna Yates,9.0,11.0945
+2026-2027,2026-10-25,Arkansas,Aleki Alexander,4.25,4.3873
+2026-2027,2026-10-25,Arkansas,Madi Benne,9.75,11.6991
+2026-2027,2026-10-25,Arkansas,Gaby Cornier,8.75,6.7812
+2026-2027,2026-10-25,Arkansas,Lakin Laurendine,20.75,24.4556
+2026-2027,2026-10-25,Arkansas,Kiki Remensperger,28.5,41.705
+2026-2027,2026-10-25,Arkansas,Romani Thurman,1.5,-0.37
+2026-2027,2026-10-25,Arkansas,Maggie McCarroll,1.75,1.4634
+2026-2027,2026-10-25,Arkansas,Journey Peppers,5.5,6.2159
+2026-2027,2026-10-25,Arkansas,Paisley Pavliska,8.75,7.9113
+2026-2027,2026-10-25,Arkansas,Laci Bohannan,0.25,-0.9365
+2026-2027,2026-10-25,Arkansas,Parker Duncan,6.75,6.4479
+2026-2027,2026-10-25,Arkansas,Layla Smith,0.75,-0.4694
+2026-2027,2026-10-25,Mississippi St.,Bernardita Aguilar,12.5,14.5008
+2026-2027,2026-10-25,Mississippi St.,Ava Anderson,8.5,10.2781
+2026-2027,2026-10-25,Mississippi St.,Cayley Hanson,13.75,18.1569
+2026-2027,2026-10-25,Mississippi St.,Erin Kline,12.75,17.6222
+2026-2027,2026-10-25,Mississippi St.,Lindsey Mangelson,17.5,15.8479
+2026-2027,2026-10-25,Mississippi St.,Mary Neal,12.0,15.4126
+2026-2027,2026-10-25,Mississippi St.,Noella Obi,8.0,9.4881
+2026-2027,2026-10-25,Mississippi St.,Paloma Routaboul,10.75,8.2097
+2026-2027,2026-10-25,Mississippi St.,Gha'Naye Whitfield-Moss,6.75,6.0366
+2026-2027,2026-10-25,Mississippi St.,McKenna Yates,8.0,7.9295
+2026-2027,2026-10-25,Mississippi St.,Avery Power,0.0,0.0
 2026-2027,2026-08-29,Marist,Sarah Bumstead,6.75,5.7782
 2026-2027,2026-08-29,Marist,Sarah Bumstead,6.75,5.5737
 2026-2027,2026-08-29,Marist,Sara Dasic,8.75,3.8547
@@ -746962,6 +747989,30 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,Charlotte,Erin Lehman,3.25,2.3175
 2026-2027,2026-10-23,Charlotte,Milan Cannon,-1.75,-1.7722
 2026-2027,2026-10-23,Charlotte,Gia McGrew,0.0,0.0
+2026-2027,2026-10-25,UTSA,Isabella Arroyave,7.0,4.1052
+2026-2027,2026-10-25,UTSA,Sydney Bryant,2.0,1.5896
+2026-2027,2026-10-25,UTSA,Megan Hawkins,12.75,13.0955
+2026-2027,2026-10-25,UTSA,Ledisi Kpea,3.25,2.6273
+2026-2027,2026-10-25,UTSA,Alyssa Manitzas,8.0,8.142
+2026-2027,2026-10-25,UTSA,Valeria Ortiz,8.5,10.3454
+2026-2027,2026-10-25,UTSA,Caroline Tredwell,8.5,8.4126
+2026-2027,2026-10-25,UTSA,Ally Tribe,12.0,9.8873
+2026-2027,2026-10-25,UTSA,Sydney Black,3.0,3.4326
+2026-2027,2026-10-25,UTSA,Brooke Elliott,-1.25,-1.2094
+2026-2027,2026-10-25,UTSA,Makinsey Jones,-0.25,-0.5986
+2026-2027,2026-10-25,UTSA,Giada Obregon,-0.75,-0.7438
+2026-2027,2026-10-25,Temple,Kennedy Crayton,12.5,13.3126
+2026-2027,2026-10-25,Temple,Christiana  Greene,19.5,23.1106
+2026-2027,2026-10-25,Temple,Khenedi Guest,6.5,6.8997
+2026-2027,2026-10-25,Temple,Olivia Hummel,10.75,9.976
+2026-2027,2026-10-25,Temple,Sarah Quarells,9.75,11.4485
+2026-2027,2026-10-25,Temple,Claudia Rivera,9.25,8.4321
+2026-2027,2026-10-25,Temple,Maddix Taniguchi,0.5,0.4547
+2026-2027,2026-10-25,Temple,Lexi Yoza,24.5,37.5009
+2026-2027,2026-10-25,Temple,Abby Jhun,-1.0,-0.9908
+2026-2027,2026-10-25,Temple,Daniella Gonzalez-Murati,1.25,1.3424
+2026-2027,2026-10-25,Temple,Opeoluwa Aladetimi,0.0,-0.0654
+2026-2027,2026-10-25,Temple,Jaya Moore,0.0,0.0
 2026-2027,2026-10-23,Kennesaw St.,Ashlyn Anderson,10.5,11.9114
 2026-2027,2026-10-23,Kennesaw St.,Kourtney Brown,15.0,24.3424
 2026-2027,2026-10-23,Kennesaw St.,Olivia Burrage,12.25,15.8641
@@ -747085,17 +748136,17 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-27,UAB,Juliet Galla,0.0,0.0
 2026-2027,2026-09-27,UAB,Abby Jones,-1.25,-1.9093
 2026-2027,2026-09-27,Rice,Maggie Croft,13.25,16.1724
-2026-2027,2026-09-27,Rice,Mari Furoyama,7.75,6.5831
+2026-2027,2026-09-27,Rice,Mari Furoyama,7.75,7.861
 2026-2027,2026-09-27,Rice,Stephanie Gutierrez,12.5,15.6149
-2026-2027,2026-09-27,Rice,Jordan Hummel,8.5,7.7625
+2026-2027,2026-09-27,Rice,Jordan Hummel,8.5,8.4283
 2026-2027,2026-09-27,Rice,Bella Lopez,9.0,7.8425
-2026-2027,2026-09-27,Rice,Sydnee Peterson,14.5,10.9408
-2026-2027,2026-09-27,Rice,Amalia Simmons,13.5,13.9746
-2026-2027,2026-09-27,Rice,Savannah Skopal,26.0,37.0319
+2026-2027,2026-09-27,Rice,Sydnee Peterson,14.5,11.3482
+2026-2027,2026-09-27,Rice,Amalia Simmons,13.5,13.6982
+2026-2027,2026-09-27,Rice,Savannah Skopal,26.0,36.937
 2026-2027,2026-09-27,Rice,Declan Eastman,3.0,3.4045
-2026-2027,2026-09-27,Rice,Campbell Love,2.5,2.5942
-2026-2027,2026-09-27,Rice,Zora Bello,4.5,6.7003
-2026-2027,2026-09-27,Rice,Kellen Dorotik,1.75,1.5604
+2026-2027,2026-09-27,Rice,Campbell Love,2.5,2.6701
+2026-2027,2026-09-27,Rice,Zora Bello,4.5,6.6661
+2026-2027,2026-09-27,Rice,Kellen Dorotik,1.75,1.5857
 2026-2027,2026-09-27,Rice,Aaliyah Smith,1.0,1.0404
 2026-2027,2026-10-23,Rice,Declan Eastman,1.25,1.2663
 2026-2027,2026-10-23,Rice,Mari Furoyama,6.75,8.4391
@@ -747279,16 +748330,16 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-11,FGCU,Eliska Vytiskova,16.5,24.9723
 2026-2027,2026-10-11,FGCU,Katie Gielas,-1.25,-2.0952
 2026-2027,2026-10-11,FGCU,Shay Heaney,8.5,6.708
-2026-2027,2026-10-17,FGCU,Katie Gielas,9.5,3.7699
-2026-2027,2026-10-17,FGCU,Julija Grubisic Cabo,5.5,1.9971
-2026-2027,2026-10-17,FGCU,Maju Hildebrand,-0.5,-1.5181
+2026-2027,2026-10-17,FGCU,Katie Gielas,9.5,3.4632
+2026-2027,2026-10-17,FGCU,Julija Grubisic Cabo,5.5,3.5411
+2026-2027,2026-10-17,FGCU,Maju Hildebrand,-0.5,-1.4822
 2026-2027,2026-10-17,FGCU,Amany Kuwa,0.5,0.0097
-2026-2027,2026-10-17,FGCU,Anna Marzella,6.5,5.4105
-2026-2027,2026-10-17,FGCU,Dinara Sabitova,12.5,13.5334
+2026-2027,2026-10-17,FGCU,Anna Marzella,6.5,6.4571
+2026-2027,2026-10-17,FGCU,Dinara Sabitova,12.5,12.9919
 2026-2027,2026-10-17,FGCU,Devynn Schulze,0.25,0.272
 2026-2027,2026-10-17,FGCU,Camila Soto,-1.25,-1.5627
 2026-2027,2026-10-17,FGCU,Abby Toeniskoetter,4.75,4.3929
-2026-2027,2026-10-17,FGCU,Eliska Vytiskova,4.0,4.6912
+2026-2027,2026-10-17,FGCU,Eliska Vytiskova,4.0,4.4576
 2026-2027,2026-10-17,North Florida,Haleina Bowers,8.25,10.6178
 2026-2027,2026-10-17,North Florida,Sofia Dawson,19.0,30.5333
 2026-2027,2026-10-17,North Florida,Kaili Doctor,14.5,16.1462
@@ -749783,25 +750834,25 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-12,Bowling Green,Marin Dunaway,0.75,0.4882
 2026-2027,2026-09-12,Bowling Green,Vivian Jones,0.0,-0.0621
 2026-2027,2026-09-12,Bowling Green,Edyta Waclawczyk,-0.5,-0.5211
-2026-2027,2026-09-12,Xavier,Jenna Barhorst,9.25,13.76
+2026-2027,2026-09-12,Xavier,Jenna Barhorst,9.25,13.5546
 2026-2027,2026-09-12,Xavier,Jenna Barhorst,9.25,13.1938
 2026-2027,2026-09-12,Xavier,McKinley Boehm,9.75,14.7469
 2026-2027,2026-09-12,Xavier,McKinley Boehm,9.75,14.7662
-2026-2027,2026-09-12,Xavier,Catherine Flaharty,2.25,1.6101
+2026-2027,2026-09-12,Xavier,Catherine Flaharty,2.25,1.6406
 2026-2027,2026-09-12,Xavier,Catherine Flaharty,2.25,1.6329
-2026-2027,2026-09-12,Xavier,Macy Hatkevich,15.25,22.4842
+2026-2027,2026-09-12,Xavier,Macy Hatkevich,15.25,21.868
 2026-2027,2026-09-12,Xavier,Macy Hatkevich,15.25,20.5572
 2026-2027,2026-09-12,Xavier,Margo Kemp,9.75,13.1644
 2026-2027,2026-09-12,Xavier,Margo Kemp,9.75,13.172
-2026-2027,2026-09-12,Xavier,Charlotte Moriarty,7.25,5.7496
+2026-2027,2026-09-12,Xavier,Charlotte Moriarty,7.25,6.1578
 2026-2027,2026-09-12,Xavier,Charlotte Moriarty,7.25,5.3694
-2026-2027,2026-09-12,Xavier,Kelsey Niesen,11.5,10.6087
+2026-2027,2026-09-12,Xavier,Kelsey Niesen,11.5,13.6439
 2026-2027,2026-09-12,Xavier,Kelsey Niesen,11.5,13.0333
-2026-2027,2026-09-12,Xavier,Kasey Quenichet,5.75,5.6475
+2026-2027,2026-09-12,Xavier,Kasey Quenichet,5.75,5.1748
 2026-2027,2026-09-12,Xavier,Kasey Quenichet,5.75,6.9482
 2026-2027,2026-09-12,Xavier,Quinci Thomas,5.0,6.3932
 2026-2027,2026-09-12,Xavier,Quinci Thomas,5.0,6.3932
-2026-2027,2026-09-12,Xavier,Ava Tilden,3.25,3.0026
+2026-2027,2026-09-12,Xavier,Ava Tilden,3.25,3.3859
 2026-2027,2026-09-12,Xavier,Ava Tilden,3.25,2.8289
 2026-2027,2026-09-12,Xavier,Elouise Czajkowski,0.5,0.5936
 2026-2027,2026-09-12,Xavier,Elouise Czajkowski,0.5,0.5247
@@ -750081,19 +751132,19 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-08-29,Sacred Heart,Raissa Antonio,4.75,4.6591
 2026-2027,2026-08-29,Sacred Heart,Raissa Antonio,4.75,4.6232
 2026-2027,2026-08-29,Sacred Heart,Addy Franz,21.75,21.0694
-2026-2027,2026-08-29,Sacred Heart,Addy Franz,21.75,31.8438
+2026-2027,2026-08-29,Sacred Heart,Addy Franz,21.75,31.8193
 2026-2027,2026-08-29,Sacred Heart,Abbie Hagedorn,7.0,4.1165
 2026-2027,2026-08-29,Sacred Heart,Abbie Hagedorn,7.0,5.7237
 2026-2027,2026-08-29,Sacred Heart,Sofia Hechavarria,13.0,14.0687
-2026-2027,2026-08-29,Sacred Heart,Sofia Hechavarria,13.0,12.8599
+2026-2027,2026-08-29,Sacred Heart,Sofia Hechavarria,13.0,13.1362
 2026-2027,2026-08-29,Sacred Heart,Lauren Hubert,17.75,20.4305
-2026-2027,2026-08-29,Sacred Heart,Lauren Hubert,17.75,20.5577
+2026-2027,2026-08-29,Sacred Heart,Lauren Hubert,17.75,20.653
 2026-2027,2026-08-29,Sacred Heart,Renata Montini,1.25,0.7698
-2026-2027,2026-08-29,Sacred Heart,Renata Montini,1.25,1.2928
+2026-2027,2026-08-29,Sacred Heart,Renata Montini,1.25,1.0906
 2026-2027,2026-08-29,Sacred Heart,Molly Newton,3.0,2.4056
 2026-2027,2026-08-29,Sacred Heart,Molly Newton,3.0,2.3861
 2026-2027,2026-08-29,Sacred Heart,Miliani Villarreal,6.0,5.7017
-2026-2027,2026-08-29,Sacred Heart,Miliani Villarreal,6.0,4.8622
+2026-2027,2026-08-29,Sacred Heart,Miliani Villarreal,6.0,5.1724
 2026-2027,2026-08-29,Sacred Heart,Taylor Pratt,0.25,0.21
 2026-2027,2026-08-29,Sacred Heart,Ryleigh Short,1.5,0.3415
 2026-2027,2026-08-29,Sacred Heart,Ryleigh Short,1.5,1.2618
@@ -750131,16 +751182,16 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-08-30,Iowa,Carmel Vares,11.75,13.2347
 2026-2027,2026-08-30,Iowa,Hannah Whittingstall,6.0,5.7861
 2026-2027,2026-08-30,Iowa,Greta Schlichter,-0.5,-0.4756
-2026-2027,2026-08-30,Sacred Heart,Addy Franz,12.75,17.2183
-2026-2027,2026-08-30,Sacred Heart,Abbie Hagedorn,15.0,16.4981
-2026-2027,2026-08-30,Sacred Heart,Sofia Hechavarria,2.75,2.1589
-2026-2027,2026-08-30,Sacred Heart,Lauren Hubert,9.75,10.1781
-2026-2027,2026-08-30,Sacred Heart,Renata Montini,3.0,2.8976
+2026-2027,2026-08-30,Sacred Heart,Addy Franz,12.75,17.2399
+2026-2027,2026-08-30,Sacred Heart,Abbie Hagedorn,15.0,16.0765
+2026-2027,2026-08-30,Sacred Heart,Sofia Hechavarria,2.75,1.2315
+2026-2027,2026-08-30,Sacred Heart,Lauren Hubert,9.75,10.7397
+2026-2027,2026-08-30,Sacred Heart,Renata Montini,3.0,3.8488
 2026-2027,2026-08-30,Sacred Heart,Molly Newton,0.5,-0.357
-2026-2027,2026-08-30,Sacred Heart,Miliani Villarreal,6.25,5.9575
+2026-2027,2026-08-30,Sacred Heart,Miliani Villarreal,6.25,5.8074
 2026-2027,2026-08-30,Sacred Heart,Raissa Antonio,1.0,0.985
 2026-2027,2026-08-30,Sacred Heart,Kayla Jones,0.75,0.8827
-2026-2027,2026-08-30,Sacred Heart,Taylor Pratt,1.25,1.4402
+2026-2027,2026-08-30,Sacred Heart,Taylor Pratt,1.25,1.3114
 2026-2027,2026-08-30,Sacred Heart,Kelli Ennis,1.0,1.4487
 2026-2027,2026-08-30,Sacred Heart,Ryleigh Short,0.0,0.0
 2026-2027,2026-09-15,FDU,Ava DeGuzman,8.5,7.7519
@@ -750477,13 +751528,13 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-13,North Carolina,Sienna Cozza,1.5,1.5685
 2026-2027,2026-09-13,North Carolina,Addison West,1.0,1.29
 2026-2027,2026-09-18,Lipscomb,Anna Claire Brown,-1.5,-1.8234
-2026-2027,2026-09-18,Lipscomb,Ella Durham,5.0,2.7628
+2026-2027,2026-09-18,Lipscomb,Ella Durham,5.0,3.3771
 2026-2027,2026-09-18,Lipscomb,Brooklyn Fuchs,3.5,4.4193
 2026-2027,2026-09-18,Lipscomb,Lexi Guinn,-1.25,-1.6551
-2026-2027,2026-09-18,Lipscomb,Grace Jones,2.25,2.3951
+2026-2027,2026-09-18,Lipscomb,Grace Jones,2.25,2.8361
 2026-2027,2026-09-18,Lipscomb,Makenna Kirlin,0.75,0.9217
-2026-2027,2026-09-18,Lipscomb,Kenzie Kucks,5.75,6.1396
-2026-2027,2026-09-18,Lipscomb,Kelsey Schenck,17.0,20.0062
+2026-2027,2026-09-18,Lipscomb,Kenzie Kucks,5.75,5.6095
+2026-2027,2026-09-18,Lipscomb,Kelsey Schenck,17.0,20.1238
 2026-2027,2026-09-18,Lipscomb,Sydney Strenger,4.25,5.2679
 2026-2027,2026-09-18,Vanderbilt,Reese Animashaun,15.25,20.3539
 2026-2027,2026-09-18,Vanderbilt,Ariel Chime,3.25,3.8854
@@ -750747,12 +751798,12 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-02,Alabama,Josie Imes,0.0,0.0
 2026-2027,2026-10-02,Texas A&M,Lolufe Adedeji,4.75,4.6425
 2026-2027,2026-10-02,Texas A&M,Addi Applegate,2.5,2.3828
-2026-2027,2026-10-02,Texas A&M,Megan Fitch,15.75,17.3462
+2026-2027,2026-10-02,Texas A&M,Megan Fitch,15.75,17.001
 2026-2027,2026-10-02,Texas A&M,Brooke Lacewell,3.0,2.9277
 2026-2027,2026-10-02,Texas A&M,Margot Manning,-0.75,-0.7697
-2026-2027,2026-10-02,Texas A&M,Kirra Musgrove,18.0,22.8506
-2026-2027,2026-10-02,Texas A&M,Gabi Rodriguez,8.0,8.0706
-2026-2027,2026-10-02,Texas A&M,Kyndal Stowers,11.5,10.1529
+2026-2027,2026-10-02,Texas A&M,Kirra Musgrove,18.0,22.7837
+2026-2027,2026-10-02,Texas A&M,Gabi Rodriguez,8.0,8.5973
+2026-2027,2026-10-02,Texas A&M,Kyndal Stowers,11.5,10.0671
 2026-2027,2026-10-02,Texas A&M,Kaia Castle,1.5,0.733
 2026-2027,2026-10-02,Texas A&M,Djurdja Stanojevic,3.0,3.2714
 2026-2027,2026-10-02,Texas A&M,Lily Nicholson,1.25,1.376
@@ -752113,6 +753164,31 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,UTSA,Makinsey Jones,-0.25,-0.255
 2026-2027,2026-10-23,UTSA,Ally Tribe,-4.0,-5.4332
 2026-2027,2026-10-23,UTSA,Sydney Black,0.0,0.0
+2026-2027,2026-10-25,UAB,Sydney Austin,2.5,2.8618
+2026-2027,2026-10-25,UAB,Delaney Bowser,5.25,5.9226
+2026-2027,2026-10-25,UAB,Juliet Galla,0.5,-0.0885
+2026-2027,2026-10-25,UAB,Rachel McCollum,36.75,55.3057
+2026-2027,2026-10-25,UAB,Makayla Meister,17.0,24.2369
+2026-2027,2026-10-25,UAB,Mia Reese,18.0,25.5672
+2026-2027,2026-10-25,UAB,Addyson Smock,8.0,10.2545
+2026-2027,2026-10-25,UAB,Kennedy Vaughn,15.5,15.7046
+2026-2027,2026-10-25,UAB,Sara Sykes,0.25,0.4676
+2026-2027,2026-10-25,UAB,Rylee Busse,0.0,0.0
+2026-2027,2026-10-25,UAB,Annastiina Tarkkanen,0.0,0.0
+2026-2027,2026-10-25,North Texas,Reagan Bedell,8.0,3.6712
+2026-2027,2026-10-25,North Texas,Lillian Croshaw,11.0,13.8842
+2026-2027,2026-10-25,North Texas,Loredana Fouonji,10.75,14.6032
+2026-2027,2026-10-25,North Texas,Jahniya Jackson,8.0,7.1758
+2026-2027,2026-10-25,North Texas,Dakota Mitchell,5.5,4.8058
+2026-2027,2026-10-25,North Texas,Alessandra Romo,4.5,4.3631
+2026-2027,2026-10-25,North Texas,Sidney Soria,23.5,32.9916
+2026-2027,2026-10-25,North Texas,Ryann Vik,12.0,16.679
+2026-2027,2026-10-25,North Texas,Alyssa Young,3.0,2.7728
+2026-2027,2026-10-25,North Texas,Addison Achilles,3.0,2.5874
+2026-2027,2026-10-25,North Texas,Olivia Branum,5.0,4.6457
+2026-2027,2026-10-25,North Texas,Jocelyn Jourdan,-1.0,-1.3401
+2026-2027,2026-10-25,North Texas,Alexa Hayes,-1.0,-1.0783
+2026-2027,2026-10-25,North Texas,Reese Watters,0.0,0.0
 2026-2027,2026-08-28,Bowling Green,Avery Anders,2.5,2.7149
 2026-2027,2026-08-28,Bowling Green,Anastasija Bozic,10.5,9.1489
 2026-2027,2026-08-28,Bowling Green,Sydnie Hernandez,11.0,12.1084
@@ -753302,12 +754378,12 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-19,Kennesaw St.,Abby Kaminski,-0.25,-0.258
 2026-2027,2026-09-19,Kennesaw St.,Hunter Cook,-1.0,-0.9688
 2026-2027,2026-09-19,Kennesaw St.,Hannah Pearce,0.25,0.268
-2026-2027,2026-10-02,North Florida,Haleina Bowers,7.5,9.5043
+2026-2027,2026-10-02,North Florida,Haleina Bowers,7.5,9.4822
 2026-2027,2026-10-02,North Florida,Sofia Dawson,25.75,41.3276
-2026-2027,2026-10-02,North Florida,Kaili Doctor,15.25,17.943
+2026-2027,2026-10-02,North Florida,Kaili Doctor,15.25,18.1074
 2026-2027,2026-10-02,North Florida,Yarimar Francis Garay,15.0,20.9735
-2026-2027,2026-10-02,North Florida,Leah McDonald,6.0,3.9879
-2026-2027,2026-10-02,North Florida,Emma Pohlmann,9.25,11.1218
+2026-2027,2026-10-02,North Florida,Leah McDonald,6.0,4.2837
+2026-2027,2026-10-02,North Florida,Emma Pohlmann,9.25,10.989
 2026-2027,2026-10-02,North Florida,Julianna Santiago,0.0,-0.1002
 2026-2027,2026-10-02,North Florida,Dakota Spurrier,21.0,25.9851
 2026-2027,2026-10-02,North Florida,Brooklyn Stringfellow,-0.5,-0.3891
@@ -753515,6 +754591,30 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-02,Ole Miss,Melia Johnson,14.25,20.0046
 2026-2027,2026-10-02,Ole Miss,Tenesyn Frye,3.25,4.1513
 2026-2027,2026-10-02,Ole Miss,Jaidyn Hartsfield,2.25,2.0675
+2026-2027,2026-10-25,Ole Miss,Bella Bonanno,7.5,11.9771
+2026-2027,2026-10-25,Ole Miss,Keirstyn Carlton,1.75,1.8956
+2026-2027,2026-10-25,Ole Miss,Jorda Crook,2.0,0.5929
+2026-2027,2026-10-25,Ole Miss,Tenesyn Frye,3.25,5.6841
+2026-2027,2026-10-25,Ole Miss,Jaidyn Hartsfield,4.0,1.9985
+2026-2027,2026-10-25,Ole Miss,Ryea Jackson,4.0,6.0905
+2026-2027,2026-10-25,Ole Miss,Melia Johnson,6.75,7.5937
+2026-2027,2026-10-25,Ole Miss,Shayla Meyer,0.75,0.9357
+2026-2027,2026-10-25,Ole Miss,Vivianna Samaniego,8.0,9.3951
+2026-2027,2026-10-25,Ole Miss,Sophie Taylor,1.25,1.796
+2026-2027,2026-10-25,Ole Miss,Rileigh Butler,0.0,0.0
+2026-2027,2026-10-25,Florida,Kamryn Chaney,9.75,11.6504
+2026-2027,2026-10-25,Florida,Lily Hayes,5.75,5.7857
+2026-2027,2026-10-25,Florida,Emerson Hoyle,0.25,0.1379
+2026-2027,2026-10-25,Florida,Logan King,4.0,3.7518
+2026-2027,2026-10-25,Florida,Selena Leban,4.75,6.0247
+2026-2027,2026-10-25,Florida,Bella Lee,1.0,1.3739
+2026-2027,2026-10-25,Florida,Taylor Parks,24.0,40.3002
+2026-2027,2026-10-25,Florida,Alec Rothe,12.75,18.6303
+2026-2027,2026-10-25,Florida,Brooklyn Briscoe,6.0,9.6614
+2026-2027,2026-10-25,Florida,Jordyn Byrd,1.0,1.1019
+2026-2027,2026-10-25,Florida,Lauren Harden,1.0,1.0685
+2026-2027,2026-10-25,Florida,Olivia Klimis,-1.0,-0.9486
+2026-2027,2026-10-25,Florida,Amaya Thomas,0.5,0.4849
 2026-2027,2026-09-04,Mercer,Sammi Bergjans,23.0,30.4983
 2026-2027,2026-09-04,Mercer,Sarah Frager,8.5,6.2777
 2026-2027,2026-09-04,Mercer,Aubri Martin,17.0,12.6682
@@ -754310,6 +755410,29 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-27,Oklahoma,Alaleh Tolliver,10.75,14.1625
 2026-2027,2026-09-27,Oklahoma,Aniya Warren,6.0,9.6542
 2026-2027,2026-09-27,Oklahoma,Mikala Young,1.0,-0.4469
+2026-2027,2026-10-25,Oklahoma,Tekoa Barnes,10.5,12.7643
+2026-2027,2026-10-25,Oklahoma,McKenna Brand,1.0,1.8912
+2026-2027,2026-10-25,Oklahoma,Carley Butler,14.0,22.1801
+2026-2027,2026-10-25,Oklahoma,Alyssa Flack,9.0,9.5535
+2026-2027,2026-10-25,Oklahoma,Elise Hani,8.5,9.5575
+2026-2027,2026-10-25,Oklahoma,Mari King,-0.75,-0.7421
+2026-2027,2026-10-25,Oklahoma,Avaya Maga,15.25,25.6584
+2026-2027,2026-10-25,Oklahoma,Kinsley Singleton,2.25,2.6949
+2026-2027,2026-10-25,Oklahoma,Aniya Warren,6.25,6.4012
+2026-2027,2026-10-25,Oklahoma,Mikala Young,5.5,4.6585
+2026-2027,2026-10-25,Alabama,Mya Allen,5.75,7.3238
+2026-2027,2026-10-25,Alabama,Lindsey Brown,0.75,0.7972
+2026-2027,2026-10-25,Alabama,Ashby Daniel,-1.0,-1.0497
+2026-2027,2026-10-25,Alabama,Dionii Fraga,7.25,6.5932
+2026-2027,2026-10-25,Alabama,Laney Hennessee,2.0,0.9405
+2026-2027,2026-10-25,Alabama,Kaleigh Palmer,10.5,13.7046
+2026-2027,2026-10-25,Alabama,Hannah Parant,12.25,16.8224
+2026-2027,2026-10-25,Alabama,Tea Simic,1.5,1.4606
+2026-2027,2026-10-25,Alabama,Audrey Simpson,3.0,3.4088
+2026-2027,2026-10-25,Alabama,Leilia Toailoa,-1.0,-0.9004
+2026-2027,2026-10-25,Alabama,Lily Gervase,-2.5,-2.4948
+2026-2027,2026-10-25,Alabama,Ava Wallis,0.0,0.0
+2026-2027,2026-10-25,Alabama,Addison Engel,0.0,0.0
 2026-2027,2026-09-04,Evansville,Kendall Agler,5.25,4.0688
 2026-2027,2026-09-04,Evansville,Kendall Agler,5.25,1.9524
 2026-2027,2026-09-04,Evansville,Lyla Fisher,5.5,4.7285
@@ -754916,15 +756039,15 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-09-18,VCU,Cansin Sendir,26.25,40.3316
 2026-2027,2026-09-18,VCU,Molly McCall,10.75,13.2332
 2026-2027,2026-09-18,VCU,Gabby LaPata,0.5,0.3559
-2026-2027,2026-09-18,Delaware,Morgan Campbell,5.25,5.5811
+2026-2027,2026-09-18,Delaware,Morgan Campbell,5.25,5.6686
 2026-2027,2026-09-18,Delaware,Anna Logan Gillens,7.25,7.9306
 2026-2027,2026-09-18,Delaware,Jayda Gray,0.5,0.1748
 2026-2027,2026-09-18,Delaware,Taylor Holly,5.0,2.9908
-2026-2027,2026-09-18,Delaware,Kennedi Inman,22.25,29.0652
+2026-2027,2026-09-18,Delaware,Kennedi Inman,22.25,28.8986
 2026-2027,2026-09-18,Delaware,Asia Murray,6.5,7.7477
-2026-2027,2026-09-18,Delaware,Jayda Redd,2.25,1.9404
-2026-2027,2026-09-18,Delaware,Thalia Yancey,8.5,7.2577
-2026-2027,2026-09-18,Delaware,Emily Zgonc,3.25,3.3121
+2026-2027,2026-09-18,Delaware,Jayda Redd,2.25,2.1261
+2026-2027,2026-09-18,Delaware,Thalia Yancey,8.5,7.7114
+2026-2027,2026-09-18,Delaware,Emily Zgonc,3.25,3.1966
 2026-2027,2026-09-18,Delaware,Kristyn Membreno,0.0,0.0
 2026-2027,2026-09-18,Delaware,Carolina Sayeg Blak,1.25,1.0329
 2026-2027,2026-09-06,Southern California,Taylor Deckert,4.0,4.3758
@@ -756436,6 +757559,28 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-23,Prairie View,Aubrey Goode,3.25,2.1065
 2026-2027,2026-10-23,Prairie View,Shea McElroy,1.75,1.0634
 2026-2027,2026-10-23,Prairie View,Daniella Udegbunam,2.0,1.2497
+2026-2027,2026-10-25,Prairie View,Carrington Cook,9.75,7.974
+2026-2027,2026-10-25,Prairie View,Lucy Dieterlen,8.5,6.6399
+2026-2027,2026-10-25,Prairie View,Kenedy Massie,27.25,26.5521
+2026-2027,2026-10-25,Prairie View,Shea McElroy,4.25,3.9624
+2026-2027,2026-10-25,Prairie View,Camille Middleton,16.25,12.4643
+2026-2027,2026-10-25,Prairie View,Iyonna Sherwood,9.0,7.6824
+2026-2027,2026-10-25,Prairie View,Jade Smith,10.0,10.2205
+2026-2027,2026-10-25,Prairie View,Valencia Wilder,3.25,1.8693
+2026-2027,2026-10-25,Prairie View,Terasita Caldwell,0.25,0.2086
+2026-2027,2026-10-25,Texas Southern,Lauren Battle,10.25,6.3587
+2026-2027,2026-10-25,Texas Southern,Kadence Davison,11.25,11.2605
+2026-2027,2026-10-25,Texas Southern,Gracie Lee,1.5,0.4203
+2026-2027,2026-10-25,Texas Southern,Morgynne McQueen,5.0,4.3786
+2026-2027,2026-10-25,Texas Southern,Keagan St. Junious,4.75,4.1321
+2026-2027,2026-10-25,Texas Southern,Kennedi Walker,4.75,2.4549
+2026-2027,2026-10-25,Texas Southern,Keldri Young,14.5,12.097
+2026-2027,2026-10-25,Texas Southern,Emory Harper,2.5,2.0604
+2026-2027,2026-10-25,Texas Southern,Ava Houston,0.0,-0.3266
+2026-2027,2026-10-25,Texas Southern,Aliyah Spencer,5.75,5.9181
+2026-2027,2026-10-25,Texas Southern,Aaliyah Brown,0.5,0.2815
+2026-2027,2026-10-25,Texas Southern,Lacey Kusnier,1.0,0.8112
+2026-2027,2026-10-25,Texas Southern,Selana Morales,1.5,1.1169
 2026-2027,2026-09-24,Eastern Ky.,Cooper Abney,15.75,21.7977
 2026-2027,2026-09-24,Eastern Ky.,Alexis Bull,7.5,8.2555
 2026-2027,2026-09-24,Eastern Ky.,Addison Burke,16.0,17.7124
@@ -757897,22 +759042,22 @@ Season,Date,Team,Player,GIS,GIS_Plus
 2026-2027,2026-10-16,Texas Tech,Faith Jordan,-1.0,-0.8656
 2026-2027,2026-10-16,Texas Tech,Kayla Robertson,-1.0,-0.8656
 2026-2027,2026-10-16,Texas Tech,Madeleine Smotherman,0.0,0.0
-2026-2027,2026-10-16,TCU,Rosemary Archer,17.0,27.0515
-2026-2027,2026-10-16,TCU,Jalyn Gibson,9.5,12.2361
-2026-2027,2026-10-16,TCU,Evan Hendrix,22.75,25.5724
+2026-2027,2026-10-16,TCU,Rosemary Archer,17.0,26.0268
+2026-2027,2026-10-16,TCU,Jalyn Gibson,9.5,12.1408
+2026-2027,2026-10-16,TCU,Evan Hendrix,22.75,26.8578
 2026-2027,2026-10-16,TCU,Addy Horner,4.0,5.139
-2026-2027,2026-10-16,TCU,Becca Kelley,12.5,11.2054
+2026-2027,2026-10-16,TCU,Becca Kelley,12.5,12.0314
 2026-2027,2026-10-16,TCU,Molly McCarthy,1.0,1.1289
 2026-2027,2026-10-16,TCU,Reese Robins,1.25,1.3596
-2026-2027,2026-10-16,TCU,Alice Volpe,4.5,5.1641
+2026-2027,2026-10-16,TCU,Alice Volpe,4.5,5.2673
 2026-2027,2026-10-16,TCU,Kinsley Young,8.75,12.2804
-2026-2027,2026-10-16,TCU,Jaylen Clark,1.5,1.5032
+2026-2027,2026-10-16,TCU,Jaylen Clark,1.5,1.6736
 2026-2027,2026-10-16,TCU,De'Andrea McMillian,2.0,1.9257
 2026-2027,2026-10-16,TCU,Lauren Murphy,-0.5,-0.4715
 2026-2027,2026-10-16,TCU,Morgan Holloman,2.75,2.9925
 2026-2027,2026-10-16,TCU,Mia Lee,1.5,1.6603
 2026-2027,2026-10-16,TCU,Josie Valgus,0.0,0.0
-2026-2027,2026-10-16,TCU,Reese Wilburn,1.25,1.2502
+2026-2027,2026-10-16,TCU,Reese Wilburn,1.25,1.2295
 2026-2027,2026-09-18,UNC Asheville,Addie Brookbank,-1.25,-2.2538
 2026-2027,2026-09-18,UNC Asheville,Addie Brookbank,-1.25,-1.7724
 2026-2027,2026-09-18,UNC Asheville,Olivia Callipo,12.75,17.4712

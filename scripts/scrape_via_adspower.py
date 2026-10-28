@@ -725,6 +725,132 @@ def _load_ids(args) -> list[str]:
     raise SystemExit("pass --ids or --ids-file")
 
 
+def _fetch_and_discover_dates(dates: list[str], year: int,
+                              port_hint: int | None = None) -> None:
+    """Fetch the stats.ncaa.org D1 WVB scoreboard page for each date and
+    extract contest IDs via the AdsPower-authenticated session.
+
+    Replaces the old Crawlbase-based discovery, which started returning a
+    stale "featured game" placeholder for every date in late Oct 2026.
+    Writes:
+      - scripts/.pbp-build/scoreboard_<YYYY-MM-DD>.txt   (per-date IDs)
+      - scripts/.pbp-build/discover_todo.txt             (union of new IDs)
+      - appends to scripts/.pbp-build/contest_ids_<year>.txt
+
+    `dates` entries are M/D/YYYY (e.g. "10/27/2026")."""
+    import re as _re
+    import urllib.parse as _ulp
+
+    build_dir = Path("scripts/.pbp-build")
+    cid_path = build_dir / f"contest_ids_{year}.txt"
+    todo_path = build_dir / "discover_todo.txt"
+    # Same ID shape handled by add_ids_from_page.py:
+    # /contests/<id>/ and /contests/livestream_scoreboards/<id>/
+    CONTEST_RE = _re.compile(r"/contests/(?:livestream_scoreboards/)?(\d+)/")
+    # D1 Women's Volleyball season_division_id for the 2026-27 season.
+    # NCAA rolls this over each year; last season was 17820. Update here
+    # when the season turns over. The /livestream_scoreboards path (not
+    # /scoreboards) is what the current NCAA UI uses — the old /scoreboards
+    # path now returns a one-row "featured game" placeholder regardless
+    # of the game_date query.
+    SEASON_DIV = 18944
+
+    existing: set[str] = set()
+    if cid_path.exists():
+        for line in cid_path.read_text(encoding="utf-8").splitlines():
+            s = line.strip()
+            if s:
+                existing.add(s)
+    print(f"[discover] contest_ids_{year}.txt has {len(existing)} IDs")
+
+    print("[discover] attaching to AdsPower CDP…")
+    ws = discover_adspower_cdp(port_hint=port_hint)
+    all_new: list[str] = []  # union, in order
+    seen_new: set[str] = set()
+
+    with sync_playwright() as pw:
+        browser = pw.chromium.connect_over_cdp(ws)
+        ctx = browser.contexts[0] if browser.contexts else browser.new_context()
+        _install_resource_filter(ctx)
+        page = ctx.pages[0] if ctx.pages else ctx.new_page()
+
+        tc_cleared = False
+        for mdy in dates:
+            url = (f"{BASE_URL}/season_divisions/{SEASON_DIV}"
+                   f"/livestream_scoreboards"
+                   f"?utf8=%E2%9C%93&season_division_id="
+                   f"&game_date={_ulp.quote(mdy, safe='')}"
+                   f"&conference_id=0&tournament_id=&commit=Submit")
+            print(f"[discover] {mdy} <- {url}")
+            try:
+                page.goto(url, timeout=NAV_TIMEOUT_MS,
+                          wait_until="domcontentloaded")
+            except Exception as e:
+                print(f"[discover]   fetch error: {str(e)[:200]}")
+                continue
+            page.wait_for_timeout(PAGE_DWELL_MS)
+            html = page.content()
+
+            if not tc_cleared and _looks_like_terms_gate(html):
+                print("[discover]   T&C present — accepting")
+                if not _accept_terms(page):
+                    print("[discover]   T&C accept failed, aborting")
+                    return
+                tc_cleared = True
+                try:
+                    page.goto(url, timeout=NAV_TIMEOUT_MS,
+                              wait_until="domcontentloaded")
+                    page.wait_for_timeout(PAGE_DWELL_MS)
+                    html = page.content()
+                except Exception as e:
+                    print(f"[discover]   re-fetch after T&C error: "
+                          f"{str(e)[:200]}")
+                    continue
+
+            if len(html) < 5000 or "Access Denied" in html:
+                print(f"[discover]   response looks blocked ({len(html)}B)")
+                continue
+
+            seen: set[str] = set()
+            ids: list[str] = []
+            for cid in CONTEST_RE.findall(html):
+                if cid not in seen:
+                    seen.add(cid)
+                    ids.append(cid)
+
+            # Normalize date to YYYY-MM-DD for the output filename.
+            m, d, y = mdy.split("/")
+            iso = f"{int(y):04d}-{int(m):02d}-{int(d):02d}"
+            out = build_dir / f"scoreboard_{iso}.txt"
+            out.write_text("\n".join(ids) + ("\n" if ids else ""),
+                           encoding="utf-8")
+            new_ids = [c for c in ids if c not in existing]
+            print(f"[discover]   {len(html):,}B · {len(ids)} IDs on page "
+                  f"({len(new_ids)} new) · wrote {out.name}")
+            for cid in ids:
+                if cid not in seen_new:
+                    seen_new.add(cid)
+                    all_new.append(cid)
+
+    # Merge into contest_ids_<year>.txt
+    before = len(existing)
+    existing.update(all_new)
+    cid_path.write_text(
+        "\n".join(sorted(existing, key=int)) + "\n", encoding="utf-8"
+    )
+    added = len(existing) - before
+    print(f"[discover] contest_ids_{year}.txt: {before} → {len(existing)} "
+          f"(+{added})")
+
+    # Write a todo file holding every ID we just saw across these dates.
+    # The scraper's own "already done" filter will skip any ID already
+    # captured, so no need to pre-filter here.
+    todo_path.write_text(
+        "\n".join(all_new) + ("\n" if all_new else ""), encoding="utf-8"
+    )
+    print(f"[discover] wrote {todo_path} ({len(all_new)} IDs union)")
+
+
 def _fetch_and_parse_rpi(url: str, year: int, port_hint: int | None = None
                          ) -> None:
     """Pull the stats.ncaa.org RPI/nitty-gritties page for a season and
@@ -1009,6 +1135,14 @@ def main() -> None:
                          "via AdsPower, parse it, and merge the results into "
                          "historical_rpi.json + team_conferences_<year>.json. "
                          "Requires --year.")
+    ap.add_argument("--discover-dates", type=str,
+                    help="Comma-separated M/D/YYYY game dates to pull from "
+                         "the D1 WVB scoreboard via the AdsPower session. "
+                         "Writes scoreboard_<YYYY-MM-DD>.txt per date, "
+                         "merges IDs into contest_ids_<year>.txt, and emits "
+                         "discover_todo.txt holding the union. Requires "
+                         "--year. Example: --discover-dates "
+                         "10/26/2026,10/27/2026 --year 2026")
     ap.add_argument("--year", type=int,
                     help="Season year for --rpi-url (e.g. 2026)")
     args = ap.parse_args()
@@ -1024,9 +1158,16 @@ def main() -> None:
             raise SystemExit("--rpi-url requires --year")
         _fetch_and_parse_rpi(args.rpi_url, args.year, port_hint=args.port)
         return
+    if args.discover_dates:
+        if not args.year:
+            raise SystemExit("--discover-dates requires --year")
+        dates = [d.strip() for d in args.discover_dates.split(",") if d.strip()]
+        _fetch_and_discover_dates(dates, args.year, port_hint=args.port)
+        return
     if not args.mode:
         raise SystemExit("--mode is required unless --status, "
-                         "--list-stragglers, or --rpi-url is set")
+                         "--list-stragglers, --rpi-url, or "
+                         "--discover-dates is set")
 
     # --force-ids: targeted retry that bypasses the done filter. Also
     # resets any 'abandoned' DB rows for these ids so the recovery

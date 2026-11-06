@@ -114,6 +114,18 @@ export const POS_COLORS = {
   L: '#facc15', DS: '#facc15', LB: '#facc15',
 };
 
+// Darker (tailwind-700-ish) partner for each POS_COLORS hue, used as the
+// text color on a tint-of-self background so pills meet WCAG AA contrast.
+// The lighter hues above still identify the position by eye; the darker
+// text is what you actually read in a screenshot.
+export const POS_COLORS_DARK = {
+  OH: '#0369a1', MH: '#6d28d9', MB: '#6d28d9',
+  RS: '#c2410c', OPP: '#c2410c', OP: '#c2410c', O: '#c2410c',
+  OPPOSITE: '#c2410c', OPPO: '#c2410c', OUTSIDE: '#c2410c', OS: '#c2410c',
+  S: '#15803d',
+  L: '#a16207', DS: '#a16207', LB: '#a16207',
+};
+
 export const POS_COLORS_SB = POS_COLORS;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -145,6 +157,11 @@ export function posColor(p) {
   // Normalize "OH/RS", "DS/L", lowercase, whitespace — take first token.
   const key = p?.toUpperCase()?.split('/')[0]?.trim();
   return POS_COLORS[key] || '#94a3b8';
+}
+
+export function posColorDark(p) {
+  const key = p?.toUpperCase()?.split('/')[0]?.trim();
+  return POS_COLORS_DARK[key] || '#475569';
 }
 
 export function gisTier(g) {

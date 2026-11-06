@@ -1,23 +1,26 @@
-import { gisTier, pgisLabel, posColor } from '../lib/gis.js';
+import { gisTier, pgisLabel, posColor, posColorDark } from '../lib/gis.js';
 import { getSchoolColors, hasSchoolColors } from '../data/schoolColors.js';
 
 const OPP_POSITIONS = ['RS','OPP','OP','O','OPPOSITE','OPPO','OUTSIDE','OS'];
 
+// Each stat pill uses a tint of its hue as bg + a darker tailwind-700
+// partner as text, keeping color identity but hitting AA contrast at
+// the ~10px size these pills render at.
 function Pills({ p }) {
   const items = [
-    [p.kills,         'K',   '#38bdf820', '#38bdf8'],
-    [p.assists,       'A',   '#4ade8020', '#4ade80'],
-    [p.digs,          'D',   '#facc1520', '#facc15'],
-    [p.service_aces,  'Ace', '#f43f5e20', '#f43f5e'],
-    [p.block_solos,   'BS',  '#a78bfa20', '#a78bfa'],
-    [p.block_assists, 'BA',  '#a78bfa20', '#a78bfa'],
+    [p.kills,         'K',   '#38bdf820', '#0369a1'],
+    [p.assists,       'A',   '#4ade8020', '#15803d'],
+    [p.digs,          'D',   '#facc1520', '#a16207'],
+    [p.service_aces,  'Ace', '#f43f5e20', '#be123c'],
+    [p.block_solos,   'BS',  '#a78bfa20', '#6d28d9'],
+    [p.block_assists, 'BA',  '#a78bfa20', '#6d28d9'],
   ].filter(([v]) => v > 0);
 
   return (
     <div className="pill-row">
       {items.map(([v, lbl, bg, fg]) => (
         <span key={lbl} className="pill" style={{ background: bg, color: fg }}>
-          {v}{lbl}
+          {v}<span className="pill-lbl">{lbl}</span>
         </span>
       ))}
     </div>
@@ -27,6 +30,7 @@ function Pills({ p }) {
 export default function PlayerCard({ p, rank, animDelay, onSelect, gameData, isSelected }) {
   const [, tc]         = gisTier(p.gis);
   const pc             = posColor(p.position);
+  const pcText         = posColorDark(p.position);
 
   // Bar capped at 10.0
   const barPct         = p.pGIS !== null ? Math.min((p.pGIS / 10) * 100, 100).toFixed(1) : '0';
@@ -52,7 +56,7 @@ export default function PlayerCard({ p, rank, animDelay, onSelect, gameData, isS
       onClick={onSelect ? () => onSelect(p) : undefined}
     >
       <div className="pcard-top">
-        <span className="pos-badge" style={{ background: `${pc}20`, color: pc, borderColor: `${pc}40` }}>
+        <span className="pos-badge" style={{ background: `${pc}20`, color: pcText, borderColor: `${pc}60` }}>
           {displayPos}
         </span>
         <span className="pcard-name">{p.name}</span>

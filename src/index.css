@@ -23,6 +23,10 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
+  /* Slashed zeros + tabular numbers for every digit on the page — fixes
+     the 0/8 confusion JetBrains Mono shows at small sizes and keeps
+     numeric columns aligned across rows. */
+  font-variant-numeric: slashed-zero tabular-nums;
 }
 
 /* ── App shell (top nav + optional left sidebar + main) ──────────── */
@@ -643,11 +647,14 @@ body {
 .pgis-block { }
 .pgis-label-row { min-height: 1.2rem; display: flex; align-items: center; margin-bottom: 0.1rem; }
 .pgis-ctx { font-family: 'JetBrains Mono', monospace; font-size: 0.54rem; letter-spacing: 0.08em; padding: 0.06rem 0.3rem; border-radius: 3px; border: 1px solid; display: inline-block; }
-.pgis-ctx.elite  { color: var(--red);    border-color: #e11d4840; background: #e11d4810; }
-.pgis-ctx.strong { color: var(--orange); border-color: #ea580c40; background: #ea580c10; }
-.pgis-ctx.avg    { color: var(--accent); border-color: #0284c740; background: #0284c710; }
-.pgis-ctx.below  { color: var(--muted); border-color: var(--border); background: var(--surface2); }
-.pgis-ctx.low    { color: #94a3b8;     border-color: var(--border); background: var(--surface2); }
+/* Quality-tier tag text uses a tailwind-700 shade of each hue over a
+   light tint, so the labels read clearly in screenshots instead of
+   dissolving into the colored chip background. */
+.pgis-ctx.elite  { color: #9f1239; border-color: #e11d4860; background: #e11d4815; }
+.pgis-ctx.strong { color: #9a3412; border-color: #ea580c60; background: #ea580c15; }
+.pgis-ctx.avg    { color: #075985; border-color: #0284c760; background: #0284c715; }
+.pgis-ctx.below  { color: #334155; border-color: var(--border2); background: var(--surface2); }
+.pgis-ctx.low    { color: #475569; border-color: var(--border2); background: var(--surface2); }
 
 /* ── pGIS bar ────────────────────────────────────────────────────── */
 .pgis-bar-wrap { margin-bottom: 0.55rem; }
@@ -662,7 +669,26 @@ body {
 .stat-cell-dim .stat-num, .stat-cell-dim .stat-lbl { opacity: 0.4; }
 .stat-num { font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: var(--text); }
 .stat-lbl { font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; color: var(--muted); margin-top: 0.1rem; }
-.pill { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; padding: 0.12rem 0.4rem; border-radius: 3px; }
+.pill {
+  /* JetBrains Mono with slashed-zero turned off — the default oval 0 is
+     the clearest shape we get. Size bumped slightly from the original
+     0.62rem so the 0's inner opening actually has pixels at this
+     render size (below ~11px it collapses into a filled dot via
+     anti-aliasing, which is what read as "something in the middle"). */
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem; font-weight: 700;
+  padding: 0.14rem 0.42rem; border-radius: 3px;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "zero" 0;
+}
+/* Stat-type suffix (K / A / D / Ace / BS / BA). Same glyph size as the
+   digits in front of it, but noticeably lighter stroke (400 vs 700) so
+   the eye reads the numeral as the measured value and the letter as a
+   label — even when the digit is 0 and the letter is D. */
+.pill-lbl {
+  font-weight: 400;
+  margin-left: 0.18em;
+}
 
 /* ── Report footer ───────────────────────────────────────────────── */
 .rpt-footer {
@@ -1531,3 +1557,4 @@ body {
   /* Hide any Recent list that snuck into the sidebar (belt-and-suspenders). */
   .recent-list { display: none !important; }
 }
+

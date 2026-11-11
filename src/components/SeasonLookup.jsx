@@ -314,13 +314,22 @@ export default function SeasonLookup() {
     const AA_W_OVERALL   = 0.60;
     const AA_W_T50       = 0.40;
     const K_T50_GAMES    = 0.05;   // additive bonus per T50 game played
-    const T50_TRUST_FULL = 20;     // T50 games at which we fully trust T50 pGIS
+    const T50_TRUST_FULL_SHARE = 0.33;  // fraction of games vs T50 at which T50 pGIS is fully trusted
 
     // No hard T50-games gate. The 75% team-games filter in buildRows()
     // is the only qualification. Small-sample T50 pGIS is shrunk toward
     // zero via the trust weight, so a mid-major with one lucky T50
     // performance can't leapfrog a real P4 season, and a 0-T50 player
     // naturally scores low enough to fall out of the AA cohort.
+    //
+    // Trust is a SHARE, not a raw count. A player whose T50 games are
+    // ≥33% of their total games gets full trust in their T50 pGIS;
+    // below that, trust degrades linearly. Using the share means a
+    // P4 regular who plays 13 T50 games out of ~24 (54%) isn't
+    // penalized vs a high-volume P4 schedule player who plays 19 T50
+    // games out of ~27 (70%) — both saw enough top-tier reps to
+    // trust the number. A raw-count cap would overweight sheer
+    // T50-game volume, which is partly a scheduling artifact.
     const byBucket = { OH: [], MB: [], S: [], L: [] };
     for (const r of allRows) {
       const grp = posGroup(r.position);
@@ -328,7 +337,9 @@ export default function SeasonLookup() {
       if (!Number.isFinite(r.pGIS)) continue;
       const t50Games = r.t50?.games || 0;
       const t50PGis  = Number.isFinite(r.t50?.pGIS) ? r.t50.pGIS : 0;
-      const trust    = Math.min(t50Games / T50_TRUST_FULL, 1.0);
+      const totalG   = r.games || 0;
+      const t50Share = totalG > 0 ? t50Games / totalG : 0;
+      const trust    = Math.min(t50Share / T50_TRUST_FULL_SHARE, 1.0);
       const effT50   = t50PGis * trust;
       byBucket[grp].push({
         ...r,
@@ -614,7 +625,7 @@ export default function SeasonLookup() {
           : `${year} Computer All-American Teams`;
         const aaSub         = useConfAwards
           ? `≥75% team games · 0.6 × pGIS + 0.4 × trust(Conf) × Conf pGIS + 0.05 × Conf games · 3 OH · 2 MB · 1 S · 1 L`
-          : `≥75% team games · 0.6 × pGIS + 0.4 × trust(T50) × T50 pGIS + 0.05 × T50 games · 3 OH · 2 MB · 1 S · 1 L`;
+          : `≥75% team games · 0.6 × pGIS + 0.4 × trust(T50 share ≥ 33%) × T50 pGIS + 0.05 × T50 games · 3 OH · 2 MB · 1 S · 1 L`;
 
         if (!awards) return null;
 

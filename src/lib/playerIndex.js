@@ -619,6 +619,13 @@ export function loadPlayerIndex(
         let t50Games = 0, t50Sets = 0;
         let t50GisSum = 0, t50GisPlusSum = 0;
         const t50PGisVals = [];
+        // Intra-conference season buckets. Games where the opponent
+        // shares the player's conference — lets Seasons render an
+        // All-Conference view that doesn't collapse to zero in
+        // non-P4 conferences (where T50 games are rare).
+        let inConfGames = 0, inConfSets = 0;
+        let inConfGisSum = 0, inConfGisPlusSum = 0;
+        const inConfPGisVals = [];
         for (const g of gamesSorted) {
           // Match match-level nSets as Game Browser's computeGIS() does —
           // a 1-set cameo is rated at the match's scale, not the player's
@@ -646,6 +653,19 @@ export function loadPlayerIndex(
               t50GisPlusSum += g.gisPlus;
               t50PGisVals.push(gPGis || 0);
             }
+            // Intra-conf: opponent's conference matches the player's
+            // conference on this row. Non-conference games (tournaments,
+            // out-of-conference early-season) and games where NCAA
+            // didn't tag the opponent conference both correctly fail
+            // this check and drop out of the bucket.
+            if (g.conference && g.oppConference
+                && g.conference === g.oppConference) {
+              inConfGames   += 1;
+              inConfSets    += g.sets;
+              inConfGisSum     += g.gis;
+              inConfGisPlusSum += g.gisPlus;
+              inConfPGisVals.push(gPGis || 0);
+            }
           }
         }
         // Season pGIS = 50/50 blend of mean + median of per-game pGIS.
@@ -660,6 +680,13 @@ export function loadPlayerIndex(
           gis:     t50Sets > 0 ? t50GisSum     / t50Sets : 0,
           gisPlus: t50Sets > 0 ? t50GisPlusSum / t50Sets : 0,
           pGIS:    blendPGIS(t50PGisVals),
+        } : null;
+        const inConfSeason = inConfGames > 0 ? {
+          games:   inConfGames,
+          sets:    inConfSets,
+          gis:     inConfSets > 0 ? inConfGisSum     / inConfSets : 0,
+          gisPlus: inConfSets > 0 ? inConfGisPlusSum / inConfSets : 0,
+          pGIS:    blendPGIS(inConfPGisVals),
         } : null;
 
         // How many games the player's primary team played that season.
@@ -731,6 +758,7 @@ export function loadPlayerIndex(
           gisPlus:  gisPlusPerSet,
           pGIS:     seasonPGIS,
           t50:      t50Season,
+          inConf:   inConfSeason,
           gameLog:  gamesSorted,
           recQuality,
           srvQuality,

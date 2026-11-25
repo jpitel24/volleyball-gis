@@ -33,7 +33,7 @@ export default function App() {
           {route.name === 'games'   && <GameLookup route={route} />}
           {route.name === 'players' && <PlayerLookup onGameDeepLink={handleGameDeepLink} />}
           {route.name === 'seasons' && <SeasonLookup />}
-          {route.name === 'teams'   && <TeamLookup />}
+          {route.name === 'teams'   && <TeamLookup route={route} onGameDeepLink={handleGameDeepLink} />}
           {route.name === 'compare' && <Compare />}
         </ErrorBoundary>
       </AppShell>

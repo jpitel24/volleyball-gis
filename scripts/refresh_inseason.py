@@ -252,6 +252,11 @@ def main() -> int:
         [PY, "-X", "utf8", str(SCRIPTS / "build_category_pgis_tables.py")],
         dry_run=args.dry_run))
 
+    # ── Step 14: purge non-D1-vs-D1 games from every data file ───
+    results.append(run_step("filter_non_d1",
+        [PY, "-X", "utf8", str(SCRIPTS / "filter_non_d1.py")],
+        dry_run=args.dry_run))
+
     total = time.time() - overall_start
     print(f"\n═══ complete in {total:.0f}s ═══")
     ok_count = sum(1 for r in results if r.ok and not r.skipped)

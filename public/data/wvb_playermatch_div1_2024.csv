@@ -22907,45 +22907,6 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2024-2025,2024-09-02,6326763,Coastal Carolina,Sun Belt,Georgia Tech,ACC,Away,4,Anna Smith,L,3,1,0,1,1.000,2,0,0,1,12,2,0,0,0,1,0,0,3,0,0
 2024-2025,2024-09-02,6326763,Coastal Carolina,Sun Belt,Georgia Tech,ACC,Away,3,Lauren Baek,L,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
 2024-2025,2024-09-02,6326763,Coastal Carolina,Sun Belt,Georgia Tech,ACC,Away,44,Lauren Malone,OH,1,2,2,8,.000,0,0,1,1,1,0,0,0,0,2,0,0,0,2,0
-2024-2025,2024-09-03,6326764,Mississippi Val.,SWAC,Jarvis Christian,NA,Home,11,Alaya Rhodes,OH,5,10,4,24,0.250,2,0,1,8,10,0,0,3,0,11.5,0,0,15,10,3
-2024-2025,2024-09-03,6326764,Mississippi Val.,SWAC,Jarvis Christian,NA,Home,10,Madison Conley,MB,2,1,1,4,.000,0,0,0,2,0,0,0,0,0,1,0,0,0,0,0
-2024-2025,2024-09-03,6326764,Mississippi Val.,SWAC,Jarvis Christian,NA,Home,15,Jaazaniah Calvert,MB,2,0,0,1,.000,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0
-2024-2025,2024-09-03,6326764,Mississippi Val.,SWAC,Jarvis Christian,NA,Home,14,Dashaun Pinesette,MB,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-03,6326764,Mississippi Val.,SWAC,Jarvis Christian,NA,Home,13,Carmella Jones,OH,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-03,6326764,Mississippi Val.,SWAC,Jarvis Christian,NA,Home,12,Mariana Franco,L,5,0,0,0,.000,0,2,1,12,28,1,0,0,0,2,0,0,5,16,0
-2024-2025,2024-09-03,6326764,Mississippi Val.,SWAC,Jarvis Christian,NA,Home,19,Taylor Wooten,OH,4,6,1,13,0.385,0,0,0,0,1,0,0,0,0,6,0,1,7,3,0
-2024-2025,2024-09-03,6326764,Mississippi Val.,SWAC,Jarvis Christian,NA,Home,17,Carrington Archer,S,5,3,2,22,0.045,33,3,2,5,0,0,0,0,0,6,0,2,73,16,0
-2024-2025,2024-09-03,6326764,Mississippi Val.,SWAC,Jarvis Christian,NA,Home,16,Ananiah Hugely,MB,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-03,6326764,Mississippi Val.,SWAC,Jarvis Christian,NA,Home,1,Ashlynn Hawkins,OH,5,0,0,4,.000,1,0,0,14,27,1,0,0,0,0,0,0,12,0,0
-2024-2025,2024-09-03,6326764,Mississippi Val.,SWAC,Jarvis Christian,NA,Home,2,Mikayla Lee,S,5,0,1,7,-0.143,20,3,1,4,1,0,0,0,0,3,0,0,54,17,0
-2024-2025,2024-09-03,6326764,Mississippi Val.,SWAC,Jarvis Christian,NA,Home,3,Brooklyn Brunt,MB,5,8,2,20,0.300,0,0,0,2,0,0,0,2,0,9,0,1,12,0,2
-2024-2025,2024-09-03,6326764,Mississippi Val.,SWAC,Jarvis Christian,NA,Home,4,Jadyn Rambo,MB,5,7,5,23,0.087,0,0,0,0,0,0,0,1,0,7.5,0,1,1,1,1
-2024-2025,2024-09-03,6326764,Mississippi Val.,SWAC,Jarvis Christian,NA,Home,5,Lyric Edwards,OH,5,7,8,26,-0.038,1,2,1,5,0,0,0,0,0,9,0,0,5,21,0
-2024-2025,2024-09-03,6326764,Mississippi Val.,SWAC,Jarvis Christian,NA,Home,6,Aniyah Moore,OH,4,4,2,9,0.222,1,0,0,1,1,0,0,6,0,7,0,0,3,0,6
-2024-2025,2024-09-03,6326764,Mississippi Val.,SWAC,Jarvis Christian,NA,Home,7,Toni Clemons,MB,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-03,6326764,Mississippi Val.,SWAC,Jarvis Christian,NA,Home,8,Leticia Franco,OH,5,14,4,25,0.400,0,1,3,13,19,0,0,0,0,15,0,2,13,17,0
-2024-2025,2024-09-03,6326764,Mississippi Val.,SWAC,Jarvis Christian,NA,Home,9,Torre Giron,OH,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-03,6326764,Mississippi Val.,SWAC,Jarvis Christian,NA,Home,23,Sasha Mathis,OH,1,0,0,0,.000,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0
-2024-2025,2024-09-03,6326764,Jarvis Christian,NA,Mississippi Val.,SWAC,Away,24,Jamiling Vela-cruz,DS,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-03,6326764,Jarvis Christian,NA,Mississippi Val.,SWAC,Away,27,Sanaa Allison-williams,MH,1,0,0,1,.000,0,0,0,0,3,2,0,0,0,0,0,0,0,2,0
-2024-2025,2024-09-03,6326764,Jarvis Christian,NA,Mississippi Val.,SWAC,Away,5,Jahnaya Kelly,DS,5,0,2,3,-0.667,1,1,2,7,20,2,0,0,0,1,0,1,4,15,0
-2024-2025,2024-09-03,6326764,Jarvis Christian,NA,Mississippi Val.,SWAC,Away,6,Mia Smith,DS,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-03,6326764,Jarvis Christian,NA,Mississippi Val.,SWAC,Away,3,Kayla Green,OH,1,0,0,1,.000,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
-2024-2025,2024-09-03,6326764,Jarvis Christian,NA,Mississippi Val.,SWAC,Away,4,Kiah Barron,MB,5,8,4,24,0.167,0,0,2,9,1,0,0,6,0,11,0,0,7,20,6
-2024-2025,2024-09-03,6326764,Jarvis Christian,NA,Mississippi Val.,SWAC,Away,1,Mahogani Wilson,MB,5,6,3,21,0.143,1,0,0,2,0,0,0,5,0,8.5,1,0,4,0,5
-2024-2025,2024-09-03,6326764,Jarvis Christian,NA,Mississippi Val.,SWAC,Away,21,Sofia Castillo,DS,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-03,6326764,Jarvis Christian,NA,Mississippi Val.,SWAC,Away,2,Kesmyre Smalls,DS,5,1,1,8,.000,2,0,0,17,36,2,0,0,0,1,0,0,16,18,0
-2024-2025,2024-09-03,6326764,Jarvis Christian,NA,Mississippi Val.,SWAC,Away,22,Madison Mccoy,S,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-03,6326764,Jarvis Christian,NA,Mississippi Val.,SWAC,Away,13,Kassandra Morin,DS,5,1,0,6,0.167,1,0,0,5,18,1,0,0,0,1,0,0,9,14,0
-2024-2025,2024-09-03,6326764,Jarvis Christian,NA,Mississippi Val.,SWAC,Away,18,Shayla Montemayor,O,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-03,6326764,Jarvis Christian,NA,Mississippi Val.,SWAC,Away,10,Marquise Nelson,MB,5,11,3,25,0.320,0,0,0,4,1,0,1,3,0,13.5,1,0,4,0,4
-2024-2025,2024-09-03,6326764,Jarvis Christian,NA,Mississippi Val.,SWAC,Away,11,Amber Cruz,S,5,0,1,5,-0.200,15,1,0,6,0,0,0,0,0,1,0,0,54,11,0
-2024-2025,2024-09-03,6326764,Jarvis Christian,NA,Mississippi Val.,SWAC,Away,30,Branderia Graham,MB,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-03,6326764,Jarvis Christian,NA,Mississippi Val.,SWAC,Away,9,Haven Verrett,OH,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-03,6326764,Jarvis Christian,NA,Mississippi Val.,SWAC,Away,7,Aubrey Jackson,S,5,1,0,10,0.100,18,4,0,3,1,0,0,3,0,6.5,0,1,56,14,3
-2024-2025,2024-09-03,6326764,Jarvis Christian,NA,Mississippi Val.,SWAC,Away,8,Aaronyana Wilson,OH,5,14,5,28,0.321,0,0,0,7,8,0,0,4,0,16,0,0,1,0,4
-2024-2025,2024-09-03,6326764,Jarvis Christian,NA,Mississippi Val.,SWAC,Away,16,Michaela Johnson,,1,0,1,4,-0.250,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0
-2024-2025,2024-09-03,6326764,Jarvis Christian,NA,Mississippi Val.,SWAC,Away,15,Madelyne Barkley,,3,1,1,5,.000,0,0,0,2,0,0,0,1,0,1.5,0,0,1,1,1
 2024-2025,2024-09-03,6326765,Rice,The American,Baylor,Big 12,Home,4,Kaitlyn Knobbe,MB,3,3,4,13,-0.077,0,0,0,0,1,0,0,1,0,3.5,0,0,2,0,1
 2024-2025,2024-09-03,6326765,Rice,The American,Baylor,Big 12,Home,5,Nia Mccardell,L,3,0,0,0,.000,1,1,1,16,8,0,0,0,0,1,0,0,10,13,0
 2024-2025,2024-09-03,6326765,Rice,The American,Baylor,Big 12,Home,2,Gaby Mansfield,L/DS,3,0,0,0,.000,0,0,1,5,6,0,0,0,0,0,0,0,2,5,0
@@ -23203,37 +23164,6 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2024-2025,2024-09-03,6326772,FIU,CUSA,Fla. Atlantic,The American,Away,6,Savannah Cook,S,2,1,1,2,.000,8,0,1,1,0,0,0,1,0,1.5,0,1,33,2,1
 2024-2025,2024-09-03,6326772,FIU,CUSA,Fla. Atlantic,The American,Away,1,Emily Matias,L,2,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0
 2024-2025,2024-09-03,6326772,FIU,CUSA,Fla. Atlantic,The American,Away,2,Jillian Huckabey,OH,3,8,7,32,0.031,0,0,3,12,22,1,0,0,0,8,0,0,1,10,0
-2024-2025,2024-09-03,6326773,Grambling,SWAC,Centenary (LA),SCAC,Home,1,Ra'niya Brown,MB,3,1,1,5,.000,1,5,1,6,0,0,1,0,0,7,0,0,2,18,1
-2024-2025,2024-09-03,6326773,Grambling,SWAC,Centenary (LA),SCAC,Home,2,Essence Allen,OH,3,9,2,16,0.438,0,0,0,4,1,0,0,0,0,9,0,0,0,0,0
-2024-2025,2024-09-03,6326773,Grambling,SWAC,Centenary (LA),SCAC,Home,0,Kenya Lucas,OH,2,3,0,5,0.600,0,0,0,1,0,0,0,0,0,3,0,0,0,0,0
-2024-2025,2024-09-03,6326773,Grambling,SWAC,Centenary (LA),SCAC,Home,9,Ana Zink,S,3,1,1,2,.000,9,2,0,4,0,0,0,0,0,3,0,1,20,11,0
-2024-2025,2024-09-03,6326773,Grambling,SWAC,Centenary (LA),SCAC,Home,5,Dylan Hoskins,L/DS,2,0,0,0,.000,0,0,1,2,6,1,0,0,0,0,0,0,0,2,0
-2024-2025,2024-09-03,6326773,Grambling,SWAC,Centenary (LA),SCAC,Home,6,Madison Reagins,OH,3,4,0,9,0.444,0,0,0,1,0,0,6,1,0,10.5,0,0,1,0,7
-2024-2025,2024-09-03,6326773,Grambling,SWAC,Centenary (LA),SCAC,Home,3,Fabiola Betancourt,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-03,6326773,Grambling,SWAC,Centenary (LA),SCAC,Home,4,Bella Haddad,DS,3,0,0,1,.000,0,0,0,8,6,3,0,0,0,0,0,0,3,0,0
-2024-2025,2024-09-03,6326773,Grambling,SWAC,Centenary (LA),SCAC,Home,23,Lauryn Bourne,OH,1,1,0,1,1.000,0,0,0,1,2,0,0,0,0,1,0,0,1,1,0
-2024-2025,2024-09-03,6326773,Grambling,SWAC,Centenary (LA),SCAC,Home,25,Jazmine Binion,OH,3,4,0,9,0.444,0,0,1,1,8,1,0,0,0,4,0,0,2,2,0
-2024-2025,2024-09-03,6326773,Grambling,SWAC,Centenary (LA),SCAC,Home,18,Alyssa Pieh,L/DS,3,0,0,1,.000,1,2,1,5,4,0,0,0,0,2,0,0,1,10,0
-2024-2025,2024-09-03,6326773,Grambling,SWAC,Centenary (LA),SCAC,Home,10,Mil'lanni Marte,L/DS,3,0,0,0,.000,2,0,2,3,0,0,0,0,0,0,0,0,4,10,0
-2024-2025,2024-09-03,6326773,Grambling,SWAC,Centenary (LA),SCAC,Home,11,Kennya Sykes,MB,2,2,0,4,0.500,0,0,0,0,0,0,0,1,0,2.5,0,0,0,0,1
-2024-2025,2024-09-03,6326773,Grambling,SWAC,Centenary (LA),SCAC,Home,12,Kai Williams,OH,1,2,1,5,0.200,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0
-2024-2025,2024-09-03,6326773,Grambling,SWAC,Centenary (LA),SCAC,Home,13,Morgan Munro,MB,1,0,1,2,-0.500,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0
-2024-2025,2024-09-03,6326773,Grambling,SWAC,Centenary (LA),SCAC,Home,14,Letícia Correa,S,3,1,1,5,.000,9,1,0,5,0,0,0,0,0,2,0,0,23,20,0
-2024-2025,2024-09-03,6326773,Centenary (LA),SCAC,Grambling,SWAC,Away,18,Charlie Wedding,MB,3,0,0,2,.000,0,0,0,1,12,1,0,0,0,0,0,0,1,4,0
-2024-2025,2024-09-03,6326773,Centenary (LA),SCAC,Grambling,SWAC,Away,17,Elizabeth Canady,MB,1,0,1,1,-1.000,0,0,0,1,0,0,0,0,0,0,0,0,1,3,0
-2024-2025,2024-09-03,6326773,Centenary (LA),SCAC,Grambling,SWAC,Away,16,Mackenzie Haley,OH,2,1,6,11,-0.455,0,0,0,0,8,2,0,0,0,1,0,0,1,1,0
-2024-2025,2024-09-03,6326773,Centenary (LA),SCAC,Grambling,SWAC,Away,11,Daly Nagot,L/DS,3,0,0,1,.000,0,0,0,11,20,2,0,0,0,0,1,0,7,3,0
-2024-2025,2024-09-03,6326773,Centenary (LA),SCAC,Grambling,SWAC,Away,10,Aaliyah Barnett,OH,3,4,12,25,-0.320,0,2,2,5,14,0,0,0,0,6,0,1,3,7,0
-2024-2025,2024-09-03,6326773,Centenary (LA),SCAC,Grambling,SWAC,Away,15,Alyssa Gatlin,OH,3,2,2,13,.000,0,0,0,3,8,0,0,0,0,2,0,0,0,3,0
-2024-2025,2024-09-03,6326773,Centenary (LA),SCAC,Grambling,SWAC,Away,14,Kristi Hinze,S,3,0,2,9,-0.222,11,3,1,5,1,0,1,0,1,4,1,1,71,9,1
-2024-2025,2024-09-03,6326773,Centenary (LA),SCAC,Grambling,SWAC,Away,13,Yadneli Molina,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-03,6326773,Centenary (LA),SCAC,Grambling,SWAC,Away,12,Grayson Shugart,DS,1,0,0,0,.000,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0
-2024-2025,2024-09-03,6326773,Centenary (LA),SCAC,Grambling,SWAC,Away,1,Jacie Bagley,OH,1,1,0,5,0.200,0,0,0,2,0,0,0,0,0,1,0,0,1,0,0
-2024-2025,2024-09-03,6326773,Centenary (LA),SCAC,Grambling,SWAC,Away,9,Reign Mcarthur,MB,2,0,0,2,.000,0,0,2,0,0,0,0,0,0,0,0,0,0,2,0
-2024-2025,2024-09-03,6326773,Centenary (LA),SCAC,Grambling,SWAC,Away,3,Laijah Lockwood,OH,2,1,4,12,-0.250,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
-2024-2025,2024-09-03,6326773,Centenary (LA),SCAC,Grambling,SWAC,Away,6,Reagan Miller,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-03,6326773,Centenary (LA),SCAC,Grambling,SWAC,Away,22,Bailee Henderson,MB,3,3,1,8,0.250,0,0,0,1,0,0,2,0,0,5,0,0,0,0,2
-2024-2025,2024-09-03,6326773,Centenary (LA),SCAC,Grambling,SWAC,Away,21,Maia Kraft,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
 2024-2025,2024-09-03,6326774,William & Mary,CAA,Old Dominion,Sun Belt,Home,7,Tulasi Nalluri,L/DS,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
 2024-2025,2024-09-03,6326774,William & Mary,CAA,Old Dominion,Sun Belt,Home,8,Kaitlyn Dunnigan,L,5,0,0,0,.000,3,1,1,20,21,2,0,0,0,1,0,0,16,20,0
 2024-2025,2024-09-03,6326774,William & Mary,CAA,Old Dominion,Sun Belt,Home,5,Bella Easton,S,5,0,0,0,.000,34,0,0,8,0,0,0,0,0,0,0,0,88,14,0
@@ -37302,34 +37232,6 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2024-2025,2024-09-10,6327218,Penn,Ivy League,Coppin St.,MEAC,Away,5,Jalen Tennyson,OH,2,0,1,1,-1.000,0,0,0,0,0,0,0,3,0,1.5,0,0,0,0,3
 2024-2025,2024-09-10,6327218,Penn,Ivy League,Coppin St.,MEAC,Away,8,Zada Sanger,OH,5,17,6,42,0.262,0,1,3,4,19,3,0,3,1,19.5,0,0,1,10,3
 2024-2025,2024-09-10,6327218,Penn,Ivy League,Coppin St.,MEAC,Away,7,Kat Alexander,L/DS,5,0,0,1,.000,5,0,1,9,23,1,0,0,0,0,0,0,23,14,0
-2024-2025,2024-09-10,6327219,Morgan St.,MEAC,Bowie St.,CIAA,Home,13,Selah Brashear,OH,3,4,3,11,0.091,0,4,2,4,2,2,0,1,0,0,0,0,2,18,1
-2024-2025,2024-09-10,6327219,Morgan St.,MEAC,Bowie St.,CIAA,Home,11,Aubrey Wilson,MB,1,1,0,2,0.500,0,0,1,1,0,0,1,0,0,0,0,0,0,3,1
-2024-2025,2024-09-10,6327219,Morgan St.,MEAC,Bowie St.,CIAA,Home,17,Mikaela Esparza,L/DS,3,0,0,1,.000,2,0,1,12,2,1,0,0,0,0,0,0,9,11,0
-2024-2025,2024-09-10,6327219,Morgan St.,MEAC,Bowie St.,CIAA,Home,14,Tyrah Weems,MB,1,0,2,4,-0.500,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0
-2024-2025,2024-09-10,6327219,Morgan St.,MEAC,Bowie St.,CIAA,Home,4,Trinity Carruthers,S,1,0,0,0,.000,7,0,0,4,0,0,0,0,0,0,0,0,18,5,0
-2024-2025,2024-09-10,6327219,Morgan St.,MEAC,Bowie St.,CIAA,Home,1,Jada Williams,MB,1,5,2,8,0.375,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0
-2024-2025,2024-09-10,6327219,Morgan St.,MEAC,Bowie St.,CIAA,Home,2,Mya Karrick,S,2,1,0,2,0.500,12,3,2,1,0,0,0,0,0,0,0,0,34,9,0
-2024-2025,2024-09-10,6327219,Morgan St.,MEAC,Bowie St.,CIAA,Home,8,Addison Metts,OH,3,12,4,24,0.333,0,2,0,7,2,1,1,0,0,0,0,0,6,14,1
-2024-2025,2024-09-10,6327219,Morgan St.,MEAC,Bowie St.,CIAA,Home,6,Erin Carpenter,S,2,0,0,0,.000,14,1,1,0,0,0,0,0,0,0,0,0,31,8,0
-2024-2025,2024-09-10,6327219,Morgan St.,MEAC,Bowie St.,CIAA,Home,9,Daniela Ferreira,OH,3,6,5,18,0.056,0,1,0,2,0,0,0,0,0,0,0,0,1,2,0
-2024-2025,2024-09-10,6327219,Morgan St.,MEAC,Bowie St.,CIAA,Home,18,Jordan Williams,N,2,2,2,5,.000,0,0,0,0,0,0,1,1,0,0,0,0,0,0,2
-2024-2025,2024-09-10,6327219,Morgan St.,MEAC,Bowie St.,CIAA,Home,19,Madison Grace,OH,3,7,5,15,0.133,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
-2024-2025,2024-09-10,6327219,Morgan St.,MEAC,Bowie St.,CIAA,Home,20,Piper Newton,N,2,2,3,9,-0.111,0,1,0,1,0,0,0,0,0,0,0,1,1,5,0
-2024-2025,2024-09-10,6327219,Bowie St.,CIAA,Morgan St.,MEAC,Away,9,Madyson Brinson,,3,3,3,13,.000,0,0,0,1,0,0,0,1,0,0,1,0,0,2,1
-2024-2025,2024-09-10,6327219,Bowie St.,CIAA,Morgan St.,MEAC,Away,14,Nina Edwards,,2,6,2,10,0.400,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1
-2024-2025,2024-09-10,6327219,Bowie St.,CIAA,Morgan St.,MEAC,Away,8,Shaska Davis,,3,5,3,14,0.143,0,1,1,4,4,4,0,0,0,0,0,0,4,9,0
-2024-2025,2024-09-10,6327219,Bowie St.,CIAA,Morgan St.,MEAC,Away,13,Jaide Holliday,,1,0,0,3,.000,1,1,0,1,0,0,0,0,0,0,0,0,1,5,0
-2024-2025,2024-09-10,6327219,Bowie St.,CIAA,Morgan St.,MEAC,Away,7,Bracey Gross,,3,0,0,0,.000,0,0,1,0,1,1,0,0,0,0,0,0,0,4,0
-2024-2025,2024-09-10,6327219,Bowie St.,CIAA,Morgan St.,MEAC,Away,16,Taylor Johnson,OH,3,0,0,0,.000,0,2,2,4,6,4,0,0,0,0,0,0,3,13,0
-2024-2025,2024-09-10,6327219,Bowie St.,CIAA,Morgan St.,MEAC,Away,6,Ayana Johnson,DS,3,0,2,3,-0.667,0,1,1,3,3,1,0,0,0,0,0,0,2,8,0
-2024-2025,2024-09-10,6327219,Bowie St.,CIAA,Morgan St.,MEAC,Away,10,Trinity Loundmon,,3,1,2,5,-0.200,12,1,1,6,0,0,0,0,0,0,1,3,50,8,0
-2024-2025,2024-09-10,6327219,Bowie St.,CIAA,Morgan St.,MEAC,Away,12,Iman Wright,,2,2,0,8,0.250,0,0,0,0,1,1,0,0,0,0,0,0,2,0,0
-2024-2025,2024-09-10,6327219,Bowie St.,CIAA,Morgan St.,MEAC,Away,3,Mekenna Scott,,1,0,0,0,.000,1,0,0,0,1,1,0,0,0,0,0,0,13,2,0
-2024-2025,2024-09-10,6327219,Bowie St.,CIAA,Morgan St.,MEAC,Away,2,Nadira Avery,OH,1,2,0,2,1.000,0,0,1,0,0,0,0,1,1,0,0,0,0,4,1
-2024-2025,2024-09-10,6327219,Bowie St.,CIAA,Morgan St.,MEAC,Away,11,Haley Pelham,,1,0,0,0,.000,7,0,0,0,0,0,0,0,0,0,0,0,12,3,0
-2024-2025,2024-09-10,6327219,Bowie St.,CIAA,Morgan St.,MEAC,Away,1,Melisa Anacius,,2,2,0,6,0.333,1,0,0,1,0,0,0,1,0,0,0,0,1,2,1
-2024-2025,2024-09-10,6327219,Bowie St.,CIAA,Morgan St.,MEAC,Away,17,Nicole Taylor,OH,3,3,4,19,-0.053,1,0,0,5,0,0,0,2,0,0,0,0,4,3,2
-2024-2025,2024-09-10,6327219,Bowie St.,CIAA,Morgan St.,MEAC,Away,20,Marissa Robinson,,1,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0
 2024-2025,2024-09-10,6327221,UNC Asheville,Big South,Western Caro.,SoCon,Home,28,Kim Czepukaitis,MB,1,1,0,1,1.000,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0
 2024-2025,2024-09-10,6327221,UNC Asheville,Big South,Western Caro.,SoCon,Home,26,Ella Stroehmann,MB,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
 2024-2025,2024-09-10,6327221,UNC Asheville,Big South,Western Caro.,SoCon,Home,27,Alison Goldberg,MB,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
@@ -52605,36 +52507,6 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2024-2025,2024-09-16,6327675,Tennessee,SEC,Wofford,SoCon,Away,2,Eryn Jones,OH,5,0,0,2,.000,2,0,0,7,12,2,0,0,0,0,0,0,4,14,0
 2024-2025,2024-09-16,6327675,Tennessee,SEC,Wofford,SoCon,Away,3,Orian Drore,L/DS,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
 2024-2025,2024-09-16,6327675,Tennessee,SEC,Wofford,SoCon,Away,4,Paityn Chapman,OH,5,11,2,17,0.529,1,0,2,2,0,0,0,0,0,11,0,0,2,3,0
-2024-2025,2024-09-16,6327676,Alcorn,SWAC,Tougaloo,NA,Home,7,Erin Mims,OH,1,0,1,5,-0.200,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0
-2024-2025,2024-09-16,6327676,Alcorn,SWAC,Tougaloo,NA,Home,6,Sa'mya Tate,DS,2,0,0,0,.000,0,0,0,1,5,2,0,0,0,0,0,0,0,2,0
-2024-2025,2024-09-16,6327676,Alcorn,SWAC,Tougaloo,NA,Home,9,Ramona Pulu,S,3,11,2,27,0.333,10,1,4,14,5,0,1,1,0,13.5,0,5,56,11,2
-2024-2025,2024-09-16,6327676,Alcorn,SWAC,Tougaloo,NA,Home,8,Paris Johnson,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-16,6327676,Alcorn,SWAC,Tougaloo,NA,Home,3,Andria Lewis,DS,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-16,6327676,Alcorn,SWAC,Tougaloo,NA,Home,2,Bailey Upshaw,MB,2,2,1,6,0.167,0,0,2,0,0,0,0,1,0,2.5,0,0,2,5,1
-2024-2025,2024-09-16,6327676,Alcorn,SWAC,Tougaloo,NA,Home,5,Kasey Watkins,OH,1,1,1,4,.000,1,0,0,3,3,0,0,0,0,1,0,0,2,6,0
-2024-2025,2024-09-16,6327676,Alcorn,SWAC,Tougaloo,NA,Home,17,Kayla Jones,OH,2,2,0,6,0.333,0,0,1,0,1,0,1,0,0,3,1,0,2,5,1
-2024-2025,2024-09-16,6327676,Alcorn,SWAC,Tougaloo,NA,Home,4,Cayla Williams,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-16,6327676,Alcorn,SWAC,Tougaloo,NA,Home,1,Sydney Valentine,OH,2,6,3,16,0.188,0,2,2,2,11,1,0,0,0,8,0,1,6,13,0
-2024-2025,2024-09-16,6327676,Alcorn,SWAC,Tougaloo,NA,Home,13,Michaela Branner,OH,2,4,1,9,0.333,0,2,1,2,4,0,0,0,0,6,0,0,4,8,0
-2024-2025,2024-09-16,6327676,Alcorn,SWAC,Tougaloo,NA,Home,0,Demya Tate,MB,2,4,0,6,0.667,0,0,0,1,1,0,0,0,0,4,0,1,4,0,0
-2024-2025,2024-09-16,6327676,Alcorn,SWAC,Tougaloo,NA,Home,14,Jalayah Hamby,MB,3,4,1,8,0.375,1,0,1,1,0,0,1,0,0,5,0,0,3,4,1
-2024-2025,2024-09-16,6327676,Alcorn,SWAC,Tougaloo,NA,Home,20,Brooklyn Shook,DS,3,0,0,3,.000,14,2,2,3,0,0,0,0,0,2,0,3,31,10,0
-2024-2025,2024-09-16,6327676,Alcorn,SWAC,Tougaloo,NA,Home,21,Harmoni Carswell,DS,3,1,0,9,0.111,3,2,2,13,24,0,0,0,0,3,0,0,12,9,0
-2024-2025,2024-09-16,6327676,Alcorn,SWAC,Tougaloo,NA,Home,11,Kennedy Brooks,OH,2,2,1,6,0.167,0,0,0,1,2,0,0,0,0,2,0,0,2,0,0
-2024-2025,2024-09-16,6327676,Tougaloo,NA,Alcorn,SWAC,Away,22,Lashundria Chapman,MB,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-16,6327676,Tougaloo,NA,Alcorn,SWAC,Away,24,Kamyah Love,MB,3,2,0,4,0.500,0,1,2,2,0,0,0,1,0,3.5,0,0,2,13,1
-2024-2025,2024-09-16,6327676,Tougaloo,NA,Alcorn,SWAC,Away,1,Zindzhi Conner,MB,2,0,2,4,-0.500,1,0,0,0,0,0,0,0,0,0,0,0,4,0,0
-2024-2025,2024-09-16,6327676,Tougaloo,NA,Alcorn,SWAC,Away,9,Kaliyah Shavers,S,3,4,4,18,.000,1,0,1,6,1,0,0,0,0,4,0,0,6,9,0
-2024-2025,2024-09-16,6327676,Tougaloo,NA,Alcorn,SWAC,Away,7,Tatyeanna Armstrong,RS,3,5,3,18,0.111,12,0,1,5,2,0,0,0,0,5,0,2,58,11,0
-2024-2025,2024-09-16,6327676,Tougaloo,NA,Alcorn,SWAC,Away,5,Destiny Matthews,S,1,0,0,0,.000,0,0,0,0,2,1,0,0,0,0,0,1,2,0,0
-2024-2025,2024-09-16,6327676,Tougaloo,NA,Alcorn,SWAC,Away,2,Makinnah Jones,OH,1,2,0,5,0.400,0,0,0,0,0,0,0,0,0,2,0,0,1,0,0
-2024-2025,2024-09-16,6327676,Tougaloo,NA,Alcorn,SWAC,Away,3,Taylor Cousar,S,1,1,0,1,1.000,0,0,0,0,2,1,0,0,0,1,0,1,1,0,0
-2024-2025,2024-09-16,6327676,Tougaloo,NA,Alcorn,SWAC,Away,11,Cameron Gatlin,S,3,1,0,1,1.000,1,0,0,3,18,2,0,0,0,1,0,0,7,5,0
-2024-2025,2024-09-16,6327676,Tougaloo,NA,Alcorn,SWAC,Away,33,Janai Mason,MB,2,1,1,5,.000,0,0,0,0,0,0,1,1,0,2.5,0,0,2,0,2
-2024-2025,2024-09-16,6327676,Tougaloo,NA,Alcorn,SWAC,Away,12,Haylay Porter,DS,3,0,0,0,.000,0,1,1,6,5,1,0,0,0,1,0,0,2,5,0
-2024-2025,2024-09-16,6327676,Tougaloo,NA,Alcorn,SWAC,Away,15,Ke'ira Collins,L/DS,3,5,2,14,0.214,1,1,2,7,11,1,0,0,0,6,0,0,7,14,0
-2024-2025,2024-09-16,6327676,Tougaloo,NA,Alcorn,SWAC,Away,13,Zyriana Mcdonald,S,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-16,6327676,Tougaloo,NA,Alcorn,SWAC,Away,14,Zoie Chambers,OH,3,2,2,18,.000,1,0,1,5,16,2,0,0,0,2,0,3,9,8,0
 2024-2025,2024-09-17,6327677,McNeese,Southland,Tarleton St.,WAC,Home,21,Kayla Wilson,OH,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
 2024-2025,2024-09-17,6327677,McNeese,Southland,Tarleton St.,WAC,Home,1,Luisa Melloni,S,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
 2024-2025,2024-09-17,6327677,McNeese,Southland,Tarleton St.,WAC,Home,2,Riley Wall,L,5,0,0,0,.000,0,3,1,1,0,0,0,0,0,3,0,0,0,16,0
@@ -53176,43 +53048,6 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2024-2025,2024-09-17,6327693,California Baptist,WAC,CSUN,Big West,Away,18,Rylie Henige,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
 2024-2025,2024-09-17,6327693,California Baptist,WAC,CSUN,Big West,Away,20,Wilsun Weir,MB,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
 2024-2025,2024-09-17,6327693,California Baptist,WAC,CSUN,Big West,Away,21,Solia Angilau,MB,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-17,6327694,Ark.-Monticello,GAC,Ark.-Pine Bluff,SWAC,Home,26,Valeria Velez,OH,3,6,3,23,0.130,1,1,1,11,24,1,1,0,0,8,0,0,5,15,1
-2024-2025,2024-09-17,6327694,Ark.-Monticello,GAC,Ark.-Pine Bluff,SWAC,Home,13,Abrielle Jordan,MB,4,9,0,19,0.474,0,0,0,5,0,0,0,5,0,11.5,1,0,1,6,5
-2024-2025,2024-09-17,6327694,Ark.-Monticello,GAC,Ark.-Pine Bluff,SWAC,Home,12,Michayla Black,OH,2,2,2,14,.000,1,0,1,3,4,1,1,0,0,3,0,0,4,4,1
-2024-2025,2024-09-17,6327694,Ark.-Monticello,GAC,Ark.-Pine Bluff,SWAC,Home,11,Maelie Cooke,L,3,0,0,3,.000,2,1,0,25,23,1,0,0,0,1,0,0,11,10,0
-2024-2025,2024-09-17,6327694,Ark.-Monticello,GAC,Ark.-Pine Bluff,SWAC,Home,10,Asia Griffiths,L,1,0,0,0,.000,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0
-2024-2025,2024-09-17,6327694,Ark.-Monticello,GAC,Ark.-Pine Bluff,SWAC,Home,19,Holiday Ellis,OH,2,3,2,14,0.071,0,0,0,2,3,0,0,1,0,3.5,0,0,1,2,1
-2024-2025,2024-09-17,6327694,Ark.-Monticello,GAC,Ark.-Pine Bluff,SWAC,Home,17,Aniyah Williams,MB,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-17,6327694,Ark.-Monticello,GAC,Ark.-Pine Bluff,SWAC,Home,16,Natalie White,OH,4,15,6,42,0.214,0,0,0,2,0,0,1,1,3,16.5,0,0,1,0,2
-2024-2025,2024-09-17,6327694,Ark.-Monticello,GAC,Ark.-Pine Bluff,SWAC,Home,15,Kerrigan Biggs,MB,2,1,2,7,-0.143,0,0,0,1,0,0,0,0,1,1,0,0,1,0,0
-2024-2025,2024-09-17,6327694,Ark.-Monticello,GAC,Ark.-Pine Bluff,SWAC,Home,7,Bruna Silva,S,3,0,0,2,.000,2,0,2,4,4,1,0,0,0,0,0,0,14,7,0
-2024-2025,2024-09-17,6327694,Ark.-Monticello,GAC,Ark.-Pine Bluff,SWAC,Home,4,Jalen Scroggins,OH,1,1,0,4,0.250,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0
-2024-2025,2024-09-17,6327694,Ark.-Monticello,GAC,Ark.-Pine Bluff,SWAC,Home,8,Janaye Sweat,MB,2,1,2,6,-0.167,0,0,0,0,0,0,2,1,0,3.5,0,0,0,0,3
-2024-2025,2024-09-17,6327694,Ark.-Monticello,GAC,Ark.-Pine Bluff,SWAC,Home,9,Isneydy De la rosa,OH,2,2,0,13,0.154,0,0,1,3,15,3,0,1,0,2.5,0,0,1,5,1
-2024-2025,2024-09-17,6327694,Ark.-Monticello,GAC,Ark.-Pine Bluff,SWAC,Home,22,Jordan Wehr,S,2,2,0,6,0.333,8,0,1,20,9,1,0,0,0,2,0,0,,14,0
-2024-2025,2024-09-17,6327694,Ark.-Monticello,GAC,Ark.-Pine Bluff,SWAC,Home,2,Jasmine Welton,OH,2,1,2,9,-0.111,0,1,0,3,5,0,0,2,0,3,0,0,2,6,2
-2024-2025,2024-09-17,6327694,Ark.-Monticello,GAC,Ark.-Pine Bluff,SWAC,Home,21,Evalyn Dang,OH,3,1,3,12,-0.167,0,0,0,3,0,0,1,1,0,2.5,0,0,2,0,2
-2024-2025,2024-09-17,6327694,Ark.-Monticello,GAC,Ark.-Pine Bluff,SWAC,Home,3,Mia Smalls,S,4,0,0,4,.000,26,0,0,8,0,0,0,0,0,0,0,0,81,18,0
-2024-2025,2024-09-17,6327694,Ark.-Monticello,GAC,Ark.-Pine Bluff,SWAC,Home,20,Alexia Hajdu,OH,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-17,6327694,Ark.-Monticello,GAC,Ark.-Pine Bluff,SWAC,Home,1,Licia Echevarria,L,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-17,6327694,Ark.-Monticello,GAC,Ark.-Pine Bluff,SWAC,Home,24,Jordan Wehr,S,4,2,0,6,0.333,8,0,1,20,9,1,0,0,0,2,0,0,42,14,0
-2024-2025,2024-09-17,6327694,Ark.-Pine Bluff,SWAC,Ark.-Monticello,GAC,Away,9,Samantha Newman,OH,4,4,5,25,-0.040,0,1,2,13,28,1,1,0,1,6,0,0,4,17,1
-2024-2025,2024-09-17,6327694,Ark.-Pine Bluff,SWAC,Ark.-Monticello,GAC,Away,8,Maci Miller,OH,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-17,6327694,Ark.-Pine Bluff,SWAC,Ark.-Monticello,GAC,Away,22,Lyla Jones,S,4,2,0,4,0.500,22,0,2,11,0,0,0,0,0,2,0,0,66,21,0
-2024-2025,2024-09-17,6327694,Ark.-Pine Bluff,SWAC,Ark.-Monticello,GAC,Away,2,Haley Reeves,OH,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-17,6327694,Ark.-Pine Bluff,SWAC,Ark.-Monticello,GAC,Away,1,Camille Johnson,OH,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-17,6327694,Ark.-Pine Bluff,SWAC,Ark.-Monticello,GAC,Away,6,Amayah Jones,OH,4,11,2,24,0.375,0,3,1,8,0,0,0,1,1,14.5,0,0,1,14,1
-2024-2025,2024-09-17,6327694,Ark.-Pine Bluff,SWAC,Ark.-Monticello,GAC,Away,5,Laila Fortson,MB,4,10,4,23,0.261,0,1,1,7,1,0,0,0,0,11,0,0,4,11,0
-2024-2025,2024-09-17,6327694,Ark.-Pine Bluff,SWAC,Ark.-Monticello,GAC,Away,4,Anaiah Jordan,S,4,0,1,5,-0.200,23,0,1,19,0,0,0,0,0,0,0,1,59,16,0
-2024-2025,2024-09-17,6327694,Ark.-Pine Bluff,SWAC,Ark.-Monticello,GAC,Away,3,Destani Jones,MB,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-17,6327694,Ark.-Pine Bluff,SWAC,Ark.-Monticello,GAC,Away,12,Zykia Jones,OH,4,15,7,36,0.222,0,3,2,21,19,0,1,1,1,19.5,0,0,4,17,2
-2024-2025,2024-09-17,6327694,Ark.-Pine Bluff,SWAC,Ark.-Monticello,GAC,Away,15,Keaundra Sykes,L/DS,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-17,6327694,Ark.-Pine Bluff,SWAC,Ark.-Monticello,GAC,Away,14,Riley Johnson,MB,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-17,6327694,Ark.-Pine Bluff,SWAC,Ark.-Monticello,GAC,Away,17,Arah Anoma,MB,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-17,6327694,Ark.-Pine Bluff,SWAC,Ark.-Monticello,GAC,Away,16,Ariyonna Edmond,OH,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-17,6327694,Ark.-Pine Bluff,SWAC,Ark.-Monticello,GAC,Away,18,Mackenzie Mcdowell,DS,4,0,0,5,.000,3,0,0,19,31,0,0,0,0,0,0,1,23,0,0
-2024-2025,2024-09-17,6327694,Ark.-Pine Bluff,SWAC,Ark.-Monticello,GAC,Away,11,Marlina Anderson,OH,4,10,7,35,0.086,0,0,0,3,0,0,2,0,0,12,0,0,4,0,2
-2024-2025,2024-09-17,6327694,Ark.-Pine Bluff,SWAC,Ark.-Monticello,GAC,Away,10,Ashanti Butler,MB,4,7,3,26,0.154,0,0,0,2,0,0,1,0,0,8,0,0,1,0,1
 2024-2025,2024-09-17,6327695,Virginia,ACC,Middle Tenn.,CUSA,Home,10,Zoey Dood,S,3,1,0,5,0.200,8,0,0,3,0,0,0,4,1,3,0,0,25,0,4
 2024-2025,2024-09-17,6327695,Virginia,ACC,Middle Tenn.,CUSA,Home,12,Kadynce Boothe,OH,2,8,2,29,0.207,0,2,0,11,12,0,0,0,0,10,0,0,3,10,0
 2024-2025,2024-09-17,6327695,Virginia,ACC,Middle Tenn.,CUSA,Home,11,Lily Gervase,MB,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
@@ -53674,36 +53509,6 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2024-2025,2024-09-18,6327708,Southern Miss.,Sun Belt,Jackson St.,SWAC,Away,9,Emily Davis,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
 2024-2025,2024-09-18,6327708,Southern Miss.,Sun Belt,Jackson St.,SWAC,Away,8,Maggie Sewell,MB,1,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 2024-2025,2024-09-18,6327708,Southern Miss.,Sun Belt,Jackson St.,SWAC,Away,21,Hayden Riddle,S,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-18,6327709,Texas Southern,SWAC,Huston-Tillotson,NA,Home,13,Sydney Love,MB,1,1,0,2,0.500,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
-2024-2025,2024-09-18,6327709,Texas Southern,SWAC,Huston-Tillotson,NA,Home,14,Lauren Battle,OH,3,9,0,20,0.450,0,2,1,9,10,0,0,0,0,11,0,0,4,18,0
-2024-2025,2024-09-18,6327709,Texas Southern,SWAC,Huston-Tillotson,NA,Home,11,Ava Ray,S,3,0,0,4,.000,14,0,1,6,0,0,0,0,0,0,0,0,30,11,0
-2024-2025,2024-09-18,6327709,Texas Southern,SWAC,Huston-Tillotson,NA,Home,12,Keldri Young,OH,2,2,2,7,.000,1,0,0,0,0,0,0,0,0,2,0,0,2,0,0
-2024-2025,2024-09-18,6327709,Texas Southern,SWAC,Huston-Tillotson,NA,Home,17,Angelika Rusin,L/DS,3,0,0,8,.000,6,0,1,15,6,0,0,0,0,0,0,0,11,9,0
-2024-2025,2024-09-18,6327709,Texas Southern,SWAC,Huston-Tillotson,NA,Home,18,Gracie Hill,OH,1,5,2,8,0.375,1,0,1,2,5,0,0,0,0,5,0,0,4,4,0
-2024-2025,2024-09-18,6327709,Texas Southern,SWAC,Huston-Tillotson,NA,Home,15,Brandolyn Freeman,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-18,6327709,Texas Southern,SWAC,Huston-Tillotson,NA,Home,16,Kennedy Reed,OH,2,5,0,7,0.714,0,3,1,2,4,0,0,0,1,8,0,0,4,8,0
-2024-2025,2024-09-18,6327709,Texas Southern,SWAC,Huston-Tillotson,NA,Home,19,Taryn Stafford,MB,1,2,1,3,0.333,0,0,0,0,0,0,0,0,0,2,0,0,1,0,0
-2024-2025,2024-09-18,6327709,Texas Southern,SWAC,Huston-Tillotson,NA,Home,3,Gracie Lee,OH,2,4,1,8,0.375,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0
-2024-2025,2024-09-18,6327709,Texas Southern,SWAC,Huston-Tillotson,NA,Home,7,Morgynne Mcqueen,MB,2,7,0,7,1.000,0,1,1,1,0,0,2,0,0,10,0,0,1,7,2
-2024-2025,2024-09-18,6327709,Texas Southern,SWAC,Huston-Tillotson,NA,Home,6,Ava Houston,MB,1,0,1,1,-1.000,0,0,0,0,3,1,0,0,0,0,0,0,0,2,0
-2024-2025,2024-09-18,6327709,Texas Southern,SWAC,Huston-Tillotson,NA,Home,5,Narkisse Kelly,L/DS,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-18,6327709,Texas Southern,SWAC,Huston-Tillotson,NA,Home,4,Trinidie Davis,OH,2,4,0,6,0.667,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0
-2024-2025,2024-09-18,6327709,Texas Southern,SWAC,Huston-Tillotson,NA,Home,9,Kourtni Collier,MB,2,1,0,3,0.333,0,0,1,0,1,0,1,0,0,2,0,2,3,3,1
-2024-2025,2024-09-18,6327709,Texas Southern,SWAC,Huston-Tillotson,NA,Home,8,Kennedi Walker,S,3,2,0,3,0.667,15,1,2,4,0,0,0,0,0,3,0,0,30,12,0
-2024-2025,2024-09-18,6327709,Huston-Tillotson,NA,Texas Southern,SWAC,Away,1,Angelina Munoz,,3,2,3,12,-0.083,2,0,0,1,0,0,0,0,0,2,0,1,14,1,0
-2024-2025,2024-09-18,6327709,Huston-Tillotson,NA,Texas Southern,SWAC,Away,3,Danelle Mccullough,,3,0,1,3,-0.333,2,0,0,6,8,0,0,0,0,0,0,1,8,5,0
-2024-2025,2024-09-18,6327709,Huston-Tillotson,NA,Texas Southern,SWAC,Away,2,Tiya Crawford,N,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-18,6327709,Huston-Tillotson,NA,Texas Southern,SWAC,Away,10,Xiara Berry,N,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-18,6327709,Huston-Tillotson,NA,Texas Southern,SWAC,Away,4,Aniyah Asberry,,1,0,0,0,.000,0,0,0,1,10,2,0,0,0,0,0,0,1,1,0
-2024-2025,2024-09-18,6327709,Huston-Tillotson,NA,Texas Southern,SWAC,Away,7,Kennedy White,N,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-18,6327709,Huston-Tillotson,NA,Texas Southern,SWAC,Away,14,Kadyn Smith,,3,2,2,7,.000,0,0,0,0,0,0,0,0,0,2,0,0,1,0,0
-2024-2025,2024-09-18,6327709,Huston-Tillotson,NA,Texas Southern,SWAC,Away,11,Chloe Gaytan,,3,7,2,24,0.208,1,1,1,5,13,1,0,0,0,8,0,1,7,6,0
-2024-2025,2024-09-18,6327709,Huston-Tillotson,NA,Texas Southern,SWAC,Away,18,Cameron Boyd,,3,0,0,1,.000,0,1,0,7,16,1,0,0,0,1,0,0,2,5,0
-2024-2025,2024-09-18,6327709,Huston-Tillotson,NA,Texas Southern,SWAC,Away,17,Ka'mari Pointer,,3,2,3,13,-0.077,0,0,0,3,0,0,0,0,0,2,0,0,1,1,0
-2024-2025,2024-09-18,6327709,Huston-Tillotson,NA,Texas Southern,SWAC,Away,16,Olivia De la cruz,,3,2,2,9,.000,0,0,5,1,0,0,1,0,0,3,0,0,1,7,1
-2024-2025,2024-09-18,6327709,Huston-Tillotson,NA,Texas Southern,SWAC,Away,15,Kaylee Duque,,2,0,0,0,.000,0,0,1,0,15,0,0,0,0,0,0,0,2,4,0
-2024-2025,2024-09-18,6327709,Huston-Tillotson,NA,Texas Southern,SWAC,Away,9,Elaina Spriggins,,3,1,1,8,.000,9,0,1,2,0,0,0,0,0,1,0,1,52,8,0
-2024-2025,2024-09-18,6327709,Huston-Tillotson,NA,Texas Southern,SWAC,Away,20,Makayla White,N,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
 2024-2025,2024-09-18,6327710,Virginia,ACC,Middle Tenn.,CUSA,Home,10,Zoey Dood,S,2,0,0,3,.000,4,0,0,0,0,0,0,0,0,0,0,0,17,0,0
 2024-2025,2024-09-18,6327710,Virginia,ACC,Middle Tenn.,CUSA,Home,12,Kadynce Boothe,OH,5,7,4,17,0.176,0,1,1,7,15,1,0,1,0,8.5,0,0,3,15,1
 2024-2025,2024-09-18,6327710,Virginia,ACC,Middle Tenn.,CUSA,Home,11,Lily Gervase,MB,2,3,0,4,0.750,0,0,0,1,0,0,0,2,1,4,0,0,0,0,2
@@ -66220,42 +66025,6 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2024-2025,2024-09-24,6328083,Mercyhurst,NEC,Youngstown St.,Horizon,Away,9,Paige Miller,OH,3,7,4,27,0.111,1,0,0,2,22,2,0,0,1,7,0,0,6,8,0
 2024-2025,2024-09-24,6328083,Mercyhurst,NEC,Youngstown St.,Horizon,Away,7,Jessica Wilson,OPP,3,4,3,16,0.062,1,0,0,0,0,0,0,0,0,4,0,0,1,0,0
 2024-2025,2024-09-24,6328083,Mercyhurst,NEC,Youngstown St.,Horizon,Away,8,Abby Miller,S,3,0,0,1,.000,2,0,2,0,1,0,0,0,0,0,0,0,9,2,0
-2024-2025,2024-09-24,6328084,Southern U.,SWAC,Dillard,NA,Home,12,Bailee St. romain,OH,4,5,4,15,0.067,0,0,0,1,0,0,1,1,0,6.5,0,0,2,1,2
-2024-2025,2024-09-24,6328084,Southern U.,SWAC,Dillard,NA,Home,11,Tamara Chavez,OH,4,10,6,22,0.182,0,1,3,6,15,1,1,1,0,12.5,0,0,0,12,2
-2024-2025,2024-09-24,6328084,Southern U.,SWAC,Dillard,NA,Home,10,Trenity Lundy,L/DS,1,0,0,0,.000,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0
-2024-2025,2024-09-24,6328084,Southern U.,SWAC,Dillard,NA,Home,17,Alicia Hearn,MB,4,8,0,12,0.667,0,2,1,1,0,0,0,5,0,12.5,0,0,3,14,5
-2024-2025,2024-09-24,6328084,Southern U.,SWAC,Dillard,NA,Home,16,Leslie Warren,OH,1,0,0,1,.000,0,0,0,0,0,0,0,1,0,0.5,0,0,0,0,1
-2024-2025,2024-09-24,6328084,Southern U.,SWAC,Dillard,NA,Home,15,Marian Attaway,OH,4,2,0,2,1.000,2,1,3,1,19,1,0,0,0,3,0,0,2,19,0
-2024-2025,2024-09-24,6328084,Southern U.,SWAC,Dillard,NA,Home,14,Jordan Wheeler,MB,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-24,6328084,Southern U.,SWAC,Dillard,NA,Home,4,Elise Doomes,OH,3,6,1,23,0.217,0,0,0,2,1,0,1,2,0,8,0,0,1,0,3
-2024-2025,2024-09-24,6328084,Southern U.,SWAC,Dillard,NA,Home,3,Zaria Nelson,OH,2,2,0,5,0.400,1,0,1,0,2,0,1,2,0,4,0,0,2,2,3
-2024-2025,2024-09-24,6328084,Southern U.,SWAC,Dillard,NA,Home,2,Zion Robinson,DS,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-24,6328084,Southern U.,SWAC,Dillard,NA,Home,19,Najah Harris,DS,4,0,0,1,.000,3,6,2,13,27,3,0,0,0,6,0,0,13,24,0
-2024-2025,2024-09-24,6328084,Southern U.,SWAC,Dillard,NA,Home,1,Kiarra Rosales,L,2,0,0,0,.000,0,0,0,2,6,0,0,0,0,0,0,0,1,0,0
-2024-2025,2024-09-24,6328084,Southern U.,SWAC,Dillard,NA,Home,8,Jordan Felix,S,4,6,4,18,0.111,20,4,0,7,0,0,0,2,0,11,0,1,45,17,2
-2024-2025,2024-09-24,6328084,Southern U.,SWAC,Dillard,NA,Home,7,Miabella English,S,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-24,6328084,Southern U.,SWAC,Dillard,NA,Home,6,Iyanah Taylor,S,4,1,1,4,.000,20,1,4,8,0,0,0,0,0,2,0,0,49,13,0
-2024-2025,2024-09-24,6328084,Southern U.,SWAC,Dillard,NA,Home,5,Jasmine Okorafor,MB,4,8,3,16,0.312,1,0,0,1,0,0,0,4,0,10,0,0,2,0,4
-2024-2025,2024-09-24,6328084,Southern U.,SWAC,Dillard,NA,Home,20,Logan Hart,MB,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-24,6328084,Southern U.,SWAC,Dillard,NA,Home,22,Chanelle Smith,MB,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-24,6328084,Southern U.,SWAC,Dillard,NA,Home,21,Dana Henry,MB,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-24,6328084,Dillard,NA,Southern U.,SWAC,Away,12,Ajanae Chatham,N,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-24,6328084,Dillard,NA,Southern U.,SWAC,Away,16,Sara Da silva,N,4,7,9,23,-0.087,0,0,0,3,14,3,0,3,2,8.5,0,0,0,0,3
-2024-2025,2024-09-24,6328084,Dillard,NA,Southern U.,SWAC,Away,15,Tyramae Fautanu,N,4,0,0,2,.000,3,2,2,5,0,0,0,0,0,2,0,0,11,17,0
-2024-2025,2024-09-24,6328084,Dillard,NA,Southern U.,SWAC,Away,14,Vanae Sapp,N,4,7,4,18,0.167,2,2,1,13,23,2,0,0,1,9,0,0,8,16,0
-2024-2025,2024-09-24,6328084,Dillard,NA,Southern U.,SWAC,Away,13,Kadence Busby,,4,2,3,14,-0.071,0,0,0,0,0,0,0,3,0,3.5,0,0,2,6,3
-2024-2025,2024-09-24,6328084,Dillard,NA,Southern U.,SWAC,Away,22,Saige Grider,N,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-24,6328084,Dillard,NA,Southern U.,SWAC,Away,20,Nya St. cyr,N,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-24,6328084,Dillard,NA,Southern U.,SWAC,Away,2,Trenity Prender,N,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-24,6328084,Dillard,NA,Southern U.,SWAC,Away,3,Sarai Rogers,N,3,1,1,9,.000,0,0,0,1,3,1,0,1,1,1.5,0,0,0,0,1
-2024-2025,2024-09-24,6328084,Dillard,NA,Southern U.,SWAC,Away,4,Cadence Thomas,N,4,10,2,20,0.400,0,0,1,3,0,0,0,3,0,11.5,0,0,1,2,3
-2024-2025,2024-09-24,6328084,Dillard,NA,Southern U.,SWAC,Away,18,Makaela Swoopes,,4,6,7,19,-0.053,0,0,1,6,11,2,0,0,0,6,0,1,4,12,0
-2024-2025,2024-09-24,6328084,Dillard,NA,Southern U.,SWAC,Away,5,Madisyn Bussey,N,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-24,6328084,Dillard,NA,Southern U.,SWAC,Away,6,Nanyelis Moreno,,4,0,0,0,.000,32,3,2,5,1,1,0,2,1,4,1,1,96,19,2
-2024-2025,2024-09-24,6328084,Dillard,NA,Southern U.,SWAC,Away,7,Gabrielle Washington,N,1,1,1,2,.000,0,0,0,0,0,0,1,0,1,2,0,0,0,0,1
-2024-2025,2024-09-24,6328084,Dillard,NA,Southern U.,SWAC,Away,8,Neveah Bax,,4,5,2,10,0.300,0,2,1,12,32,2,0,0,0,7,0,0,4,11,0
-2024-2025,2024-09-24,6328084,Dillard,NA,Southern U.,SWAC,Away,9,Aiko Helper,N,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-24,6328084,Dillard,NA,Southern U.,SWAC,Away,1,Jasmyne Mumphrey,N,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
 2024-2025,2024-09-24,6328085,Fresno St.,Mountain West,San Jose St.,Mountain West,Home,23,Jenna Legault,OH,4,1,4,23,-0.130,0,2,2,3,2,0,0,1,0,3.5,0,0,3,8,1
 2024-2025,2024-09-24,6328085,Fresno St.,Mountain West,San Jose St.,Mountain West,Home,10,Alivia Schneider,OH,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
 2024-2025,2024-09-24,6328085,Fresno St.,Mountain West,San Jose St.,Mountain West,Home,11,Kasey Purry,MB,4,9,6,19,0.158,0,1,2,0,0,0,1,3,1,12.5,0,0,1,12,4
@@ -71607,46 +71376,6 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2024-2025,2024-09-28,6328252,Sacramento St.,Big Sky,Eastern Wash.,Big Sky,Away,10,Kate Doorn,S,4,0,0,1,.000,24,0,2,9,0,0,0,3,0,1.5,0,0,66,11,3
 2024-2025,2024-09-28,6328252,Sacramento St.,Big Sky,Eastern Wash.,Big Sky,Away,12,Ashlynn Archer,MB,4,5,4,19,0.053,1,0,1,0,0,0,1,7,0,9.5,1,0,2,6,8
 2024-2025,2024-09-28,6328252,Sacramento St.,Big Sky,Eastern Wash.,Big Sky,Away,11,Ellie Tisko,OH,4,10,4,21,0.286,0,1,0,3,0,0,0,2,0,12,0,0,3,22,2
-2024-2025,2024-09-28,6328253,Assumption,NE10,Stonehill,NEC,Home,16,Carly Goodhue,OH,3,8,3,24,0.208,0,0,0,2,15,0,0,1,0,8.5,0,0,2,0,1
-2024-2025,2024-09-28,6328253,Assumption,NE10,Stonehill,NEC,Home,19,Mikayla Bush,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6328253,Assumption,NE10,Stonehill,NEC,Home,12,Alexis Distasio,OH,3,6,3,27,0.111,1,0,1,5,20,1,0,1,0,6.5,0,0,6,12,1
-2024-2025,2024-09-28,6328253,Assumption,NE10,Stonehill,NEC,Home,13,Allie Barton,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6328253,Assumption,NE10,Stonehill,NEC,Home,14,Tatiana Calderin,DS,3,0,0,0,.000,0,0,1,3,8,1,0,0,0,0,0,0,2,8,0
-2024-2025,2024-09-28,6328253,Assumption,NE10,Stonehill,NEC,Home,10,Lily Leduc,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6328253,Assumption,NE10,Stonehill,NEC,Home,11,Molly Cummings,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6328253,Assumption,NE10,Stonehill,NEC,Home,1,Josephine Gellis,MB,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6328253,Assumption,NE10,Stonehill,NEC,Home,2,Anna Dean,OH,3,6,2,28,0.143,0,0,0,2,0,0,0,1,0,6.5,0,0,0,0,1
-2024-2025,2024-09-28,6328253,Assumption,NE10,Stonehill,NEC,Home,3,Barbara Illig,L/DS,3,0,1,4,-0.250,4,0,1,17,18,1,0,0,0,0,0,0,15,11,0
-2024-2025,2024-09-28,6328253,Assumption,NE10,Stonehill,NEC,Home,23,Christine Mbachi,OH,3,6,1,13,0.385,0,0,0,1,0,0,0,1,0,6.5,0,0,1,1,1
-2024-2025,2024-09-28,6328253,Assumption,NE10,Stonehill,NEC,Home,4,Madison Lupino,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6328253,Assumption,NE10,Stonehill,NEC,Home,5,Marissa Krawczyk,S,3,0,0,1,.000,15,0,0,5,0,0,0,0,0,0,0,0,51,12,0
-2024-2025,2024-09-28,6328253,Assumption,NE10,Stonehill,NEC,Home,6,Sophia Kane,MB,3,2,1,10,0.100,0,1,0,2,1,1,2,2,1,6,0,0,0,10,4
-2024-2025,2024-09-28,6328253,Assumption,NE10,Stonehill,NEC,Home,7,Natalie Brojek,S,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6328253,Assumption,NE10,Stonehill,NEC,Home,8,Taryn Crowley,DS,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6328253,Assumption,NE10,Stonehill,NEC,Home,9,Ava Fernandes,DS,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6328253,Assumption,NE10,Stonehill,NEC,Home,20,Kaitlyn Mongomery,MB,3,4,1,8,0.375,0,0,0,1,0,0,0,2,0,5,0,0,1,0,2
-2024-2025,2024-09-28,6328253,Assumption,NE10,Stonehill,NEC,Home,21,Brennah Abilheira-cargill,DS,1,0,0,0,.000,0,0,0,2,2,0,0,0,0,0,0,0,1,1,0
-2024-2025,2024-09-28,6328253,Assumption,NE10,Stonehill,NEC,Home,22,Marisa Billone,S,3,0,0,1,.000,11,2,1,3,1,0,0,0,1,2,0,1,38,10,0
-2024-2025,2024-09-28,6328253,Stonehill,NEC,Assumption,NE10,Away,1,Mia Berardino,OH,3,11,3,26,0.308,0,1,1,18,14,0,0,0,0,12,0,0,2,11,0
-2024-2025,2024-09-28,6328253,Stonehill,NEC,Assumption,NE10,Away,3,Kayla Wheaton,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6328253,Stonehill,NEC,Assumption,NE10,Away,2,Paloma Gonzalez jaramillo,MB,3,9,4,20,0.250,0,0,0,4,0,0,0,2,0,10,0,0,1,2,2
-2024-2025,2024-09-28,6328253,Stonehill,NEC,Assumption,NE10,Away,7,Sammy Franco,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6328253,Stonehill,NEC,Assumption,NE10,Away,6,Leah Michalowski,MB,2,3,0,4,0.750,0,0,0,1,0,0,2,0,0,5,0,0,0,0,2
-2024-2025,2024-09-28,6328253,Stonehill,NEC,Assumption,NE10,Away,9,Gabi Polishuk,OH,3,2,0,4,0.500,0,1,1,10,5,0,0,0,0,3,0,0,0,15,0
-2024-2025,2024-09-28,6328253,Stonehill,NEC,Assumption,NE10,Away,8,Bianca Fitch,DS,3,0,0,2,.000,3,0,0,2,32,2,0,0,0,0,0,0,7,0,0
-2024-2025,2024-09-28,6328253,Stonehill,NEC,Assumption,NE10,Away,13,Amaya Parnell,S,3,2,0,3,0.667,26,0,3,5,0,0,0,0,0,2,0,1,48,12,0
-2024-2025,2024-09-28,6328253,Stonehill,NEC,Assumption,NE10,Away,11,Alayna Rooney,L,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6328253,Stonehill,NEC,Assumption,NE10,Away,12,Isabella Arcidiacono,S,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6328253,Stonehill,NEC,Assumption,NE10,Away,19,Abby Farrell,MB,3,10,0,13,0.769,1,0,3,2,0,0,2,3,0,13.5,0,0,1,9,5
-2024-2025,2024-09-28,6328253,Stonehill,NEC,Assumption,NE10,Away,17,Georgia Murphy,DS,2,8,5,24,0.125,0,0,0,3,6,0,0,0,0,8,0,0,4,0,0
-2024-2025,2024-09-28,6328253,Stonehill,NEC,Assumption,NE10,Away,18,Emma Graves,OH,3,12,2,23,0.435,1,0,0,3,0,0,2,1,1,14.5,0,0,1,0,3
-2024-2025,2024-09-28,6328253,Stonehill,NEC,Assumption,NE10,Away,15,Jess Barrett,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6328253,Stonehill,NEC,Assumption,NE10,Away,24,Annabelle Svenson,MB,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6328253,Stonehill,NEC,Assumption,NE10,Away,25,Lindsey Peirson,MB,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6328253,Stonehill,NEC,Assumption,NE10,Away,22,Kaitlyn Watson,MB,1,0,0,0,.000,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0
-2024-2025,2024-09-28,6328253,Stonehill,NEC,Assumption,NE10,Away,23,Sydney Javes,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6328253,Stonehill,NEC,Assumption,NE10,Away,20,Maddie Schamaun,S,3,0,0,1,.000,21,3,0,4,0,0,0,0,0,3,1,1,52,15,0
-2024-2025,2024-09-28,6328253,Stonehill,NEC,Assumption,NE10,Away,21,Sarah Frager,L/DS,3,0,0,0,.000,2,2,4,6,3,0,0,0,0,2,0,0,6,16,0
 2024-2025,2024-09-28,6328254,Delaware,CAA,Towson,CAA,Home,19,Emily Chrysogelos,OH,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
 2024-2025,2024-09-28,6328254,Delaware,CAA,Towson,CAA,Home,21,Hannah Wright,L,4,0,0,0,.000,1,1,0,8,4,0,0,0,0,1,0,0,4,16,0
 2024-2025,2024-09-28,6328254,Delaware,CAA,Towson,CAA,Home,20,Savannah Seemans,OH,4,13,5,38,0.211,1,4,4,11,23,0,0,3,0,18.5,0,0,5,23,3
@@ -88657,38 +88386,6 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2024-2025,2024-10-09,6328775,Bethune-Cookman,SWAC,Florida A&M,SWAC,Away,19,Nola Hemphill,S,3,0,0,0,.000,9,0,0,2,0,0,0,0,0,0,0,0,37,6,0
 2024-2025,2024-10-09,6328775,Bethune-Cookman,SWAC,Florida A&M,SWAC,Away,18,Jasmine Robinson,OH,3,8,9,29,-0.034,0,1,1,4,10,0,0,2,0,10,0,0,0,9,2
 2024-2025,2024-10-09,6328775,Bethune-Cookman,SWAC,Florida A&M,SWAC,Away,9,Aj Simmons,MB,3,7,4,18,0.167,0,0,0,0,0,0,0,1,0,7.5,0,0,0,0,1
-2024-2025,2024-10-09,6328776,Allen,SIAC,South Carolina St.,MEAC,Home,1,Janae Greene,DS,4,0,0,1,.000,0,0,0,5,11,1,0,0,0,0,0,0,0,0,0
-2024-2025,2024-10-09,6328776,Allen,SIAC,South Carolina St.,MEAC,Home,24,Dazzalon Larkins,OH,4,6,7,33,-0.030,3,0,2,5,12,2,0,0,0,6,0,0,14,7,0
-2024-2025,2024-10-09,6328776,Allen,SIAC,South Carolina St.,MEAC,Home,4,Amiri Mason,DS,3,0,0,0,.000,0,0,0,2,5,0,0,0,0,0,0,0,0,1,0
-2024-2025,2024-10-09,6328776,Allen,SIAC,South Carolina St.,MEAC,Home,5,Myra Lopez,DS,4,0,0,2,.000,3,2,2,15,26,0,0,0,0,2,0,0,14,15,0
-2024-2025,2024-10-09,6328776,Allen,SIAC,South Carolina St.,MEAC,Home,3,Jaida Hansen,OH,1,0,0,1,.000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-2024-2025,2024-10-09,6328776,Allen,SIAC,South Carolina St.,MEAC,Home,23,Sydney Ross,OH,4,6,6,22,.000,0,0,0,3,0,0,1,2,0,8,0,0,0,0,3
-2024-2025,2024-10-09,6328776,Allen,SIAC,South Carolina St.,MEAC,Home,22,Taylor Lawrence,MB,4,3,2,20,0.050,0,0,1,3,0,0,3,2,0,7,0,0,1,17,5
-2024-2025,2024-10-09,6328776,Allen,SIAC,South Carolina St.,MEAC,Home,21,Kaiya Walker,MB,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-10-09,6328776,Allen,SIAC,South Carolina St.,MEAC,Home,20,Camile Patterson,MB,1,0,0,2,.000,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
-2024-2025,2024-10-09,6328776,Allen,SIAC,South Carolina St.,MEAC,Home,8,Shelly Terry,MB,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-10-09,6328776,Allen,SIAC,South Carolina St.,MEAC,Home,6,Jani Smith,MB,4,2,1,6,0.167,0,0,0,0,0,0,1,0,0,3,0,0,1,0,1
-2024-2025,2024-10-09,6328776,Allen,SIAC,South Carolina St.,MEAC,Home,7,Jaida Jones,DS,4,0,0,0,.000,1,0,0,4,17,3,0,0,0,0,0,0,2,7,0
-2024-2025,2024-10-09,6328776,Allen,SIAC,South Carolina St.,MEAC,Home,16,Tahmiah Lawson,OH,1,0,2,4,-0.500,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0
-2024-2025,2024-10-09,6328776,Allen,SIAC,South Carolina St.,MEAC,Home,15,Dacia Lowery,OH,3,3,2,13,0.077,0,0,0,1,0,0,0,0,0,3,0,0,0,0,0
-2024-2025,2024-10-09,6328776,Allen,SIAC,South Carolina St.,MEAC,Home,14,Maliyah Spencer,OH,4,8,5,21,0.143,0,1,1,4,9,1,1,0,0,10,0,1,3,10,1
-2024-2025,2024-10-09,6328776,Allen,SIAC,South Carolina St.,MEAC,Home,13,Aiyala Williams,DS,1,0,0,0,.000,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
-2024-2025,2024-10-09,6328776,Allen,SIAC,South Carolina St.,MEAC,Home,19,Sa'nyah Daly,S,3,0,0,1,.000,6,0,0,5,0,0,0,0,0,0,0,1,37,6,0
-2024-2025,2024-10-09,6328776,Allen,SIAC,South Carolina St.,MEAC,Home,18,Zyara Harrison,S,4,3,0,7,0.429,12,0,1,2,0,0,0,0,0,3,0,1,57,13,0
-2024-2025,2024-10-09,6328776,South Carolina St.,MEAC,Allen,SIAC,Away,13,Kaia Barnett,S,4,2,0,5,0.400,30,1,2,6,2,0,0,0,0,3,0,1,76,11,0
-2024-2025,2024-10-09,6328776,South Carolina St.,MEAC,Allen,SIAC,Away,16,Mckinley Roach,MB,3,5,5,17,.000,2,0,0,0,0,0,3,2,0,9,0,0,3,0,5
-2024-2025,2024-10-09,6328776,South Carolina St.,MEAC,Allen,SIAC,Away,17,Trinity Stevenson,L/DS,4,0,0,2,.000,2,3,0,9,10,0,0,0,0,3,0,0,5,20,0
-2024-2025,2024-10-09,6328776,South Carolina St.,MEAC,Allen,SIAC,Away,18,Jara Davis,S,4,0,0,0,.000,0,2,4,12,10,0,0,0,0,2,0,0,2,20,0
-2024-2025,2024-10-09,6328776,South Carolina St.,MEAC,Allen,SIAC,Away,19,Shamira Andrews,OH,4,3,3,11,.000,0,0,0,0,0,0,0,1,0,3.5,1,0,3,0,1
-2024-2025,2024-10-09,6328776,South Carolina St.,MEAC,Allen,SIAC,Away,1,Kiyah Felder,OH,4,21,7,49,0.286,2,0,3,12,11,1,1,3,0,23.5,0,0,5,13,4
-2024-2025,2024-10-09,6328776,South Carolina St.,MEAC,Allen,SIAC,Away,5,Hedia Lewis,OH,2,5,2,10,0.300,0,0,1,0,0,0,0,0,0,5,0,0,0,1,0
-2024-2025,2024-10-09,6328776,South Carolina St.,MEAC,Allen,SIAC,Away,4,Hailey Harris,MB,4,11,2,21,0.429,1,0,1,3,2,0,0,2,0,12,0,0,1,11,2
-2024-2025,2024-10-09,6328776,South Carolina St.,MEAC,Allen,SIAC,Away,10,Robyn White,OH,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-10-09,6328776,South Carolina St.,MEAC,Allen,SIAC,Away,3,Xaria Pickett,OH,3,7,4,18,0.167,0,0,0,1,6,1,1,0,0,8,0,0,1,1,1
-2024-2025,2024-10-09,6328776,South Carolina St.,MEAC,Allen,SIAC,Away,11,Alissa Williams,S,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-10-09,6328776,South Carolina St.,MEAC,Allen,SIAC,Away,2,Miya Benson,L/DS,4,0,0,1,.000,4,0,3,20,28,1,0,0,0,0,0,0,11,17,0
-2024-2025,2024-10-09,6328776,South Carolina St.,MEAC,Allen,SIAC,Away,7,Taelyn Graham,MB,2,0,0,2,.000,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0
-2024-2025,2024-10-09,6328776,South Carolina St.,MEAC,Allen,SIAC,Away,6,Macey Mccoy,S,2,1,0,4,0.250,7,1,1,4,0,0,0,0,0,2,1,0,27,2,0
 2024-2025,2024-10-09,6328777,Ole Miss,SEC,Texas A&M,SEC,Home,22,Sommer Daniel,S,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
 2024-2025,2024-10-09,6328777,Ole Miss,SEC,Texas A&M,SEC,Home,1,Bailee Middleton,L,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
 2024-2025,2024-10-09,6328777,Ole Miss,SEC,Texas A&M,SEC,Home,2,Cammy Niesen,DS,4,0,0,0,.000,1,0,1,15,25,0,0,0,0,0,0,0,12,14,0
@@ -120777,29 +120474,6 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2024-2025,2024-10-30,6329762,Notre Dame,ACC,Louisville,ACC,Away,11,Mallory Bohl,MB,1,1,0,1,1.000,0,0,0,0,0,0,1,0,0,2,0,0,0,0,1
 2024-2025,2024-10-30,6329762,Notre Dame,ACC,Louisville,ACC,Away,33,Grace Langer,MB,3,0,0,3,.000,0,0,0,0,0,0,0,3,0,1.5,0,0,2,0,3
 2024-2025,2024-10-30,6329762,Notre Dame,ACC,Louisville,ACC,Away,12,Sydney Palazzolo,OH,3,3,2,22,0.045,2,2,2,1,13,0,0,1,0,5.5,0,0,2,11,1
-2024-2025,2024-10-31,6329763,Dillard,NA,Southern U.,SWAC,Home,20,nya St. cyr,N,3,3,1,6,0.333,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4
-2024-2025,2024-10-31,6329763,Dillard,NA,Southern U.,SWAC,Home,16,sara Da silva,N,4,11,5,21,0.286,0,0,0,1,12,0,0,2,0,0,0,0,2,0,2
-2024-2025,2024-10-31,6329763,Dillard,NA,Southern U.,SWAC,Home,15,tyramae Fautanu,N,4,0,1,3,-0.333,12,0,0,4,1,0,0,0,0,0,0,0,39,12,0
-2024-2025,2024-10-31,6329763,Dillard,NA,Southern U.,SWAC,Home,14,vanae Sapp,N,4,5,3,23,0.087,0,2,2,6,20,1,0,1,0,0,1,0,4,18,1
-2024-2025,2024-10-31,6329763,Dillard,NA,Southern U.,SWAC,Home,13,kadence Bubsy,,4,0,0,0,.000,0,1,0,2,0,0,0,0,0,0,0,0,0,14,0
-2024-2025,2024-10-31,6329763,Dillard,NA,Southern U.,SWAC,Home,2,trenity Pender,N,3,0,0,1,.000,1,1,0,14,23,2,0,0,0,0,0,0,4,17,0
-2024-2025,2024-10-31,6329763,Dillard,NA,Southern U.,SWAC,Home,3,sarai Rogers,N,3,4,2,10,0.200,0,0,0,0,0,0,0,2,1,0,0,0,1,0,2
-2024-2025,2024-10-31,6329763,Dillard,NA,Southern U.,SWAC,Home,4,cadence Thomas,N,4,12,3,23,0.391,0,0,1,1,3,0,1,1,0,0,0,0,0,2,2
-2024-2025,2024-10-31,6329763,Dillard,NA,Southern U.,SWAC,Home,6,nanyelis Moreno,,4,3,1,9,0.222,29,2,2,6,0,0,0,2,0,0,0,0,66,18,2
-2024-2025,2024-10-31,6329763,Dillard,NA,Southern U.,SWAC,Home,7,gabrielle Washington,N,4,6,2,18,0.222,0,0,0,2,0,0,1,8,0,0,0,0,0,0,9
-2024-2025,2024-10-31,6329763,Dillard,NA,Southern U.,SWAC,Home,8,neveah Bax,,3,2,2,5,.000,0,0,3,2,6,0,0,0,0,0,0,0,1,5,0
-2024-2025,2024-10-31,6329763,Dillard,NA,Southern U.,SWAC,Home,1,jasmyne Mumphrey,N,4,0,1,5,-0.200,1,0,0,6,19,1,0,0,0,0,0,0,3,11,0
-2024-2025,2024-10-31,6329763,Southern U.,SWAC,Dillard,NA,Away,17,alicia Hearn,MB,4,18,4,26,0.538,0,1,1,3,3,0,0,2,1,0,0,0,1,12,2
-2024-2025,2024-10-31,6329763,Southern U.,SWAC,Dillard,NA,Away,15,marian Attaway,OH,4,5,3,17,0.118,1,0,1,6,15,0,0,0,0,0,0,0,2,16,0
-2024-2025,2024-10-31,6329763,Southern U.,SWAC,Dillard,NA,Away,4,elise Doomes,OH,1,2,0,6,0.333,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0
-2024-2025,2024-10-31,6329763,Southern U.,SWAC,Dillard,NA,Away,3,zaria Nelson,OH,4,6,5,17,0.059,1,0,0,0,1,1,0,1,0,0,0,0,2,0,1
-2024-2025,2024-10-31,6329763,Southern U.,SWAC,Dillard,NA,Away,19,najah Harris,DS,4,0,0,0,.000,3,1,2,22,35,2,0,0,0,0,0,0,10,24,0
-2024-2025,2024-10-31,6329763,Southern U.,SWAC,Dillard,NA,Away,8,jordan Felix,S,4,9,5,23,0.174,8,0,2,8,13,1,0,0,0,0,0,0,19,9,0
-2024-2025,2024-10-31,6329763,Southern U.,SWAC,Dillard,NA,Away,6,iyanah Taylor,S,4,2,1,4,0.250,42,0,4,5,1,0,0,2,0,0,0,1,96,15,2
-2024-2025,2024-10-31,6329763,Southern U.,SWAC,Dillard,NA,Away,12,bailee St. romain,OH,2,3,3,12,.000,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0
-2024-2025,2024-10-31,6329763,Southern U.,SWAC,Dillard,NA,Away,11,tamara Chavez,OH,4,12,5,23,0.304,0,4,3,3,6,0,0,0,0,0,0,0,1,12,0
-2024-2025,2024-10-31,6329763,Southern U.,SWAC,Dillard,NA,Away,22,chanelle Smith,MB,4,7,4,15,0.200,0,0,0,0,1,0,1,1,0,0,0,0,0,0,2
-2024-2025,2024-10-31,6329763,Southern U.,SWAC,Dillard,NA,Away,10,trenity Lundy,L/DS,4,0,0,0,.000,0,0,2,3,11,1,0,0,0,0,0,0,1,13,0
 2024-2025,2024-10-31,6329764,Western Caro.,SoCon,Samford,SoCon,Home,4,Ollie Henderson,L,3,0,0,0,.000,0,2,2,1,0,0,0,0,0,2,0,0,0,14,0
 2024-2025,2024-10-31,6329764,Western Caro.,SoCon,Samford,SoCon,Home,10,Peri Subat,OH,3,5,4,16,0.062,0,0,0,1,0,0,0,1,0,5.5,0,0,0,0,1
 2024-2025,2024-10-31,6329764,Western Caro.,SoCon,Samford,SoCon,Home,5,Courtney Graham,MB,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
@@ -157261,38 +156935,6 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2024-2025,2024-08-31,6343616,UMES,MEAC,Mercyhurst,NEC,Away,1,Valeria Matias,L/DS,3,0,1,4,-0.250,1,1,1,19,18,2,0,0,0,1,0,0,14,11,0
 2024-2025,2024-08-31,6343616,UMES,MEAC,Mercyhurst,NEC,Away,4,Jocelyn Torres,S,3,0,0,1,.000,13,2,1,7,0,0,0,0,0,2,0,3,27,13,0
 2024-2025,2024-08-31,6343616,UMES,MEAC,Mercyhurst,NEC,Away,3,Isil Yilmaz,L,3,0,0,0,.000,2,0,1,3,8,0,0,0,0,0,0,0,5,6,0
-2024-2025,2024-08-31,6343617,Evansville,MVC,P.R.-Rio Piedras,NA,Home,6,Lexi Owen,S,2,0,0,0,.000,2,0,0,1,0,0,0,0,0,0,0,0,4,2,0
-2024-2025,2024-08-31,6343617,Evansville,MVC,P.R.-Rio Piedras,NA,Home,7,Blakeley Freeman,L/DS,4,0,0,0,.000,0,0,0,6,21,2,0,0,0,0,0,0,4,0,0
-2024-2025,2024-08-31,6343617,Evansville,MVC,P.R.-Rio Piedras,NA,Home,8,Josdarilee Caraballo,OH,4,0,0,1,.000,0,0,0,8,8,2,0,0,0,0,0,0,4,0,0
-2024-2025,2024-08-31,6343617,Evansville,MVC,P.R.-Rio Piedras,NA,Home,9,Kora Ruff,S,4,0,0,2,.000,52,0,2,13,0,0,0,2,0,1,0,2,112,19,2
-2024-2025,2024-08-31,6343617,Evansville,MVC,P.R.-Rio Piedras,NA,Home,2,Jenna Heidbreder,OH,2,0,0,0,.000,0,0,0,1,2,0,0,0,0,0,0,0,1,2,0
-2024-2025,2024-08-31,6343617,Evansville,MVC,P.R.-Rio Piedras,NA,Home,3,Maddie Hawkins,DS,4,0,0,0,.000,4,1,2,7,1,0,0,0,0,1,0,0,11,16,0
-2024-2025,2024-08-31,6343617,Evansville,MVC,P.R.-Rio Piedras,NA,Home,4,Sabrina Ripple,MB,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-08-31,6343617,Evansville,MVC,P.R.-Rio Piedras,NA,Home,5,Angelica Gonzalez maltes,OH,4,5,6,24,-0.042,1,0,5,4,10,1,0,4,0,7,0,0,3,8,4
-2024-2025,2024-08-31,6343617,Evansville,MVC,P.R.-Rio Piedras,NA,Home,10,Krystell Pappas,DS,4,0,0,0,.000,0,1,1,1,0,0,0,0,0,1,0,0,0,15,0
-2024-2025,2024-08-31,6343617,Evansville,MVC,P.R.-Rio Piedras,NA,Home,12,Giulia Cardona,OH,4,30,7,58,0.397,0,1,3,16,1,1,0,5,1,33.5,0,0,0,15,5
-2024-2025,2024-08-31,6343617,Evansville,MVC,P.R.-Rio Piedras,NA,Home,1,Melanie Feliciano,OH,4,12,3,40,0.225,0,0,0,13,31,1,0,2,0,13,0,0,3,22,2
-2024-2025,2024-08-31,6343617,Evansville,MVC,P.R.-Rio Piedras,NA,Home,11,Ainoah Cruz,DS,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-08-31,6343617,Evansville,MVC,P.R.-Rio Piedras,NA,Home,14,Chloe Cline,MB,4,8,0,9,0.889,0,0,0,2,0,0,0,3,0,9.5,0,0,0,1,3
-2024-2025,2024-08-31,6343617,Evansville,MVC,P.R.-Rio Piedras,NA,Home,13,Holland Morris,OH,2,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0
-2024-2025,2024-08-31,6343617,Evansville,MVC,P.R.-Rio Piedras,NA,Home,15,Madisyn Steele,MB,4,7,1,13,0.462,0,0,0,1,0,0,1,10,0,13,0,0,2,0,11
-2024-2025,2024-08-31,6343617,Evansville,MVC,P.R.-Rio Piedras,NA,Home,17,Carlotta Pascual centelles,OH,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-08-31,6343617,P.R.-Rio Piedras,NA,Evansville,MVC,Away,14,Leilanys Villanueva,OH,2,8,4,21,0.190,0,0,1,12,18,1,0,0,0,8,0,0,0,6,0
-2024-2025,2024-08-31,6343617,P.R.-Rio Piedras,NA,Evansville,MVC,Away,13,Maria Vazquez,OH,4,6,6,29,.000,0,1,1,2,0,0,1,1,0,8.5,0,0,4,8,2
-2024-2025,2024-08-31,6343617,P.R.-Rio Piedras,NA,Evansville,MVC,Away,16,Alondra Diaz,MB,3,2,1,9,0.111,0,0,0,0,0,0,0,0,0,2,0,0,4,0,0
-2024-2025,2024-08-31,6343617,P.R.-Rio Piedras,NA,Evansville,MVC,Away,17,Devymar Martinez,S,3,1,0,1,1.000,5,0,0,4,0,0,0,0,0,1,0,0,25,4,0
-2024-2025,2024-08-31,6343617,P.R.-Rio Piedras,NA,Evansville,MVC,Away,7,Alliani Ramos,MB,2,0,1,3,-0.333,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
-2024-2025,2024-08-31,6343617,P.R.-Rio Piedras,NA,Evansville,MVC,Away,6,Andrea Perez,L,3,0,0,2,.000,4,1,1,5,6,0,0,0,0,1,0,0,7,14,0
-2024-2025,2024-08-31,6343617,P.R.-Rio Piedras,NA,Evansville,MVC,Away,10,Richmillie Del valle,MB,3,6,4,20,0.100,0,0,0,2,0,0,0,2,0,7,0,0,4,1,2
-2024-2025,2024-08-31,6343617,P.R.-Rio Piedras,NA,Evansville,MVC,Away,12,Kritzia Diaz,OH,2,7,2,16,0.312,0,0,2,5,13,1,0,0,0,7,0,0,3,7,0
-2024-2025,2024-08-31,6343617,P.R.-Rio Piedras,NA,Evansville,MVC,Away,11,Fabiola Hermana,OH,2,3,1,11,0.182,0,1,0,2,12,0,0,0,0,4,0,1,1,4,0
-2024-2025,2024-08-31,6343617,P.R.-Rio Piedras,NA,Evansville,MVC,Away,1,Jailyanis Mateo,S,4,1,2,5,-0.200,10,0,1,2,0,0,0,0,0,1,0,0,23,6,0
-2024-2025,2024-08-31,6343617,P.R.-Rio Piedras,NA,Evansville,MVC,Away,5,Natalia Ortiz,OH,4,8,3,27,0.185,0,2,1,6,17,1,0,1,0,10.5,0,0,0,13,1
-2024-2025,2024-08-31,6343617,P.R.-Rio Piedras,NA,Evansville,MVC,Away,4,Yoma Garcia,L,4,0,0,0,.000,2,2,3,5,13,0,0,0,0,2,0,0,6,14,0
-2024-2025,2024-08-31,6343617,P.R.-Rio Piedras,NA,Evansville,MVC,Away,3,Gabriela Gonzalez,OH,2,1,1,4,.000,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0
-2024-2025,2024-08-31,6343617,P.R.-Rio Piedras,NA,Evansville,MVC,Away,2,Mia Ocasio,S,4,1,0,1,1.000,15,0,0,6,0,0,0,0,0,1,0,0,49,3,0
-2024-2025,2024-08-31,6343617,P.R.-Rio Piedras,NA,Evansville,MVC,Away,20,Itzel Monsegur,S,1,0,0,0,.000,2,0,0,3,0,0,0,0,0,0,0,0,14,2,0
-2024-2025,2024-08-31,6343617,P.R.-Rio Piedras,NA,Evansville,MVC,Away,22,Alexandra Calderon,L,2,0,0,0,.000,2,0,0,6,8,0,0,0,0,0,0,0,8,2,0
 2024-2025,2024-09-07,6343627,Louisiana Tech,CUSA,Rutgers,Big Ten,Home,21,Meghan Scharpenberg,S,3,0,0,0,.000,12,0,1,7,2,0,0,0,0,0,0,0,41,11,0
 2024-2025,2024-09-07,6343627,Louisiana Tech,CUSA,Rutgers,Big Ten,Home,20,Megan Cooley,OH,2,0,0,6,.000,0,0,0,4,8,0,0,1,0,0.5,0,0,0,1,1
 2024-2025,2024-09-07,6343627,Louisiana Tech,CUSA,Rutgers,Big Ten,Home,11,Grace Luevanos,OH,2,0,3,7,-0.429,0,0,1,3,6,0,0,1,0,0.5,0,0,1,6,1
@@ -161683,45 +161325,6 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2024-2025,2024-09-13,6344023,UIW,Southland,McNeese,Southland,Away,12,Sofia Grimm,OPP,4,2,2,10,.000,0,0,0,2,0,0,0,0,0,2,0,0,3,0,0
 2024-2025,2024-09-13,6344023,UIW,Southland,McNeese,Southland,Away,13,Gabby Fish,O,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
 2024-2025,2024-09-13,6344023,UIW,Southland,McNeese,Southland,Away,10,Karli Krueger,OH,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6344063,Assumption,NE10,Stonehill,NEC,Home,16,Carly Goodhue,OH,4,4,1,18,0.167,0,0,1,0,11,1,1,1,0,5.5,0,0,1,3,2
-2024-2025,2024-09-28,6344063,Assumption,NE10,Stonehill,NEC,Home,19,Mikayla Bush,OH,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6344063,Assumption,NE10,Stonehill,NEC,Home,12,Alexis Distasio,OH,4,8,3,22,0.227,1,3,0,6,17,4,0,2,0,12,0,0,4,13,2
-2024-2025,2024-09-28,6344063,Assumption,NE10,Stonehill,NEC,Home,13,Allie Barton,OH,1,0,0,2,.000,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
-2024-2025,2024-09-28,6344063,Assumption,NE10,Stonehill,NEC,Home,14,Tatiana Calderin,DS,1,0,0,0,.000,0,1,0,0,4,0,0,0,0,1,0,0,0,6,0
-2024-2025,2024-09-28,6344063,Assumption,NE10,Stonehill,NEC,Home,10,Lily Leduc,OH,4,8,2,13,0.462,0,0,0,0,11,1,0,2,0,9,0,0,1,0,2
-2024-2025,2024-09-28,6344063,Assumption,NE10,Stonehill,NEC,Home,11,Molly Cummings,OH,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6344063,Assumption,NE10,Stonehill,NEC,Home,2,Anna Dean,OH,5,10,3,27,0.259,0,0,0,2,1,0,1,0,0,11,0,0,3,0,1
-2024-2025,2024-09-28,6344063,Assumption,NE10,Stonehill,NEC,Home,3,Barbara Illig,L/DS,5,2,1,9,0.111,4,1,2,29,30,1,0,0,0,3,0,0,15,19,0
-2024-2025,2024-09-28,6344063,Assumption,NE10,Stonehill,NEC,Home,23,Christine Mbachi,OH,5,1,1,9,.000,1,0,0,0,0,0,0,1,1,1.5,0,0,1,0,1
-2024-2025,2024-09-28,6344063,Assumption,NE10,Stonehill,NEC,Home,4,Madison Lupino,OH,4,0,2,2,-1.000,0,0,1,1,0,0,0,1,0,0.5,0,0,0,3,1
-2024-2025,2024-09-28,6344063,Assumption,NE10,Stonehill,NEC,Home,5,Marissa Krawczyk,S,5,0,0,2,.000,25,2,1,3,0,0,0,0,0,2,0,1,74,16,0
-2024-2025,2024-09-28,6344063,Assumption,NE10,Stonehill,NEC,Home,6,Sophia Kane,MB,4,3,1,8,0.250,0,0,1,1,0,0,0,2,1,4,0,0,0,7,2
-2024-2025,2024-09-28,6344063,Assumption,NE10,Stonehill,NEC,Home,7,Natalie Brojek,S,5,0,0,0,.000,9,2,2,3,0,0,0,0,0,2,0,1,25,12,0
-2024-2025,2024-09-28,6344063,Assumption,NE10,Stonehill,NEC,Home,8,Taryn Crowley,DS,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6344063,Assumption,NE10,Stonehill,NEC,Home,9,Ava Fernandes,DS,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6344063,Assumption,NE10,Stonehill,NEC,Home,20,Kaitlyn Mongomery,MB,5,8,2,16,0.375,0,0,0,0,0,0,3,3,0,12.5,0,0,0,0,6
-2024-2025,2024-09-28,6344063,Assumption,NE10,Stonehill,NEC,Home,21,Brennah Abilheira-cargill,DS,4,1,0,2,0.500,1,2,3,6,10,1,0,0,0,3,0,0,3,18,0
-2024-2025,2024-09-28,6344063,Assumption,NE10,Stonehill,NEC,Home,22,Marisa Billone,S,1,0,0,0,.000,3,0,0,1,0,0,0,0,0,0,0,0,7,2,0
-2024-2025,2024-09-28,6344063,Stonehill,NEC,Assumption,NE10,Away,1,Mia Berardino,OH,4,12,7,30,0.167,0,3,3,15,20,1,1,0,0,16,0,0,0,23,1
-2024-2025,2024-09-28,6344063,Stonehill,NEC,Assumption,NE10,Away,3,Kayla Wheaton,OH,1,0,2,3,-0.667,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-2024-2025,2024-09-28,6344063,Stonehill,NEC,Assumption,NE10,Away,2,Paloma Gonzalez jaramillo,MB,4,13,5,27,0.296,0,0,0,5,8,2,0,0,1,13,0,0,1,0,0
-2024-2025,2024-09-28,6344063,Stonehill,NEC,Assumption,NE10,Away,7,Sammy Franco,OH,5,5,3,12,0.167,0,0,0,1,0,0,0,0,1,5,0,0,0,0,0
-2024-2025,2024-09-28,6344063,Stonehill,NEC,Assumption,NE10,Away,6,Leah Michalowski,MB,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6344063,Stonehill,NEC,Assumption,NE10,Away,9,Gabi Polishuk,OH,5,0,0,0,.000,1,1,1,3,10,0,0,0,0,1,0,0,3,12,0
-2024-2025,2024-09-28,6344063,Stonehill,NEC,Assumption,NE10,Away,8,Bianca Fitch,DS,1,0,0,0,.000,1,0,0,1,8,1,0,0,0,0,0,0,1,0,0
-2024-2025,2024-09-28,6344063,Stonehill,NEC,Assumption,NE10,Away,13,Amaya Parnell,S,5,0,0,0,.000,21,1,3,5,0,0,0,0,0,1,0,1,47,15,0
-2024-2025,2024-09-28,6344063,Stonehill,NEC,Assumption,NE10,Away,11,Alayna Rooney,L,4,0,0,0,.000,0,0,0,3,13,1,0,0,0,0,0,0,3,0,0
-2024-2025,2024-09-28,6344063,Stonehill,NEC,Assumption,NE10,Away,12,Isabella Arcidiacono,S,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6344063,Stonehill,NEC,Assumption,NE10,Away,19,Abby Farrell,MB,5,10,1,17,0.529,0,2,2,1,0,0,2,0,0,14,0,0,1,13,2
-2024-2025,2024-09-28,6344063,Stonehill,NEC,Assumption,NE10,Away,17,Georgia Murphy,DS,2,1,1,8,.000,0,0,1,4,6,0,0,0,0,1,0,0,0,4,0
-2024-2025,2024-09-28,6344063,Stonehill,NEC,Assumption,NE10,Away,18,Emma Graves,OH,4,13,5,31,0.258,0,0,0,3,0,0,1,1,1,14.5,0,0,2,0,2
-2024-2025,2024-09-28,6344063,Stonehill,NEC,Assumption,NE10,Away,15,Jess Barrett,OH,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6344063,Stonehill,NEC,Assumption,NE10,Away,24,Annabelle Svenson,MB,5,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-28,6344063,Stonehill,NEC,Assumption,NE10,Away,25,Lindsey Peirson,MB,2,0,2,7,-0.286,0,0,0,1,4,0,0,0,0,0,0,0,1,0,0
-2024-2025,2024-09-28,6344063,Stonehill,NEC,Assumption,NE10,Away,22,Kaitlyn Watson,MB,5,6,1,11,0.455,0,0,0,1,0,0,1,1,0,7.5,0,0,2,0,2
-2024-2025,2024-09-28,6344063,Stonehill,NEC,Assumption,NE10,Away,23,Sydney Javes,OH,1,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-2024-2025,2024-09-28,6344063,Stonehill,NEC,Assumption,NE10,Away,20,Maddie Schamaun,S,5,0,0,0,.000,29,2,2,10,0,0,0,0,0,2,0,2,72,14,0
-2024-2025,2024-09-28,6344063,Stonehill,NEC,Assumption,NE10,Away,21,Sarah Frager,L/DS,5,0,0,3,.000,5,2,2,9,13,0,0,0,0,2,0,0,17,20,0
 2024-2025,2024-09-14,6344077,SMU,ACC,Houston,Big 12,Home,31,Maya Tabron,OH,4,14,4,33,0.303,2,1,2,8,14,0,0,3,0,16.5,0,0,4,17,3
 2024-2025,2024-09-14,6344077,SMU,ACC,Houston,Big 12,Home,53,Natalie Perdue,OH,2,0,0,0,.000,0,0,0,0,7,1,0,0,0,0,0,0,0,0,0
 2024-2025,2024-09-14,6344077,SMU,ACC,Houston,Big 12,Home,12,Natalia Newsome,MB,4,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
@@ -161790,31 +161393,6 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2024-2025,2024-09-21,6344119,Rhode Island,Atlantic 10,Villanova,Big East,Away,12,Chloe Abuto,OH,3,4,3,9,0.111,0,0,0,1,1,0,0,4,1,6,0,0,1,0,4
 2024-2025,2024-09-21,6344119,Rhode Island,Atlantic 10,Villanova,Big East,Away,13,Havyn Rolle,OH,3,7,2,13,0.385,1,1,2,3,0,0,0,1,1,8.5,0,0,3,10,1
 2024-2025,2024-09-21,6344119,Rhode Island,Atlantic 10,Villanova,Big East,Away,15,Emma Vente,OH,1,0,2,4,-0.500,0,0,0,1,7,0,0,0,0,0,0,0,1,1,0
-2024-2025,2024-09-17,6344129,Tennessee St.,OVC,Tenn. Southern,NA,Home,13,Gabriella Blevins,MB,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-17,6344129,Tennessee St.,OVC,Tenn. Southern,NA,Home,12,Alizaysha Sopi,OH,3,5,1,10,0.400,0,0,1,6,14,1,0,1,0,5.5,0,0,5,8,1
-2024-2025,2024-09-17,6344129,Tennessee St.,OVC,Tenn. Southern,NA,Home,15,Sagaia Reilly,S,3,0,0,0,.000,9,0,1,2,0,0,0,0,0,0,0,0,34,6,0
-2024-2025,2024-09-17,6344129,Tennessee St.,OVC,Tenn. Southern,NA,Home,14,Storm White,OPP,3,6,0,15,0.400,0,1,2,1,0,0,1,3,0,9.5,0,0,1,12,4
-2024-2025,2024-09-17,6344129,Tennessee St.,OVC,Tenn. Southern,NA,Home,11,Ãzge Tan,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-17,6344129,Tennessee St.,OVC,Tenn. Southern,NA,Home,2,Jayla Holcombe,OH,3,13,1,20,0.600,0,0,0,2,0,0,1,2,0,15,0,0,0,0,3
-2024-2025,2024-09-17,6344129,Tennessee St.,OVC,Tenn. Southern,NA,Home,1,Delaney Sheridan,L,3,0,0,0,.000,4,0,1,12,21,4,0,0,0,0,0,0,8,11,0
-2024-2025,2024-09-17,6344129,Tennessee St.,OVC,Tenn. Southern,NA,Home,16,Maygan Miller-garcia,MB,3,4,2,13,0.154,1,0,0,0,0,0,1,3,0,6.5,0,0,2,0,4
-2024-2025,2024-09-17,6344129,Tennessee St.,OVC,Tenn. Southern,NA,Home,6,Janke Pretorius,S,3,1,0,2,0.500,20,3,2,6,0,0,0,0,0,4,0,0,37,16,0
-2024-2025,2024-09-17,6344129,Tennessee St.,OVC,Tenn. Southern,NA,Home,5,Celestial Miller,OH,3,6,3,18,0.167,2,4,3,8,10,0,0,1,0,10.5,0,0,3,20,1
-2024-2025,2024-09-17,6344129,Tennessee St.,OVC,Tenn. Southern,NA,Home,3,Jazmin Vergara,OH,3,5,2,15,0.200,0,0,0,1,0,0,0,2,0,6,0,0,0,0,2
-2024-2025,2024-09-17,6344129,Tennessee St.,OVC,Tenn. Southern,NA,Home,8,Melae Lacy,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-17,6344129,Tenn. Southern,NA,Tennessee St.,OVC,Away,9,Nathaly Taylor,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-17,6344129,Tenn. Southern,NA,Tennessee St.,OVC,Away,8,Morgan Avrit,OH,3,9,8,26,0.038,0,1,1,3,15,1,1,0,0,11,0,0,4,9,1
-2024-2025,2024-09-17,6344129,Tenn. Southern,NA,Tennessee St.,OVC,Away,10,Laura Howell,S,3,1,0,3,0.333,18,1,1,5,0,0,0,3,0,3.5,0,1,71,9,3
-2024-2025,2024-09-17,6344129,Tenn. Southern,NA,Tennessee St.,OVC,Away,13,Olivia Ward,MH,3,2,4,12,-0.167,0,0,1,1,1,0,0,4,0,4,0,0,2,4,4
-2024-2025,2024-09-17,6344129,Tenn. Southern,NA,Tennessee St.,OVC,Away,37,Madison Farmer,MH,2,1,1,4,.000,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
-2024-2025,2024-09-17,6344129,Tenn. Southern,NA,Tennessee St.,OVC,Away,16,Ashley Cope,DS,1,0,0,0,.000,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0
-2024-2025,2024-09-17,6344129,Tenn. Southern,NA,Tennessee St.,OVC,Away,6,Isabella Garza,DS,3,0,0,1,.000,3,0,0,11,23,3,0,0,0,0,0,0,6,7,0
-2024-2025,2024-09-17,6344129,Tenn. Southern,NA,Tennessee St.,OVC,Away,5,Hannah Oliver,DS,3,1,0,1,1.000,0,0,0,3,5,0,0,0,0,1,0,0,2,0,0
-2024-2025,2024-09-17,6344129,Tenn. Southern,NA,Tennessee St.,OVC,Away,4,Sophia Ortega,OH,3,6,5,25,0.040,1,0,0,5,3,0,0,2,1,7,0,1,2,9,2
-2024-2025,2024-09-17,6344129,Tenn. Southern,NA,Tennessee St.,OVC,Away,3,Emma Beardsley,OH,3,3,1,12,0.167,0,0,0,0,0,0,0,1,0,3.5,0,0,1,0,1
-2024-2025,2024-09-17,6344129,Tenn. Southern,NA,Tennessee St.,OVC,Away,1,Dani Medina,OH,3,0,1,2,-0.500,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-2024-2025,2024-09-17,6344129,Tenn. Southern,NA,Tennessee St.,OVC,Away,21,Caity Griffin,OH,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
-2024-2025,2024-09-17,6344129,Tenn. Southern,NA,Tennessee St.,OVC,Away,23,Emma Price,DS,3,0,1,2,-0.500,0,3,1,6,12,2,0,0,0,3,0,0,1,11,0
 2024-2025,2024-09-21,6344130,Temple,The American,Marist,MAAC,Home,20,Olivia Hummel,OH,3,2,1,4,0.250,0,1,1,3,7,0,0,0,0,3,0,0,1,4,0
 2024-2025,2024-09-21,6344130,Temple,The American,Marist,MAAC,Home,19,Katie Hickey,MB,2,0,0,2,.000,0,0,0,0,0,0,0,4,0,2,0,0,1,0,4
 2024-2025,2024-09-21,6344130,Temple,The American,Marist,MAAC,Home,17,Alyssa Finister,MB,3,4,1,7,0.429,1,1,0,0,0,0,0,3,0,6.5,0,0,1,6,3
@@ -161856,29 +161434,6 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2024-2025,2024-09-21,6344130,Marist,MAAC,Temple,The American,Away,1,Katherine Thompson,L,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
 2024-2025,2024-09-21,6344130,Marist,MAAC,Temple,The American,Away,20,Olivia Hummel,OH,3,2,1,4,0.250,0,1,1,3,7,0,0,0,0,3,0,0,1,4,0
 2024-2025,2024-09-21,6344130,Marist,MAAC,Temple,The American,Away,17,Alyssa Finister,MB,3,4,1,7,0.429,1,1,0,0,0,0,0,3,0,6.5,0,0,1,6,3
-2024-2025,2024-09-25,6348349,Grambling,SWAC,Texas Col.,NA,Home,1,ra'niya Brown,MB,2,2,3,5,-0.200,0,0,0,1,0,0,0,0,1,0,0,0,1,2,0
-2024-2025,2024-09-25,6348349,Grambling,SWAC,Texas Col.,NA,Home,0,kenya Lucas,OH,1,1,1,5,.000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-2024-2025,2024-09-25,6348349,Grambling,SWAC,Texas Col.,NA,Home,9,ana Zink,S,3,2,0,9,0.222,15,0,0,10,0,0,0,0,0,0,0,0,49,13,0
-2024-2025,2024-09-25,6348349,Grambling,SWAC,Texas Col.,NA,Home,18,alyssa Pieh,L/DS,2,0,0,1,.000,0,0,1,1,5,2,0,0,0,0,0,0,0,3,0
-2024-2025,2024-09-25,6348349,Grambling,SWAC,Texas Col.,NA,Home,8,aubreigh Haxton,OH,2,2,1,7,0.143,0,0,0,3,0,0,0,3,1,0,0,0,2,0,3
-2024-2025,2024-09-25,6348349,Grambling,SWAC,Texas Col.,NA,Home,5,dylan Hoskins,L/DS,3,0,0,0,.000,4,2,1,7,12,1,0,0,0,0,0,0,11,8,0
-2024-2025,2024-09-25,6348349,Grambling,SWAC,Texas Col.,NA,Home,6,madison Reagins,OH,2,4,0,14,0.286,0,0,0,2,2,1,0,0,0,0,0,0,2,1,0
-2024-2025,2024-09-25,6348349,Grambling,SWAC,Texas Col.,NA,Home,4,bella Haddad,DS,2,0,0,2,.000,1,0,1,8,8,0,0,0,0,0,0,0,3,4,0
-2024-2025,2024-09-25,6348349,Grambling,SWAC,Texas Col.,NA,Home,10,mil'lanni Marte,L/DS,2,0,0,1,.000,0,1,1,0,4,0,0,0,0,0,0,0,3,6,0
-2024-2025,2024-09-25,6348349,Grambling,SWAC,Texas Col.,NA,Home,11,kenya Sykes,,2,2,0,6,0.333,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1
-2024-2025,2024-09-25,6348349,Grambling,SWAC,Texas Col.,NA,Home,12,kai Williams,OH,2,7,2,18,0.278,2,6,1,2,6,0,0,0,0,0,0,0,5,14,0
-2024-2025,2024-09-25,6348349,Grambling,SWAC,Texas Col.,NA,Home,13,morgan Munro,MB,2,3,1,7,0.286,0,0,1,1,0,0,0,2,0,0,0,0,1,5,2
-2024-2025,2024-09-25,6348349,Grambling,SWAC,Texas Col.,NA,Home,25,jazmine Binion,OH,3,6,4,23,0.087,1,2,0,6,7,0,1,0,0,0,0,0,7,12,1
-2024-2025,2024-09-25,6348349,Grambling,SWAC,Texas Col.,NA,Home,14,leticia Correa,,2,0,0,0,.000,5,0,0,3,0,0,0,0,0,0,0,0,12,6,0
-2024-2025,2024-09-25,6348349,Texas Col.,NA,Grambling,SWAC,Away,3,aaliyah Hale,,3,0,4,9,-0.444,0,0,0,4,5,0,0,0,0,0,0,0,1,0,0
-2024-2025,2024-09-25,6348349,Texas Col.,NA,Grambling,SWAC,Away,2,kristen Stewart,,3,9,6,31,0.097,5,2,1,11,6,0,0,0,0,0,0,0,20,11,0
-2024-2025,2024-09-25,6348349,Texas Col.,NA,Grambling,SWAC,Away,9,destinie Booker,,3,0,0,1,.000,0,0,0,12,35,6,0,0,0,0,0,0,5,5,0
-2024-2025,2024-09-25,6348349,Texas Col.,NA,Grambling,SWAC,Away,8,kiannah Morgan,,3,2,1,4,0.250,1,0,0,0,1,0,0,1,0,0,0,0,1,0,1
-2024-2025,2024-09-25,6348349,Texas Col.,NA,Grambling,SWAC,Away,5,chelsea Johnson,,1,0,1,4,-0.250,0,0,0,1,7,3,0,0,0,0,0,0,1,1,0
-2024-2025,2024-09-25,6348349,Texas Col.,NA,Grambling,SWAC,Away,4,tajvonae Decquir,,3,0,0,8,.000,2,0,0,9,9,0,0,0,0,0,1,0,11,10,0
-2024-2025,2024-09-25,6348349,Texas Col.,NA,Grambling,SWAC,Away,7,ja'mia Hutton,,3,4,2,14,0.143,13,0,0,3,4,1,0,1,0,0,1,4,58,7,1
-2024-2025,2024-09-25,6348349,Texas Col.,NA,Grambling,SWAC,Away,6,a'miya Jordan,,2,4,1,11,0.273,0,0,4,2,0,0,0,0,0,0,0,0,4,5,0
-2024-2025,2024-09-25,6348349,Texas Col.,NA,Grambling,SWAC,Away,14,cadriane Martin,,3,7,8,20,-0.050,1,2,0,6,0,0,0,0,1,0,1,0,5,10,0
 2024-2025,2024-10-05,6348446,Winthrop,Big South,USC Upstate,Big South,Home,5,Paige Bennett,OH,1,4,0,6,0.667,0,0,0,0,0,0,1,0,0,5,0,0,0,0,1
 2024-2025,2024-10-05,6348446,Winthrop,Big South,USC Upstate,Big South,Home,4,Jenna Calloway,DS,1,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
 2024-2025,2024-10-05,6348446,Winthrop,Big South,USC Upstate,Big South,Home,6,Edie Powell,S,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
@@ -161954,32 +161509,6 @@ Season,Date,ContestID,Team,Conference,Opponent Team,Opponent Conference,Location
 2024-2025,2024-10-29,6349053,Radford,Big South,High Point,Big South,Away,24,Aubrey Hatch,OH,3,4,2,16,0.125,0,0,0,0,3,1,0,0,0,4,0,0,3,0,0
 2024-2025,2024-10-29,6349053,Radford,Big South,High Point,Big South,Away,22,Lea Gage,S,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0
 2024-2025,2024-10-29,6349053,Radford,Big South,High Point,Big South,Away,26,Sierra Moore,OH,3,7,4,27,0.111,0,0,2,9,8,1,0,0,0,7,0,0,2,7,0
-2024-2025,2024-10-22,6379985,Southern U.,SWAC,Southern-N.O.,NA,Home,12,Bailee St. romain,OH,3,1,1,5,.000,1,0,0,1,0,0,0,0,0,1,0,0,1,0,0
-2024-2025,2024-10-22,6379985,Southern U.,SWAC,Southern-N.O.,NA,Home,11,Tamara Chavez,OH,2,3,2,8,0.125,0,5,0,4,3,0,0,0,0,8,0,0,0,14,0
-2024-2025,2024-10-22,6379985,Southern U.,SWAC,Southern-N.O.,NA,Home,10,Trenity Lundy,L/DS,2,0,1,1,-1.000,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0
-2024-2025,2024-10-22,6379985,Southern U.,SWAC,Southern-N.O.,NA,Home,17,Alicia Hearn,MB,3,7,3,12,0.333,1,0,0,0,1,0,0,0,0,7,0,1,2,4,0
-2024-2025,2024-10-22,6379985,Southern U.,SWAC,Southern-N.O.,NA,Home,16,Leslie Warren,OH,1,0,0,0,.000,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
-2024-2025,2024-10-22,6379985,Southern U.,SWAC,Southern-N.O.,NA,Home,15,Marian Attaway,OH,3,3,2,8,0.125,1,5,2,5,5,1,0,0,0,8,0,0,3,12,0
-2024-2025,2024-10-22,6379985,Southern U.,SWAC,Southern-N.O.,NA,Home,4,Elise Doomes,OH,1,1,1,4,.000,0,0,0,1,1,0,0,0,0,1,0,0,2,0,0
-2024-2025,2024-10-22,6379985,Southern U.,SWAC,Southern-N.O.,NA,Home,3,Zaria Nelson,OH,2,1,1,3,.000,0,0,0,2,0,0,0,0,0,1,0,0,0,0,0
-2024-2025,2024-10-22,6379985,Southern U.,SWAC,Southern-N.O.,NA,Home,19,Najah Harris,DS,3,1,0,2,0.500,4,4,3,6,16,0,0,0,0,5,0,0,6,18,0
-2024-2025,2024-10-22,6379985,Southern U.,SWAC,Southern-N.O.,NA,Home,1,Kiarra Rosales,L,3,0,0,0,.000,0,1,0,4,7,0,0,0,0,1,0,1,1,11,0
-2024-2025,2024-10-22,6379985,Southern U.,SWAC,Southern-N.O.,NA,Home,8,Jordan Felix,S,3,8,3,12,0.417,14,5,1,3,6,0,0,0,0,13,0,1,38,13,0
-2024-2025,2024-10-22,6379985,Southern U.,SWAC,Southern-N.O.,NA,Home,6,Iyanah Taylor,S,1,0,1,2,-0.500,7,0,0,2,0,0,0,0,0,0,0,1,17,1,0
-2024-2025,2024-10-22,6379985,Southern U.,SWAC,Southern-N.O.,NA,Home,20,Logan Hart,MB,1,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-2024-2025,2024-10-22,6379985,Southern U.,SWAC,Southern-N.O.,NA,Home,22,Chanelle Smith,MB,3,4,3,9,0.111,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0
-2024-2025,2024-10-22,6379985,Southern-N.O.,NA,Southern U.,SWAC,Away,9,U Larry,,3,4,3,8,0.125,1,0,0,0,0,0,0,0,0,4,0,0,2,0,0
-2024-2025,2024-10-22,6379985,Southern-N.O.,NA,Southern U.,SWAC,Away,6,R Mcdowell,,3,1,3,10,-0.200,0,2,1,2,14,0,0,0,0,3,0,0,3,8,0
-2024-2025,2024-10-22,6379985,Southern-N.O.,NA,Southern U.,SWAC,Away,7,T Adkinson,,3,2,7,16,-0.312,0,0,0,2,14,3,0,0,0,2,0,0,1,0,0
-2024-2025,2024-10-22,6379985,Southern-N.O.,NA,Southern U.,SWAC,Away,8,A Jenkins,,1,1,0,1,1.000,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
-2024-2025,2024-10-22,6379985,Southern-N.O.,NA,Southern U.,SWAC,Away,1,M Hudson,,1,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
-2024-2025,2024-10-22,6379985,Southern-N.O.,NA,Southern U.,SWAC,Away,3,J Taylor,,3,1,4,8,-0.375,0,0,0,0,0,0,0,0,0,1,0,0,4,0,0
-2024-2025,2024-10-22,6379985,Southern-N.O.,NA,Southern U.,SWAC,Away,4,A Clark,,3,0,0,1,.000,5,0,0,1,2,1,0,0,0,0,0,0,29,8,0
-2024-2025,2024-10-22,6379985,Southern-N.O.,NA,Southern U.,SWAC,Away,15,J Snowden,,3,1,0,5,0.200,0,1,1,1,8,1,0,0,0,2,0,0,0,8,0
-2024-2025,2024-10-22,6379985,Southern-N.O.,NA,Southern U.,SWAC,Away,11,N Williams,,3,1,2,6,-0.167,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0
-2024-2025,2024-10-22,6379985,Southern-N.O.,NA,Southern U.,SWAC,Away,10,A Harris,,3,0,0,3,.000,2,1,0,8,17,3,0,0,0,1,0,0,3,13,0
-2024-2025,2024-10-22,6379985,Southern-N.O.,NA,Southern U.,SWAC,Away,13,T Bloodworth,,3,0,0,0,.000,5,0,1,2,0,0,0,0,0,0,0,3,20,5,0
-2024-2025,2024-10-22,6379985,Southern-N.O.,NA,Southern U.,SWAC,Away,12,A Obianozie,,3,4,1,6,0.500,0,4,0,2,0,0,0,0,0,8,0,0,2,10,0
 2024-2025,2024-11-06,6380777,Western Caro.,SoCon,Mercer,SoCon,Home,4,Ollie Henderson,L,3,0,0,0,.000,0,0,0,1,7,0,0,0,0,0,0,0,1,7,0
 2024-2025,2024-11-06,6380777,Western Caro.,SoCon,Mercer,SoCon,Home,10,Peri Subat,OH,2,0,1,3,-0.333,0,0,0,1,0,0,0,1,0,0.5,0,0,0,0,1
 2024-2025,2024-11-06,6380777,Western Caro.,SoCon,Mercer,SoCon,Home,5,Courtney Graham,MB,3,0,0,0,.000,0,0,0,0,0,0,0,0,0,0,0,0,,0,0

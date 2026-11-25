@@ -44,16 +44,27 @@ export default function TeamLookup({ route, onGameDeepLink }) {
     return () => { cancelled = true; };
   }, [loading, pgisTables, rpiByYear, receptionQuality, serveQuality, setQuality]);
 
+  // Teams shown in the selector = union of all RPI D1 teams across the
+  // years we hold. A team that a D1 team happened to play but that was
+  // non-D1 (NAIA / D2 / D3 opponent) is purged from the data at
+  // ingestion, but filtering here too keeps the selector honest if any
+  // stray row slips through.
   const teamNames = useMemo(() => {
     if (!index) return [];
+    const rpiTeams = new Set();
+    if (rpiByYear) {
+      for (const y of Object.keys(rpiByYear)) {
+        for (const t of Object.keys(rpiByYear[y] || {})) rpiTeams.add(t);
+      }
+    }
     const names = new Set();
     for (const p of index.players) {
       for (const s of p.seasons) {
-        if (s.team) names.add(s.team);
+        if (s.team && (rpiTeams.size === 0 || rpiTeams.has(s.team))) names.add(s.team);
       }
     }
     return [...names].sort((a, b) => a.localeCompare(b));
-  }, [index]);
+  }, [index, rpiByYear]);
 
   const selectedTeam = route?.team || null;
   const selectedYear = route?.year || null;

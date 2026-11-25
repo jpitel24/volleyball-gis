@@ -642,11 +642,11 @@ function TeamDetail({ teamName, year, index, onGameDeepLink }) {
 
 function RosterStatsSection({ rows, isAllTime }) {
   // Match SeasonLookup's 75% team-games filter so the table doesn't
-  // include cameo appearances. Sort by GIS+/S desc (Seasons tool default).
+  // include cameo appearances. Sort by pGIS desc.
   const qualified = rows
     .filter(r => r.teamGames > 0 && r.games / r.teamGames >= 0.75)
     .slice()
-    .sort((a, b) => (b.gisPlus || 0) - (a.gisPlus || 0));
+    .sort((a, b) => (b.pGIS || 0) - (a.pGIS || 0));
   return (
     <div style={{ marginTop: '1.5rem' }}>
       <h2 style={{ margin: '0 0 0.4rem', fontSize: '1rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--muted)' }}>

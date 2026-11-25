@@ -1,16 +1,39 @@
 import { getSchoolColors, hasSchoolColors } from '../data/schoolColors.js';
+import { getTeamLogo, hasTeamLogo } from '../data/teamLogos.js';
 
 /**
- * TeamChip — a small colored dot showing a school's primary brand color
- * next to its name. Poor-man's team logo: instant visual identity in
- * lists and tables without shipping ~340 logo files.
- *
- * Renders a compact inline-block circle. Skips output entirely when the
- * school isn't in schoolColors.js so we don't paint a misleading neutral
- * dot for programs we don't have data for.
+ * TeamChip — a compact visual identity for a school. Prefers the
+ * actual team logo (downloaded from ESPN via scripts/build_team_logos.py),
+ * and falls back to a colored dot in the school's primary brand color
+ * for the ~13 D1 programs ESPN doesn't carry logos for. Renders nothing
+ * when we have neither, so we never paint a misleading neutral token.
  */
 export default function TeamChip({ team, size = 8, style }) {
-  if (!team || !hasSchoolColors(team)) return null;
+  if (!team) return null;
+
+  const logo = getTeamLogo(team);
+  if (logo) {
+    return (
+      <img
+        src={logo}
+        alt=""
+        aria-hidden="true"
+        className="team-chip team-chip-logo"
+        loading="lazy"
+        style={{
+          width: size,
+          height: size,
+          objectFit: 'contain',
+          verticalAlign: 'middle',
+          marginRight: '0.4em',
+          flexShrink: 0,
+          ...style,
+        }}
+      />
+    );
+  }
+
+  if (!hasSchoolColors(team)) return null;
   const { primary } = getSchoolColors(team);
   return (
     <span

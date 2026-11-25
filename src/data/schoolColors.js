@@ -477,6 +477,10 @@ const SCHOOL_COLORS = {
   'boise state':         { primary: '#0033A0', secondary: '#D64309' },
   'colorado state':      { primary: '#1E4D2B', secondary: '#C8C372' },
   'long beach state':    { primary: '#FFB81C', secondary: '#000000' },
+
+  // ── 2026 D1 newcomers ────────────────────────────────────────────
+  'lsu new orleans':     { primary: '#002F65', secondary: '#A2AAAD' },
+  'west florida':        { primary: '#00205B', secondary: '#71C5E8' },
 };
 
 const DEFAULT_COLORS = { primary: '#1a1a2e', secondary: '#ffffff' };

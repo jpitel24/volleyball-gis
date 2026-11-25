@@ -6,6 +6,7 @@ import { navigate, hrefFor, useLinkHandler } from '../lib/router.js';
 import { useRecent } from '../lib/recentlyViewed.js';
 import { computeAwardsIndex, awardsToLabels } from '../lib/awards.js';
 import TeamChip from './TeamChip.jsx';
+import SeasonStatsTable from './SeasonStatsTable.jsx';
 
 const CURRENT_YEAR = 2026;
 const ALL_YEARS    = [2026, 2025, 2024, 2023, 2022];
@@ -338,6 +339,9 @@ function collectTeamPlayerSeasons(index, teamName) {
       if (!s.games) continue;
       rows.push({
         playerKey: p.key,
+        // Both shapes — SeasonStatsTable reads `name`, the existing
+        // best-player / lineup cards read `playerName`.
+        name:      p.name,
         playerName: p.name,
         year: s.year,
         team: s.team,
@@ -352,6 +356,12 @@ function collectTeamPlayerSeasons(index, teamName) {
         inConf: s.inConf,
         gameLog: s.gameLog || [],
         teamGames: s.teamGames,
+        // PBP-derived quality cells for the roster stats table.
+        recQuality:     s.recQuality,
+        srvQuality:     s.srvQuality,
+        setQuality:     s.setQuality,
+        blockEffPerSet: s.blockEffPerSet,
+        totals:         s.totals,
       });
     }
   }
@@ -615,9 +625,42 @@ function TeamDetail({ teamName, year, index, onGameDeepLink }) {
             best={bestGames}
             onGameDeepLink={onGameDeepLink}
           />
+
+          {/* Full roster stats table — identical layout to the Seasons
+              tool. All-time shows every player-season (so transfers /
+              multi-year starters appear once per year); season view
+              filters to that year only. */}
+          <RosterStatsSection
+            rows={scopedRows}
+            isAllTime={isAllTime}
+          />
         </>
       )}
     </>
+  );
+}
+
+function RosterStatsSection({ rows, isAllTime }) {
+  // Match SeasonLookup's 75% team-games filter so the table doesn't
+  // include cameo appearances. Sort by GIS+/S desc (Seasons tool default).
+  const qualified = rows
+    .filter(r => r.teamGames > 0 && r.games / r.teamGames >= 0.75)
+    .slice()
+    .sort((a, b) => (b.gisPlus || 0) - (a.gisPlus || 0));
+  return (
+    <div style={{ marginTop: '1.5rem' }}>
+      <h2 style={{ margin: '0 0 0.4rem', fontSize: '1rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--muted)' }}>
+        {isAllTime ? 'All-Time Roster' : 'Roster'}
+        <span style={{ marginLeft: '0.5rem', fontSize: '0.75em', fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>
+          · {qualified.length} player-season{qualified.length === 1 ? '' : 's'} (≥75% team games)
+        </span>
+      </h2>
+      {qualified.length === 0 ? (
+        <div className="gb-empty">No qualifying player-seasons.</div>
+      ) : (
+        <SeasonStatsTable rows={qualified} showTeam={false} showYear={true} />
+      )}
+    </div>
   );
 }
 

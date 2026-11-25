@@ -191,6 +191,14 @@ def main() -> int:
          "--year", str(year)],
         dry_run=args.dry_run))
 
+    # ── Step 6.5: strip non-D1 contests from the parquet + raw data
+    #    BEFORE the quality builders aggregate from it. Also runs again
+    #    at the end to catch anything downstream steps regenerate.
+    results.append(run_step("filter_non_d1 (pre-aggregate)",
+        [PY, "-X", "utf8", str(SCRIPTS / "filter_non_d1.py"),
+         "--year", str(year)],
+        dry_run=args.dry_run))
+
     # ── Step 7: per-match efficiency ─────────────────────────────
     results.append(run_step("build_per_match_efficiency",
         [PY, "-X", "utf8", str(SCRIPTS / "build_per_match_efficiency.py"),

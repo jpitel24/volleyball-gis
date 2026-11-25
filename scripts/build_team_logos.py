@@ -32,6 +32,32 @@ ESPN_API = (
     'https://site.api.espn.com/apis/site/v2/sports/volleyball/'
     'womens-college-volleyball/teams?limit=500'
 )
+# Fallback source: ESPN women's basketball covers programs the volleyball
+# endpoint omits (volleyball-only D1 newcomers, non-volleyball-active
+# schools whose logos we still need for opponent chips, etc.).
+ESPN_BB_API = (
+    'https://site.api.espn.com/apis/site/v2/sports/basketball/'
+    'womens-college-basketball/teams?limit=500'
+)
+# ESPN team ids for the last 13 D1 volleyball programs the volleyball
+# endpoint doesn't list. All logos resolve on ESPN's shared NCAA CDN.
+# Keyed by our in-app team name (lowercased).
+MANUAL_ESPN_IDS = {
+    'delaware':              48,
+    'hartford':              42,
+    'lamar university':      2320,
+    'merrimack':             2771,
+    'missouri st.':          2623,
+    'old dominion':          295,
+    'saint francis':         2598,   # Saint Francis (PA)
+    'seattle u':             2547,
+    'southeastern la.':      2545,
+    'st. francis brooklyn':  2597,
+    'uc san diego':          28,
+    'vanderbilt':            238,
+    'west florida':          2697,
+}
+ESPN_LOGO_URL = 'https://a.espncdn.com/i/teamlogos/ncaa/500/{eid}.png'
 UA = 'Mozilla/5.0 (volleyball-gis logo builder)'
 
 REPO_ROOT    = Path(__file__).resolve().parent.parent
@@ -445,20 +471,21 @@ MANUAL_ALIASES = {
     'usc upstate':      'south carolina upstate',
     'utrgv':            'ut rio grande valley',
     'west ga.':         'west georgia',
-    # Programs NOT in ESPN's current NCAAW volleyball list — mark empty to
-    # avoid spurious matches / download attempts. Teams will keep their
-    # colored dot. Candidates for a manual secondary-source pass later:
-    'delaware':         '',   # ESPN only has Delaware State here
-    'hartford':         '',   # Hartford dropped athletics
-    'lamar university': '',   # Lamar not in ESPN volleyball list
-    'merrimack':        '',   # recent D1 add, not yet in list
-    'missouri st.':     '',   # Missouri State (MO State Bears)
+    # Programs NOT in ESPN's current NCAAW volleyball list — these are
+    # filled from ESPN's shared NCAA logo CDN via MANUAL_ESPN_IDS below.
+    # (Left blank here to make the matcher skip them during the normal
+    # alias pass — the manual override pass covers them.)
+    'delaware':         '',
+    'hartford':         '',
+    'lamar university': '',
+    'merrimack':        '',
+    'missouri st.':     '',
     'old dominion':     '',
-    'saint francis':    '',   # St Francis PA — new to D1
-    'st. francis brooklyn': '',  # discontinued
-    'uc san diego':     '',   # not in ESPN
-    'vanderbilt':       '',   # dropped volleyball
-    'west florida':     '',   # new D1
+    'saint francis':    '',
+    'st. francis brooklyn': '',
+    'uc san diego':     '',
+    'vanderbilt':       '',
+    'west florida':     '',
 }
 
 def fetch_espn():
@@ -559,6 +586,24 @@ def main():
     downloaded = set()  # espnId already written
 
     for name in our_teams:
+        # Manual ESPN-id overrides take precedence — these are the D1
+        # programs the volleyball endpoint omits (new-to-D1, dropped
+        # athletics, etc.) that we pull from the shared NCAA CDN.
+        manual_id = MANUAL_ESPN_IDS.get(name.lower().strip())
+        if manual_id:
+            slug = slugify(name)
+            out_rel = f'/logos/{slug}.webp'
+            out_path = LOGO_DIR / f'{slug}.webp'
+            if not out_path.exists():
+                try:
+                    download_logo(ESPN_LOGO_URL.format(eid=manual_id), out_path)
+                    time.sleep(0.05)
+                except Exception as e:
+                    unmatched.append(f'{name} (manual id {manual_id} failed: {e})')
+                    continue
+            mapping[name.lower().strip()] = out_rel
+            continue
+
         t = match_team(name, espn_by_key)
         if not t:
             unmatched.append(name)

@@ -4,6 +4,7 @@ import PlayerInspector from './PlayerInspector.jsx';
 import { findRPIValue, rpiToRank, seasonFromGameId, computeCategoryGIS, CATEGORIES } from '../lib/gis.js';
 import { getSchoolColors } from '../data/schoolColors.js';
 import TeamChip from './TeamChip.jsx';
+import { hrefFor, navigate } from '../lib/router.js';
 
 // A player "participated" if they have any non-zero counting stat line.
 // This is the visibility predicate for the roster grid and tug-of-war —
@@ -87,7 +88,7 @@ function TugOfWar({ mg }) {
   );
 }
 
-function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpiByYear, onSelect, selectedPlayer }) {
+function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpiByYear, onSelect, selectedPlayer, year }) {
   const players = mg.players
     .filter(p => p.team === teamName && hasStatLine(p))
     .sort((a, b) => (b.pGIS ?? b.gisPlus) - (a.pGIS ?? a.gisPlus));
@@ -129,8 +130,17 @@ function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpi
         <div className="team-hdr-left">
           {ownRank && <span className="rpi-rank-badge">RPI #{ownRank}</span>}
           <div className="team-name-lbl">
-            <TeamChip team={teamName} size={12} />
-            {teamName}
+            <TeamChip team={teamName} size={20} />
+            {year ? (
+              <a
+                href={hrefFor('teams', teamName, year)}
+                onClick={e => { e.preventDefault(); navigate(hrefFor('teams', teamName, year)); }}
+                style={{ color: 'inherit', textDecoration: 'none', borderBottom: '1px dashed currentColor' }}
+                title={`View ${teamName} in the Teams tool (${year})`}
+              >
+                {teamName}
+              </a>
+            ) : teamName}
             {isWinner && <span className="winner-crown">🏆 WINNER</span>}
           </div>
         </div>
@@ -159,7 +169,7 @@ function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpi
   );
 }
 
-export default function GameReport({ gameId, mg, isMock, rpiByYear, categoryPgisTables }) {
+export default function GameReport({ gameId, mg, year, isMock, rpiByYear, categoryPgisTables }) {
   const ref = useRef(null);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
 
@@ -250,12 +260,12 @@ export default function GameReport({ gameId, mg, isMock, rpiByYear, categoryPgis
 
       <TeamSection
         mg={mg} teamName={mg.homeTeam} teamNameFull={mg.homeTeamFull}
-        side="home" matchRanks={matchRanks} gameId={gameId}
+        side="home" matchRanks={matchRanks} gameId={gameId} year={year}
         rpiByYear={rpiByYear} onSelect={handleSelectPlayer} selectedPlayer={selectedPlayer}
       />
       <TeamSection
         mg={mg} teamName={mg.awayTeam} teamNameFull={mg.awayTeamFull}
-        side="away" matchRanks={matchRanks} gameId={gameId}
+        side="away" matchRanks={matchRanks} gameId={gameId} year={year}
         rpiByYear={rpiByYear} onSelect={handleSelectPlayer} selectedPlayer={selectedPlayer}
       />
 

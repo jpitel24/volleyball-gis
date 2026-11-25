@@ -5,9 +5,7 @@ import { loadYear, gameRowsToBoxscore, loadSetScores } from '../lib/csvGames.js'
 import { computeGIS, computePGIS } from '../lib/gis.js';
 import { loadGisPlus, makeKey, seasonStrFromYear } from '../lib/gisPlus.js';
 import { navigate, hrefFor } from '../lib/router.js';
-import { useStickyYear } from '../lib/useStickyYear.js';
 import { useKeyboardShortcuts } from '../lib/useKeyboardShortcuts.js';
-import { getUrlFilter, useSyncUrlFilter } from '../lib/urlFilters.js';
 import { useRecent } from '../lib/recentlyViewed.js';
 import TeamChip from './TeamChip.jsx';
 
@@ -16,133 +14,62 @@ const YEARS = [2026, 2025, 2024, 2023, 2022];
 export default function GameLookup({ route }) {
   const { rpiByYear, pgisTables, categoryPgisTables } = useData();
 
-  const [year, setYear]             = useStickyYear(2026);
-  // If the URL names a specific game, its season wins over the shared
-  // sticky value — a shared /games/2024/keyX link should open in 2024
-  // even if the user was last browsing 2026.
-  useEffect(() => {
-    if (route?.name === 'games' && route.year && route.year !== year) {
-      setYear(route.year);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const [yearData, setYearData]     = useState(null);
-  const [loadingYear, setLoadingYear] = useState(false);
-  const [search, setSearch]         = useState(() => getUrlFilter('q') ?? '');
-  useSyncUrlFilter('q', search, '');
-  const [report, setReport]         = useState(null);
-  const [openKey, setOpenKey]       = useState(null);  // currently-open game key
-  const searchRef                   = useRef(null);
-  const [recent, recordRecent]      = useRecent('games');
+  // Multi-year game catalog — loaded lazily, driven by the picker UI below.
+  // allYearData[year] is the full {games, byKey, playerPos} index for that
+  // year once resolved. Keeping all years in memory is fine: the metadata
+  // objects are tiny; the heavy byKey rows aren't needed by the picker but
+  // are retained because selectGame() consumes them when the user picks.
+  const [allYearData, setAllYearData] = useState({});
+  const [loadingYears, setLoadingYears] = useState(true);
 
-  // Record opens into the recently-viewed list. Effect key: (openKey,
-  // yearData) — waits until we have the year's game index so we can
-  // look up the matchup label and date without extra queries.
-  useEffect(() => {
-    if (!openKey || !yearData) return;
-    const g = yearData.games.find(x => x.key === openKey);
-    if (!g) return;
-    recordRecent({
-      id:    `${year}|${g.key}`,
-      label: `${g.homeTeam} vs ${g.awayTeam}`,
-      sub:   g.date,
-      href:  hrefFor('games', year, g.key),
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [openKey, yearData]);
+  const [report, setReport]       = useState(null);
+  const [recent, recordRecent]    = useRecent('games');
 
-  // ── Load CSV when year changes ─────────────────────────────────────────────
+  // Kick off every year's CSV fetch on mount, in parallel. Each loadYear
+  // call is internally cached, so later lookups are free.
   useEffect(() => {
     let cancelled = false;
-    setLoadingYear(true);
-    setReport(null);
-    setOpenKey(null);
-    setSearch('');
-    loadYear(year)
-      .then(data => { if (!cancelled) { setYearData(data); setLoadingYear(false); } })
-      .catch(() =>   { if (!cancelled) { setYearData(null); setLoadingYear(false); } });
+    setLoadingYears(true);
+    Promise.all(YEARS.map(y => loadYear(y).then(d => [y, d]).catch(() => [y, null])))
+      .then(results => {
+        if (cancelled) return;
+        const next = {};
+        for (const [y, d] of results) if (d) next[y] = d;
+        setAllYearData(next);
+        setLoadingYears(false);
+      });
     return () => { cancelled = true; };
-  }, [year]);
+  }, []);
 
-  // ── URL-driven auto-select: /games/:year/:key opens that match ─────────────
-  // Two-phase: switch year first (triggers CSV load), then on yearData
-  // resolution find the matching game and open the report. The URL is the
-  // source of truth — no consume-callback needed.
+  // ── URL-driven auto-select: /games/:year/:key opens that match ─────────
   useEffect(() => {
     if (!route || route.name !== 'games' || !route.gameKey) return;
-    if (route.year !== year) { setYear(route.year); return; }
-    if (!yearData) return;
-    // Wait for pgisTables from DataContext before computing. On a hard
-    // refresh of /games/:year/:key this effect fires immediately, and if
-    // we open the game before the tables arrive computeGIS runs with an
-    // empty lookup and every pGIS value comes out null.
+    const yd = allYearData[route.year];
+    if (!yd) return;
     if (!pgisTables) return;
-    if (openKey === route.gameKey) return;  // already open
-    const g = yearData.games.find(x => x.key === route.gameKey);
-    if (g) selectGame(g);
+    if (report && report.gameKey === route.gameKey) return;
+    const g = yd.games.find(x => x.key === route.gameKey);
+    if (g) selectGame(g, route.year);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [route, yearData, pgisTables]);
+  }, [route, allYearData, pgisTables]);
 
-  // ── Closing the report (back to /games) clears the open match ──────────────
+  // Closing the report (route back to /games) clears the view.
   useEffect(() => {
     if (route && route.name === 'games' && !route.gameKey && report) {
       setReport(null);
-      setOpenKey(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [route]);
 
-  // ── Preload the gis_plus_observations.csv Map (one-time, fire-and-forget) ──
-  // Kicks off the 46 MB fetch as soon as the browser mounts, so by the time the
-  // user clicks a game the Map is usually resolved and `selectGame` doesn't block.
+  // Preload the gis_plus_observations.csv Map (one-time, fire-and-forget).
   useEffect(() => { loadGisPlus(); }, []);
 
-  // ── Filter games by search term ────────────────────────────────────────────
-  // No search → show the 25 most recent games. With a search, show every
-  // match in the season that hits (no cap — searches are naturally scoped).
-  const filteredGames = useMemo(() => {
-    if (!yearData) return [];
-    const q = search.trim().toLowerCase();
-    if (!q) return yearData.games.slice(0, 25);
-    return yearData.games.filter(g =>
-      g.homeTeam.toLowerCase().includes(q) ||
-      g.awayTeam.toLowerCase().includes(q)
-    );
-  }, [yearData, search]);
+  async function selectGame(game, year) {
+    const yd = allYearData[year];
+    if (!yd) return;
+    const rows = yd.byKey[game.key];
+    const bs   = gameRowsToBoxscore(rows, yd.playerPos);
 
-  // ── Keyboard shortcuts ────────────────────────────────────────────────────
-  //   /        focus the sidebar search input
-  //   Escape   close the currently-open game report (back to the list)
-  //   [ / ]    page back/forward through the currently-visible game list
-  //            (only fires when a report is open; wraps around the list)
-  const pageGame = useCallback((delta) => {
-    if (!openKey || !filteredGames.length) return;
-    const idx = filteredGames.findIndex(g => g.key === openKey);
-    if (idx < 0) return;
-    const n = filteredGames.length;
-    const next = filteredGames[((idx + delta) % n + n) % n];
-    if (next) navigate(hrefFor('games', year, next.key));
-  }, [openKey, filteredGames, year]);
-
-  useKeyboardShortcuts({
-    '/': (e) => {
-      e.preventDefault();
-      searchRef.current?.focus();
-      searchRef.current?.select();
-    },
-    'Escape': () => { if (report) navigate(hrefFor('games')); },
-    '[': (e) => { e.preventDefault(); pageGame(+1); }, // older (list is date-desc)
-    ']': (e) => { e.preventDefault(); pageGame(-1); }, // newer
-  });
-
-  // ── Select a game → compute GIS → overlay Python GIS+ → show report ───────
-  async function selectGame(game) {
-    const rows = yearData.byKey[game.key];
-    const bs   = gameRowsToBoxscore(rows, yearData.playerPos);
-
-    // Per-set rally-point scores are served by /data/wvb_setscores_<year>.json,
-    // a lightweight lookup built from NCAA play-by-play (ContestID → [[h,a], ...]).
-    // If missing, fall through to scoresUnknown so matchLev defaults to 1.00.
     const setScoresMap = await loadSetScores(year).catch(() => ({}));
     const periodsArr   = game.contestId && setScoresMap[game.contestId]
       ? setScoresMap[game.contestId].map(([h, a]) => ({ homeScore: h, awayScore: a }))
@@ -164,24 +91,11 @@ export default function GameLookup({ route }) {
     const gameId = game.contestId || '0';
     const mg     = computeGIS(bs, ss, null, gameId, rpiByYear || {}, pgisTables || {});
 
-    // Override fields that computeGIS can't derive from the CSV
     mg.nSets        = game.nSets;
     mg.gameDate     = game.date;
     mg.gameLocation = game.location === 'Neutral' ? 'Neutral site' : null;
-    // Known season from the year dropdown — more reliable than
-    // seasonFromGameId's numeric-range guess, which miscategorizes games at
-    // season boundaries (the PBP-rebuilt ContestIDs don't match the original
-    // thresholds calibrated to the R-scraped data).
     mg.season       = String(year);
 
-    // Overlay Python-computed GIS+ values from gis_plus_observations.csv.
-    // The fetch is kicked off on mount; this awaits the cached Map. Any
-    // unmatched player falls back to the JS values from computeGIS().
-    //
-    // After overlay, recompute pGIS using the overlayed GIS+/S rate so the
-    // percentile lookup is in the same units as pgis_tables.json (built
-    // from Python GIS+/S). JS-derived gisNeutralPlus lacks the efficiency +
-    // set-leverage modifiers the Python pipeline bakes in.
     try {
       const gisPlusMap = await loadGisPlus();
       const seasonStr  = seasonStrFromYear(year);
@@ -190,19 +104,11 @@ export default function GameLookup({ route }) {
         const key = makeKey(seasonStr, game.date, p.team, p.name);
         const hit = gisPlusMap.get(key);
         if (hit) {
-          // Game Browser displays per-MATCH totals (the Python pipeline
-          // outputs match-level values). Season/Player browsers show
-          // per-set rates by aggregating these and dividing by total
-          // sets. The category breakdown in PlayerInspector rescales
-          // its per-set categories up to per-match so the rows sum to
-          // this headline.
           p.gis     = hit.gis;
           p.gisPlus = hit.gisPlus;
           overlayCount++;
           const ns = p.ns || mg.nSets || 0;
           if (ns > 0 && pgisTables) {
-            // pgis_tables.json is built off per-set GIS+ rates, so divide
-            // the per-match overlay by ns for the percentile lookup.
             const recomputed = computePGIS(hit.gisPlus / ns, p.position, mg.nSets, pgisTables);
             if (recomputed != null) p.pGIS = recomputed;
           }
@@ -213,50 +119,47 @@ export default function GameLookup({ route }) {
       console.warn('[GameLookup] GIS+ overlay failed', err);
     }
 
-    setReport({ gameId, mg });
-    setOpenKey(game.key);
-    // Scroll to report after React paints
+    setReport({ gameId, mg, year, gameKey: game.key });
+    recordRecent({
+      id:    `${year}|${game.key}`,
+      label: `${game.homeTeam} vs ${game.awayTeam}`,
+      sub:   game.date,
+      href:  hrefFor('games', year, game.key),
+    });
     requestAnimationFrame(() =>
       document.querySelector('.report')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     );
   }
 
-  const totalGames = yearData?.games.length ?? 0;
-  const showing    = filteredGames.length;
+  useKeyboardShortcuts({
+    'Escape': () => { if (report) navigate(hrefFor('games')); },
+  });
+
+  const inPickerMode = !route?.gameKey;
 
   return (
     <>
-      {/* ── Sidebar — filters live here ───────────────────────────────── */}
       <aside className="tool-sidebar">
         <div className="tool-sidebar-title">Games</div>
-        <div className="tool-sidebar-section">
-          <div className="tool-sidebar-label">Season</div>
-          <select
-            className="gb-year-select"
-            value={year}
-            onChange={e => {
-              setYear(parseInt(e.target.value, 10));
-              // Reset to /games so we don't leave a stale game key in the URL.
-              navigate(hrefFor('games'));
-            }}
-            aria-label="Select season"
-          >
-            {YEARS.map(y => (
-              <option key={y} value={y}>{y}</option>
-            ))}
-          </select>
-        </div>
-        <div className="tool-sidebar-section">
-          <div className="tool-sidebar-label">Search</div>
-          <input
-            ref={searchRef}
-            className="pb-search"
-            placeholder="Filter by team name…  ( / )"
-            value={search}
-            onChange={e => { setSearch(e.target.value); setReport(null); }}
-            disabled={loadingYear}
-          />
-        </div>
+        {inPickerMode ? (
+          <div className="tool-sidebar-section">
+            <div className="tool-sidebar-label">About</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--muted)', lineHeight: 1.55 }}>
+              Pick a year and two teams, in any order — options narrow to
+              match the picks you've already made. Or hit Random Match.
+            </div>
+          </div>
+        ) : (
+          <div className="tool-sidebar-section">
+            <a
+              href={hrefFor('games')}
+              onClick={e => { e.preventDefault(); navigate(hrefFor('games')); }}
+              style={{ fontSize: '0.8rem', color: 'var(--muted)' }}
+            >
+              ← Pick a different game
+            </a>
+          </div>
+        )}
         {recent.length > 0 && (
           <div className="tool-sidebar-section">
             <div className="tool-sidebar-label">Recent</div>
@@ -278,72 +181,351 @@ export default function GameLookup({ route }) {
         )}
       </aside>
 
-      {/* ── Main content ──────────────────────────────────────────────── */}
       <main className="tool-main">
-        <div className="page-title-row">
-          <h1 className="page-title">Game Browser</h1>
-          <div className="page-sub">
-            Every D1 match, 2022–present. Pick a season, search for a team,
-            click a game to see the full GIS+/pGIS report.
-          </div>
-        </div>
+        {inPickerMode && (
+          <>
+            <div className="page-title-row">
+              <h1 className="page-title">Game Browser</h1>
+              <div className="page-sub">
+                Pick a year and two teams (in any order) to find the match.
+              </div>
+            </div>
+            {loadingYears
+              ? <div className="gb-status"><div className="spinner" /> Loading schedule…</div>
+              : <GamePicker allYearData={allYearData} onPick={(g, y) => navigate(hrefFor('games', y, g.key))} />
+            }
+          </>
+        )}
 
-      {/* ── Status / game count ───────────────────────────────────────── */}
-      {!report && (
-        <div className="gb-status">
-          {loadingYear
-            ? <><div className="spinner" /> Loading {year} games…</>
-            : search.trim()
-              ? `${showing} match${showing === 1 ? '' : 'es'} for "${search.trim()}"`
-              : `Showing ${Math.min(25, totalGames)} most recent of ${totalGames} games — search to find more`
-          }
-        </div>
-      )}
-
-      {/* ── Game list (hidden once a game is selected) ────────────────── */}
-      {!report && !loadingYear && filteredGames.length > 0 && (
-        <div className="gb-list">
-          {filteredGames.map(g => (
-            <button
-              key={g.key}
-              className="gb-game"
-              onClick={() => {
-                // Push the canonical URL; the route effect will call selectGame.
-                navigate(hrefFor('games', year, g.key));
-              }}
-            >
-              <span className="gb-game-date">{g.date}</span>
-              <span className="gb-game-matchup">
-                <span className="gb-game-team"><TeamChip team={g.homeTeam} />{g.homeTeam}</span>
-                <span className="gb-game-vs">vs</span>
-                <span className="gb-game-team"><TeamChip team={g.awayTeam} />{g.awayTeam}</span>
-              </span>
-              <span className="gb-game-meta">
-                {g.nSets}S
-                {g.conference && <span className="gb-game-conf">{g.conference}</span>}
-              </span>
-            </button>
-          ))}
-        </div>
-      )}
-
-      {!report && !loadingYear && filteredGames.length === 0 && yearData && (
-        <div className="gb-empty">
-          No games found{search ? ` matching "${search}"` : ''} for {year}.
-        </div>
-      )}
-
-      {/* ── Report ────────────────────────────────────────────────────── */}
-      {report && (
-        <GameReport
-          gameId={report.gameId}
-          mg={report.mg}
-          isMock={false}
-          rpiByYear={rpiByYear}
-          categoryPgisTables={categoryPgisTables}
-        />
-      )}
+        {report && (
+          <GameReport
+            gameId={report.gameId}
+            mg={report.mg}
+            year={report.year}
+            isMock={false}
+            rpiByYear={rpiByYear}
+            categoryPgisTables={categoryPgisTables}
+          />
+        )}
       </main>
     </>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// GamePicker — 3-slot year × team × team selector
+// ──────────────────────────────────────────────────────────────────────
+function GamePicker({ allYearData, onPick }) {
+  const [year,  setYear]  = useState(null);    // numeric year or null = any
+  const [team1, setTeam1] = useState(null);
+  const [team2, setTeam2] = useState(null);
+
+  // Flat list: every game across every loaded year, with its year attached.
+  const allGames = useMemo(() => {
+    const out = [];
+    for (const [y, yd] of Object.entries(allYearData)) {
+      const yr = parseInt(y, 10);
+      for (const g of yd.games) out.push({ ...g, year: yr });
+    }
+    return out;
+  }, [allYearData]);
+
+  // Narrow by current selections. Each slot filter is independent of its own
+  // selector — year narrowing uses year; team1 options ignore team1; etc.
+  function filterGames({ ignoreYear, ignoreTeam1, ignoreTeam2 } = {}) {
+    return allGames.filter(g => {
+      if (!ignoreYear  && year  != null && g.year !== year)                             return false;
+      if (!ignoreTeam1 && team1 && g.homeTeam !== team1 && g.awayTeam !== team1)        return false;
+      if (!ignoreTeam2 && team2 && g.homeTeam !== team2 && g.awayTeam !== team2)        return false;
+      return true;
+    });
+  }
+
+  // Available years = years in which there's any game that satisfies the
+  // team filters (i.e. games the user's team picks can still match).
+  const yearOptions = useMemo(() => {
+    const s = new Set();
+    for (const g of filterGames({ ignoreYear: true })) s.add(g.year);
+    return [...s].sort((a, b) => b - a);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allGames, team1, team2]);
+
+  // Team-1 options: every team that appears in a game satisfying year + team2
+  // (so if the user has already picked team2, team1 narrows to its opponents).
+  const team1Options = useMemo(() => {
+    const s = new Set();
+    for (const g of filterGames({ ignoreTeam1: true })) {
+      s.add(g.homeTeam);
+      s.add(g.awayTeam);
+    }
+    if (team2) s.delete(team2);   // can't pick the same team twice
+    return [...s].sort((a, b) => a.localeCompare(b));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allGames, year, team2]);
+
+  // Team-2 options: every team that appears opposite team1 in a satisfying game.
+  const team2Options = useMemo(() => {
+    const s = new Set();
+    for (const g of filterGames({ ignoreTeam2: true })) {
+      s.add(g.homeTeam);
+      s.add(g.awayTeam);
+    }
+    if (team1) s.delete(team1);
+    return [...s].sort((a, b) => a.localeCompare(b));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allGames, year, team1]);
+
+  // Candidate matches given current selections.
+  const matches = useMemo(() => filterGames().sort((a, b) => b.date.localeCompare(a.date)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [allGames, year, team1, team2],
+  );
+
+  // Auto-open when enough is selected to uniquely identify a match.
+  // Teams picked + exactly one match in scope → navigate directly.
+  useEffect(() => {
+    if (team1 && team2 && matches.length === 1) {
+      onPick(matches[0], matches[0].year);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [team1, team2, matches.length]);
+
+  function pickRandom() {
+    if (allGames.length === 0) return;
+    const pick = allGames[Math.floor(Math.random() * allGames.length)];
+    onPick(pick, pick.year);
+  }
+
+  // Reset handlers — clearing team1 also clears team2 so stale downstream
+  // picks don't linger.
+  function updateYear(y)  { setYear(y); }
+  function updateTeam1(t) { setTeam1(t); if (t && team2 === t) setTeam2(null); }
+  function updateTeam2(t) { setTeam2(t); if (t && team1 === t) setTeam1(null); }
+
+  return (
+    <div style={{ maxWidth: 560 }}>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '0.75rem' }}>
+        <button
+          type="button"
+          className="gl-mode-btn"
+          onClick={pickRandom}
+          style={{ padding: '0.4rem 0.9rem' }}
+        >
+          🎲 Random Match
+        </button>
+      </div>
+
+      <PickerSlot
+        label="Year"
+        placeholder="Any year — click to pick"
+        value={year == null ? null : String(year)}
+        options={yearOptions.map(y => ({ value: String(y), label: String(y) }))}
+        onChange={v => updateYear(v == null ? null : parseInt(v, 10))}
+        onClear={() => setYear(null)}
+      />
+      <PickerSlot
+        label="Team 1"
+        placeholder={`Pick any of ${team1Options.length} teams`}
+        value={team1}
+        options={team1Options.map(t => ({ value: t, label: t }))}
+        onChange={updateTeam1}
+        onClear={() => setTeam1(null)}
+        teamChip
+      />
+      <PickerSlot
+        label="Team 2"
+        placeholder={team1
+          ? `Pick any of ${team2Options.length} opponents`
+          : (team2Options.length > 0 ? `Pick any of ${team2Options.length} teams` : 'Pick Team 1 first')}
+        value={team2}
+        options={team2Options.map(t => ({ value: t, label: t }))}
+        onChange={updateTeam2}
+        onClear={() => setTeam2(null)}
+        teamChip
+      />
+
+      {/* Match disambiguation — shown when both teams + year yield >1 game,
+          or when both teams are picked but no year was and they met in
+          multiple seasons. */}
+      {team1 && team2 && matches.length > 1 && (
+        <div style={{ marginTop: '1.5rem' }}>
+          <div className="tool-sidebar-label" style={{ marginBottom: '0.5rem' }}>
+            {matches.length} matches between {team1} and {team2}
+          </div>
+          <div className="gb-list">
+            {matches.map(g => (
+              <button
+                key={`${g.year}|${g.key}`}
+                className="gb-game"
+                onClick={() => onPick(g, g.year)}
+              >
+                <span className="gb-game-date">{g.date}</span>
+                <span className="gb-game-matchup">
+                  <span className="gb-game-team"><TeamChip team={g.homeTeam} />{g.homeTeam}</span>
+                  <span className="gb-game-vs">vs</span>
+                  <span className="gb-game-team"><TeamChip team={g.awayTeam} />{g.awayTeam}</span>
+                </span>
+                <span className="gb-game-meta">
+                  {g.nSets}S · {g.year}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {team1 && team2 && matches.length === 0 && (
+        <div className="gb-empty" style={{ marginTop: '1rem' }}>
+          {team1} and {team2} haven't played{year ? ` in ${year}` : ' in our data'}.
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Reusable typeable combobox for a single slot.
+function PickerSlot({ label, placeholder, value, options, onChange, onClear, teamChip }) {
+  const [open,   setOpen]   = useState(false);
+  const [query,  setQuery]  = useState('');
+  const [cursor, setCursor] = useState(0);
+  const inputRef = useRef(null);
+
+  const q = query.trim().toLowerCase();
+  const filtered = useMemo(() => {
+    if (!q) return options;
+    const pref = [], sub = [];
+    for (const o of options) {
+      const lc = o.label.toLowerCase();
+      if (lc.startsWith(q))   pref.push(o);
+      else if (lc.includes(q)) sub.push(o);
+    }
+    return [...pref, ...sub];
+  }, [q, options]);
+
+  useEffect(() => { setCursor(0); }, [query, open]);
+
+  // When the slot gets a value from elsewhere, hide the dropdown and clear
+  // the query so the picker shows the picked value (not a stale input).
+  useEffect(() => { if (value) setOpen(false); if (value) setQuery(''); }, [value]);
+
+  function pick(v) {
+    onChange(v);
+    setOpen(false);
+    setQuery('');
+    inputRef.current?.blur();
+  }
+
+  function onKeyDown(e) {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setOpen(true);
+      setCursor(c => Math.min(c + 1, filtered.length - 1));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setCursor(c => Math.max(c - 1, 0));
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (filtered[cursor]) pick(filtered[cursor].value);
+    } else if (e.key === 'Escape') {
+      setOpen(false);
+    }
+  }
+
+  const MAX_VISIBLE = 50;
+  const visible = filtered.slice(0, MAX_VISIBLE);
+
+  return (
+    <div style={{ marginBottom: '1rem' }}>
+      <div style={{
+        fontSize: '0.65rem',
+        textTransform: 'uppercase',
+        letterSpacing: '0.1em',
+        color: 'var(--muted)',
+        marginBottom: '0.3rem',
+      }}>
+        {label}
+      </div>
+      <div style={{ position: 'relative' }}>
+        {value ? (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            padding: '0.5rem 0.75rem',
+            border: '1px solid var(--border)',
+            borderRadius: 6,
+            background: 'var(--surface2)',
+            fontSize: '0.85rem',
+            cursor: 'pointer',
+          }}
+          onClick={() => { onClear(); setOpen(true); setTimeout(() => inputRef.current?.focus(), 0); }}
+          title="Click to change"
+          >
+            {teamChip && <TeamChip team={value} size={14} />}
+            <span style={{ flex: 1 }}>{value}</span>
+            <span style={{ color: 'var(--muted)', fontSize: '0.75em' }}>✕</span>
+          </div>
+        ) : (
+          <>
+            <input
+              ref={inputRef}
+              className="pb-search"
+              placeholder={placeholder}
+              value={query}
+              onChange={e => { setQuery(e.target.value); setOpen(true); }}
+              onFocus={() => setOpen(true)}
+              onKeyDown={onKeyDown}
+              onBlur={() => setTimeout(() => setOpen(false), 150)}
+              disabled={options.length === 0}
+              autoComplete="off"
+              spellCheck={false}
+              style={{ width: '100%' }}
+            />
+            {open && visible.length > 0 && (
+              <div style={{
+                position: 'absolute',
+                top: 'calc(100% + 4px)',
+                left: 0,
+                right: 0,
+                maxHeight: 340,
+                overflowY: 'auto',
+                background: 'var(--surface)',
+                color: 'var(--text)',
+                border: '1px solid var(--border)',
+                borderRadius: 6,
+                zIndex: 20,
+                boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+              }}>
+                {visible.map((o, i) => (
+                  <div
+                    key={o.value}
+                    onMouseDown={e => { e.preventDefault(); pick(o.value); }}
+                    onMouseEnter={() => setCursor(i)}
+                    style={{
+                      padding: '0.4rem 0.75rem',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      background: i === cursor ? 'var(--surface2)' : 'transparent',
+                      color: 'var(--text)',
+                      fontSize: '0.85rem',
+                    }}
+                  >
+                    {teamChip && <TeamChip team={o.value} size={12} />}
+                    <span>{o.label}</span>
+                  </div>
+                ))}
+                {filtered.length > MAX_VISIBLE && (
+                  <div style={{ padding: '0.4rem 0.75rem', fontSize: '0.75rem', color: 'var(--muted)' }}>
+                    {filtered.length - MAX_VISIBLE} more — keep typing.
+                  </div>
+                )}
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
   );
 }

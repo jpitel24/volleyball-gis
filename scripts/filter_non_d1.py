@@ -181,6 +181,38 @@ def filter_match_pbp_coverage(bad_contests: dict[int, set[str]], dry_run: bool =
     return filter_json_by_contest(DATA / "match_pbp_coverage.json", all_bad, dry_run=dry_run)
 
 
+def filter_pbp_touches_parquet(bad_contests: dict[int, set[str]], dry_run: bool = False) -> int:
+    """Strip non-D1 contests from scripts/.pbp-build/wvb_pbp_touches_<year>.parquet
+    so downstream quality builders don't aggregate their touches."""
+    try:
+        import pandas as pd  # type: ignore
+    except ImportError:
+        print("  [warn] pandas not available; skipping parquet filter", file=sys.stderr)
+        return 0
+    pbp_dir = ROOT / "scripts" / ".pbp-build"
+    total = 0
+    for y in ALL_YEARS:
+        p = pbp_dir / f"wvb_pbp_touches_{y}.parquet"
+        if not p.exists():
+            continue
+        bad = bad_contests.get(y, set())
+        if not bad:
+            continue
+        df = pd.read_parquet(p)
+        if "contest_id" not in df.columns:
+            continue
+        before = len(df)
+        bad_str = {str(c) for c in bad}
+        df = df[~df["contest_id"].astype(str).isin(bad_str)]
+        dropped = before - len(df)
+        if dropped and not dry_run:
+            df.to_parquet(p, index=False)
+        if dropped:
+            print(f"  {p.name}: dropped {dropped} rows")
+            total += dropped
+    return total
+
+
 def filter_match_context(d1_by_year: dict[int, set[str]], dry_run: bool = False) -> int:
     """match_context.json keyed by MM-DD-YYYY_team1_team2 with team values
     inside. Drop any key where the inner 'team' values include non-D1 teams
@@ -281,6 +313,11 @@ def main() -> None:
         if n:
             print(f"  {p.name}: dropped {n} entries")
             total_dropped += n
+
+    # PBP touches parquet (upstream of the quality builders)
+    n = filter_pbp_touches_parquet(bad_contests, dry_run=args.dry_run)
+    if n:
+        total_dropped += n
 
     # match_pbp_coverage.json (keyed by ContestID across all years)
     n = filter_match_pbp_coverage(bad_contests, dry_run=args.dry_run)

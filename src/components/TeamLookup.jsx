@@ -7,6 +7,7 @@ import { useRecent } from '../lib/recentlyViewed.js';
 import { computeAwardsIndex, awardsToLabels } from '../lib/awards.js';
 import TeamChip from './TeamChip.jsx';
 import SeasonStatsTable from './SeasonStatsTable.jsx';
+import { getTeamDisplayName } from '../data/teamNicknames.js';
 
 const CURRENT_YEAR = 2026;
 const ALL_YEARS    = [2026, 2025, 2024, 2023, 2022];
@@ -144,7 +145,7 @@ function TeamSidebar({ teamName, selectedYear, index }) {
         <div className="tool-sidebar-label">Team</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 600, fontSize: '0.95rem' }}>
           <TeamChip team={teamName} size={14} />
-          <span>{teamName}</span>
+          <span>{getTeamDisplayName(teamName)}</span>
         </div>
         <a
           href={hrefFor('teams')}
@@ -208,9 +209,12 @@ function TeamSelector({ teamNames }) {
     const prefix = [];
     const substr = [];
     for (const name of teamNames) {
+      // Match either the short name ("Texas") or its display form
+      // ("Texas Longhorns") so typing a mascot still finds the team.
       const lc = name.toLowerCase();
-      if (lc.startsWith(q))       prefix.push(name);
-      else if (lc.includes(q))    substr.push(name);
+      const full = getTeamDisplayName(name).toLowerCase();
+      if (lc.startsWith(q) || full.startsWith(q))       prefix.push(name);
+      else if (lc.includes(q) || full.includes(q))      substr.push(name);
     }
     return [...prefix, ...substr];
   }, [teamNames, query]);
@@ -301,7 +305,7 @@ function TeamSelector({ teamNames }) {
                 }}
               >
                 <TeamChip team={name} size={12} />
-                <span>{name}</span>
+                <span>{getTeamDisplayName(name)}</span>
               </div>
             ))}
             {filtered.length > MAX_VISIBLE && (
@@ -588,7 +592,7 @@ function TeamDetail({ teamName, year, index, onGameDeepLink }) {
     <>
       <div className="page-title-row">
         <h1 className="page-title">
-          <TeamChip team={teamName} size={20} /> {teamName}
+          <TeamChip team={teamName} size={20} /> {getTeamDisplayName(teamName)}
           <span style={{ marginLeft: '0.6rem', color: 'var(--muted)', fontWeight: 400, fontSize: '0.65em' }}>
             · {scopeLabel}
           </span>

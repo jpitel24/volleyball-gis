@@ -5,6 +5,7 @@ import { findRPIValue, rpiToRank, seasonFromGameId, computeCategoryGIS, CATEGORI
 import { getSchoolColors } from '../data/schoolColors.js';
 import TeamChip from './TeamChip.jsx';
 import { hrefFor, navigate } from '../lib/router.js';
+import { getTeamDisplayName } from '../data/teamNicknames.js';
 
 // A player "participated" if they have any non-zero counting stat line.
 // This is the visibility predicate for the roster grid and tug-of-war —
@@ -138,9 +139,9 @@ function TeamSection({ mg, teamName, teamNameFull, side, matchRanks, gameId, rpi
                 style={{ color: 'inherit', textDecoration: 'none', borderBottom: '1px dashed currentColor' }}
                 title={`View ${teamName} in the Teams tool (${year})`}
               >
-                {teamName}
+                {getTeamDisplayName(teamName)}
               </a>
-            ) : teamName}
+            ) : getTeamDisplayName(teamName)}
             {isWinner && <span className="winner-crown">🏆 WINNER</span>}
           </div>
         </div>

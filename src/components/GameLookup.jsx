@@ -8,6 +8,7 @@ import { navigate, hrefFor } from '../lib/router.js';
 import { useKeyboardShortcuts } from '../lib/useKeyboardShortcuts.js';
 import { useRecent } from '../lib/recentlyViewed.js';
 import TeamChip from './TeamChip.jsx';
+import { getTeamDisplayName } from '../data/teamNicknames.js';
 
 const YEARS = [2026, 2025, 2024, 2023, 2022];
 
@@ -122,7 +123,7 @@ export default function GameLookup({ route }) {
     setReport({ gameId, mg, year, gameKey: game.key });
     recordRecent({
       id:    `${year}|${game.key}`,
-      label: `${game.homeTeam} vs ${game.awayTeam}`,
+      label: `${getTeamDisplayName(game.homeTeam)} vs ${getTeamDisplayName(game.awayTeam)}`,
       sub:   game.date,
       href:  hrefFor('games', year, game.key),
     });
@@ -327,7 +328,7 @@ function GamePicker({ allYearData, onPick }) {
         label="Team 1"
         placeholder={`Pick any of ${team1Options.length} teams`}
         value={team1}
-        options={team1Options.map(t => ({ value: t, label: t }))}
+        options={team1Options.map(t => ({ value: t, label: getTeamDisplayName(t) }))}
         onChange={updateTeam1}
         onClear={() => setTeam1(null)}
         teamChip
@@ -338,7 +339,7 @@ function GamePicker({ allYearData, onPick }) {
           ? `Pick any of ${team2Options.length} opponents`
           : (team2Options.length > 0 ? `Pick any of ${team2Options.length} teams` : 'Pick Team 1 first')}
         value={team2}
-        options={team2Options.map(t => ({ value: t, label: t }))}
+        options={team2Options.map(t => ({ value: t, label: getTeamDisplayName(t) }))}
         onChange={updateTeam2}
         onClear={() => setTeam2(null)}
         teamChip
@@ -361,9 +362,9 @@ function GamePicker({ allYearData, onPick }) {
               >
                 <span className="gb-game-date">{g.date}</span>
                 <span className="gb-game-matchup">
-                  <span className="gb-game-team"><TeamChip team={g.homeTeam} />{g.homeTeam}</span>
+                  <span className="gb-game-team"><TeamChip team={g.homeTeam} />{getTeamDisplayName(g.homeTeam)}</span>
                   <span className="gb-game-vs">vs</span>
-                  <span className="gb-game-team"><TeamChip team={g.awayTeam} />{g.awayTeam}</span>
+                  <span className="gb-game-team"><TeamChip team={g.awayTeam} />{getTeamDisplayName(g.awayTeam)}</span>
                 </span>
                 <span className="gb-game-meta">
                   {g.nSets}S · {g.year}
@@ -462,7 +463,7 @@ function PickerSlot({ label, placeholder, value, options, onChange, onClear, tea
           title="Click to change"
           >
             {teamChip && <TeamChip team={value} size={14} />}
-            <span style={{ flex: 1 }}>{value}</span>
+            <span style={{ flex: 1 }}>{teamChip ? getTeamDisplayName(value) : value}</span>
             <span style={{ color: 'var(--muted)', fontSize: '0.75em' }}>✕</span>
           </div>
         ) : (

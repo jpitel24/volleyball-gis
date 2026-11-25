@@ -108,7 +108,12 @@ body {
   letter-spacing: -0.005em;
   line-height: 1.1;
   margin-bottom: 0.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
+.page-title > .team-chip { margin-right: 0; }
 .page-sub {
   font-size: 0.8rem; color: var(--muted); line-height: 1.5;
 }
@@ -315,6 +320,7 @@ body {
   min-width: 0; overflow: hidden;
 }
 .gb-game-team {
+  display: inline-flex; align-items: center; gap: 0.4em;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   font-weight: 600;
 }
@@ -403,7 +409,9 @@ body {
 .team-name-lbl {
   font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
   font-size: 1.45rem; text-transform: uppercase; letter-spacing: 0.03em;
+  display: inline-flex; align-items: center; gap: 0.4em;
 }
+.team-name-lbl > .team-chip { margin-right: 0; }
 .winner-crown { color: var(--yellow); margin-left: 0.5rem; font-size: 0.85rem; }
 .team-totals {
   display: flex; gap: 1.25rem; align-items: baseline; flex-wrap: wrap;
@@ -1334,6 +1342,7 @@ body {
   text-overflow: ellipsis;
 }
 .aa-team {
+  display: inline-flex; align-items: center; gap: 0.35em;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.6rem;
   color: var(--muted);
